@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "how-to-read-a-security-alert",
+    "title": "How to read a security alert in five minutes",
+    "summary": "A repeatable method for turning an unfamiliar alert into a clear decision: what fired, what is affected and what happens next.",
+    "tags": [
+      "SOC",
+      "Triage"
+    ],
+    "publishedAt": "2026-10-01T09:00:00Z",
+    "body": "Every alert is a hypothesis. Your job in the first five minutes is not to solve the case, it is to decide what kind of case it is.\n\n## 1. What did the rule mean to detect?\n\nOpen the rule definition before the events. If you do not know what behaviour the rule targets, you cannot judge whether the events show it.\n\n## 2. Who and what is involved?\n\nList the entities: user, host, IP address, process, file, cloud resource. These are your pivots.\n\n## 3. Do the raw events support the alert?\n\nRules sometimes match partial or malformed data. Look at the events that triggered the alert and check that they really show the behaviour.\n\n## 4. What is the context?\n\nIs the host a domain controller or a test machine? Is there a change ticket? Has this entity alerted before?\n\n## 5. Decide\n\nClose with a clear reason, or escalate with severity, facts, scope, actions taken and the decision you need.\n\nThe AMANIQ SOC Analyst programme practises this method across six simulated investigations."
+  },
+  {
+    "slug": "certificates-of-completion-explained",
+    "title": "Certificates of completion, certifications and accreditation: what is the difference?",
+    "summary": "A plain-language guide to what training certificates do and do not mean, so you can describe your credentials accurately.",
+    "tags": [
+      "Careers"
+    ],
+    "publishedAt": "2026-10-05T09:00:00Z",
+    "body": "These words are often used interchangeably, but they mean different things.\n\n## Certificate of completion\n\nIssued by a training provider to confirm that you completed a programme and met its requirements. AMANIQ Academy certificates are of this kind. Each one can be verified online at the address printed on it.\n\n## Professional certification\n\nAwarded by a certification body, usually after an independent examination and often with experience and continuing-education requirements. Vendor certifications and industry certifications fall into this category.\n\n## Accredited qualification\n\nA qualification recognised by a government-authorised or national accreditation body.\n\n## Why it matters\n\nDescribe your credentials precisely on your CV. Employers value honesty, and precise wording also tells them exactly what you have demonstrated. A good way to describe an AMANIQ credential is: *\"Certificate of completion, SOC Analyst programme, AMANIQ Academy (verifiable at academy.amaniqgroup.com/verify)\"*."
+  },
+  {
+    "slug": "least-privilege-in-practice",
+    "title": "Least privilege in practice: three questions for every permission",
+    "summary": "Least privilege is easy to say and hard to do. Three questions make it practical for cloud, network and application access.",
+    "tags": [
+      "Cloud",
+      "GRC"
+    ],
+    "publishedAt": "2026-10-10T09:00:00Z",
+    "body": "Least privilege means every identity has only the access it needs, for only as long as it needs it. Three questions make that concrete.\n\n## 1. What does it actually need to do?\n\nWrite the need in plain words before writing the policy: *\"Read invoices from one bucket and write application logs.\"* Anything not on that list is excess.\n\n## 2. Where are the wildcards?\n\n`*` in an action or resource is the most common source of excess privilege. Each wildcard should have a written justification.\n\n## 3. Could this permission grant more permissions?\n\nSome permissions let an identity give itself more access: attaching policies, creating keys for others, or passing roles to services. Treat them as administrative.\n\nReview access regularly. Permissions accumulate quietly, and the cheapest privilege to remove is the one nobody uses."
+  }
+]

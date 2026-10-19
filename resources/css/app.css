@@ -1,0 +1,105 @@
+@import 'tailwindcss';
+/* Self-hosted fonts (no third-party font CDN). Inter's full build includes latin-ext and
+   vietnamese subsets, which carry the dotted letters used in Yoruba, Igbo and Hausa names. */
+@import '@fontsource-variable/inter';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/*
+ * AMANIQ Academy design tokens (same palette as the original build). Dark by design; every text
+ * colour meets WCAG AA (4.5:1) on bg, surface and elevated — checked in tests/Unit/ContrastTest.
+ */
+:root {
+    --bg: #0a1020;
+    --surface: #0f172b;
+    --elevated: #162038;
+    --elevated-2: #1c2846;
+    --border: #26324d;
+    --border-strong: #34446a;
+    --text: #edf1f8;
+    --muted: #a6b1c4;
+    --subtle: #8792a8;
+    --accent: #2dd4bf;
+    --accent-strong: #5eead4;
+    --accent-ink: #042f2a;
+    --blue: #7cb3ff;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --ring: #5eead4;
+    color-scheme: dark;
+}
+
+@theme inline {
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-elevated: var(--elevated);
+    --color-elevated-2: var(--elevated-2);
+    --color-border: var(--border);
+    --color-border-strong: var(--border-strong);
+    --color-text: var(--text);
+    --color-muted: var(--muted);
+    --color-subtle: var(--subtle);
+    --color-accent: var(--accent);
+    --color-accent-strong: var(--accent-strong);
+    --color-accent-ink: var(--accent-ink);
+    --color-blue: var(--blue);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-danger: var(--danger);
+    --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+}
+
+html { background: var(--bg); }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 4px; }
+::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+[x-cloak] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Code must show exactly what learners type: no ligatures (e.g. != rendered as ≠). */
+code, pre, kbd, samp, .font-mono { font-variant-ligatures: none; font-feature-settings: 'liga' 0, 'calt' 0; }
+
+/* Long-form lesson and article content rendered from Markdown */
+.prose-amaniq { color: var(--text); line-height: 1.75; font-size: 1.0625rem; max-width: 72ch; }
+.prose-amaniq > * + * { margin-top: 1.1em; }
+.prose-amaniq h2 { font-size: 1.5rem; font-weight: 650; margin-top: 2.2em; letter-spacing: -0.01em; }
+.prose-amaniq h3 { font-size: 1.2rem; font-weight: 600; margin-top: 1.8em; }
+.prose-amaniq a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+.prose-amaniq strong { color: #fff; font-weight: 650; }
+.prose-amaniq ul, .prose-amaniq ol { padding-left: 1.4em; }
+.prose-amaniq ul { list-style: disc; }
+.prose-amaniq ol { list-style: decimal; }
+.prose-amaniq li + li { margin-top: 0.35em; }
+.prose-amaniq li::marker { color: var(--subtle); }
+.prose-amaniq code { font-family: var(--font-mono); font-size: 0.88em; background: var(--elevated); border: 1px solid var(--border); border-radius: 6px; padding: 0.1em 0.35em; }
+.prose-amaniq pre { background: #070c18; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; overflow-x: auto; font-size: 0.86rem; line-height: 1.6; }
+.prose-amaniq pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.prose-amaniq table { width: 100%; border-collapse: collapse; font-size: 0.93rem; display: block; overflow-x: auto; }
+.prose-amaniq th, .prose-amaniq td { border-bottom: 1px solid var(--border); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+.prose-amaniq th { color: var(--muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.prose-amaniq blockquote { border-left: 3px solid var(--accent); background: var(--surface); padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; color: var(--muted); }
+.prose-amaniq input[type='checkbox'] { accent-color: var(--accent); margin-right: 0.4em; }
+.prose-compact { font-size: 0.9rem; line-height: 1.6; }
+.prose-compact > * + * { margin-top: 0.6em; }

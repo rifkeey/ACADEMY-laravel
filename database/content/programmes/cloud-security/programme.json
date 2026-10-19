@@ -1,0 +1,1229 @@
+{
+  "dir": "cloud-security",
+  "slug": "cloud-security",
+  "code": "CLD",
+  "title": "Cloud Security",
+  "category": "cloud",
+  "level": "Beginner to intermediate",
+  "summary": "Secure cloud identity, networks, data and workloads, and investigate cloud incidents. Cloud-neutral principles first. Curriculum in development.",
+  "description": "A programme that teaches cloud-neutral security principles first, then clearly labelled provider-specific examples from AWS, Microsoft Azure and Google Cloud. Essential activities use supplied data and simulators, so you never need to create paid cloud resources. Each module has an authored starter lesson; full lessons, the remaining labs and the examination are in development.",
+  "audience": [
+    "Cloud and DevOps engineers",
+    "Security engineers moving to cloud",
+    "SOC analysts handling cloud alerts"
+  ],
+  "prerequisites": [
+    "Basic IT and networking knowledge",
+    "No cloud account required"
+  ],
+  "outcomes": [
+    "Apply shared responsibility correctly",
+    "Design least-privilege IAM",
+    "Prevent storage exposure",
+    "Use cloud audit logs for detection",
+    "Investigate compromised identities",
+    "Review cloud architectures"
+  ],
+  "inclusions": [
+    "10 modules (in development)",
+    "IAM review and audit-log labs available now",
+    "Final examination, badge and certificate when complete"
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a paid cloud account?",
+      "a": "No. Essential activities use supplied datasets and simulators. Any optional exercises in a real cloud account will be clearly labelled, with cost warnings."
+    }
+  ],
+  "estimatedHours": 60,
+  "price": {
+    "currency": "NGN",
+    "amountMinor": 22000000
+  },
+  "sortOrder": 5,
+  "enrolmentOpen": false,
+  "contentStatus": "in_development",
+  "badge": {
+    "name": "AMANIQ Cloud Security",
+    "description": "Awarded for completing the AMANIQ Academy Cloud Security programme.",
+    "criteria": "Complete all required lessons and labs and score at least 75% on the final examination.",
+    "hue": 265,
+    "icon": "cloud"
+  },
+  "exam": {
+    "title": "Cloud Security final examination",
+    "questionCount": 40,
+    "passPercent": 75,
+    "durationMinutes": 60,
+    "maxAttempts": 3,
+    "cooldownHours": 24,
+    "status": "draft"
+  },
+  "modules": [
+    {
+      "slug": "cloud-fundamentals",
+      "title": "Cloud Fundamentals and Shared Responsibility",
+      "purpose": "Explain cloud models and who is responsible for what.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Describe IaaS, PaaS and SaaS and deployment models.",
+        "Apply the shared responsibility model.",
+        "Identify common cloud security risks."
+      ],
+      "keyConcepts": [
+        "NIST cloud definition",
+        "Service and deployment models",
+        "Shared responsibility",
+        "Common risks"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to describe IaaS, PaaS and SaaS and deployment models.",
+        "Demonstrates the ability to apply the shared responsibility model.",
+        "Demonstrates the ability to identify common cloud security risks."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "shared-responsibility",
+          "title": "Cloud models and shared responsibility",
+          "minutes": 25,
+          "objectives": [
+            "Describe IaaS, PaaS and SaaS and deployment models.",
+            "Apply the shared responsibility model."
+          ],
+          "sources": [
+            "nist-sp-800-145",
+            "aws-shared-responsibility"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "iam",
+      "title": "Identity and Access Management",
+      "purpose": "Design least-privilege cloud identity.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Explain users, roles, policies and federation.",
+        "Apply least privilege to policies.",
+        "Protect privileged access and credentials."
+      ],
+      "keyConcepts": [
+        "Principals",
+        "Policies",
+        "Roles and federation",
+        "MFA",
+        "Long-lived keys"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to explain users, roles, policies and federation.",
+        "Demonstrates the ability to apply least privilege to policies.",
+        "Demonstrates the ability to protect privileged access and credentials."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "least-privilege-policies",
+          "title": "Least-privilege policies",
+          "minutes": 25,
+          "objectives": [
+            "Explain users, roles, policies and federation.",
+            "Apply least privilege to policies."
+          ],
+          "sources": [
+            "aws-iam-best-practices",
+            "ms-cloud-benchmark"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cloud-networking",
+      "title": "Secure Cloud Networking",
+      "purpose": "Segment cloud networks and control exposure.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Design virtual networks and subnets.",
+        "Configure security groups and network ACLs.",
+        "Use private endpoints and secure admin access."
+      ],
+      "keyConcepts": [
+        "VPC/VNet",
+        "Security groups",
+        "Private endpoints",
+        "Bastions"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to design virtual networks and subnets.",
+        "Demonstrates the ability to configure security groups and network ACLs.",
+        "Demonstrates the ability to use private endpoints and secure admin access."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "virtual-network-design",
+          "title": "Virtual network design",
+          "minutes": 25,
+          "objectives": [
+            "Design virtual networks and subnets.",
+            "Configure security groups and network ACLs."
+          ],
+          "sources": [
+            "nist-sp-800-207",
+            "aws-security-docs"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "data-protection",
+      "title": "Storage and Data Protection",
+      "purpose": "Prevent data exposure and manage encryption.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Identify public exposure risks.",
+        "Apply encryption at rest and in transit.",
+        "Manage keys and data access policies."
+      ],
+      "keyConcepts": [
+        "Public buckets",
+        "Encryption",
+        "KMS",
+        "Classification"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to identify public exposure risks.",
+        "Demonstrates the ability to apply encryption at rest and in transit.",
+        "Demonstrates the ability to manage keys and data access policies."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "preventing-storage-exposure",
+          "title": "Preventing storage exposure",
+          "minutes": 25,
+          "objectives": [
+            "Identify public exposure risks.",
+            "Apply encryption at rest and in transit."
+          ],
+          "sources": [
+            "aws-security-docs",
+            "ms-cloud-benchmark"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "logging-monitoring",
+      "title": "Logging, Monitoring and Auditability",
+      "purpose": "Collect and use cloud audit logs.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Describe control-plane and data-plane logs.",
+        "Centralise logging and alerting.",
+        "Set retention for evidence."
+      ],
+      "keyConcepts": [
+        "Audit logs",
+        "Central logging",
+        "Alerting",
+        "Retention"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to describe control-plane and data-plane logs.",
+        "Demonstrates the ability to centralise logging and alerting.",
+        "Demonstrates the ability to set retention for evidence."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "cloud-audit-logs",
+          "title": "Cloud audit logs",
+          "minutes": 25,
+          "objectives": [
+            "Describe control-plane and data-plane logs.",
+            "Centralise logging and alerting."
+          ],
+          "sources": [
+            "nist-sp-800-92",
+            "aws-security-docs",
+            "ms-sentinel"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "posture",
+      "title": "Cloud Security Posture and Configuration",
+      "purpose": "Find and fix misconfiguration at scale.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Explain misconfiguration risk.",
+        "Use configuration baselines.",
+        "Prioritise remediation."
+      ],
+      "keyConcepts": [
+        "CSPM",
+        "Baselines",
+        "Policy as code",
+        "Prioritisation"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to explain misconfiguration risk.",
+        "Demonstrates the ability to use configuration baselines.",
+        "Demonstrates the ability to prioritise remediation."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "posture-management",
+          "title": "Posture management",
+          "minutes": 25,
+          "objectives": [
+            "Explain misconfiguration risk.",
+            "Use configuration baselines."
+          ],
+          "sources": [
+            "cis-benchmarks",
+            "ms-cloud-benchmark"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "workloads",
+      "title": "Cloud Workload and Application Security",
+      "purpose": "Secure compute, secrets and containers.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Harden compute instances.",
+        "Manage secrets safely.",
+        "Explain container security fundamentals."
+      ],
+      "keyConcepts": [
+        "Images",
+        "Secrets managers",
+        "Containers",
+        "Vulnerability management"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to harden compute instances.",
+        "Demonstrates the ability to manage secrets safely.",
+        "Demonstrates the ability to explain container security fundamentals."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "secrets-and-workloads",
+          "title": "Secrets and workload hardening",
+          "minutes": 25,
+          "objectives": [
+            "Harden compute instances.",
+            "Manage secrets safely."
+          ],
+          "sources": [
+            "aws-security-docs",
+            "cis-benchmarks"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cloud-ir",
+      "title": "Cloud Threat Detection and Incident Response",
+      "purpose": "Detect and respond to identity-driven cloud attacks.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Recognise suspicious identity activity.",
+        "Investigate compromised credentials.",
+        "Contain cloud incidents."
+      ],
+      "keyConcepts": [
+        "Credential compromise",
+        "Unusual API activity",
+        "Containment",
+        "ATT&CK cloud"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to recognise suspicious identity activity.",
+        "Demonstrates the ability to investigate compromised credentials.",
+        "Demonstrates the ability to contain cloud incidents."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "compromised-credentials",
+          "title": "Investigating compromised credentials",
+          "minutes": 25,
+          "objectives": [
+            "Recognise suspicious identity activity.",
+            "Investigate compromised credentials."
+          ],
+          "sources": [
+            "mitre-attack-cloud",
+            "nist-sp-800-61r3"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "governance-resilience",
+      "title": "Cloud Governance, Resilience and Compliance",
+      "purpose": "Govern cloud use and plan for resilience.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Run cloud risk assessments.",
+        "Design backup and recovery.",
+        "Collect compliance evidence."
+      ],
+      "keyConcepts": [
+        "Landing zones",
+        "Backups",
+        "Resilience",
+        "Compliance evidence"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to run cloud risk assessments.",
+        "Demonstrates the ability to design backup and recovery.",
+        "Demonstrates the ability to collect compliance evidence."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "resilience-and-governance",
+          "title": "Resilience and governance",
+          "minutes": 25,
+          "objectives": [
+            "Run cloud risk assessments.",
+            "Design backup and recovery."
+          ],
+          "sources": [
+            "nist-csf-2",
+            "ms-cloud-benchmark"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cloud-capstone",
+      "title": "Cloud Security Capstone",
+      "purpose": "Assess a fictional cloud architecture end to end.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Identify IAM and configuration risks.",
+        "Analyse audit logs.",
+        "Recommend prioritised remediation."
+      ],
+      "keyConcepts": [
+        "Architecture review",
+        "Reporting"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to identify IAM and configuration risks.",
+        "Demonstrates the ability to analyse audit logs.",
+        "Demonstrates the ability to recommend prioritised remediation."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "capstone-overview",
+          "title": "Capstone overview",
+          "minutes": 25,
+          "objectives": [
+            "Identify IAM and configuration risks.",
+            "Analyse audit logs."
+          ],
+          "sources": [
+            "aws-security-docs",
+            "ms-cloud-benchmark"
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "iam-excessive-permissions",
+      "title": "Identify excessive permissions in an IAM policy",
+      "difficulty": "foundation",
+      "labType": "config_review",
+      "summary": "Review the policy attached to a fictional invoice-processing application and decide which statements break least privilege.",
+      "minutes": 30,
+      "moduleSlug": "iam",
+      "passPercent": 80,
+      "content": {
+        "objectives": [
+          "Read an IAM policy",
+          "Recognise wildcard and privilege-escalation risks",
+          "Propose a least-privilege alternative"
+        ],
+        "scenario": "Kanem's invoice application reads invoice files from one storage bucket, decrypts them with one key and writes application logs. A developer attached the policy below during a deadline. Review it.",
+        "scope": "The policy uses AWS IAM syntax (provider-specific); the principles apply to every cloud. Account IDs and ARNs are documentation placeholders.",
+        "instructions": "Read the policy and the application's needs, then answer the tasks.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "invoice-app-policy.json",
+              "format": "code",
+              "language": "json",
+              "body": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    { \"Sid\": \"S1\", \"Effect\": \"Allow\", \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/*\" },\n    { \"Sid\": \"S2\", \"Effect\": \"Allow\", \"Action\": \"s3:*\", \"Resource\": \"*\" },\n    { \"Sid\": \"S3\", \"Effect\": \"Allow\", \"Action\": [\"logs:CreateLogStream\", \"logs:PutLogEvents\"], \"Resource\": \"arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:*\" },\n    { \"Sid\": \"S4\", \"Effect\": \"Allow\", \"Action\": \"iam:PassRole\", \"Resource\": \"*\" },\n    { \"Sid\": \"S5\", \"Effect\": \"Allow\", \"Action\": \"kms:Decrypt\", \"Resource\": \"arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666\" },\n    { \"Sid\": \"S6\", \"Effect\": \"Allow\", \"Action\": \"ec2:*\", \"Resource\": \"*\" }\n  ]\n}"
+            },
+            {
+              "title": "What the application needs",
+              "format": "markdown",
+              "body": "- Read objects from the `kanem-invoices` bucket\n- Decrypt with the invoice KMS key\n- Write logs to `/kanem/invoice-app`\n- Nothing else"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "excessive",
+            "prompt": "Which statements grant more than the application needs? Select all.",
+            "points": 4,
+            "hints": [
+              "Look for '*' in Action or Resource.",
+              "Compare each statement with the needs list."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "S1",
+                  "label": "S1"
+                },
+                {
+                  "id": "S2",
+                  "label": "S2"
+                },
+                {
+                  "id": "S3",
+                  "label": "S3"
+                },
+                {
+                  "id": "S4",
+                  "label": "S4"
+                },
+                {
+                  "id": "S5",
+                  "label": "S5"
+                },
+                {
+                  "id": "S6",
+                  "label": "S6"
+                }
+              ]
+            }
+          },
+          {
+            "id": "escalation",
+            "prompt": "Which statement creates the most direct privilege-escalation risk, because it lets the application hand any role to a service it launches?",
+            "points": 3,
+            "hints": [
+              "Which action relates to roles?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "S2",
+                  "label": "S2"
+                },
+                {
+                  "id": "S4",
+                  "label": "S4"
+                },
+                {
+                  "id": "S6",
+                  "label": "S6"
+                }
+              ]
+            }
+          },
+          {
+            "id": "fix",
+            "prompt": "What is the best remediation?",
+            "points": 3,
+            "hints": [
+              "Least privilege keeps only what is needed."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "remove",
+                  "label": "Remove S2, S4 and S6; keep S1, S3 and S5"
+                },
+                {
+                  "id": "mfa",
+                  "label": "Keep the policy but require MFA"
+                },
+                {
+                  "id": "deny",
+                  "label": "Add a Deny for s3:DeleteObject only"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "excessive": {
+            "type": "multi",
+            "correct": [
+              "S2",
+              "S4",
+              "S6"
+            ],
+            "feedback": {
+              "correct": "Correct: three wildcard statements unrelated to the application's needs.",
+              "incorrect": "Check each statement against the needs list; wildcards are the giveaway."
+            }
+          },
+          "escalation": {
+            "type": "choice",
+            "correct": "S4",
+            "feedback": {
+              "correct": "Correct: iam:PassRole on * can let a workload assume far more privilege.",
+              "incorrect": "Look for the IAM action that relates to roles."
+            }
+          },
+          "fix": {
+            "type": "choice",
+            "correct": "remove",
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "MFA does not apply to workload identities, and a single Deny leaves most excess in place."
+            }
+          }
+        }
+      }
+    },
+    {
+      "slug": "cloud-audit-log-investigation",
+      "title": "Analyse cloud audit logs for suspicious access",
+      "difficulty": "intermediate",
+      "labType": "query_exercise",
+      "summary": "Use KQL over a synthetic cloud control-plane log to find a compromised developer identity and what it did.",
+      "minutes": 40,
+      "moduleSlug": "cloud-ir",
+      "passPercent": 75,
+      "content": {
+        "objectives": [
+          "Query control-plane audit logs",
+          "Recognise reconnaissance, persistence and defence evasion in cloud APIs"
+        ],
+        "scenario": "An alert reports that audit logging was stopped in Kanem's cloud account early on 11 March. Investigate the audit log.",
+        "scope": "CloudAudit is a synthetic table in a provider-neutral format modelled on common cloud audit logs.",
+        "instructions": "Use the KQL console to explore, then answer the tasks.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "kql",
+          "tables": [
+            {
+              "name": "CloudAudit",
+              "description": "Control-plane API calls, 11 March 2026.",
+              "columns": [
+                "EventTime",
+                "Identity",
+                "SourceIP",
+                "EventName",
+                "Region",
+                "Result"
+              ],
+              "rows": [
+                {
+                  "EventTime": "2026-03-11T02:10:04Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "GetCallerIdentity",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T02:10:40Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "ListUsers",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T02:11:15Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "CreateAccessKey",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T02:12:02Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "PutBucketPolicy",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T02:13:30Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "RunInstances",
+                  "Region": "ap-southeast-1",
+                  "Result": "AccessDenied"
+                },
+                {
+                  "EventTime": "2026-03-11T02:13:31Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "RunInstances",
+                  "Region": "ap-southeast-1",
+                  "Result": "AccessDenied"
+                },
+                {
+                  "EventTime": "2026-03-11T02:14:55Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.51.100.140",
+                  "EventName": "StopLogging",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:07:37Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.27",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:13:35Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.43",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:27:11Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.27",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:44:39Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.27",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:51:53Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.43",
+                  "EventName": "GetLogEvents",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:57:52Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.26",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T07:58:21Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.26",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T08:05:40Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.27",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T08:09:53Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.41",
+                  "EventName": "GetLogEvents",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T08:10:42Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.33",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T08:40:57Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.23",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T08:55:51Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.22",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T09:00:12Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.49",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T09:01:12Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.26",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T09:04:22Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.46",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T09:13:11Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.26",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T09:52:30Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.23",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T10:09:34Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.21",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T10:31:22Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.49",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T10:36:11Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.21",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T10:50:57Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.32",
+                  "EventName": "GetLogEvents",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T10:54:05Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.33",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T11:17:18Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.40",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T11:18:40Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.38",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T11:22:43Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.41",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T11:41:52Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.38",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T12:01:55Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.44",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T12:19:23Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.35",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T12:28:22Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.48",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T12:51:14Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.45",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T13:09:05Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.40",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T13:16:47Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.25",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T13:32:46Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.29",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T13:44:09Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.48",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T13:46:02Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.31",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T13:56:47Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.23",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T14:00:25Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.23",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T14:11:49Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.47",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T14:13:06Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.26",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T14:15:30Z",
+                  "Identity": "dev.obi",
+                  "SourceIP": "198.18.1.44",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T14:25:13Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.36",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T15:22:07Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.20",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T15:26:07Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.31",
+                  "EventName": "ListBuckets",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T15:39:44Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.49",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T15:40:57Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.22",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T16:15:05Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.47",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T16:21:39Z",
+                  "Identity": "svc-invoice",
+                  "SourceIP": "198.18.1.35",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T16:26:14Z",
+                  "Identity": "dev.akande",
+                  "SourceIP": "198.18.1.43",
+                  "EventName": "GetObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T16:37:52Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.43",
+                  "EventName": "DescribeInstances",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                },
+                {
+                  "EventTime": "2026-03-11T16:53:18Z",
+                  "Identity": "ops.usman",
+                  "SourceIP": "198.18.1.43",
+                  "EventName": "PutObject",
+                  "Region": "eu-west-1",
+                  "Result": "Success"
+                }
+              ]
+            }
+          ],
+          "sampleQuery": "CloudAudit\n| where EventName == \"StopLogging\""
+        },
+        "tasks": [
+          {
+            "id": "identity",
+            "prompt": "Which identity stopped audit logging?",
+            "points": 2,
+            "hints": [
+              "Start from the sample query."
+            ],
+            "input": {
+              "type": "text"
+            }
+          },
+          {
+            "id": "events",
+            "prompt": "Write a query that returns the **EventName** of every call made from the attacker's source IP.",
+            "points": 4,
+            "hints": [
+              "Find the SourceIP of the StopLogging event first.",
+              "| project EventName"
+            ],
+            "input": {
+              "type": "kql",
+              "table": "CloudAudit"
+            }
+          },
+          {
+            "id": "persistence",
+            "prompt": "Which API call most likely gave the attacker persistent access?",
+            "points": 2,
+            "hints": [
+              "Which call creates new credentials?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "GetCallerIdentity",
+                  "label": "GetCallerIdentity"
+                },
+                {
+                  "id": "CreateAccessKey",
+                  "label": "CreateAccessKey"
+                },
+                {
+                  "id": "RunInstances",
+                  "label": "RunInstances"
+                },
+                {
+                  "id": "ListUsers",
+                  "label": "ListUsers"
+                }
+              ]
+            }
+          },
+          {
+            "id": "containment",
+            "prompt": "What should be done first?",
+            "points": 2,
+            "hints": [
+              "Stop the attacker's credentials and restore visibility."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "contain",
+                  "label": "Disable dev.akande's access keys (including the new one), revoke sessions, re-enable logging, and review the changed bucket policy"
+                },
+                {
+                  "id": "delete-account",
+                  "label": "Delete the whole cloud account"
+                },
+                {
+                  "id": "wait",
+                  "label": "Wait for the RunInstances attempts to succeed to gather more evidence"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "identity": {
+            "type": "text",
+            "accept": [
+              "dev.akande"
+            ],
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Filter on EventName == \"StopLogging\"."
+            }
+          },
+          "events": {
+            "type": "kql",
+            "column": "EventName",
+            "values": [
+              "GetCallerIdentity",
+              "ListUsers",
+              "CreateAccessKey",
+              "PutBucketPolicy",
+              "RunInstances",
+              "StopLogging"
+            ],
+            "mode": "set",
+            "feedback": {
+              "correct": "Correct: reconnaissance, credential creation, a policy change, failed compute launches and logging tampering.",
+              "incorrect": "Filter SourceIP == \"198.51.100.140\" and project EventName."
+            }
+          },
+          "persistence": {
+            "type": "choice",
+            "correct": "CreateAccessKey",
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Persistence means credentials that survive a password reset."
+            }
+          },
+          "containment": {
+            "type": "choice",
+            "correct": "contain",
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Contain the identity and restore logging first."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "questions": []
+}

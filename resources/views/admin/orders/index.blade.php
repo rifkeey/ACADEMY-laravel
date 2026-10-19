@@ -1,0 +1,73 @@
+<x-layouts.admin title="Orders and enrolments" description="Payments are confirmed with the provider before access is granted. Refunds are made in the provider's dashboard first, then recorded here, which removes access.">
+    <form method="GET" class="mb-6 flex flex-wrap items-end gap-3">
+        <div class="w-72"><x-ui.field label="Order reference or learner email" for="q"><x-ui.input type="search" name="q" :value="$q" /></x-ui.field></div>
+        @if ($orders)
+            <div class="w-40"><x-ui.field label="Order status" for="status"><x-ui.select name="status"><option value="">Any</option>@foreach (['pending', 'paid', 'failed', 'cancelled', 'refunded'] as $s)<option value="{{ $s }}" @selected($status === $s)>{{ ucfirst($s) }}</option>@endforeach</x-ui.select></x-ui.field></div>
+        @endif
+        <x-ui.button variant="secondary">Filter</x-ui.button>
+    </form>
+
+    @if ($orders)
+        <section aria-labelledby="ord-h">
+            <h2 id="ord-h" class="text-lg font-semibold">Orders</h2>
+            <div class="mt-3">
+                <x-ui.table :head="['Reference', 'Learner', 'Programme', 'Total', 'Payment', 'Status', 'Created', '']" caption="Orders">
+                    @forelse ($orders as $o)
+                        @php $pay = $o->payments->first(); @endphp
+                        <tr>
+                            <x-ui.td class="font-mono text-xs">{{ $o->reference }}</x-ui.td>
+                            <x-ui.td>{{ $o->user->email }}</x-ui.td>
+                            <x-ui.td>{{ $o->specialization->title }}</x-ui.td>
+                            <x-ui.td class="whitespace-nowrap tabular-nums">{{ \App\Support\Money::format($o->total_minor, $o->currency) }}@if ($o->discount_minor > 0)<p class="text-xs text-subtle">−{{ \App\Support\Money::format($o->discount_minor, $o->currency) }} discount</p>@endif</x-ui.td>
+                            <x-ui.td class="text-xs text-muted">{{ $o->provider }}@if ($pay)<br><span class="font-mono">{{ $pay->provider_reference }}</span>@endif</x-ui.td>
+                            <x-ui.td>@include('admin.partials.status', ['value' => $o->status])</x-ui.td>
+                            <x-ui.td class="whitespace-nowrap text-muted">{{ $o->created_at->format('j M Y H:i') }}</x-ui.td>
+                            <x-ui.td>
+                                @if ($o->status === 'paid')
+                                    <x-ui.confirm :action="route('admin.orders.refund', $o)" label="Record refund" title="Record a refund for {{ $o->reference }}?" description="Only do this after refunding in the payment provider's dashboard. The learner's enrolment is revoked." confirm-label="Record refund" :require-reason="true" />
+                                @endif
+                            </x-ui.td>
+                        </tr>
+                    @empty
+                        <tr><x-ui.td colspan="8" class="text-center text-muted">No orders found.</x-ui.td></tr>
+                    @endforelse
+                </x-ui.table>
+            </div>
+            <x-admin.pager :items="$orders" />
+        </section>
+    @endif
+
+    @if ($enrolments)
+        <section aria-labelledby="enr-h" class="mt-10">
+            <h2 id="enr-h" class="text-lg font-semibold">Enrolments</h2>
+            <form method="POST" action="{{ route('admin.enrolments.grant') }}" class="mt-4 grid gap-4 rounded-2xl border border-border bg-surface p-5 sm:grid-cols-2 lg:grid-cols-4">
+                @csrf
+                <x-ui.field label="Learner email (account must exist)" for="email"><x-ui.input type="email" name="email" required /></x-ui.field>
+                <x-ui.field label="Programme" for="specialization_id"><x-ui.select name="specialization_id">@foreach ($programmes as $p)<option value="{{ $p->id }}">{{ $p->title }}</option>@endforeach</x-ui.select></x-ui.field>
+                <x-ui.field label="Reason (scholarship, staff, corporate pilot…)" for="note"><x-ui.input name="note" required minlength="5" maxlength="300" /></x-ui.field>
+                <div class="flex items-end"><x-ui.button size="sm">Grant complimentary enrolment</x-ui.button></div>
+            </form>
+            <div class="mt-4">
+                <x-ui.table :head="['Learner', 'Programme', 'Source', 'Enrolled', 'Status', '']" caption="Enrolments">
+                    @forelse ($enrolments as $e)
+                        <tr>
+                            <x-ui.td><p>{{ $e->user->name }}</p><p class="text-xs text-muted">{{ $e->user->email }}</p></x-ui.td>
+                            <x-ui.td>{{ $e->specialization->title }} <span class="text-xs text-subtle">v{{ $e->courseVersion->version }}</span></x-ui.td>
+                            <x-ui.td>{{ ucfirst($e->source) }}</x-ui.td>
+                            <x-ui.td class="whitespace-nowrap">{{ $e->enrolled_at->format('j M Y') }}@if ($e->completed_at)<p class="text-xs text-success">Completed {{ $e->completed_at->format('j M Y') }}</p>@endif</x-ui.td>
+                            <x-ui.td>@include('admin.partials.status', ['value' => $e->status])</x-ui.td>
+                            <x-ui.td>
+                                @if ($e->status === 'active')
+                                    <x-ui.confirm :action="route('admin.enrolments.revoke', $e)" label="Revoke" title="Revoke this enrolment?" description="The learner loses access to the course. Progress is kept." confirm-label="Revoke enrolment" :require-reason="true" />
+                                @endif
+                            </x-ui.td>
+                        </tr>
+                    @empty
+                        <tr><x-ui.td colspan="6" class="text-center text-muted">No enrolments found.</x-ui.td></tr>
+                    @endforelse
+                </x-ui.table>
+            </div>
+            <x-admin.pager :items="$enrolments" />
+        </section>
+    @endif
+</x-layouts.admin>

@@ -1,0 +1,469 @@
+{
+  "checks": {
+    "checkedOn": "2026-10-17",
+    "method": "Automated HTTP GET with redirects; a source is marked verified when it returned HTTP 200. This confirms availability, not that every statement in the source was re-read. Version notes for OWASP Top 10 and CIS Controls were confirmed against the publishers' pages on the same date.",
+    "unavailable": []
+  },
+  "sources": [
+    {
+      "key": "nist-nice",
+      "title": "NICE Framework Resource Center",
+      "publisher": "NIST",
+      "url": "https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center",
+      "topic": "Workforce roles and competencies",
+      "sourceType": "official_standard",
+      "versionNote": "NICE Framework (SP 800-181 Rev. 1) and current components; confirm component version at review.",
+      "supports": "Role mapping for every specialization; learning outcome phrasing."
+    },
+    {
+      "key": "nist-csf-2",
+      "title": "Cybersecurity Framework (CSF) 2.0",
+      "publisher": "NIST",
+      "url": "https://www.nist.gov/cyberframework",
+      "topic": "Cyber risk governance and outcomes",
+      "sourceType": "official_standard",
+      "versionNote": "CSF 2.0 (February 2024).",
+      "supports": "GRC module 3; Functions referenced in SOC and Network modules."
+    },
+    {
+      "key": "nist-sp-800-61r3",
+      "title": "SP 800-61 Rev. 3: Incident Response Recommendations and Considerations for Cybersecurity Risk Management",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+      "topic": "Incident response",
+      "sourceType": "official_standard",
+      "versionNote": "Rev. 3 (April 2025) aligns incident response with CSF 2.0; replaces Rev. 2.",
+      "supports": "SOC modules 1, 5, 8, 9; Cloud module 8; Network module 8."
+    },
+    {
+      "key": "nist-sp-800-92",
+      "title": "SP 800-92: Guide to Computer Security Log Management",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/92/final",
+      "topic": "Log management",
+      "sourceType": "official_standard",
+      "versionNote": "2006 final; a revision has been in draft. Check status at review.",
+      "supports": "SOC modules 2 and 3; Cloud module 5."
+    },
+    {
+      "key": "nist-sp-800-30r1",
+      "title": "SP 800-30 Rev. 1: Guide for Conducting Risk Assessments",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/30/r1/final",
+      "topic": "Risk assessment",
+      "sourceType": "official_standard",
+      "versionNote": "Rev. 1 (2012).",
+      "supports": "GRC module 2; Cloud module 9."
+    },
+    {
+      "key": "nist-sp-800-115",
+      "title": "SP 800-115: Technical Guide to Information Security Testing and Assessment",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/115/final",
+      "topic": "Security testing methodology",
+      "sourceType": "official_standard",
+      "versionNote": "2008 final.",
+      "supports": "Penetration testing modules 1–4 and 9."
+    },
+    {
+      "key": "nist-sp-800-41r1",
+      "title": "SP 800-41 Rev. 1: Guidelines on Firewalls and Firewall Policy",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/41/r1/final",
+      "topic": "Firewalls",
+      "sourceType": "official_standard",
+      "versionNote": "Rev. 1 (2009).",
+      "supports": "Network module 4."
+    },
+    {
+      "key": "nist-sp-800-94",
+      "title": "SP 800-94: Guide to Intrusion Detection and Prevention Systems",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/94/final",
+      "topic": "IDS/IPS",
+      "sourceType": "official_standard",
+      "versionNote": "2007 final.",
+      "supports": "Network module 5."
+    },
+    {
+      "key": "nist-sp-800-77r1",
+      "title": "SP 800-77 Rev. 1: Guide to IPsec VPNs",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/77/r1/final",
+      "topic": "VPNs",
+      "sourceType": "official_standard",
+      "versionNote": "Rev. 1 (2020).",
+      "supports": "Network module 6."
+    },
+    {
+      "key": "nist-sp-800-145",
+      "title": "SP 800-145: The NIST Definition of Cloud Computing",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/145/final",
+      "topic": "Cloud models",
+      "sourceType": "official_standard",
+      "versionNote": "2011 final.",
+      "supports": "Cloud module 1."
+    },
+    {
+      "key": "nist-sp-800-207",
+      "title": "SP 800-207: Zero Trust Architecture",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/207/final",
+      "topic": "Zero trust",
+      "sourceType": "official_standard",
+      "versionNote": "2020 final.",
+      "supports": "Network module 3; Cloud modules 2–3."
+    },
+    {
+      "key": "mitre-attack",
+      "title": "MITRE ATT&CK",
+      "publisher": "The MITRE Corporation",
+      "url": "https://attack.mitre.org/",
+      "topic": "Adversary tactics and techniques",
+      "sourceType": "open_resource",
+      "versionNote": "ATT&CK is versioned (two releases a year). Record the version used at each content review.",
+      "supports": "SOC modules 6–8 and 10; Pentest module 9; Cloud module 8; Network module 8."
+    },
+    {
+      "key": "mitre-attack-cloud",
+      "title": "ATT&CK Cloud Matrix",
+      "publisher": "The MITRE Corporation",
+      "url": "https://attack.mitre.org/matrices/enterprise/cloud/",
+      "topic": "Cloud adversary techniques",
+      "sourceType": "open_resource",
+      "versionNote": "See ATT&CK version note.",
+      "supports": "Cloud module 8."
+    },
+    {
+      "key": "cis-controls",
+      "title": "CIS Critical Security Controls",
+      "publisher": "Center for Internet Security",
+      "url": "https://www.cisecurity.org/controls",
+      "topic": "Prioritised security controls",
+      "sourceType": "official_standard",
+      "versionNote": "Controls v8.1 referenced on the official site on 2026-10-17.",
+      "supports": "GRC module 5; Network module 7."
+    },
+    {
+      "key": "cis-benchmarks",
+      "title": "CIS Benchmarks",
+      "publisher": "Center for Internet Security",
+      "url": "https://www.cisecurity.org/cis-benchmarks",
+      "topic": "Secure configuration baselines",
+      "sourceType": "official_standard",
+      "versionNote": "Per-product benchmarks with independent versions.",
+      "supports": "Network module 7; Cloud module 6."
+    },
+    {
+      "key": "iso-27001",
+      "title": "ISO/IEC 27001 — Information security management systems",
+      "publisher": "ISO",
+      "url": "https://www.iso.org/standard/27001",
+      "topic": "ISMS requirements",
+      "sourceType": "official_standard",
+      "versionNote": "ISO/IEC 27001:2022 (with Amendment 1:2024). Paid standard: lessons describe it, they do not reproduce it.",
+      "supports": "GRC module 4."
+    },
+    {
+      "key": "iso-27002",
+      "title": "ISO/IEC 27002 — Information security controls",
+      "publisher": "ISO",
+      "url": "https://www.iso.org/standard/75652.html",
+      "topic": "Control guidance",
+      "sourceType": "official_standard",
+      "versionNote": "ISO/IEC 27002:2022. Paid standard.",
+      "supports": "GRC modules 4–5."
+    },
+    {
+      "key": "first-cvss",
+      "title": "Common Vulnerability Scoring System v4.0",
+      "publisher": "FIRST",
+      "url": "https://www.first.org/cvss/v4-0/",
+      "topic": "Vulnerability scoring",
+      "sourceType": "official_standard",
+      "versionNote": "CVSS v4.0 (November 2023); v3.1 scores remain common in feeds.",
+      "supports": "Pentest module 4."
+    },
+    {
+      "key": "cve",
+      "title": "CVE Program",
+      "publisher": "The CVE Program",
+      "url": "https://www.cve.org/",
+      "topic": "Vulnerability identifiers",
+      "sourceType": "open_resource",
+      "versionNote": "Living registry.",
+      "supports": "Pentest module 4."
+    },
+    {
+      "key": "ndpc",
+      "title": "Nigeria Data Protection Commission",
+      "publisher": "NDPC",
+      "url": "https://ndpc.gov.ng/",
+      "topic": "Nigerian data protection law (NDPA 2023)",
+      "sourceType": "official_standard",
+      "versionNote": "Nigeria Data Protection Act 2023 and NDPC guidance; check for new regulations at review.",
+      "supports": "GRC module 8."
+    },
+    {
+      "key": "ms-sentinel",
+      "title": "Microsoft Sentinel documentation",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/sentinel/",
+      "topic": "Cloud-native SIEM",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation; Sentinel features change frequently.",
+      "supports": "SOC modules 3–5."
+    },
+    {
+      "key": "ms-kql",
+      "title": "Kusto Query Language (KQL) overview",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/kusto/query/",
+      "topic": "KQL reference",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "SOC module 4 and KQL labs. The lab engine implements a documented subset."
+    },
+    {
+      "key": "ms-security",
+      "title": "Microsoft Security documentation",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/security/",
+      "topic": "Security operations and cloud security",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "SOC modules 1 and 8; Cloud modules."
+    },
+    {
+      "key": "ms-event-4625",
+      "title": "4625(F): An account failed to log on",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4625",
+      "topic": "Windows security auditing",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Archived Windows 10 auditing reference; event semantics remain current.",
+      "supports": "SOC module 2; Lab 1."
+    },
+    {
+      "key": "ms-event-4624",
+      "title": "4624(S): An account was successfully logged on",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4624",
+      "topic": "Windows security auditing",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Archived Windows 10 auditing reference.",
+      "supports": "SOC module 2; Lab 1."
+    },
+    {
+      "key": "ms-sysmon",
+      "title": "Sysmon",
+      "publisher": "Microsoft Sysinternals",
+      "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon",
+      "topic": "Endpoint telemetry",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "SOC modules 2 and 8."
+    },
+    {
+      "key": "ms-cloud-benchmark",
+      "title": "Microsoft cloud security benchmark",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/security/benchmark/azure/",
+      "topic": "Cloud security controls (Azure-specific labelled)",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "Cloud modules 6 and 9 (provider-specific)."
+    },
+    {
+      "key": "aws-iam-best-practices",
+      "title": "Security best practices in IAM",
+      "publisher": "AWS Documentation",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+      "topic": "Identity and access management (AWS-specific labelled)",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "Cloud module 2; Cloud lab 1."
+    },
+    {
+      "key": "aws-shared-responsibility",
+      "title": "Shared Responsibility Model",
+      "publisher": "Amazon Web Services",
+      "url": "https://aws.amazon.com/compliance/shared-responsibility-model/",
+      "topic": "Shared responsibility",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living page.",
+      "supports": "Cloud module 1."
+    },
+    {
+      "key": "aws-security-docs",
+      "title": "AWS Security Documentation",
+      "publisher": "AWS Documentation",
+      "url": "https://docs.aws.amazon.com/security/",
+      "topic": "AWS security services",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "Cloud modules (provider-specific)."
+    },
+    {
+      "key": "aws-skill-builder",
+      "title": "AWS Skill Builder",
+      "publisher": "Amazon Web Services",
+      "url": "https://skillbuilder.aws/",
+      "topic": "Optional vendor training",
+      "sourceType": "practice_environment",
+      "versionNote": "External platform; some content requires a subscription.",
+      "supports": "Optional further study for Cloud learners."
+    },
+    {
+      "key": "gcp-security",
+      "title": "Google Cloud security documentation",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/docs/security",
+      "topic": "Google Cloud security (provider-specific)",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "Cloud modules (provider-specific comparisons)."
+    },
+    {
+      "key": "wireshark-guide",
+      "title": "Wireshark User's Guide",
+      "publisher": "Wireshark Foundation",
+      "url": "https://www.wireshark.org/docs/wsug_html_chunked/",
+      "topic": "Packet analysis",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Tracks the current stable release.",
+      "supports": "Network module 2; Network labs 1–2."
+    },
+    {
+      "key": "nmap-reference",
+      "title": "Nmap Reference Guide",
+      "publisher": "Nmap Project",
+      "url": "https://nmap.org/book/man.html",
+      "topic": "Network discovery",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "Pentest modules 3 and 8."
+    },
+    {
+      "key": "burp-docs",
+      "title": "Burp Suite documentation",
+      "publisher": "PortSwigger",
+      "url": "https://portswigger.net/burp/documentation",
+      "topic": "Web testing proxy",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "Pentest module 7."
+    },
+    {
+      "key": "linux-man-pages",
+      "title": "The Linux man-pages project",
+      "publisher": "man7.org",
+      "url": "https://man7.org/linux/man-pages/",
+      "topic": "Linux commands and system interfaces",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Living documentation.",
+      "supports": "SOC module 2; Pentest module 2."
+    },
+    {
+      "key": "owasp-top10",
+      "title": "OWASP Top 10:2025",
+      "publisher": "OWASP Foundation",
+      "url": "https://owasp.org/Top10/2025/",
+      "topic": "Web application risk awareness",
+      "sourceType": "open_resource",
+      "versionNote": "2025 edition confirmed current on 2026-10-17 (A01:2025 Broken Access Control … A10:2025 Mishandling of Exceptional Conditions). The 2021 edition is still widely cited.",
+      "supports": "Pentest modules 5–6."
+    },
+    {
+      "key": "owasp-top10-project",
+      "title": "OWASP Top Ten project page",
+      "publisher": "OWASP Foundation",
+      "url": "https://owasp.org/www-project-top-ten/",
+      "topic": "Project history and editions",
+      "sourceType": "open_resource",
+      "versionNote": "Lists all editions.",
+      "supports": "Pentest module 6 background."
+    },
+    {
+      "key": "owasp-wstg",
+      "title": "OWASP Web Security Testing Guide",
+      "publisher": "OWASP Foundation",
+      "url": "https://owasp.org/www-project-web-security-testing-guide/",
+      "topic": "Web testing methodology",
+      "sourceType": "open_resource",
+      "versionNote": "v4.2 stable; check for newer stable release.",
+      "supports": "Pentest modules 5–7 and 9."
+    },
+    {
+      "key": "owasp-juice-shop",
+      "title": "OWASP Juice Shop",
+      "publisher": "OWASP Foundation",
+      "url": "https://owasp.org/www-project-juice-shop/",
+      "topic": "Intentionally vulnerable application",
+      "sourceType": "practice_environment",
+      "versionNote": "Run locally only, inside an isolated lab network.",
+      "supports": "Optional local practice for Pentest modules 5–7."
+    },
+    {
+      "key": "portswigger-academy",
+      "title": "Web Security Academy",
+      "publisher": "PortSwigger",
+      "url": "https://portswigger.net/web-security",
+      "topic": "Free web security labs",
+      "sourceType": "practice_environment",
+      "versionNote": "External platform; free account required.",
+      "supports": "Optional further practice for Pentest modules 5–7."
+    },
+    {
+      "key": "sigma",
+      "title": "Sigma — generic signature format for SIEM systems",
+      "publisher": "SigmaHQ",
+      "url": "https://sigmahq.io/",
+      "topic": "Detection rule format",
+      "sourceType": "open_resource",
+      "versionNote": "Sigma specification and rule repository are versioned on GitHub.",
+      "supports": "SOC module 6; Lab 4."
+    },
+    {
+      "key": "sigma-repo",
+      "title": "SigmaHQ rule repository",
+      "publisher": "SigmaHQ",
+      "url": "https://github.com/SigmaHQ/sigma",
+      "topic": "Community detection rules",
+      "sourceType": "open_resource",
+      "versionNote": "Living repository.",
+      "supports": "SOC module 6."
+    },
+    {
+      "key": "rfc-9293",
+      "title": "RFC 9293: Transmission Control Protocol (TCP)",
+      "publisher": "IETF",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293",
+      "topic": "TCP",
+      "sourceType": "official_standard",
+      "versionNote": "2022; obsoletes RFC 793.",
+      "supports": "SOC module 2; Network modules 1–2."
+    },
+    {
+      "key": "rfc-1034",
+      "title": "RFC 1034: Domain Names — Concepts and Facilities",
+      "publisher": "IETF",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034",
+      "topic": "DNS",
+      "sourceType": "official_standard",
+      "versionNote": "1987, updated by later RFCs.",
+      "supports": "SOC module 2; Network modules 1–2."
+    },
+    {
+      "key": "rfc-9110",
+      "title": "RFC 9110: HTTP Semantics",
+      "publisher": "IETF",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110",
+      "topic": "HTTP",
+      "sourceType": "official_standard",
+      "versionNote": "2022.",
+      "supports": "Pentest modules 2 and 5; Pentest lab 1."
+    }
+  ]
+}

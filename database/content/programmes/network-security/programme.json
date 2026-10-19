@@ -1,0 +1,1229 @@
+{
+  "dir": "network-security",
+  "slug": "network-security",
+  "code": "NET",
+  "title": "Network Security",
+  "category": "network",
+  "level": "Beginner to intermediate",
+  "summary": "Analyse traffic, design segmentation and firewall policy, and detect network threats. Curriculum in development.",
+  "description": "A practical programme on network fundamentals, packet analysis, segmentation, firewalls, network detection, secure remote access and hardening. Each module has an authored starter lesson; full lessons, the remaining labs and the examination are in development.",
+  "audience": [
+    "Network and infrastructure engineers",
+    "IT support professionals",
+    "SOC analysts who want deeper network skills"
+  ],
+  "prerequisites": [
+    "Basic IT experience",
+    "Familiarity with IP addresses is helpful"
+  ],
+  "outcomes": [
+    "Read packet captures confidently",
+    "Design segmented network architectures",
+    "Write least-privilege firewall policies",
+    "Interpret and tune network detections",
+    "Harden network infrastructure"
+  ],
+  "inclusions": [
+    "9 modules (in development)",
+    "Firewall policy and packet/DNS analysis labs available now",
+    "Final examination, badge and certificate when complete"
+  ],
+  "faqs": [
+    {
+      "q": "Do I need networking hardware?",
+      "a": "No. Labs use supplied data and simulators. Optional exercises with free tools will be clearly marked."
+    }
+  ],
+  "estimatedHours": 55,
+  "price": {
+    "currency": "NGN",
+    "amountMinor": 18000000
+  },
+  "sortOrder": 4,
+  "enrolmentOpen": false,
+  "contentStatus": "in_development",
+  "badge": {
+    "name": "AMANIQ Network Security",
+    "description": "Awarded for completing the AMANIQ Academy Network Security programme.",
+    "criteria": "Complete all required lessons and labs and score at least 75% on the final examination.",
+    "hue": 214,
+    "icon": "network"
+  },
+  "exam": {
+    "title": "Network Security final examination",
+    "questionCount": 40,
+    "passPercent": 75,
+    "durationMinutes": 60,
+    "maxAttempts": 3,
+    "cooldownHours": 24,
+    "status": "draft"
+  },
+  "modules": [
+    {
+      "slug": "networking-fundamentals",
+      "title": "Networking Fundamentals",
+      "purpose": "Build the protocol and addressing knowledge that network security depends on.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Explain the OSI and TCP/IP models.",
+        "Calculate subnets and explain routing.",
+        "Describe DNS, DHCP, HTTP and TLS."
+      ],
+      "keyConcepts": [
+        "OSI and TCP/IP",
+        "IPv4 and IPv6",
+        "Subnetting",
+        "Routing",
+        "Core protocols"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to explain the OSI and TCP/IP models.",
+        "Demonstrates the ability to calculate subnets and explain routing.",
+        "Demonstrates the ability to describe DNS, DHCP, HTTP and TLS."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "models-and-addressing",
+          "title": "Network models and addressing",
+          "minutes": 25,
+          "objectives": [
+            "Explain the OSI and TCP/IP models.",
+            "Calculate subnets and explain routing."
+          ],
+          "sources": [
+            "rfc-9293",
+            "rfc-1034"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "packet-analysis",
+      "title": "Packet Analysis and Network Troubleshooting",
+      "purpose": "Read packet captures to understand and troubleshoot traffic.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Navigate a capture with display filters.",
+        "Interpret TCP handshakes and retransmissions.",
+        "Distinguish normal from suspicious traffic."
+      ],
+      "keyConcepts": [
+        "PCAP",
+        "Wireshark display filters",
+        "TCP flags",
+        "DNS investigation"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to navigate a capture with display filters.",
+        "Demonstrates the ability to interpret TCP handshakes and retransmissions.",
+        "Demonstrates the ability to distinguish normal from suspicious traffic."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "reading-a-capture",
+          "title": "Reading a packet capture",
+          "minutes": 25,
+          "objectives": [
+            "Navigate a capture with display filters.",
+            "Interpret TCP handshakes and retransmissions."
+          ],
+          "sources": [
+            "wireshark-guide",
+            "rfc-9293"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "architecture-segmentation",
+      "title": "Network Architecture and Segmentation",
+      "purpose": "Design networks with clear trust boundaries.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Define zones and trust boundaries.",
+        "Apply VLANs and segmentation.",
+        "Apply least privilege at network boundaries."
+      ],
+      "keyConcepts": [
+        "Zones",
+        "VLANs",
+        "DMZ",
+        "Least privilege",
+        "Zero trust"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to define zones and trust boundaries.",
+        "Demonstrates the ability to apply VLANs and segmentation.",
+        "Demonstrates the ability to apply least privilege at network boundaries."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "zones-and-trust",
+          "title": "Zones and trust boundaries",
+          "minutes": 25,
+          "objectives": [
+            "Define zones and trust boundaries.",
+            "Apply VLANs and segmentation."
+          ],
+          "sources": [
+            "nist-sp-800-207",
+            "nist-sp-800-41r1"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "firewalls",
+      "title": "Firewalls and Access Control",
+      "purpose": "Design, order and review firewall policy.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Compare stateful and stateless filtering.",
+        "Order rules correctly.",
+        "Identify common misconfigurations."
+      ],
+      "keyConcepts": [
+        "Stateful inspection",
+        "Rule order",
+        "Default deny",
+        "Egress filtering",
+        "Rule review"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to compare stateful and stateless filtering.",
+        "Demonstrates the ability to order rules correctly.",
+        "Demonstrates the ability to identify common misconfigurations."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "firewall-policy-design",
+          "title": "Firewall policy design",
+          "minutes": 25,
+          "objectives": [
+            "Compare stateful and stateless filtering.",
+            "Order rules correctly."
+          ],
+          "sources": [
+            "nist-sp-800-41r1"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "ids-ips",
+      "title": "IDS, IPS and Network Detection",
+      "purpose": "Interpret and tune network detection.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Compare signature and behavioural detection.",
+        "Interpret IDS alerts.",
+        "Tune noisy detections responsibly."
+      ],
+      "keyConcepts": [
+        "Signatures",
+        "Anomaly detection",
+        "Placement",
+        "Tuning",
+        "Blind spots"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to compare signature and behavioural detection.",
+        "Demonstrates the ability to interpret IDS alerts.",
+        "Demonstrates the ability to tune noisy detections responsibly."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "network-detection-basics",
+          "title": "How network detection works",
+          "minutes": 25,
+          "objectives": [
+            "Compare signature and behavioural detection.",
+            "Interpret IDS alerts."
+          ],
+          "sources": [
+            "nist-sp-800-94"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "remote-access",
+      "title": "Secure Remote Access and VPNs",
+      "purpose": "Provide and monitor remote access securely.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Explain VPN architectures.",
+        "Apply strong authentication to remote access.",
+        "Monitor remote access."
+      ],
+      "keyConcepts": [
+        "IPsec",
+        "TLS VPNs",
+        "MFA",
+        "Certificates",
+        "Split tunnelling"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to explain VPN architectures.",
+        "Demonstrates the ability to apply strong authentication to remote access.",
+        "Demonstrates the ability to monitor remote access."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "vpn-fundamentals",
+          "title": "VPN fundamentals",
+          "minutes": 25,
+          "objectives": [
+            "Explain VPN architectures.",
+            "Apply strong authentication to remote access."
+          ],
+          "sources": [
+            "nist-sp-800-77r1"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hardening",
+      "title": "Network Hardening and Infrastructure Security",
+      "purpose": "Harden and manage network devices safely.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Secure administrative access.",
+        "Manage configuration and patches.",
+        "Apply change control and backups."
+      ],
+      "keyConcepts": [
+        "Management plane",
+        "Secure protocols",
+        "Baselines",
+        "Change control"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to secure administrative access.",
+        "Demonstrates the ability to manage configuration and patches.",
+        "Demonstrates the ability to apply change control and backups."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "securing-the-management-plane",
+          "title": "Securing the management plane",
+          "minutes": 25,
+          "objectives": [
+            "Secure administrative access.",
+            "Manage configuration and patches."
+          ],
+          "sources": [
+            "cis-benchmarks",
+            "cis-controls"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "network-ir",
+      "title": "Network Threat Detection and Incident Response",
+      "purpose": "Detect and respond to threats using network evidence.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Analyse suspicious traffic.",
+        "Recognise lateral movement indicators.",
+        "Collect network evidence and contain incidents."
+      ],
+      "keyConcepts": [
+        "Beaconing",
+        "Lateral movement",
+        "Flow data",
+        "Containment"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to analyse suspicious traffic.",
+        "Demonstrates the ability to recognise lateral movement indicators.",
+        "Demonstrates the ability to collect network evidence and contain incidents."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "network-evidence",
+          "title": "Network evidence in incident response",
+          "minutes": 25,
+          "objectives": [
+            "Analyse suspicious traffic.",
+            "Recognise lateral movement indicators."
+          ],
+          "sources": [
+            "nist-sp-800-61r3",
+            "mitre-attack"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "network-capstone",
+      "title": "Network Security Capstone",
+      "purpose": "Assess a fictional network and design improvements.",
+      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "objectives": [
+        "Identify architectural weaknesses.",
+        "Analyse traffic evidence.",
+        "Write a segmentation and firewall improvement plan."
+      ],
+      "keyConcepts": [
+        "Assessment",
+        "Remediation planning",
+        "Technical reporting"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to identify architectural weaknesses.",
+        "Demonstrates the ability to analyse traffic evidence.",
+        "Demonstrates the ability to write a segmentation and firewall improvement plan."
+      ],
+      "contentStatus": "starter",
+      "lessons": [
+        {
+          "slug": "capstone-overview",
+          "title": "Capstone overview",
+          "minutes": 25,
+          "objectives": [
+            "Identify architectural weaknesses.",
+            "Analyse traffic evidence."
+          ],
+          "sources": [
+            "nist-sp-800-41r1"
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "firewall-policy-builder",
+      "title": "Design firewall rules for a fictional enterprise",
+      "difficulty": "intermediate",
+      "labType": "firewall_rules",
+      "summary": "Write an ordered rule set for Kanem Logistics' perimeter and internal firewall that allows exactly the required traffic.",
+      "minutes": 45,
+      "moduleSlug": "firewalls",
+      "passPercent": 100,
+      "content": {
+        "objectives": [
+          "Translate business requirements into least-privilege rules",
+          "Order rules so the first match produces the intended result"
+        ],
+        "scenario": "Kanem Logistics (fictional) has five zones: **internet**, **dmz** (public web server), **users** (staff laptops), **servers** (internal applications and database) and **management** (IT admin workstations). The firewall evaluates rules top to bottom; the first match wins, and anything unmatched is denied.",
+        "scope": "Rules apply to new connections. Return traffic is handled statefully and does not need rules.",
+        "instructions": "Build your rule set with the rule editor. The validator runs 10 test connections against your rules. All must behave as required.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "Connectivity requirements",
+              "format": "markdown",
+              "body": "1. Anyone on the internet may reach the public website in the **dmz** on TCP 443.\n2. **users** may browse the internet on TCP 443.\n3. **users** may reach the internal application in **servers** on TCP 443.\n4. The **dmz** web server may query the database in **servers** on TCP 5432. Nothing else from the dmz to internal zones.\n5. Only **management** may administer servers over SSH (TCP 22).\n6. **servers** may send DNS queries to the internet on UDP 53.\n7. Everything else must be blocked."
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "rules",
+            "prompt": "Create a rule set that meets all requirements. You can use at most 10 rules.",
+            "points": 10,
+            "hints": [
+              "You do not need an explicit 'deny all' rule: unmatched traffic is denied.",
+              "Avoid 'any' destinations for allow rules; least privilege means naming the zone.",
+              "Check: can the dmz reach servers on TCP 22? It must not."
+            ],
+            "input": {
+              "type": "firewall",
+              "zones": [
+                "internet",
+                "dmz",
+                "users",
+                "servers",
+                "management"
+              ],
+              "maxRules": 10
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "rules": {
+            "type": "firewall",
+            "flows": [
+              {
+                "label": "internet → dmz HTTPS",
+                "source": "internet",
+                "destination": "dmz",
+                "protocol": "tcp",
+                "port": 443,
+                "expect": "allow"
+              },
+              {
+                "label": "users → internet HTTPS",
+                "source": "users",
+                "destination": "internet",
+                "protocol": "tcp",
+                "port": 443,
+                "expect": "allow"
+              },
+              {
+                "label": "users → servers HTTPS",
+                "source": "users",
+                "destination": "servers",
+                "protocol": "tcp",
+                "port": 443,
+                "expect": "allow"
+              },
+              {
+                "label": "dmz → servers PostgreSQL",
+                "source": "dmz",
+                "destination": "servers",
+                "protocol": "tcp",
+                "port": 5432,
+                "expect": "allow"
+              },
+              {
+                "label": "management → servers SSH",
+                "source": "management",
+                "destination": "servers",
+                "protocol": "tcp",
+                "port": 22,
+                "expect": "allow"
+              },
+              {
+                "label": "servers → internet DNS",
+                "source": "servers",
+                "destination": "internet",
+                "protocol": "udp",
+                "port": 53,
+                "expect": "allow"
+              },
+              {
+                "label": "internet → servers HTTPS",
+                "source": "internet",
+                "destination": "servers",
+                "protocol": "tcp",
+                "port": 443,
+                "expect": "deny"
+              },
+              {
+                "label": "dmz → servers SSH",
+                "source": "dmz",
+                "destination": "servers",
+                "protocol": "tcp",
+                "port": 22,
+                "expect": "deny"
+              },
+              {
+                "label": "users → servers SSH",
+                "source": "users",
+                "destination": "servers",
+                "protocol": "tcp",
+                "port": 22,
+                "expect": "deny"
+              },
+              {
+                "label": "dmz → users SMB",
+                "source": "dmz",
+                "destination": "users",
+                "protocol": "tcp",
+                "port": 445,
+                "expect": "deny"
+              }
+            ],
+            "feedback": {
+              "correct": "Your rule set allows exactly the required traffic.",
+              "incorrect": "At least one test connection behaved incorrectly. Review rule order and any 'any' values."
+            }
+          }
+        }
+      }
+    },
+    {
+      "slug": "packet-and-dns-analysis",
+      "title": "Analyse a TCP session and investigate DNS traffic",
+      "difficulty": "foundation",
+      "labType": "packet_analysis",
+      "summary": "Explain a TCP connection from pre-extracted packet data, then find the host making suspicious DNS queries.",
+      "minutes": 40,
+      "moduleSlug": "packet-analysis",
+      "passPercent": 80,
+      "content": {
+        "objectives": [
+          "Identify the TCP handshake and connection teardown",
+          "Recognise retransmissions",
+          "Spot DNS tunnelling indicators"
+        ],
+        "scenario": "A Kanem user reports that the internal portal is slow. The network team has extracted one TCP session from a capture, and a day of DNS logs from the internal resolver for you to check at the same time.",
+        "scope": "The packet extract is presented as a Wireshark-style packet list (synthetic). No capture file download is needed.",
+        "instructions": "Inspect both datasets and answer the tasks.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "evidence",
+          "datasets": [
+            {
+              "name": "PacketList",
+              "description": "Packet list for one TCP stream.",
+              "columns": [
+                "No",
+                "Time",
+                "Source",
+                "Destination",
+                "Protocol",
+                "Info"
+              ],
+              "rows": [
+                {
+                  "No": 1,
+                  "Time": "0.000000",
+                  "Source": "10.20.4.21",
+                  "Destination": "192.0.2.80",
+                  "Protocol": "TCP",
+                  "Info": "52114 → 443 [SYN] Seq=0 Win=64240 MSS=1460"
+                },
+                {
+                  "No": 2,
+                  "Time": "0.031207",
+                  "Source": "192.0.2.80",
+                  "Destination": "10.20.4.21",
+                  "Protocol": "TCP",
+                  "Info": "443 → 52114 [SYN, ACK] Seq=0 Ack=1 Win=65160"
+                },
+                {
+                  "No": 3,
+                  "Time": "0.031288",
+                  "Source": "10.20.4.21",
+                  "Destination": "192.0.2.80",
+                  "Protocol": "TCP",
+                  "Info": "52114 → 443 [ACK] Seq=1 Ack=1"
+                },
+                {
+                  "No": 4,
+                  "Time": "0.032010",
+                  "Source": "10.20.4.21",
+                  "Destination": "192.0.2.80",
+                  "Protocol": "TLSv1.3",
+                  "Info": "Client Hello (SNI=portal.kanem.example)"
+                },
+                {
+                  "No": 5,
+                  "Time": "0.064551",
+                  "Source": "192.0.2.80",
+                  "Destination": "10.20.4.21",
+                  "Protocol": "TLSv1.3",
+                  "Info": "Server Hello, Change Cipher Spec, Application Data"
+                },
+                {
+                  "No": 6,
+                  "Time": "0.410000",
+                  "Source": "10.20.4.21",
+                  "Destination": "192.0.2.80",
+                  "Protocol": "TCP",
+                  "Info": "[TCP Retransmission] 52114 → 443 [PSH, ACK] Seq=518 Ack=2890 Len=310"
+                },
+                {
+                  "No": 7,
+                  "Time": "0.452300",
+                  "Source": "192.0.2.80",
+                  "Destination": "10.20.4.21",
+                  "Protocol": "TCP",
+                  "Info": "443 → 52114 [ACK] Seq=2890 Ack=828"
+                },
+                {
+                  "No": 8,
+                  "Time": "5.100000",
+                  "Source": "10.20.4.21",
+                  "Destination": "192.0.2.80",
+                  "Protocol": "TCP",
+                  "Info": "52114 → 443 [FIN, ACK] Seq=828 Ack=2890"
+                }
+              ]
+            },
+            {
+              "name": "DnsQueries",
+              "description": "Internal resolver log, 10 March 2026.",
+              "columns": [
+                "TimeGenerated",
+                "ClientIP",
+                "Query",
+                "Type",
+                "ResponseCode",
+                "Bytes"
+              ],
+              "rows": [
+                {
+                  "TimeGenerated": "2026-03-10T08:00:00Z",
+                  "ClientIP": "10.20.4.11",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:01:37Z",
+                  "ClientIP": "10.20.4.12",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:03:14Z",
+                  "ClientIP": "10.20.4.13",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:04:51Z",
+                  "ClientIP": "10.20.4.14",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:05:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "q7f20d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 240
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:06:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "m1zk1d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 252
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:06:28Z",
+                  "ClientIP": "10.20.4.15",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:07:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "a9wd2d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 264
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:08:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "t3pe3d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 240
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:08:05Z",
+                  "ClientIP": "10.20.4.16",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:09:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "x0nb4d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 252
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:09:42Z",
+                  "ClientIP": "10.20.4.17",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:10:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "k8rr5d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 264
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:11:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "c5uv6d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 240
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:11:19Z",
+                  "ClientIP": "10.20.4.18",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:12:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "p2hy7d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 252
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:12:56Z",
+                  "ClientIP": "10.20.4.19",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:13:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "z6lt8d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 264
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:14:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "e4oa9d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 240
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:14:33Z",
+                  "ClientIP": "10.20.4.11",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:15:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "n9gs10d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 252
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:16:00Z",
+                  "ClientIP": "10.20.4.57",
+                  "Query": "b1qd11d.stat-relay.example",
+                  "Type": "TXT",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 264
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:16:10Z",
+                  "ClientIP": "10.20.4.12",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:17:47Z",
+                  "ClientIP": "10.20.4.13",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:19:24Z",
+                  "ClientIP": "10.20.4.14",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:21:01Z",
+                  "ClientIP": "10.20.4.15",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:22:38Z",
+                  "ClientIP": "10.20.4.16",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:24:15Z",
+                  "ClientIP": "10.20.4.17",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:25:52Z",
+                  "ClientIP": "10.20.4.18",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:27:29Z",
+                  "ClientIP": "10.20.4.19",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:29:06Z",
+                  "ClientIP": "10.20.4.11",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:30:43Z",
+                  "ClientIP": "10.20.4.12",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:32:20Z",
+                  "ClientIP": "10.20.4.13",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:33:57Z",
+                  "ClientIP": "10.20.4.14",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:35:34Z",
+                  "ClientIP": "10.20.4.15",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:37:11Z",
+                  "ClientIP": "10.20.4.16",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:38:48Z",
+                  "ClientIP": "10.20.4.17",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:40:00Z",
+                  "ClientIP": "10.20.4.13",
+                  "Query": "intranett.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NXDOMAIN",
+                  "Bytes": 90
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:40:25Z",
+                  "ClientIP": "10.20.4.18",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:42:02Z",
+                  "ClientIP": "10.20.4.19",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:43:39Z",
+                  "ClientIP": "10.20.4.11",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:45:16Z",
+                  "ClientIP": "10.20.4.12",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:46:53Z",
+                  "ClientIP": "10.20.4.13",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:48:30Z",
+                  "ClientIP": "10.20.4.14",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:50:07Z",
+                  "ClientIP": "10.20.4.15",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:51:44Z",
+                  "ClientIP": "10.20.4.16",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:53:21Z",
+                  "ClientIP": "10.20.4.17",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:54:58Z",
+                  "ClientIP": "10.20.4.18",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:56:35Z",
+                  "ClientIP": "10.20.4.19",
+                  "Query": "intranet.kanem.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 70
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:58:12Z",
+                  "ClientIP": "10.20.4.11",
+                  "Query": "outlook.office.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 78
+                },
+                {
+                  "TimeGenerated": "2026-03-10T08:59:49Z",
+                  "ClientIP": "10.20.4.12",
+                  "Query": "teams.microsoft.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 86
+                },
+                {
+                  "TimeGenerated": "2026-03-10T09:01:26Z",
+                  "ClientIP": "10.20.4.13",
+                  "Query": "updates.vendor.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 94
+                },
+                {
+                  "TimeGenerated": "2026-03-10T09:03:03Z",
+                  "ClientIP": "10.20.4.14",
+                  "Query": "www.news.example",
+                  "Type": "A",
+                  "ResponseCode": "NOERROR",
+                  "Bytes": 102
+                }
+              ]
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "handshake",
+            "prompt": "Which packet numbers make up the TCP three-way handshake? Select all.",
+            "points": 2,
+            "hints": [
+              "SYN, SYN-ACK, ACK."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "1",
+                  "label": "Packet 1"
+                },
+                {
+                  "id": "2",
+                  "label": "Packet 2"
+                },
+                {
+                  "id": "3",
+                  "label": "Packet 3"
+                },
+                {
+                  "id": "4",
+                  "label": "Packet 4"
+                },
+                {
+                  "id": "5",
+                  "label": "Packet 5"
+                }
+              ]
+            }
+          },
+          {
+            "id": "rtt",
+            "prompt": "Using the handshake, roughly what is the round-trip time to the server in milliseconds?",
+            "points": 2,
+            "hints": [
+              "Time between SYN and SYN-ACK."
+            ],
+            "input": {
+              "type": "number",
+              "unit": "ms"
+            }
+          },
+          {
+            "id": "retransmission",
+            "prompt": "Which packet number shows evidence of packet loss?",
+            "points": 2,
+            "hints": [
+              "Look for a retransmission."
+            ],
+            "input": {
+              "type": "number"
+            }
+          },
+          {
+            "id": "tunnel-host",
+            "prompt": "Which internal client IP shows indicators of DNS tunnelling?",
+            "points": 2,
+            "hints": [
+              "Look at TXT queries with random-looking subdomains."
+            ],
+            "input": {
+              "type": "text"
+            }
+          },
+          {
+            "id": "tunnel-domain",
+            "prompt": "Which parent domain is involved?",
+            "points": 2,
+            "hints": [
+              "The last two labels of the queried names."
+            ],
+            "input": {
+              "type": "text"
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "handshake": {
+            "type": "multi",
+            "correct": [
+              "1",
+              "2",
+              "3"
+            ],
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Find the SYN, SYN-ACK and ACK packets."
+            }
+          },
+          "rtt": {
+            "type": "number",
+            "value": 31,
+            "tolerance": 3,
+            "feedback": {
+              "correct": "Correct: about 31 ms.",
+              "incorrect": "Subtract the SYN time from the SYN-ACK time and convert to milliseconds."
+            }
+          },
+          "retransmission": {
+            "type": "number",
+            "value": 6,
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Look for the [TCP Retransmission] marker."
+            }
+          },
+          "tunnel-host": {
+            "type": "text",
+            "accept": [
+              "10.20.4.57"
+            ],
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Filter Type to TXT."
+            }
+          },
+          "tunnel-domain": {
+            "type": "text",
+            "accept": [
+              "stat-relay.example"
+            ],
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Strip the random first label from the query names."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "questions": []
+}

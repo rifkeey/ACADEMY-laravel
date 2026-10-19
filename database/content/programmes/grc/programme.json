@@ -1,0 +1,4322 @@
+{
+  "dir": "grc",
+  "slug": "governance-risk-compliance",
+  "code": "GRC",
+  "title": "Governance, Risk and Compliance",
+  "category": "grc",
+  "level": "Beginner to intermediate",
+  "summary": "Assess risk, map controls across NIST CSF 2.0, ISO/IEC 27001 and CIS Controls, prepare audit evidence and assess suppliers, through five practical labs.",
+  "description": "A practical programme in security governance, risk assessment, control frameworks, audit readiness and third-party risk, including Nigerian data protection obligations under the NDPA 2023. You will build a risk register, map controls to CSF 2.0, review an ISMS scope and Statement of Applicability, test controls against evidence, assess a hosting supplier, and learn to report risk to executives. All labs use fictional organisations and synthetic data. ISO standards are explained in AMANIQ's own words and are not reproduced.",
+  "audience": [
+    "Aspiring GRC analysts and security auditors",
+    "Compliance and risk professionals moving into cybersecurity",
+    "IT managers responsible for security policy"
+  ],
+  "prerequisites": [
+    "Professional working experience in any field",
+    "No technical background required"
+  ],
+  "outcomes": [
+    "Build and maintain a risk register",
+    "Use NIST CSF 2.0 profiles for gap analysis",
+    "Explain ISMS concepts and certification accurately",
+    "Map controls across frameworks",
+    "Prepare and assess audit evidence",
+    "Assess third-party and data protection risk",
+    "Report risk to executives"
+  ],
+  "inclusions": [
+    "9 modules, 27 lessons",
+    "5 hands-on simulated labs",
+    "40-question final examination",
+    "Digital badge and verifiable certificate on completion",
+    "Access to course version 1 for the period set out in the terms"
+  ],
+  "faqs": [
+    {
+      "q": "Is this an ISO/IEC 27001 auditor qualification?",
+      "a": "No. AMANIQ certificates confirm course completion only. ISO auditor qualifications are awarded by accredited certification and personnel bodies."
+    },
+    {
+      "q": "Do I need to buy the ISO standards?",
+      "a": "No. Lessons explain the concepts in our own words. If your organisation implements an ISMS, it should purchase the official standards from ISO or a national standards body."
+    },
+    {
+      "q": "Is the data protection content legal advice?",
+      "a": "No. It is educational. Consult qualified legal counsel and the NDPC's current guidance for compliance decisions."
+    },
+    {
+      "q": "What do I need to pass?",
+      "a": "Complete all required lessons, pass all five labs, and score at least 75% (30 of 40) on the final examination."
+    }
+  ],
+  "estimatedHours": 50,
+  "price": {
+    "currency": "NGN",
+    "amountMinor": 15000000
+  },
+  "sortOrder": 3,
+  "enrolmentOpen": true,
+  "contentStatus": "complete",
+  "badge": {
+    "name": "AMANIQ GRC Practitioner",
+    "description": "Awarded for completing the AMANIQ Academy Governance, Risk and Compliance programme.",
+    "criteria": "Complete all required lessons and labs and score at least 75% on the final examination.",
+    "hue": 42,
+    "icon": "scale"
+  },
+  "exam": {
+    "title": "GRC final examination",
+    "questionCount": 40,
+    "passPercent": 75,
+    "durationMinutes": 60,
+    "maxAttempts": 3,
+    "cooldownHours": 24,
+    "status": "published"
+  },
+  "modules": [
+    {
+      "slug": "grc-fundamentals",
+      "title": "GRC Fundamentals",
+      "purpose": "Explain what governance, risk and compliance teams do and how security is directed and overseen.",
+      "prerequisiteKnowledge": "Professional working experience in any field. No technical background required.",
+      "objectives": [
+        "Distinguish governance, risk management and compliance.",
+        "Describe the hierarchy of policies, standards, procedures and guidelines.",
+        "Explain accountability and oversight structures."
+      ],
+      "keyConcepts": [
+        "Governance structures",
+        "Policy hierarchy",
+        "Accountability",
+        "Oversight"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to distinguish governance, risk management and compliance.",
+        "Demonstrates the ability to describe the hierarchy of policies, standards, procedures and guidelines.",
+        "Demonstrates the ability to explain accountability and oversight structures."
+      ],
+      "instructorNotes": "Ask learners to sketch the governance structure of an organisation they know, including who could accept a serious security risk today.",
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "what-grc-does",
+          "title": "What GRC does and why it matters",
+          "minutes": 25,
+          "objectives": [
+            "Distinguish governance, risk management and compliance",
+            "Place policies, standards, procedures and guidelines in the document hierarchy"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "nist-nice"
+          ],
+          "checks": [
+            {
+              "question": "\"MFA must use an authenticator app or hardware key; SMS is not permitted for administrators.\" Which document type is this most likely to belong to?",
+              "options": [
+                "Policy",
+                "Standard",
+                "Guideline",
+                "Procedure"
+              ],
+              "answerIndex": 1,
+              "explanation": "It is a mandatory, specific requirement that implements a higher-level policy statement."
+            }
+          ]
+        },
+        {
+          "slug": "governance-structures-and-accountability",
+          "title": "Governance structures and accountability",
+          "minutes": 25,
+          "objectives": [
+            "Describe the roles of the board, management, security and internal audit",
+            "Use a RACI matrix and segregation of duties to make accountability explicit"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "nist-nice"
+          ],
+          "checks": [
+            {
+              "question": "In a RACI matrix, how many people should be Accountable for a single activity?",
+              "options": [
+                "Exactly one",
+                "At least two, for resilience",
+                "Everyone who is Responsible",
+                "None; accountability sits with the board collectively"
+              ],
+              "answerIndex": 0,
+              "explanation": "A single accountable owner prevents decisions falling between people."
+            },
+            {
+              "question": "An administrator grants privileged access and is also the only person who reviews privileged access. Which principle is weakened?",
+              "options": [
+                "Data minimisation",
+                "Segregation of duties",
+                "Defence in depth",
+                "Risk transfer"
+              ],
+              "answerIndex": 1,
+              "explanation": "The person performing a sensitive action should not be the only check on it."
+            }
+          ]
+        },
+        {
+          "slug": "oversight-and-obligations",
+          "title": "Oversight, metrics and obligations",
+          "minutes": 25,
+          "objectives": [
+            "Distinguish KPIs, KRIs and control indicators",
+            "Build an obligations register from laws, contracts and commitments"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "ndpc"
+          ],
+          "checks": [
+            {
+              "question": "Which is a key risk indicator rather than a performance metric?",
+              "options": [
+                "Number of awareness modules launched",
+                "Number of privileged accounts without MFA",
+                "Emails processed by the gateway",
+                "Hours of training delivered"
+              ],
+              "answerIndex": 1,
+              "explanation": "It shows whether exposure is growing towards appetite."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "risk-management",
+      "title": "Security Risk Management",
+      "purpose": "Assess and treat information security risk in a structured, repeatable way.",
+      "prerequisiteKnowledge": "Module 1.",
+      "objectives": [
+        "Identify and classify assets.",
+        "Assess likelihood and impact.",
+        "Distinguish inherent and residual risk and select treatments."
+      ],
+      "keyConcepts": [
+        "Assets, threats, vulnerabilities",
+        "Likelihood and impact",
+        "Inherent and residual risk",
+        "Treat, transfer, avoid, accept"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to identify and classify assets.",
+        "Demonstrates the ability to assess likelihood and impact.",
+        "Demonstrates the ability to distinguish inherent and residual risk and select treatments."
+      ],
+      "instructorNotes": "Have two learners rate the same scenario independently and discuss differences; it shows why rating criteria must be explicit.",
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "assessing-risk",
+          "title": "Assessing and treating risk",
+          "minutes": 25,
+          "objectives": [
+            "Assess likelihood and impact against defined criteria",
+            "Distinguish inherent and residual risk and select treatments"
+          ],
+          "sources": [
+            "nist-sp-800-30r1"
+          ],
+          "checks": [
+            {
+              "question": "Buying cyber insurance against a supplier breach is an example of which treatment?",
+              "options": [
+                "Treat",
+                "Transfer",
+                "Avoid",
+                "Accept"
+              ],
+              "answerIndex": 1,
+              "explanation": "Insurance shifts financial impact; accountability for customers' data remains with you."
+            }
+          ]
+        },
+        {
+          "slug": "assets-threats-vulnerabilities",
+          "title": "Assets, threats and vulnerabilities",
+          "minutes": 25,
+          "objectives": [
+            "Identify and classify assets and their owners",
+            "Write specific risk scenarios linking threat, vulnerability, asset and impact"
+          ],
+          "sources": [
+            "nist-sp-800-30r1"
+          ],
+          "checks": [
+            {
+              "question": "Which is the best-formed risk scenario?",
+              "options": [
+                "Cyber attack",
+                "Ransomware",
+                "A phishing attacker compromises an account without MFA, encrypts the file server and halts loan processing for a week",
+                "Weak passwords"
+              ],
+              "answerIndex": 2,
+              "explanation": "It names the threat, vulnerability, asset and impact, so it can be rated and treated."
+            }
+          ]
+        },
+        {
+          "slug": "risk-appetite-and-register",
+          "title": "Risk appetite and the risk register",
+          "minutes": 25,
+          "objectives": [
+            "Express risk appetite as measurable tolerances",
+            "Maintain a risk register with owners, treatment plans and recorded acceptances"
+          ],
+          "sources": [
+            "nist-sp-800-30r1",
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "Which element makes a risk acceptance valid?",
+              "options": [
+                "The risk is low enough that nobody noticed it",
+                "A recorded decision by someone with authority, with reasoning and a review date",
+                "The IT team agrees not to fix it",
+                "It is listed in the register without a treatment"
+              ],
+              "answerIndex": 1,
+              "explanation": "Acceptance is an explicit, authorised, time-bound decision."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "nist-csf",
+      "title": "NIST Cybersecurity Framework 2.0",
+      "purpose": "Use CSF 2.0 outcomes and profiles to describe and improve security posture.",
+      "prerequisiteKnowledge": "Modules 1 and 2.",
+      "objectives": [
+        "Describe the six CSF 2.0 Functions.",
+        "Build current and target profiles.",
+        "Prioritise an improvement plan."
+      ],
+      "keyConcepts": [
+        "Govern, Identify, Protect, Detect, Respond, Recover",
+        "Profiles",
+        "Tiers",
+        "Gap analysis"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to describe the six CSF 2.0 Functions.",
+        "Demonstrates the ability to build current and target profiles.",
+        "Demonstrates the ability to prioritise an improvement plan."
+      ],
+      "instructorNotes": "Point learners to the CSF 2.0 reference tool and quick-start guides on the NIST site to explore Subcategories and Implementation Examples.",
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "csf-functions-and-profiles",
+          "title": "CSF 2.0 Functions and profiles",
+          "minutes": 25,
+          "objectives": [
+            "Describe the six CSF 2.0 Functions",
+            "Explain Current and Target Profiles"
+          ],
+          "sources": [
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "Which Function was added in CSF 2.0?",
+              "options": [
+                "Identify",
+                "Govern",
+                "Recover",
+                "Detect"
+              ],
+              "answerIndex": 1,
+              "explanation": "Govern was added in 2.0 to cover strategy, roles, policy, oversight and supply chain risk."
+            }
+          ]
+        },
+        {
+          "slug": "csf-structure-and-govern",
+          "title": "Categories, Subcategories and the Govern Function",
+          "minutes": 25,
+          "objectives": [
+            "Navigate the CSF Core hierarchy and its online resources",
+            "Explain the Govern Categories and why Govern underpins the other Functions"
+          ],
+          "sources": [
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "In CSF 2.0, under which Function does cybersecurity supply chain risk management (GV.SC) sit?",
+              "options": [
+                "Identify",
+                "Protect",
+                "Govern",
+                "Respond"
+              ],
+              "answerIndex": 2,
+              "explanation": "Supply chain risk management moved into Govern in 2.0."
+            },
+            {
+              "question": "Which statement about CSF Functions is accurate?",
+              "options": [
+                "They are sequential phases completed one after another",
+                "They operate concurrently",
+                "Only Protect applies to small organisations",
+                "Each must be scored at Tier 4"
+              ],
+              "answerIndex": 1,
+              "explanation": "The Functions describe concurrent, continuous activities."
+            }
+          ]
+        },
+        {
+          "slug": "gap-analysis-and-improvement",
+          "title": "Gap analysis and improvement planning",
+          "minutes": 30,
+          "objectives": [
+            "Rate a Current Profile from evidence and set risk-based targets",
+            "Prioritise gaps into a roadmap linked to risks"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "nist-sp-800-30r1"
+          ],
+          "checks": [
+            {
+              "question": "What should mainly drive which CSF gaps are closed first?",
+              "options": [
+                "How many Subcategories each action closes",
+                "The risk reduction each closure delivers",
+                "Alphabetical order of Categories",
+                "Which gaps are cheapest regardless of risk"
+              ],
+              "answerIndex": 1,
+              "explanation": "Prioritise by risk reduction, then consider cost, effort and dependencies."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "iso-27001",
+      "title": "ISO/IEC 27001 and Information Security Management",
+      "purpose": "Explain ISMS concepts and certification accurately without reproducing the standard.",
+      "prerequisiteKnowledge": "Modules 1 and 2.",
+      "objectives": [
+        "Explain ISMS scope and the risk-based approach.",
+        "Describe the role of a Statement of Applicability.",
+        "Explain certification and accreditation accurately."
+      ],
+      "keyConcepts": [
+        "ISMS",
+        "Scope",
+        "Statement of Applicability",
+        "Internal audit",
+        "Certification vs accreditation"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to explain ISMS scope and the risk-based approach.",
+        "Demonstrates the ability to describe the role of a Statement of Applicability.",
+        "Demonstrates the ability to explain certification and accreditation accurately."
+      ],
+      "instructorNotes": "Lessons describe ISO/IEC 27001 in AMANIQ's own words. Do not distribute copies of the standard; organisations must purchase it from ISO or a national standards body.",
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "isms-essentials",
+          "title": "ISMS essentials",
+          "minutes": 25,
+          "objectives": [
+            "Explain what an ISMS is and its risk-based approach",
+            "Distinguish certification, accreditation and personal qualifications"
+          ],
+          "sources": [
+            "iso-27001",
+            "iso-27002"
+          ],
+          "checks": [
+            {
+              "question": "Who accredits a certification body?",
+              "options": [
+                "ISO itself",
+                "A national accreditation body",
+                "The certified organisation's board",
+                "Any qualified lead auditor"
+              ],
+              "answerIndex": 1,
+              "explanation": "Accreditation bodies assess the competence of certification bodies; ISO does not certify organisations."
+            }
+          ]
+        },
+        {
+          "slug": "scope-and-statement-of-applicability",
+          "title": "Scope and the Statement of Applicability",
+          "minutes": 30,
+          "objectives": [
+            "Evaluate an ISMS scope for completeness and interfaces",
+            "Review a Statement of Applicability for justified exclusions and accurate status"
+          ],
+          "sources": [
+            "iso-27001",
+            "iso-27002"
+          ],
+          "checks": [
+            {
+              "question": "A payroll company with an in-house development team excludes secure development controls from its SoA, stating \"we do not develop software\". What is the main problem?",
+              "options": [
+                "Exclusions are never allowed",
+                "The justification contradicts the scope",
+                "The SoA should not mention development",
+                "Nothing; any exclusion is acceptable if documented"
+              ],
+              "answerIndex": 1,
+              "explanation": "Exclusions are allowed, but must be credible for the scope."
+            }
+          ]
+        },
+        {
+          "slug": "internal-audit-and-certification",
+          "title": "Internal audit, management review and certification",
+          "minutes": 25,
+          "objectives": [
+            "Explain internal audit, management review and corrective action",
+            "Describe the certification cycle and how to read a certificate critically"
+          ],
+          "sources": [
+            "iso-27001"
+          ],
+          "checks": [
+            {
+              "question": "Which certification audit stage mainly reviews documentation and readiness?",
+              "options": [
+                "Stage 1",
+                "Stage 2",
+                "Surveillance audit",
+                "Management review"
+              ],
+              "answerIndex": 0,
+              "explanation": "Stage 1 reviews readiness; Stage 2 assesses implementation and effectiveness."
+            },
+            {
+              "question": "An access review was skipped. Performing the review now is a ___; changing the process so it cannot be skipped again is a ___.",
+              "options": [
+                "corrective action; correction",
+                "correction; corrective action",
+                "nonconformity; observation",
+                "risk acceptance; exception"
+              ],
+              "answerIndex": 1,
+              "explanation": "A correction fixes the instance; a corrective action removes the cause."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cis-controls",
+      "title": "CIS Controls and Control Mapping",
+      "purpose": "Implement, own and map security controls across frameworks without false equivalence.",
+      "prerequisiteKnowledge": "Modules 1 to 3.",
+      "objectives": [
+        "Describe control objectives and ownership.",
+        "Map controls between frameworks with stated confidence.",
+        "Define evidence of implementation."
+      ],
+      "keyConcepts": [
+        "CIS Controls v8.1",
+        "Implementation Groups",
+        "Control mapping",
+        "Evidence"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to describe control objectives and ownership.",
+        "Demonstrates the ability to map controls between frameworks with stated confidence.",
+        "Demonstrates the ability to define evidence of implementation."
+      ],
+      "instructorNotes": "CIS publishes the Controls and companion guides free of charge after registration; encourage learners to download them for reference.",
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "control-mapping",
+          "title": "Mapping controls across frameworks",
+          "minutes": 25,
+          "objectives": [
+            "Map controls between frameworks with stated relationships",
+            "Avoid false equivalence when reusing evidence"
+          ],
+          "sources": [
+            "cis-controls",
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "Two requirements in different frameworks both mention logging. What should you do before mapping them as equivalent?",
+              "options": [
+                "Nothing; shared words mean equivalence",
+                "Compare their purpose and state the relationship (equivalent, subset, superset or related)",
+                "Map them only if both are from NIST",
+                "Use the shorter requirement"
+              ],
+              "answerIndex": 1,
+              "explanation": "Map purpose, not words; most mappings are partial."
+            }
+          ]
+        },
+        {
+          "slug": "cis-controls-and-implementation-groups",
+          "title": "The CIS Controls and Implementation Groups",
+          "minutes": 25,
+          "objectives": [
+            "Describe the 18 CIS Controls and why their order matters",
+            "Choose an Implementation Group appropriate to an organisation"
+          ],
+          "sources": [
+            "cis-controls"
+          ],
+          "checks": [
+            {
+              "question": "Which CIS Implementation Group is described as essential cyber hygiene?",
+              "options": [
+                "IG1",
+                "IG2",
+                "IG3",
+                "IG0"
+              ],
+              "answerIndex": 0,
+              "explanation": "IG1 is the starting point; IG2 and IG3 build on it."
+            }
+          ]
+        },
+        {
+          "slug": "control-design-and-ownership",
+          "title": "Control design, ownership and evidence",
+          "minutes": 25,
+          "objectives": [
+            "Describe a control with objective, owner, operator, frequency and evidence",
+            "Classify controls and design compensating controls"
+          ],
+          "sources": [
+            "cis-controls",
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "A quarterly review of administrator accounts is primarily which type of control?",
+              "options": [
+                "Preventive",
+                "Detective",
+                "Corrective",
+                "Deterrent"
+              ],
+              "answerIndex": 1,
+              "explanation": "Reviews find inappropriate access after it exists."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "policy-governance",
+      "title": "Policies, Procedures and Security Architecture Governance",
+      "purpose": "Manage the policy lifecycle and maintain traceability from policy to control.",
+      "prerequisiteKnowledge": "Modules 1 to 5.",
+      "objectives": [
+        "Run a policy lifecycle with review and approval.",
+        "Manage exceptions.",
+        "Maintain policy-to-control traceability."
+      ],
+      "keyConcepts": [
+        "Policy lifecycle",
+        "Exceptions",
+        "Versioning",
+        "Traceability"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to run a policy lifecycle with review and approval.",
+        "Demonstrates the ability to manage exceptions.",
+        "Demonstrates the ability to maintain policy-to-control traceability."
+      ],
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "policy-lifecycle",
+          "title": "The policy lifecycle",
+          "minutes": 20,
+          "objectives": [
+            "Run a policy lifecycle with review and approval",
+            "Manage policy exceptions with expiry and compensating controls"
+          ],
+          "sources": [
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "Which element must every policy exception include?",
+              "options": [
+                "A permanent waiver",
+                "An expiry date and remediation plan",
+                "Approval by the person requesting it",
+                "Removal of the policy requirement"
+              ],
+              "answerIndex": 1,
+              "explanation": "Unmanaged exceptions become permanent gaps."
+            }
+          ]
+        },
+        {
+          "slug": "writing-policies-and-standards",
+          "title": "Writing policies and standards people can follow",
+          "minutes": 25,
+          "objectives": [
+            "Structure a policy with scope, roles, compliance and document control",
+            "Write testable requirement statements"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "iso-27002"
+          ],
+          "checks": [
+            {
+              "question": "Which policy statement is easiest to audit?",
+              "options": [
+                "Passwords should be strong where possible",
+                "Appropriate backups are taken",
+                "Critical systems must be backed up daily and restores tested at least quarterly",
+                "Staff are encouraged to be careful with data"
+              ],
+              "answerIndex": 2,
+              "explanation": "It is mandatory, specific and measurable."
+            }
+          ]
+        },
+        {
+          "slug": "security-architecture-governance",
+          "title": "Security architecture governance and traceability",
+          "minutes": 25,
+          "objectives": [
+            "Embed security requirements across the system lifecycle",
+            "Maintain a traceability matrix from policy to control to evidence"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "cis-controls"
+          ],
+          "checks": [
+            {
+              "question": "A traceability matrix shows a policy statement with no linked control. What does this indicate?",
+              "options": [
+                "The policy is well implemented",
+                "Intent that nothing actually enforces",
+                "An unnecessary control",
+                "A completed audit"
+              ],
+              "answerIndex": 1,
+              "explanation": "Policy without a control is unimplemented intent."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "audit-readiness",
+      "title": "Audit Readiness and Evidence Management",
+      "purpose": "Prepare for audits by collecting and validating evidence and managing findings.",
+      "prerequisiteKnowledge": "Modules 1 to 6.",
+      "objectives": [
+        "Plan an audit.",
+        "Collect and validate evidence.",
+        "Track findings and corrective actions."
+      ],
+      "keyConcepts": [
+        "Audit planning",
+        "Evidence quality",
+        "Control testing",
+        "Corrective actions"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to plan an audit.",
+        "Demonstrates the ability to collect and validate evidence.",
+        "Demonstrates the ability to track findings and corrective actions."
+      ],
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "evidence-quality",
+          "title": "What makes good audit evidence",
+          "minutes": 25,
+          "objectives": [
+            "Plan an audit with objective, scope, criteria and approach",
+            "Judge evidence for relevance, reliability, sufficiency and timeliness"
+          ],
+          "sources": [
+            "iso-27001",
+            "cis-controls"
+          ],
+          "checks": [
+            {
+              "question": "Which is the strongest evidence that quarterly access reviews took place during the audit year?",
+              "options": [
+                "The IT manager says they always happen",
+                "An undated screenshot of a user list",
+                "System-generated review records with dates for each quarter",
+                "The access control policy"
+              ],
+              "answerIndex": 2,
+              "explanation": "Reliable, dated records covering the whole period are relevant and sufficient."
+            }
+          ]
+        },
+        {
+          "slug": "control-testing-and-sampling",
+          "title": "Control testing and sampling",
+          "minutes": 30,
+          "objectives": [
+            "Choose testing techniques and distinguish design from operating effectiveness",
+            "Sample from a complete population and evaluate exceptions"
+          ],
+          "sources": [
+            "iso-27001",
+            "cis-controls"
+          ],
+          "checks": [
+            {
+              "question": "Which testing technique provides the weakest evidence on its own?",
+              "options": [
+                "Inquiry",
+                "Inspection",
+                "Re-performance",
+                "Observation combined with inspection"
+              ],
+              "answerIndex": 0,
+              "explanation": "Inquiry must be corroborated with other evidence."
+            },
+            {
+              "question": "Why should the joiner population come from the HR system rather than IT's ticket queue?",
+              "options": [
+                "HR data is always more accurate",
+                "Joiners who never got a ticket would otherwise be invisible to the test",
+                "Auditors may not access ticketing tools",
+                "It is faster to export"
+              ],
+              "answerIndex": 1,
+              "explanation": "Population completeness matters: the source must not depend on the control being tested."
+            }
+          ]
+        },
+        {
+          "slug": "findings-and-corrective-actions",
+          "title": "Findings, root cause and corrective actions",
+          "minutes": 25,
+          "objectives": [
+            "Write findings with condition, criteria, cause, effect and recommendation",
+            "Track corrective actions to verified closure"
+          ],
+          "sources": [
+            "iso-27001"
+          ],
+          "checks": [
+            {
+              "question": "What is required before a corrective action is closed?",
+              "options": [
+                "The owner's statement that it is done",
+                "Evidence that the action was taken and is effective",
+                "Agreement from the auditee's team",
+                "Twelve months without a repeat"
+              ],
+              "answerIndex": 1,
+              "explanation": "Closure requires verification, typically by re-testing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "third-party-privacy",
+      "title": "Third-Party Risk, Privacy and Compliance Monitoring",
+      "purpose": "Assess suppliers and meet privacy and compliance obligations.",
+      "prerequisiteKnowledge": "Modules 1 to 7.",
+      "objectives": [
+        "Assess supplier risk and due diligence.",
+        "Specify contractual security requirements.",
+        "Explain data protection responsibilities, including under Nigerian law."
+      ],
+      "keyConcepts": [
+        "Supplier tiering",
+        "Due diligence",
+        "Contract clauses",
+        "NDPA 2023",
+        "Monitoring"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to assess supplier risk and due diligence.",
+        "Demonstrates the ability to specify contractual security requirements.",
+        "Demonstrates the ability to explain data protection responsibilities, including under Nigerian law."
+      ],
+      "instructorNotes": "Data protection content is educational, not legal advice. Re-check NDPC regulations and directives at every review; implementing rules continue to develop.",
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "supplier-risk",
+          "title": "Supplier risk and data protection",
+          "minutes": 25,
+          "objectives": [
+            "Describe the supplier risk lifecycle from inventory to exit",
+            "Explain why certification scope must be checked"
+          ],
+          "sources": [
+            "ndpc",
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "A supplier's ISO/IEC 27001 certificate covers its head office only. Your data is hosted in its data centre. What should you conclude?",
+              "options": [
+                "The hosting is certified",
+                "The certificate gives no assurance about the hosting service",
+                "Certificates always cover all sites",
+                "You should not ask further questions"
+              ],
+              "answerIndex": 1,
+              "explanation": "Always check that the certificate scope includes the service and sites you use."
+            }
+          ]
+        },
+        {
+          "slug": "due-diligence-and-contracts",
+          "title": "Due diligence, assurance reports and contracts",
+          "minutes": 30,
+          "objectives": [
+            "Tier suppliers and choose proportionate due diligence",
+            "Specify contract clauses for notification, audit, sub-processors and exit"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "iso-27002"
+          ],
+          "checks": [
+            {
+              "question": "Your law requires regulator notification within 72 hours. A supplier contract allows it 30 days to tell you about breaches. What is the problem?",
+              "options": [
+                "None; suppliers set their own timelines",
+                "You may be unable to meet your own legal deadline",
+                "30 days is too short for the supplier",
+                "Breach notification belongs only in policies"
+              ],
+              "answerIndex": 1,
+              "explanation": "Supplier notification terms must support your own obligations."
+            }
+          ]
+        },
+        {
+          "slug": "ndpa-and-compliance-monitoring",
+          "title": "The NDPA 2023 and compliance monitoring",
+          "minutes": 30,
+          "objectives": [
+            "Explain controller, processor and DPO responsibilities under the NDPA 2023",
+            "Design a compliance monitoring programme with indicators and a calendar"
+          ],
+          "sources": [
+            "ndpc"
+          ],
+          "checks": [
+            {
+              "question": "A microfinance company uses a hosting provider to store customer records. Under data protection law, the hosting provider is usually the:",
+              "options": [
+                "Data controller",
+                "Data processor",
+                "Data subject",
+                "Regulator"
+              ],
+              "answerIndex": 1,
+              "explanation": "It processes data on the controller's behalf and instructions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "grc-capstone",
+      "title": "GRC Capstone and Reporting",
+      "purpose": "Assess a fictional organisation and report risk to executives.",
+      "prerequisiteKnowledge": "All previous modules.",
+      "objectives": [
+        "Build a risk register.",
+        "Map controls and plan remediation.",
+        "Write an executive risk report."
+      ],
+      "keyConcepts": [
+        "Risk register",
+        "Remediation plan",
+        "Executive reporting"
+      ],
+      "assessmentCriteria": [
+        "Demonstrates the ability to build a risk register.",
+        "Demonstrates the ability to map controls and plan remediation.",
+        "Demonstrates the ability to write an executive risk report."
+      ],
+      "contentStatus": "complete",
+      "lessons": [
+        {
+          "slug": "executive-risk-reporting",
+          "title": "Reporting risk to executives",
+          "minutes": 25,
+          "objectives": [
+            "Structure an executive risk report around decisions",
+            "Express risk in business terms with honest uncertainty"
+          ],
+          "sources": [
+            "nist-csf-2",
+            "nist-sp-800-30r1"
+          ],
+          "checks": [
+            {
+              "question": "What should the first sentence of an executive risk report contain?",
+              "options": [
+                "The assessment methodology",
+                "The conclusion and the decision it implies",
+                "A list of control identifiers",
+                "Thanks to contributors"
+              ],
+              "answerIndex": 1,
+              "explanation": "Lead with the conclusion; executives decide where money and attention go."
+            }
+          ]
+        },
+        {
+          "slug": "capstone-assessment-method",
+          "title": "Running an end-to-end risk assessment",
+          "minutes": 30,
+          "objectives": [
+            "Plan and perform an assessment from terms of reference to findings",
+            "Build a prioritised remediation plan traced to risks"
+          ],
+          "sources": [
+            "nist-sp-800-30r1",
+            "nist-csf-2",
+            "cis-controls"
+          ],
+          "checks": [
+            {
+              "question": "Why should risk criteria and appetite be agreed at the start of an assessment?",
+              "options": [
+                "So ratings can be challenged and defended consistently",
+                "Because regulators require it on day one",
+                "To shorten the report",
+                "So that all risks are rated low"
+              ],
+              "answerIndex": 0,
+              "explanation": "Without agreed criteria, ratings are opinions that cannot be compared or defended."
+            }
+          ]
+        },
+        {
+          "slug": "measuring-and-sustaining-grc",
+          "title": "Measuring and sustaining a GRC programme",
+          "minutes": 20,
+          "objectives": [
+            "Run a GRC operating calendar",
+            "Measure risk position, control health and governance discipline over time"
+          ],
+          "sources": [
+            "nist-csf-2"
+          ],
+          "checks": [
+            {
+              "question": "Which measure best shows that a GRC programme is working over time?",
+              "options": [
+                "Number of policies published",
+                "A steady fall in risks above appetite",
+                "Size of the risk register",
+                "Number of meetings held"
+              ],
+              "answerIndex": 1,
+              "explanation": "Trends in risk position show real improvement."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "risk-register",
+      "title": "Build a risk register from a business scenario",
+      "difficulty": "foundation",
+      "labType": "risk_register",
+      "summary": "Rate likelihood and impact for five risks at a fictional microfinance company and choose an appropriate treatment for each.",
+      "minutes": 40,
+      "moduleSlug": "risk-management",
+      "passPercent": 75,
+      "content": {
+        "objectives": [
+          "Rate likelihood and impact against defined criteria",
+          "Choose treatments consistent with risk appetite"
+        ],
+        "scenario": "**Ọja Microfinance Ltd** (fictional) has 40 staff, a core banking application hosted by a supplier, and a mobile app used by 30,000 customers. The board's risk appetite statement says: *any risk rated 15 or above (likelihood × impact) must be treated; risks rated 4 or below may be accepted.*",
+        "scope": "Use only the scenario documents. Ratings use 1 (very low) to 5 (very high).",
+        "instructions": "Read the context documents, then complete the register. Each row is checked against an acceptable range agreed by AMANIQ assessors; you need at least 75% of entries within range.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "Likelihood and impact criteria",
+              "format": "markdown",
+              "body": "| Rating | Likelihood | Impact |\n| --- | --- | --- |\n| 5 | Expected within a year | Regulatory sanction, loss of licence, or > ₦100m loss |\n| 4 | Likely within a year | Major customer harm or ₦20m–₦100m loss |\n| 3 | Possible within a year | Noticeable disruption or ₦5m–₦20m loss |\n| 2 | Unlikely | Minor disruption |\n| 1 | Rare | Negligible |"
+            },
+            {
+              "title": "Context interview notes",
+              "format": "markdown",
+              "body": "- Staff share the core banking admin password; MFA is not enabled. Phishing emails targeting staff arrive weekly.\n- Customer data backups are taken nightly but have never been test-restored.\n- The office generator is serviced quarterly; power cuts are frequent but brief.\n- The mobile app's supplier holds ISO/IEC 27001 certification and contractual liability insurance for breaches.\n- A legacy fax machine stores no data and is used once a month."
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "register",
+            "prompt": "Complete the risk register.",
+            "points": 10,
+            "hints": [
+              "Shared admin passwords plus weekly phishing make compromise likely, with severe impact.",
+              "The fax machine risk is trivial on both axes."
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "r1",
+                  "label": "R1 Unauthorised access to core banking via shared admin credentials"
+                },
+                {
+                  "id": "r2",
+                  "label": "R2 Inability to restore customer data after ransomware"
+                },
+                {
+                  "id": "r3",
+                  "label": "R3 Brief office power outages"
+                },
+                {
+                  "id": "r4",
+                  "label": "R4 Breach at mobile app supplier"
+                },
+                {
+                  "id": "r5",
+                  "label": "R5 Legacy fax machine misuse"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "likelihood",
+                  "label": "Likelihood",
+                  "options": [
+                    {
+                      "id": "1",
+                      "label": "1"
+                    },
+                    {
+                      "id": "2",
+                      "label": "2"
+                    },
+                    {
+                      "id": "3",
+                      "label": "3"
+                    },
+                    {
+                      "id": "4",
+                      "label": "4"
+                    },
+                    {
+                      "id": "5",
+                      "label": "5"
+                    }
+                  ]
+                },
+                {
+                  "id": "impact",
+                  "label": "Impact",
+                  "options": [
+                    {
+                      "id": "1",
+                      "label": "1"
+                    },
+                    {
+                      "id": "2",
+                      "label": "2"
+                    },
+                    {
+                      "id": "3",
+                      "label": "3"
+                    },
+                    {
+                      "id": "4",
+                      "label": "4"
+                    },
+                    {
+                      "id": "5",
+                      "label": "5"
+                    }
+                  ]
+                },
+                {
+                  "id": "treatment",
+                  "label": "Treatment",
+                  "options": [
+                    {
+                      "id": "treat",
+                      "label": "Treat (reduce)"
+                    },
+                    {
+                      "id": "transfer",
+                      "label": "Transfer"
+                    },
+                    {
+                      "id": "avoid",
+                      "label": "Avoid"
+                    },
+                    {
+                      "id": "accept",
+                      "label": "Accept"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "register": {
+            "type": "grid",
+            "minCorrectRatio": 0.75,
+            "cells": {
+              "r1": {
+                "likelihood": [
+                  "4",
+                  "5"
+                ],
+                "impact": [
+                  "4",
+                  "5"
+                ],
+                "treatment": [
+                  "treat"
+                ]
+              },
+              "r2": {
+                "likelihood": [
+                  "3",
+                  "4"
+                ],
+                "impact": [
+                  "4",
+                  "5"
+                ],
+                "treatment": [
+                  "treat"
+                ]
+              },
+              "r3": {
+                "likelihood": [
+                  "4",
+                  "5"
+                ],
+                "impact": [
+                  "1",
+                  "2"
+                ],
+                "treatment": [
+                  "treat",
+                  "accept"
+                ]
+              },
+              "r4": {
+                "likelihood": [
+                  "2",
+                  "3"
+                ],
+                "impact": [
+                  "4",
+                  "5"
+                ],
+                "treatment": [
+                  "transfer",
+                  "treat"
+                ]
+              },
+              "r5": {
+                "likelihood": [
+                  "1",
+                  "2"
+                ],
+                "impact": [
+                  "1"
+                ],
+                "treatment": [
+                  "accept",
+                  "avoid"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Your register is consistent with the criteria and the board's appetite.",
+              "incorrect": "Re-read the criteria table and the appetite statement; at least 75% of entries must fall within the assessed range."
+            }
+          }
+        }
+      }
+    },
+    {
+      "slug": "csf-control-mapping",
+      "title": "Map security controls to NIST CSF 2.0 Functions",
+      "difficulty": "foundation",
+      "labType": "control_mapping",
+      "summary": "Assign eight implemented controls to the CSF 2.0 Function they primarily support.",
+      "minutes": 30,
+      "moduleSlug": "cis-controls",
+      "passPercent": 75,
+      "content": {
+        "objectives": [
+          "Apply CSF 2.0 Function definitions",
+          "Recognise that mappings express primary purpose, not equivalence"
+        ],
+        "scenario": "Ọja Microfinance wants a simple view of which CSF 2.0 Functions its existing controls support, to find gaps before an internal review.",
+        "scope": "Choose the single Function each control primarily supports. Some controls support more than one; where two answers are defensible, both are accepted.",
+        "instructions": "Complete the mapping and submit.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "CSF 2.0 Functions (summary)",
+              "format": "markdown",
+              "body": "- **Govern**: strategy, expectations, policy, roles and oversight.\n- **Identify**: understanding assets, risks and improvement needs.\n- **Protect**: safeguards to manage risk.\n- **Detect**: finding and analysing possible attacks and compromises.\n- **Respond**: actions regarding a detected incident.\n- **Recover**: restoring assets and operations after an incident."
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "mapping",
+            "prompt": "Map each control to its primary CSF 2.0 Function.",
+            "points": 8,
+            "hints": [
+              "Asset inventories help you understand what you have.",
+              "Board-approved policy is about direction and oversight."
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "c1",
+                  "label": "Board-approved information security policy"
+                },
+                {
+                  "id": "c2",
+                  "label": "Hardware and software asset inventory"
+                },
+                {
+                  "id": "c3",
+                  "label": "Multi-factor authentication for all staff"
+                },
+                {
+                  "id": "c4",
+                  "label": "24×7 log monitoring with alerting"
+                },
+                {
+                  "id": "c5",
+                  "label": "Incident response playbook and on-call rota"
+                },
+                {
+                  "id": "c6",
+                  "label": "Tested backup restoration procedure"
+                },
+                {
+                  "id": "c7",
+                  "label": "Annual risk assessment"
+                },
+                {
+                  "id": "c8",
+                  "label": "Full-disk encryption on laptops"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "fn",
+                  "label": "CSF Function",
+                  "options": [
+                    {
+                      "id": "GV",
+                      "label": "Govern"
+                    },
+                    {
+                      "id": "ID",
+                      "label": "Identify"
+                    },
+                    {
+                      "id": "PR",
+                      "label": "Protect"
+                    },
+                    {
+                      "id": "DE",
+                      "label": "Detect"
+                    },
+                    {
+                      "id": "RS",
+                      "label": "Respond"
+                    },
+                    {
+                      "id": "RC",
+                      "label": "Recover"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "mapping": {
+            "type": "grid",
+            "minCorrectRatio": 0.75,
+            "cells": {
+              "c1": {
+                "fn": [
+                  "GV"
+                ]
+              },
+              "c2": {
+                "fn": [
+                  "ID"
+                ]
+              },
+              "c3": {
+                "fn": [
+                  "PR"
+                ]
+              },
+              "c4": {
+                "fn": [
+                  "DE"
+                ]
+              },
+              "c5": {
+                "fn": [
+                  "RS"
+                ]
+              },
+              "c6": {
+                "fn": [
+                  "RC"
+                ]
+              },
+              "c7": {
+                "fn": [
+                  "ID",
+                  "GV"
+                ]
+              },
+              "c8": {
+                "fn": [
+                  "PR"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Good mapping.",
+              "incorrect": "Revisit the Function definitions; at least six of eight must match."
+            }
+          }
+        }
+      }
+    },
+    {
+      "slug": "isms-scope-soa-review",
+      "title": "Review an ISMS scope and Statement of Applicability",
+      "difficulty": "intermediate",
+      "labType": "document_review",
+      "summary": "Review the ISMS scope and a sample Statement of Applicability for a fictional payroll company before its certification audit.",
+      "minutes": 45,
+      "moduleSlug": "iso-27001",
+      "passPercent": 75,
+      "content": {
+        "objectives": [
+          "Evaluate an ISMS scope against the services customers rely on",
+          "Test SoA exclusions, justifications and status against evidence",
+          "Trace SoA decisions to the risk register"
+        ],
+        "scenario": "**Ìrìn Payroll Services Ltd** (fictional, `irinpayroll.example`) runs payroll for 140 corporate clients on its own platform, *PayFlow*. Its first ISO/IEC 27001 Stage 1 audit is in six weeks. The CEO has asked you, as an internal reviewer, to check the scope statement and a sample of the Statement of Applicability (SoA) before the auditors see them.",
+        "scope": "Use only the documents provided. SoA rows describe controls in Ìrìn's own words; they are not quotations from the standard.",
+        "instructions": "Read the scope statements, risk register extract and interview notes, then review each SoA row. For the grid, choose the single most important issue with each row (or 'Acceptable'). You need at least 7 of 9 rows right.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "Organisation profile",
+              "format": "markdown",
+              "body": "- 85 staff across the **Ikeja operations office** (payroll operations, client support, finance) and the **Yaba engineering office** (12 developers who build and maintain PayFlow).\n- PayFlow is hosted in a colocation facility in Lagos operated by a supplier, *Ebute DataHalls Ltd* (fictional). Ìrìn owns and administers the servers; the supplier provides power, cooling and physical security.\n- Since 2025, operations and engineering staff work from home two days a week on company laptops.\n- Ìrìn's website states: *\"Our payroll services are ISO/IEC 27001 certified\"* (planned for after the audit).\n- No software development is outsourced."
+            },
+            {
+              "title": "Scope statement (current draft v1)",
+              "format": "markdown",
+              "body": "> The ISMS of Ìrìn Payroll Services Ltd covers the finance, HR and administrative functions carried out at the Ikeja head office."
+            },
+            {
+              "title": "Risk register extract",
+              "format": "markdown",
+              "body": "| ID | Risk | Rating |\n| --- | --- | --- |\n| R1 | Client payroll data disclosed through an exploitable flaw in PayFlow code | 16 |\n| R2 | PayFlow administrator account taken over through phishing or password reuse | 20 |\n| R3 | Payroll run fails because data cannot be restored after corruption or ransomware | 15 |\n| R4 | Colocation supplier failure (power, physical access) affects PayFlow availability or confidentiality | 12 |\n| R5 | Theft of laptops or documents from offices | 8 |\n| R6 | Malicious activity on PayFlow goes undetected | 12 |\n| R7 | Data exposed on laptops used at home or in public places | 12 |"
+            },
+            {
+              "title": "Interview notes (review team, February 2026)",
+              "format": "markdown",
+              "body": "- *Head of engineering*: \"We push PayFlow releases every two weeks. Code review is informal; no security testing yet.\"\n- *IT manager*: \"MFA is enforced on email. The PayFlow admin console still uses username and password; MFA is planned for Q3.\"\n- *IT manager*: \"PayFlow logs stay on each server for seven days. Nobody reviews them. A central logging project starts in 2027.\"\n- *Operations manager*: \"Restore tests run quarterly; the last one in January worked. Reports are in the backup folder.\"\n- *Facilities*: \"Badge readers on both offices; access logs exported monthly.\""
+            },
+            {
+              "title": "Statement of Applicability (sample, v0.9)",
+              "format": "markdown",
+              "body": "| Row | Control (Ìrìn's description) | Applicable | Justification | Status | Evidence reference |\n| --- | --- | --- | --- | --- | --- |\n| SOA-01 | Information security policy approved by management and communicated to staff | Yes | Sets direction for treating R1–R7; required for the ISMS | Implemented | Policy v3.1, approved by CEO 12 Feb 2026; staff acknowledgements |\n| SOA-02 | Secure development life cycle: security requirements, code review and testing for in-house software | **No** | Ìrìn does not develop software | — | — |\n| SOA-03 | Security of remote and home working | **No** | All staff work on site | — | — |\n| SOA-04 | Strong authentication (MFA) for administrative and remote access | Yes | Treats R2 | Implemented | Email MFA policy export |\n| SOA-05 | Backup and tested restoration of PayFlow data | Yes | Treats R3 | Implemented | Daily backup reports; restore test report 22 Jan 2026 |\n| SOA-06 | Information security in supplier agreements and supplier monitoring | Yes | Best practice | Implemented | Ebute DataHalls contract schedule 4; annual supplier review Nov 2025 |\n| SOA-07 | Physical entry controls for offices | Yes | Treats R5 | Implemented | Badge system; monthly access log exports |\n| SOA-08 | Logging and monitoring of PayFlow activity | Yes | Treats R2 and R6 | Implemented | \"Logs enabled on servers\" |\n| SOA-09 | Security of outsourced software development | **No** | No development is outsourced; all development is in-house and covered by SOA-02 | — | Engineering org chart; no development contracts |"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "scope-issue",
+            "prompt": "What is the most significant problem with the current draft scope statement (v1)?",
+            "points": 2,
+            "hints": [
+              "Compare the scope with what the website tells clients.",
+              "Which part of the business do clients actually depend on?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "too-long",
+                  "label": "It is too long and should be a single sentence"
+                },
+                {
+                  "id": "excludes-service",
+                  "label": "It excludes the PayFlow service, engineering team and hosting that clients rely on, while the website implies the payroll service is certified"
+                },
+                {
+                  "id": "names-location",
+                  "label": "Scope statements must not name physical locations"
+                },
+                {
+                  "id": "no-issue",
+                  "label": "There is no problem; a narrow scope is always preferable"
+                }
+              ]
+            }
+          },
+          {
+            "id": "soa-review",
+            "prompt": "Assess each SoA row against the revised scope (both offices, PayFlow, its hosting and remote working). Choose the single most important issue for each row.",
+            "points": 9,
+            "hints": [
+              "Check each exclusion against the organisation profile.",
+              "Check each 'Implemented' status against the interview notes and evidence reference.",
+              "A justification should point to risks or obligations, not to general good practice."
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "soa01",
+                  "label": "SOA-01 Information security policy"
+                },
+                {
+                  "id": "soa02",
+                  "label": "SOA-02 Secure development life cycle (excluded)"
+                },
+                {
+                  "id": "soa03",
+                  "label": "SOA-03 Remote and home working (excluded)"
+                },
+                {
+                  "id": "soa04",
+                  "label": "SOA-04 Strong authentication (MFA)"
+                },
+                {
+                  "id": "soa05",
+                  "label": "SOA-05 Backup and tested restoration"
+                },
+                {
+                  "id": "soa06",
+                  "label": "SOA-06 Supplier agreements and monitoring"
+                },
+                {
+                  "id": "soa07",
+                  "label": "SOA-07 Physical entry controls"
+                },
+                {
+                  "id": "soa08",
+                  "label": "SOA-08 Logging and monitoring"
+                },
+                {
+                  "id": "soa09",
+                  "label": "SOA-09 Outsourced development (excluded)"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "verdict",
+                  "label": "Review outcome",
+                  "options": [
+                    {
+                      "id": "ok",
+                      "label": "Acceptable as written"
+                    },
+                    {
+                      "id": "exclusion",
+                      "label": "Exclusion not justified for this scope"
+                    },
+                    {
+                      "id": "status",
+                      "label": "Status not supported by evidence"
+                    },
+                    {
+                      "id": "justification",
+                      "label": "Inclusion justification missing or weak"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "untreated-risk",
+            "prompt": "Which risk ID in the register is left without any treatment because of the SOA-02 exclusion?",
+            "points": 2,
+            "hints": [
+              "Which risk is about flaws in PayFlow's code?"
+            ],
+            "input": {
+              "type": "text",
+              "placeholder": "e.g. R9"
+            }
+          },
+          {
+            "id": "soa-fields",
+            "prompt": "Select **all** items the SoA must record for each control in the reference set.",
+            "points": 2,
+            "hints": [
+              "Think about what the auditor uses the SoA for: decisions, reasons and status."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "applicable",
+                  "label": "Whether the control is included or excluded"
+                },
+                {
+                  "id": "justification",
+                  "label": "The justification for inclusion or exclusion"
+                },
+                {
+                  "id": "status",
+                  "label": "Whether the control is implemented"
+                },
+                {
+                  "id": "cost",
+                  "label": "The purchase cost of any tools used"
+                },
+                {
+                  "id": "auditor",
+                  "label": "The name of the certification auditor"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "scope-issue": {
+            "type": "choice",
+            "correct": "excludes-service",
+            "feedback": {
+              "correct": "Correct. A scope that leaves out the service clients depend on, while marketing implies it is certified, misleads clients.",
+              "incorrect": "Compare the scope with the website claim and the organisation profile."
+            }
+          },
+          "soa-review": {
+            "type": "grid",
+            "minCorrectRatio": 0.75,
+            "cells": {
+              "soa01": {
+                "verdict": [
+                  "ok"
+                ]
+              },
+              "soa02": {
+                "verdict": [
+                  "exclusion"
+                ]
+              },
+              "soa03": {
+                "verdict": [
+                  "exclusion"
+                ]
+              },
+              "soa04": {
+                "verdict": [
+                  "status"
+                ]
+              },
+              "soa05": {
+                "verdict": [
+                  "ok"
+                ]
+              },
+              "soa06": {
+                "verdict": [
+                  "justification"
+                ]
+              },
+              "soa07": {
+                "verdict": [
+                  "ok"
+                ]
+              },
+              "soa08": {
+                "verdict": [
+                  "status"
+                ]
+              },
+              "soa09": {
+                "verdict": [
+                  "ok"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Good review. Two exclusions contradict the profile, two 'Implemented' statuses are contradicted by interviews, and one justification does not trace to a risk.",
+              "incorrect": "Re-check each exclusion against the organisation profile and each 'Implemented' status against the interview notes. At least 7 of 9 rows must match."
+            }
+          },
+          "untreated-risk": {
+            "type": "text",
+            "accept": [
+              "R1"
+            ],
+            "feedback": {
+              "correct": "Correct. R1 (rated 16) concerns flaws in PayFlow code, which secure development controls would treat.",
+              "incorrect": "Find the risk about vulnerabilities in PayFlow's own code."
+            }
+          },
+          "soa-fields": {
+            "type": "multi",
+            "correct": [
+              "applicable",
+              "justification",
+              "status"
+            ],
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "The SoA records the decision, the reason and the implementation status for each control."
+            }
+          }
+        }
+      }
+    },
+    {
+      "slug": "control-evidence-assessment",
+      "title": "Collect and assess evidence for selected controls",
+      "difficulty": "intermediate",
+      "labType": "evidence_assessment",
+      "summary": "Test joiner and leaver access controls by sampling system records, judge the quality of backup evidence, and reach audit conclusions.",
+      "minutes": 50,
+      "moduleSlug": "audit-readiness",
+      "passPercent": 75,
+      "content": {
+        "objectives": [
+          "Test operating effectiveness by comparing records from independent systems",
+          "Judge evidence for reliability, timeliness and sufficiency",
+          "Reach and express a supportable control conclusion"
+        ],
+        "scenario": "You are on **Ọja Microfinance Ltd**'s internal audit team (fictional). The audit covers **1 July to 31 December 2025** and three controls:\n\n- **AC-02** Every new joiner's access to core banking is approved by their line manager *before* the account is provisioned.\n- **AC-05** Leavers' accounts are disabled no later than the next business day after their last working day.\n- **BK-01** A restore of core banking data is tested at least once per quarter and the result recorded.",
+        "scope": "Use only the datasets and documents provided. All joiners and leavers in the period are included in the HR extracts, which come from the HR system and are treated as complete.",
+        "instructions": "Compare the HR population with the IT records, review the backup evidence submitted by IT, then answer the tasks. Business days are Monday to Friday; there were no public holidays in the relevant weeks.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "evidence",
+          "datasets": [
+            {
+              "name": "HRJoiners",
+              "description": "All joiners, 1 Jul–31 Dec 2025 (HR system export).",
+              "columns": [
+                "EmployeeId",
+                "Name",
+                "Department",
+                "StartDate"
+              ],
+              "rows": [
+                {
+                  "EmployeeId": "E1001",
+                  "Name": "Adaeze Okafor",
+                  "Department": "Lending",
+                  "StartDate": "2025-07-07"
+                },
+                {
+                  "EmployeeId": "E1002",
+                  "Name": "Bayo Adeyemi",
+                  "Department": "Finance",
+                  "StartDate": "2025-07-14"
+                },
+                {
+                  "EmployeeId": "E1003",
+                  "Name": "Chiamaka Eze",
+                  "Department": "Customer Service",
+                  "StartDate": "2025-08-04"
+                },
+                {
+                  "EmployeeId": "E1004",
+                  "Name": "Dauda Musa",
+                  "Department": "IT",
+                  "StartDate": "2025-08-18"
+                },
+                {
+                  "EmployeeId": "E1005",
+                  "Name": "Efe Oghene",
+                  "Department": "Lending",
+                  "StartDate": "2025-09-01"
+                },
+                {
+                  "EmployeeId": "E1006",
+                  "Name": "Funmi Bakare",
+                  "Department": "Compliance",
+                  "StartDate": "2025-09-15"
+                },
+                {
+                  "EmployeeId": "E1007",
+                  "Name": "Garba Sani",
+                  "Department": "Lending",
+                  "StartDate": "2025-10-06"
+                },
+                {
+                  "EmployeeId": "E1008",
+                  "Name": "Halima Yusuf",
+                  "Department": "Customer Service",
+                  "StartDate": "2025-10-20"
+                },
+                {
+                  "EmployeeId": "E1009",
+                  "Name": "Ifeanyi Nwosu",
+                  "Department": "Lending",
+                  "StartDate": "2025-11-03"
+                },
+                {
+                  "EmployeeId": "E1010",
+                  "Name": "Jumoke Alade",
+                  "Department": "Finance",
+                  "StartDate": "2025-11-17"
+                },
+                {
+                  "EmployeeId": "E1011",
+                  "Name": "Kelechi Obi",
+                  "Department": "Lending",
+                  "StartDate": "2025-12-01"
+                },
+                {
+                  "EmployeeId": "E1012",
+                  "Name": "Lami Danjuma",
+                  "Department": "Customer Service",
+                  "StartDate": "2025-12-15"
+                }
+              ]
+            },
+            {
+              "name": "AccessRequests",
+              "description": "Core banking access tickets raised for joiners (service desk export).",
+              "columns": [
+                "TicketId",
+                "EmployeeId",
+                "RequestedAt",
+                "ApprovedBy",
+                "ApprovedAt",
+                "ProvisionedAt"
+              ],
+              "rows": [
+                {
+                  "TicketId": "SD-4410",
+                  "EmployeeId": "E1001",
+                  "RequestedAt": "2025-07-01T09:12:00Z",
+                  "ApprovedBy": "m.ibekwe",
+                  "ApprovedAt": "2025-07-02T10:03:00Z",
+                  "ProvisionedAt": "2025-07-04T14:20:00Z"
+                },
+                {
+                  "TicketId": "SD-4436",
+                  "EmployeeId": "E1002",
+                  "RequestedAt": "2025-07-08T11:40:00Z",
+                  "ApprovedBy": "t.alabi",
+                  "ApprovedAt": "2025-07-09T08:55:00Z",
+                  "ProvisionedAt": "2025-07-11T09:30:00Z"
+                },
+                {
+                  "TicketId": "SD-4518",
+                  "EmployeeId": "E1003",
+                  "RequestedAt": "2025-07-29T15:02:00Z",
+                  "ApprovedBy": "o.nnamdi",
+                  "ApprovedAt": "2025-07-30T09:10:00Z",
+                  "ProvisionedAt": "2025-08-01T13:45:00Z"
+                },
+                {
+                  "TicketId": "SD-4590",
+                  "EmployeeId": "E1004",
+                  "RequestedAt": "2025-08-12T10:00:00Z",
+                  "ApprovedBy": "k.adebayo",
+                  "ApprovedAt": "2025-08-12T16:21:00Z",
+                  "ProvisionedAt": "2025-08-15T10:05:00Z"
+                },
+                {
+                  "TicketId": "SD-4671",
+                  "EmployeeId": "E1005",
+                  "RequestedAt": "2025-08-26T09:45:00Z",
+                  "ApprovedBy": "m.ibekwe",
+                  "ApprovedAt": "2025-08-27T11:30:00Z",
+                  "ProvisionedAt": "2025-08-29T15:00:00Z"
+                },
+                {
+                  "TicketId": "SD-4733",
+                  "EmployeeId": "E1006",
+                  "RequestedAt": "2025-09-09T13:15:00Z",
+                  "ApprovedBy": "r.oyelaran",
+                  "ApprovedAt": "2025-09-10T09:00:00Z",
+                  "ProvisionedAt": "2025-09-12T11:10:00Z"
+                },
+                {
+                  "TicketId": "SD-4820",
+                  "EmployeeId": "E1007",
+                  "RequestedAt": "2025-10-06T08:05:00Z",
+                  "ApprovedBy": "m.ibekwe",
+                  "ApprovedAt": "2025-10-08T17:40:00Z",
+                  "ProvisionedAt": "2025-10-06T08:30:00Z"
+                },
+                {
+                  "TicketId": "SD-4877",
+                  "EmployeeId": "E1008",
+                  "RequestedAt": "2025-10-14T10:20:00Z",
+                  "ApprovedBy": "o.nnamdi",
+                  "ApprovedAt": "2025-10-15T09:35:00Z",
+                  "ProvisionedAt": "2025-10-17T12:00:00Z"
+                },
+                {
+                  "TicketId": "SD-4990",
+                  "EmployeeId": "E1010",
+                  "RequestedAt": "2025-11-11T09:00:00Z",
+                  "ApprovedBy": "t.alabi",
+                  "ApprovedAt": "2025-11-12T10:45:00Z",
+                  "ProvisionedAt": "2025-11-14T09:15:00Z"
+                },
+                {
+                  "TicketId": "SD-5034",
+                  "EmployeeId": "E1011",
+                  "RequestedAt": "2025-12-01T07:50:00Z",
+                  "ApprovedBy": "m.ibekwe",
+                  "ApprovedAt": "2025-12-03T12:10:00Z",
+                  "ProvisionedAt": "2025-12-01T08:15:00Z"
+                },
+                {
+                  "TicketId": "SD-5081",
+                  "EmployeeId": "E1012",
+                  "RequestedAt": "2025-12-09T14:30:00Z",
+                  "ApprovedBy": "o.nnamdi",
+                  "ApprovedAt": "2025-12-10T09:20:00Z",
+                  "ProvisionedAt": "2025-12-12T10:40:00Z"
+                }
+              ]
+            },
+            {
+              "name": "CoreBankingAccounts",
+              "description": "Core banking user accounts for staff who joined or left in the period (system export, 5 Jan 2026).",
+              "columns": [
+                "EmployeeId",
+                "Username",
+                "CreatedAt",
+                "Status",
+                "DisabledAt"
+              ],
+              "rows": [
+                {
+                  "EmployeeId": "E1001",
+                  "Username": "a.okafor",
+                  "CreatedAt": "2025-07-04T14:20:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1002",
+                  "Username": "b.adeyemi",
+                  "CreatedAt": "2025-07-11T09:30:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1003",
+                  "Username": "c.eze",
+                  "CreatedAt": "2025-08-01T13:45:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1004",
+                  "Username": "d.musa",
+                  "CreatedAt": "2025-08-15T10:05:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1005",
+                  "Username": "e.oghene",
+                  "CreatedAt": "2025-08-29T15:00:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1006",
+                  "Username": "f.bakare",
+                  "CreatedAt": "2025-09-12T11:10:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1007",
+                  "Username": "g.sani",
+                  "CreatedAt": "2025-10-06T08:30:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1008",
+                  "Username": "h.yusuf",
+                  "CreatedAt": "2025-10-17T12:00:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1009",
+                  "Username": "i.nwosu",
+                  "CreatedAt": "2025-11-03T07:58:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1010",
+                  "Username": "j.alade",
+                  "CreatedAt": "2025-11-14T09:15:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1011",
+                  "Username": "k.obi",
+                  "CreatedAt": "2025-12-01T08:15:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E1012",
+                  "Username": "l.danjuma",
+                  "CreatedAt": "2025-12-12T10:40:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E0931",
+                  "Username": "p.ogun",
+                  "CreatedAt": "2021-03-01T09:00:00Z",
+                  "Status": "Disabled",
+                  "DisabledAt": "2025-07-21T08:40:00Z"
+                },
+                {
+                  "EmployeeId": "E0942",
+                  "Username": "q.etuk",
+                  "CreatedAt": "2022-01-10T09:00:00Z",
+                  "Status": "Disabled",
+                  "DisabledAt": "2025-09-08T11:15:00Z"
+                },
+                {
+                  "EmployeeId": "E0950",
+                  "Username": "s.lawal",
+                  "CreatedAt": "2022-06-06T09:00:00Z",
+                  "Status": "Disabled",
+                  "DisabledAt": "2025-10-31T17:05:00Z"
+                },
+                {
+                  "EmployeeId": "E0958",
+                  "Username": "u.chukwu",
+                  "CreatedAt": "2023-02-13T09:00:00Z",
+                  "Status": "Active",
+                  "DisabledAt": null
+                },
+                {
+                  "EmployeeId": "E0967",
+                  "Username": "w.salami",
+                  "CreatedAt": "2023-09-04T09:00:00Z",
+                  "Status": "Disabled",
+                  "DisabledAt": "2025-12-22T09:30:00Z"
+                }
+              ]
+            },
+            {
+              "name": "HRLeavers",
+              "description": "All leavers, 1 Jul–31 Dec 2025 (HR system export).",
+              "columns": [
+                "EmployeeId",
+                "Name",
+                "LastWorkingDay"
+              ],
+              "rows": [
+                {
+                  "EmployeeId": "E0931",
+                  "Name": "Peter Ogun",
+                  "LastWorkingDay": "2025-07-18"
+                },
+                {
+                  "EmployeeId": "E0942",
+                  "Name": "Queen Etuk",
+                  "LastWorkingDay": "2025-08-29"
+                },
+                {
+                  "EmployeeId": "E0950",
+                  "Name": "Sade Lawal",
+                  "LastWorkingDay": "2025-10-31"
+                },
+                {
+                  "EmployeeId": "E0958",
+                  "Name": "Uche Chukwu",
+                  "LastWorkingDay": "2025-11-28"
+                },
+                {
+                  "EmployeeId": "E0967",
+                  "Name": "Wale Salami",
+                  "LastWorkingDay": "2025-12-19"
+                }
+              ]
+            }
+          ],
+          "documents": [
+            {
+              "title": "Backup evidence submitted by IT for BK-01",
+              "format": "markdown",
+              "body": "| Ref | Description |\n| --- | --- |\n| EV1 | Restore test record from the backup system: core banking database restored to the test server on **16 Sep 2025**, integrity check passed; job log attached; signed off by the IT manager and the head of operations. |\n| EV2 | Screenshot of the backup console banner reading \"Last restore test: Successful\". No date or system clock is visible. |\n| EV3 | Restore test record from the backup system dated **14 Jun 2025**, job log attached. |\n| EV4 | Email from the IT manager to internal audit: \"We test restores every quarter and they always work.\" |\n| EV5 | Backup Standard v2, approved March 2025, section 4: \"Restores must be tested at least quarterly.\" |\n| EV6 | Restore test record from the backup system: core banking database restored on **9 Dec 2025**, integrity check passed; job log attached; signed off by the IT manager and the head of operations. |"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "early-provisioning",
+            "prompt": "How many joiners had a ticket whose account was **provisioned before** the approval was recorded?",
+            "points": 2,
+            "hints": [
+              "Compare ApprovedAt with ProvisionedAt in AccessRequests, row by row."
+            ],
+            "input": {
+              "type": "number",
+              "placeholder": "count"
+            }
+          },
+          {
+            "id": "missing-ticket",
+            "prompt": "Which joiner (EmployeeId) has an active core banking account but **no access request at all**?",
+            "points": 2,
+            "hints": [
+              "Every joiner in HRJoiners should appear in AccessRequests. Which one is missing?"
+            ],
+            "input": {
+              "type": "text",
+              "placeholder": "e.g. E1000"
+            }
+          },
+          {
+            "id": "late-leavers",
+            "prompt": "Select **all** leavers whose accounts were **not** disabled by the next business day after their last working day.",
+            "points": 2,
+            "hints": [
+              "Look up each HRLeavers row in CoreBankingAccounts.",
+              "A last day on Friday means the account must be disabled by the following Monday."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "E0931",
+                  "label": "E0931 Peter Ogun"
+                },
+                {
+                  "id": "E0942",
+                  "label": "E0942 Queen Etuk"
+                },
+                {
+                  "id": "E0950",
+                  "label": "E0950 Sade Lawal"
+                },
+                {
+                  "id": "E0958",
+                  "label": "E0958 Uche Chukwu"
+                },
+                {
+                  "id": "E0967",
+                  "label": "E0967 Wale Salami"
+                }
+              ]
+            }
+          },
+          {
+            "id": "evidence-quality",
+            "prompt": "For BK-01, decide whether each item submitted by IT is acceptable evidence that a restore test operated during the audit period, and give the main issue.",
+            "points": 3,
+            "hints": [
+              "The audit period is 1 July to 31 December 2025.",
+              "Evidence of the requirement is not evidence that the control operated."
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "ev1",
+                  "label": "EV1 Restore record, 16 Sep 2025"
+                },
+                {
+                  "id": "ev2",
+                  "label": "EV2 Console screenshot"
+                },
+                {
+                  "id": "ev3",
+                  "label": "EV3 Restore record, 14 Jun 2025"
+                },
+                {
+                  "id": "ev4",
+                  "label": "EV4 IT manager's email"
+                },
+                {
+                  "id": "ev5",
+                  "label": "EV5 Backup Standard v2"
+                },
+                {
+                  "id": "ev6",
+                  "label": "EV6 Restore record, 9 Dec 2025"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "verdict",
+                  "label": "Verdict",
+                  "options": [
+                    {
+                      "id": "accept",
+                      "label": "Accept as evidence"
+                    },
+                    {
+                      "id": "reject",
+                      "label": "Reject"
+                    }
+                  ]
+                },
+                {
+                  "id": "issue",
+                  "label": "Main issue",
+                  "options": [
+                    {
+                      "id": "none",
+                      "label": "No issue"
+                    },
+                    {
+                      "id": "undated",
+                      "label": "Undated or unverifiable"
+                    },
+                    {
+                      "id": "period",
+                      "label": "Outside the audit period"
+                    },
+                    {
+                      "id": "assertion",
+                      "label": "Unsupported assertion"
+                    },
+                    {
+                      "id": "requirement",
+                      "label": "Shows the requirement, not operation"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "ac02-conclusion",
+            "prompt": "What is the most appropriate conclusion for **AC-02** over the audit period?",
+            "points": 2,
+            "hints": [
+              "How many of the 12 joiners were provisioned without prior approval, including the one with no ticket?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "effective",
+                  "label": "Effective: the control operated throughout the period"
+                },
+                {
+                  "id": "minor",
+                  "label": "Effective with a minor, isolated exception"
+                },
+                {
+                  "id": "operating",
+                  "label": "Not operating effectively: 3 of 12 joiners received access without prior approval"
+                },
+                {
+                  "id": "untestable",
+                  "label": "Cannot conclude: HR data cannot be used as a population"
+                }
+              ]
+            }
+          },
+          {
+            "id": "criteria",
+            "prompt": "In the AC-02 finding, which statement is the **criteria** element?",
+            "points": 1,
+            "hints": [
+              "Criteria describe what was required, not what was found."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "condition",
+                  "label": "Three of 12 joiners in the period received core banking access before approval or without any request"
+                },
+                {
+                  "id": "criteria",
+                  "label": "Access must be approved by the line manager before the account is provisioned (control AC-02)"
+                },
+                {
+                  "id": "effect",
+                  "label": "Staff may hold unauthorised access to customer accounts, increasing fraud risk"
+                },
+                {
+                  "id": "recommendation",
+                  "label": "Enforce approval in the ticket workflow before provisioning is possible"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "early-provisioning": {
+            "type": "number",
+            "value": 2,
+            "feedback": {
+              "correct": "Correct: SD-4820 (E1007) and SD-5034 (E1011) were provisioned before approval.",
+              "incorrect": "Compare ApprovedAt with ProvisionedAt for each ticket."
+            }
+          },
+          "missing-ticket": {
+            "type": "text",
+            "accept": [
+              "E1009"
+            ],
+            "feedback": {
+              "correct": "Correct: E1009 has an account created on their start date but no request or approval.",
+              "incorrect": "Match every HRJoiners EmployeeId against AccessRequests."
+            }
+          },
+          "late-leavers": {
+            "type": "multi",
+            "correct": [
+              "E0942",
+              "E0958"
+            ],
+            "feedback": {
+              "correct": "Correct: E0942 was disabled a week after the deadline and E0958 is still active.",
+              "incorrect": "Check DisabledAt against each last working day; remember weekends."
+            }
+          },
+          "evidence-quality": {
+            "type": "grid",
+            "minCorrectRatio": 0.75,
+            "cells": {
+              "ev1": {
+                "verdict": [
+                  "accept"
+                ],
+                "issue": [
+                  "none"
+                ]
+              },
+              "ev2": {
+                "verdict": [
+                  "reject"
+                ],
+                "issue": [
+                  "undated"
+                ]
+              },
+              "ev3": {
+                "verdict": [
+                  "reject"
+                ],
+                "issue": [
+                  "period"
+                ]
+              },
+              "ev4": {
+                "verdict": [
+                  "reject"
+                ],
+                "issue": [
+                  "assertion"
+                ]
+              },
+              "ev5": {
+                "verdict": [
+                  "reject"
+                ],
+                "issue": [
+                  "requirement"
+                ]
+              },
+              "ev6": {
+                "verdict": [
+                  "accept"
+                ],
+                "issue": [
+                  "none"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Good judgement: only EV1 and EV6 are reliable, dated records from within the period.",
+              "incorrect": "Check each item's date, source and whether it shows the control operating. At least 9 of 12 entries must match."
+            }
+          },
+          "ac02-conclusion": {
+            "type": "choice",
+            "correct": "operating",
+            "feedback": {
+              "correct": "Correct: a quarter of joiners bypassed approval, which is not an isolated exception.",
+              "incorrect": "Count the exceptions: two early provisions and one joiner with no ticket."
+            }
+          },
+          "criteria": {
+            "type": "choice",
+            "correct": "criteria",
+            "feedback": {
+              "correct": "Correct.",
+              "incorrect": "Criteria state the requirement the condition is measured against."
+            }
+          }
+        }
+      }
+    },
+    {
+      "slug": "third-party-assessment",
+      "title": "Assess a third-party hosting provider",
+      "difficulty": "intermediate",
+      "labType": "third_party_assessment",
+      "summary": "Tier a fictional hosting supplier, analyse its questionnaire, certificate, assurance report and draft contract, and make a recommendation.",
+      "minutes": 50,
+      "moduleSlug": "third-party-privacy",
+      "passPercent": 75,
+      "content": {
+        "objectives": [
+          "Tier a supplier and choose proportionate due diligence",
+          "Identify red flags across self-reported and independent evidence",
+          "Assess contract clauses against your own obligations",
+          "Make and justify a risk-based recommendation"
+        ],
+        "scenario": "**Ọja Microfinance Ltd** (fictional) plans to move its new loan origination platform to **Àpótí Cloud Hosting Ltd** (fictional, `apoti-cloud.example`). The platform will store personal data for about 30,000 customers, including identity numbers, salary details and bank statements. Downtime would stop all new lending. The head of lending wants to sign next month and has asked the GRC team for a due diligence opinion.",
+        "scope": "Use only the documents provided. This is an educational exercise and not legal advice.",
+        "instructions": "Review the documents, then answer the tasks. Note that self-reported answers and independent evidence sometimes disagree.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "Ọja supplier tiering criteria",
+              "format": "markdown",
+              "body": "| Tier | Criteria (any one is sufficient) |\n| --- | --- |\n| Critical | Stores or processes customer personal or financial data at scale (> 1,000 customers) **or** its failure would stop a critical service |\n| High | Processes staff personal data, or has network access to Ọja systems |\n| Medium | Holds limited contact data; no system access |\n| Low | No data and no access |\n\n**Ọja obligations relevant to suppliers**\n- Ọja must notify the NDPC within 72 hours of becoming aware of a qualifying personal data breach. Ọja policy requires processors to notify Ọja within **24 hours**.\n- Ọja policy: customer personal data may leave Nigeria only with DPO approval and a documented transfer basis.\n- Ọja policy: high-severity penetration test findings at critical suppliers must be fixed within 90 days."
+            },
+            {
+              "title": "Àpótí security questionnaire (self-reported, February 2026)",
+              "format": "markdown",
+              "body": "| # | Question | Àpótí response |\n| --- | --- | --- |\n| 1 | Is MFA enforced for all administrative access? | Yes, hardware keys for all platform administrators. |\n| 2 | Is customer data encrypted at rest? | Yes, all storage volumes encrypted with AES-256; keys in a hardware security module. |\n| 3 | Backups? | Daily, replicated to our second data centre in Lagos; restore tested quarterly. |\n| 4 | Do you use sub-processors for customer data? | **No.** |\n| 5 | Penetration testing? | Annual external test; last test June 2025 found 2 high-severity issues. One fixed; one \"remediation in progress\". |\n| 6 | Breach notification to customers? | Within **30 days** of confirming a breach. |\n| 7 | Where is customer data stored? | Ikeja data centre (primary) and Lekki data centre (backup). |"
+            },
+            {
+              "title": "Certificate and assurance report summary",
+              "format": "markdown",
+              "body": "**ISO/IEC 27001:2022 certificate** issued by an accredited certification body; valid to May 2027.\n\n> *Scope:* \"Provision of colocation and data centre facility services at the Lekki data centre.\"\n\n**Independent assurance report** (service organisation controls, operating effectiveness, 1 Apr 2025 – 31 Mar 2026), managed hosting service:\n\n- Auditor's opinion: controls were suitably designed and operated effectively, **except** that in 3 of 25 sampled staff departures, administrator access was removed more than 5 days after the leaving date.\n- Subservice organisations: *\"Database administration support is provided by Northgate DBA Services (fictional), operating from outside Nigeria, which has remote access to customer database servers.\"*\n- Complementary user entity controls: *\"Customers are responsible for managing their own application user accounts, including enforcing MFA for their users and reviewing their users' access.\"*"
+            },
+            {
+              "title": "Draft contract: security and data protection schedule",
+              "format": "markdown",
+              "body": "| Clause | Text (summary) |\n| --- | --- |\n| CL1 | Àpótí will process Customer personal data only on Customer's documented instructions and will keep it confidential. |\n| CL2 | Àpótí will notify Customer of a personal data breach within 30 days of confirming it. |\n| CL3 | Àpótí may engage sub-processors at its discretion. |\n| CL4 | Customer may audit Àpótí once a year on 30 days' notice, or may instead rely on Àpótí's current independent assurance report. |\n| CL5 | On termination, Àpótí will return Customer data in a standard format on request and delete it within 30 days, providing written certification of deletion. |\n| CL6 | Àpótí's total liability for data breaches is limited to one month's fees. |"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "tier",
+            "prompt": "Which tier should Àpótí be assigned?",
+            "points": 1,
+            "hints": [
+              "Apply Ọja's tiering criteria to the scenario."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "critical",
+                  "label": "Critical"
+                },
+                {
+                  "id": "high",
+                  "label": "High"
+                },
+                {
+                  "id": "medium",
+                  "label": "Medium"
+                },
+                {
+                  "id": "low",
+                  "label": "Low"
+                }
+              ]
+            }
+          },
+          {
+            "id": "red-flags",
+            "prompt": "Select **all** findings that are significant concerns requiring action before contract signature.",
+            "points": 3,
+            "hints": [
+              "Compare the questionnaire with the independent evidence.",
+              "Compare the supplier's commitments with Ọja's own obligations and policy."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "scope",
+                  "label": "The ISO/IEC 27001 certificate covers only the Lekki colocation facility, not the managed hosting service in Ikeja"
+                },
+                {
+                  "id": "subprocessor",
+                  "label": "A database support provider outside Nigeria has remote access to customer databases, though the questionnaire says there are no sub-processors"
+                },
+                {
+                  "id": "notification",
+                  "label": "Breach notification within 30 days"
+                },
+                {
+                  "id": "pentest",
+                  "label": "A high-severity penetration test finding from June 2025 is still open"
+                },
+                {
+                  "id": "encryption",
+                  "label": "Storage volumes are encrypted with AES-256"
+                },
+                {
+                  "id": "mfa",
+                  "label": "Hardware keys are used for administrator MFA"
+                },
+                {
+                  "id": "backup",
+                  "label": "Backups are replicated to a second Lagos data centre"
+                }
+              ]
+            }
+          },
+          {
+            "id": "clauses",
+            "prompt": "Assess each draft contract clause.",
+            "points": 3,
+            "hints": [
+              "Does each clause support Ọja's obligations and policies in the tiering document?"
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "cl1",
+                  "label": "CL1 Processing on documented instructions"
+                },
+                {
+                  "id": "cl2",
+                  "label": "CL2 Breach notification within 30 days"
+                },
+                {
+                  "id": "cl3",
+                  "label": "CL3 Sub-processors at supplier's discretion"
+                },
+                {
+                  "id": "cl4",
+                  "label": "CL4 Annual audit right or assurance report"
+                },
+                {
+                  "id": "cl5",
+                  "label": "CL5 Data return and certified deletion"
+                },
+                {
+                  "id": "cl6",
+                  "label": "CL6 Liability capped at one month's fees"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "assessment",
+                  "label": "Assessment",
+                  "options": [
+                    {
+                      "id": "adequate",
+                      "label": "Adequate"
+                    },
+                    {
+                      "id": "revise",
+                      "label": "Must be revised"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "role",
+            "prompt": "Under data protection law, what is Àpótí's role in relation to Ọja's customer data?",
+            "points": 1,
+            "hints": [
+              "Who decides why and how the data is processed?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "controller",
+                  "label": "Data controller"
+                },
+                {
+                  "id": "processor",
+                  "label": "Data processor"
+                },
+                {
+                  "id": "subject",
+                  "label": "Data subject"
+                },
+                {
+                  "id": "joint",
+                  "label": "Joint regulator"
+                }
+              ]
+            }
+          },
+          {
+            "id": "cuec",
+            "prompt": "According to the assurance report, which control must **Ọja** operate itself for the assurance to hold?",
+            "points": 1,
+            "hints": [
+              "Read the complementary user entity controls."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "dc-access",
+                  "label": "Physical access control at Àpótí's data centres"
+                },
+                {
+                  "id": "app-users",
+                  "label": "Managing and reviewing its own application users, including MFA"
+                },
+                {
+                  "id": "hsm",
+                  "label": "Operating Àpótí's hardware security modules"
+                },
+                {
+                  "id": "vetting",
+                  "label": "Background checks on Àpótí's staff"
+                }
+              ]
+            }
+          },
+          {
+            "id": "recommendation",
+            "prompt": "What should the GRC team recommend to the head of lending?",
+            "points": 2,
+            "hints": [
+              "The business owner decides; GRC gives a risk-based opinion with options."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "approve",
+                  "label": "Approve as proposed: the supplier is ISO certified"
+                },
+                {
+                  "id": "conditions",
+                  "label": "Approve only with conditions: revise CL2, CL3 and CL6; disclose and assess the sub-processor and obtain DPO approval for the transfer; obtain assurance covering the Ikeja hosting service; agree a dated fix for the open high finding; record residual risk with the business owner"
+                },
+                {
+                  "id": "reject",
+                  "label": "Reject: any supplier with an open finding must be refused"
+                },
+                {
+                  "id": "defer",
+                  "label": "Defer indefinitely until the supplier has no findings at all"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "tier": {
+            "type": "choice",
+            "correct": "critical",
+            "feedback": {
+              "correct": "Correct: customer financial data at scale and a critical service.",
+              "incorrect": "Apply the Critical criteria to 30,000 customers' data and a lending outage."
+            }
+          },
+          "red-flags": {
+            "type": "multi",
+            "correct": [
+              "scope",
+              "subprocessor",
+              "notification",
+              "pentest"
+            ],
+            "feedback": {
+              "correct": "Correct: four concerns, two of which contradict the self-reported questionnaire.",
+              "incorrect": "Look for gaps between the questionnaire and independent evidence, and between the supplier's terms and Ọja's obligations."
+            }
+          },
+          "clauses": {
+            "type": "grid",
+            "minCorrectRatio": 0.8,
+            "cells": {
+              "cl1": {
+                "assessment": [
+                  "adequate"
+                ]
+              },
+              "cl2": {
+                "assessment": [
+                  "revise"
+                ]
+              },
+              "cl3": {
+                "assessment": [
+                  "revise"
+                ]
+              },
+              "cl4": {
+                "assessment": [
+                  "adequate"
+                ]
+              },
+              "cl5": {
+                "assessment": [
+                  "adequate"
+                ]
+              },
+              "cl6": {
+                "assessment": [
+                  "revise"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Correct: notification, sub-processor and liability terms do not support Ọja's obligations.",
+              "incorrect": "Compare each clause with Ọja's 24-hour notification policy, its transfer rule and the size of the potential loss. At least 5 of 6 must match."
+            }
+          },
+          "role": {
+            "type": "choice",
+            "correct": "processor",
+            "feedback": {
+              "correct": "Correct: Àpótí processes data on Ọja's behalf; Ọja remains the controller and accountable.",
+              "incorrect": "Ọja decides the purpose and means of processing."
+            }
+          },
+          "cuec": {
+            "type": "choice",
+            "correct": "app-users",
+            "feedback": {
+              "correct": "Correct: the report assumes customers manage their own application users.",
+              "incorrect": "Read the complementary user entity controls in the assurance report summary."
+            }
+          },
+          "recommendation": {
+            "type": "choice",
+            "correct": "conditions",
+            "feedback": {
+              "correct": "Correct: a proportionate, conditional approval with a recorded residual risk.",
+              "incorrect": "Look for the option that addresses each concern without assuming certification answers everything."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "questions": [
+    {
+      "category": "fundamentals",
+      "difficulty": "foundation",
+      "objective": "Distinguish GRC disciplines",
+      "prompt": "Which activity is primarily a governance responsibility?",
+      "options": [
+        {
+          "text": "Running a vulnerability scan"
+        },
+        {
+          "text": "Setting the organisation's appetite for information security risk",
+          "correct": true
+        },
+        {
+          "text": "Collecting evidence for an auditor"
+        },
+        {
+          "text": "Rating the likelihood of a phishing scenario"
+        }
+      ],
+      "explanation": "Governance sets direction, appetite and accountability; the other activities support risk management and compliance.",
+      "key": "grc-001",
+      "kind": "single",
+      "tags": [
+        "fundamentals"
+      ]
+    },
+    {
+      "category": "fundamentals",
+      "difficulty": "foundation",
+      "objective": "Use the document hierarchy",
+      "prompt": "\"How to enrol a new staff member's phone in the authenticator app\" belongs in which document type?",
+      "options": [
+        {
+          "text": "Policy"
+        },
+        {
+          "text": "Standard"
+        },
+        {
+          "text": "Procedure",
+          "correct": true
+        },
+        {
+          "text": "Guideline"
+        }
+      ],
+      "explanation": "Step-by-step instructions are procedures.",
+      "key": "grc-002",
+      "kind": "single",
+      "tags": [
+        "fundamentals"
+      ]
+    },
+    {
+      "category": "fundamentals",
+      "difficulty": "intermediate",
+      "objective": "Apply accountability",
+      "prompt": "Who should normally own the risk of fraud through a lending application?",
+      "options": [
+        {
+          "text": "The CISO"
+        },
+        {
+          "text": "The business leader responsible for lending",
+          "correct": true
+        },
+        {
+          "text": "The IT service desk"
+        },
+        {
+          "text": "Internal audit"
+        }
+      ],
+      "explanation": "Business leaders own the risks their activities create; security advises and internal audit provides assurance.",
+      "key": "grc-003",
+      "kind": "single",
+      "tags": [
+        "fundamentals"
+      ]
+    },
+    {
+      "category": "fundamentals",
+      "difficulty": "intermediate",
+      "objective": "Apply segregation of duties",
+      "prompt": "In a 12-person company one administrator must both grant and remove system access. Which is the best compensating control?",
+      "options": [
+        {
+          "text": "Ask the administrator to be careful"
+        },
+        {
+          "text": "A monthly independent review of access changes by a manager outside IT",
+          "correct": true
+        },
+        {
+          "text": "Remove all logging to protect privacy"
+        },
+        {
+          "text": "Document that segregation is impossible and take no action"
+        }
+      ],
+      "explanation": "Where full segregation is impossible, an independent review compensates.",
+      "key": "grc-004",
+      "kind": "single",
+      "tags": [
+        "fundamentals"
+      ]
+    },
+    {
+      "category": "fundamentals",
+      "difficulty": "intermediate",
+      "objective": "Distinguish metric types",
+      "prompt": "Which TWO are key risk indicators?",
+      "kind": "multiple",
+      "options": [
+        {
+          "text": "Number of critical vulnerabilities older than 30 days on internet-facing systems",
+          "correct": true
+        },
+        {
+          "text": "Number of privileged accounts without MFA",
+          "correct": true
+        },
+        {
+          "text": "Number of awareness posters printed"
+        },
+        {
+          "text": "Number of firewall vendors evaluated"
+        }
+      ],
+      "explanation": "KRIs signal rising exposure; output counts do not.",
+      "key": "grc-005",
+      "tags": [
+        "fundamentals"
+      ]
+    },
+    {
+      "category": "fundamentals",
+      "difficulty": "foundation",
+      "objective": "Build an obligations register",
+      "prompt": "A customer contract requires notification of security incidents within 24 hours. Where should this be recorded?",
+      "options": [
+        {
+          "text": "In the obligations register, with an owner and evidence of compliance",
+          "correct": true
+        },
+        {
+          "text": "Only in the contract file"
+        },
+        {
+          "text": "In the asset inventory"
+        },
+        {
+          "text": "Nowhere; contractual terms are not compliance obligations"
+        }
+      ],
+      "explanation": "Contracts are a source of obligations and need owners and evidence.",
+      "key": "grc-006",
+      "kind": "single",
+      "tags": [
+        "fundamentals"
+      ]
+    },
+    {
+      "category": "risk",
+      "difficulty": "foundation",
+      "objective": "Distinguish risk components",
+      "prompt": "\"Backups have never been test-restored\" is best described as a:",
+      "options": [
+        {
+          "text": "Threat"
+        },
+        {
+          "text": "Vulnerability",
+          "correct": true
+        },
+        {
+          "text": "Impact"
+        },
+        {
+          "text": "Asset"
+        }
+      ],
+      "explanation": "It is a weakness that a threat such as ransomware could exploit.",
+      "key": "grc-007",
+      "kind": "single",
+      "tags": [
+        "risk"
+      ]
+    },
+    {
+      "category": "risk",
+      "difficulty": "intermediate",
+      "objective": "Rate risk",
+      "prompt": "Why should a 5×5 risk score of 20 not be described as \"twice as risky\" as a score of 10?",
+      "options": [
+        {
+          "text": "Because scores above 15 are capped"
+        },
+        {
+          "text": "Because the scale is ordinal: the numbers rank risks but do not measure them proportionally",
+          "correct": true
+        },
+        {
+          "text": "Because likelihood and impact must be added, not multiplied"
+        },
+        {
+          "text": "Because scores must be expressed in naira"
+        }
+      ],
+      "explanation": "Qualitative matrices rank risks; arithmetic on them is limited.",
+      "key": "grc-008",
+      "kind": "single",
+      "tags": [
+        "risk"
+      ]
+    },
+    {
+      "category": "risk",
+      "difficulty": "intermediate",
+      "objective": "Distinguish inherent and residual risk",
+      "prompt": "A risk is rated 20 before controls and 8 after MFA is enforced. What is 8?",
+      "options": [
+        {
+          "text": "The inherent risk"
+        },
+        {
+          "text": "The residual risk",
+          "correct": true
+        },
+        {
+          "text": "The risk appetite"
+        },
+        {
+          "text": "The target risk, regardless of evidence"
+        }
+      ],
+      "explanation": "Residual risk is the rating after current controls, valid only if the controls are proven to work.",
+      "key": "grc-009",
+      "kind": "single",
+      "tags": [
+        "risk"
+      ]
+    },
+    {
+      "category": "risk",
+      "difficulty": "foundation",
+      "objective": "Select treatments",
+      "prompt": "A company retires an unsupported system rather than securing it. Which treatment is this?",
+      "options": [
+        {
+          "text": "Treat"
+        },
+        {
+          "text": "Transfer"
+        },
+        {
+          "text": "Avoid",
+          "correct": true
+        },
+        {
+          "text": "Accept"
+        }
+      ],
+      "explanation": "Stopping the activity avoids the risk.",
+      "key": "grc-010",
+      "kind": "single",
+      "tags": [
+        "risk"
+      ]
+    },
+    {
+      "category": "risk",
+      "difficulty": "advanced",
+      "objective": "Apply risk appetite",
+      "prompt": "The board's tolerance is that no customer-data risk may stay above 9 for more than 90 days. A risk rated 16 has had no treatment plan for five months. What should happen?",
+      "options": [
+        {
+          "text": "Lower the rating to 9 so it fits the tolerance"
+        },
+        {
+          "text": "Escalate to the authority named in the governance framework for a treatment decision or formal acceptance",
+          "correct": true
+        },
+        {
+          "text": "Remove it from the register"
+        },
+        {
+          "text": "Wait for the annual review"
+        }
+      ],
+      "explanation": "Breaches of tolerance must be escalated; ratings should never be adjusted to fit appetite.",
+      "key": "grc-011",
+      "kind": "single",
+      "tags": [
+        "risk"
+      ]
+    },
+    {
+      "category": "risk",
+      "difficulty": "intermediate",
+      "objective": "Write risk scenarios",
+      "prompt": "Which TWO elements are missing from the risk statement \"Ransomware\"?",
+      "kind": "multiple",
+      "options": [
+        {
+          "text": "The vulnerability that would be exploited",
+          "correct": true
+        },
+        {
+          "text": "The asset affected and the business impact",
+          "correct": true
+        },
+        {
+          "text": "The name of the ransomware group's leader"
+        },
+        {
+          "text": "The colour used on the heat map"
+        }
+      ],
+      "explanation": "A rateable scenario links threat, vulnerability, asset and impact.",
+      "key": "grc-012",
+      "tags": [
+        "risk"
+      ]
+    },
+    {
+      "category": "csf",
+      "difficulty": "foundation",
+      "objective": "Recall CSF Functions",
+      "prompt": "Which list contains the six NIST CSF 2.0 Functions?",
+      "options": [
+        {
+          "text": "Govern, Identify, Protect, Detect, Respond, Recover",
+          "correct": true
+        },
+        {
+          "text": "Plan, Do, Check, Act, Review, Improve"
+        },
+        {
+          "text": "Identify, Protect, Detect, Respond, Recover, Report"
+        },
+        {
+          "text": "Prevent, Detect, Correct, Deter, Recover, Comply"
+        }
+      ],
+      "explanation": "CSF 2.0 added Govern to the five Functions of version 1.1.",
+      "key": "grc-013",
+      "kind": "single",
+      "tags": [
+        "csf"
+      ]
+    },
+    {
+      "category": "csf",
+      "difficulty": "intermediate",
+      "objective": "Classify outcomes by Function",
+      "prompt": "Establishing roles, responsibilities and authorities for cybersecurity risk management falls under which CSF 2.0 Function?",
+      "options": [
+        {
+          "text": "Govern",
+          "correct": true
+        },
+        {
+          "text": "Identify"
+        },
+        {
+          "text": "Protect"
+        },
+        {
+          "text": "Respond"
+        }
+      ],
+      "explanation": "GV.RR (Roles, Responsibilities, and Authorities) is a Govern Category.",
+      "key": "grc-014",
+      "kind": "single",
+      "tags": [
+        "csf"
+      ]
+    },
+    {
+      "category": "csf",
+      "difficulty": "intermediate",
+      "objective": "Use profiles",
+      "prompt": "What is the main purpose of comparing a Current Profile with a Target Profile?",
+      "options": [
+        {
+          "text": "To calculate a certification score"
+        },
+        {
+          "text": "To identify gaps that form the basis of a prioritised action plan",
+          "correct": true
+        },
+        {
+          "text": "To prove compliance with ISO/IEC 27001"
+        },
+        {
+          "text": "To rank the organisation against competitors"
+        }
+      ],
+      "explanation": "The gap between profiles drives the improvement plan.",
+      "key": "grc-015",
+      "kind": "single",
+      "tags": [
+        "csf"
+      ]
+    },
+    {
+      "category": "csf",
+      "difficulty": "advanced",
+      "objective": "Interpret Tiers",
+      "prompt": "Which statement about CSF Tiers is accurate?",
+      "options": [
+        {
+          "text": "Every organisation should aim for Tier 4"
+        },
+        {
+          "text": "Tiers are the same as CSF Functions"
+        },
+        {
+          "text": "Tiers characterise the rigour of risk governance and management practices and should be chosen to suit the organisation's risk",
+          "correct": true
+        },
+        {
+          "text": "Tiers are awarded by NIST after an audit"
+        }
+      ],
+      "explanation": "Tiers describe practice rigour; they are not a mandatory maturity target or a certification.",
+      "key": "grc-016",
+      "kind": "single",
+      "tags": [
+        "csf"
+      ]
+    },
+    {
+      "category": "csf",
+      "difficulty": "intermediate",
+      "objective": "Navigate the CSF Core",
+      "prompt": "Where would you find illustrative actions showing how an organisation might achieve a specific CSF 2.0 Subcategory?",
+      "options": [
+        {
+          "text": "In the Tiers"
+        },
+        {
+          "text": "In the Implementation Examples published by NIST",
+          "correct": true
+        },
+        {
+          "text": "In the Statement of Applicability"
+        },
+        {
+          "text": "In CIS Implementation Group 1"
+        }
+      ],
+      "explanation": "NIST publishes Implementation Examples and Informative References online alongside the Core.",
+      "key": "grc-017",
+      "kind": "single",
+      "tags": [
+        "csf"
+      ]
+    },
+    {
+      "category": "csf",
+      "difficulty": "intermediate",
+      "objective": "Set target profiles",
+      "prompt": "A small accounting firm with no software developers is building its first Target Profile. What is the best approach?",
+      "options": [
+        {
+          "text": "Set the highest rating for every Subcategory"
+        },
+        {
+          "text": "Copy a large bank's Target Profile"
+        },
+        {
+          "text": "Set targets based on its own risks, obligations and appetite, accepting lower targets where outcomes matter less",
+          "correct": true
+        },
+        {
+          "text": "Leave Govern out because the firm is small"
+        }
+      ],
+      "explanation": "Targets come from the organisation's own risk context.",
+      "key": "grc-018",
+      "kind": "single",
+      "tags": [
+        "csf"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "foundation",
+      "objective": "Explain certification accurately",
+      "prompt": "Which statement about ISO/IEC 27001 certification is correct?",
+      "options": [
+        {
+          "text": "ISO certifies organisations directly"
+        },
+        {
+          "text": "Accredited certification bodies certify organisations after an external audit",
+          "correct": true
+        },
+        {
+          "text": "Completing a training course makes a person ISO 27001 certified"
+        },
+        {
+          "text": "Certification is permanent once awarded"
+        }
+      ],
+      "explanation": "Certification bodies certify; accreditation bodies accredit them; certificates have a limited life with surveillance audits.",
+      "key": "grc-019",
+      "kind": "single",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "intermediate",
+      "objective": "Review an SoA",
+      "prompt": "Which SoA entry is most likely to be raised as a finding?",
+      "options": [
+        {
+          "text": "Outsourced development excluded because no development is outsourced"
+        },
+        {
+          "text": "Remote working controls excluded because \"all staff work on site\", while staff work from home two days a week",
+          "correct": true
+        },
+        {
+          "text": "Backup control included to treat a data-loss risk, with dated restore records"
+        },
+        {
+          "text": "Policy control included with a recent approval date"
+        }
+      ],
+      "explanation": "Exclusions must be credible for the actual scope.",
+      "key": "grc-020",
+      "kind": "single",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "intermediate",
+      "objective": "Explain the role of Annex A",
+      "prompt": "How should Annex A be used in a risk-based ISMS?",
+      "options": [
+        {
+          "text": "Implement all 93 controls regardless of risk"
+        },
+        {
+          "text": "Select controls to treat assessed risks, then compare with Annex A to check nothing necessary was overlooked",
+          "correct": true
+        },
+        {
+          "text": "Ignore it, since it is optional guidance only"
+        },
+        {
+          "text": "Use it instead of a risk assessment"
+        }
+      ],
+      "explanation": "Controls follow from risk treatment; Annex A is a completeness cross-check.",
+      "key": "grc-021",
+      "kind": "single",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "foundation",
+      "objective": "Describe ISMS scope",
+      "prompt": "Why is ISMS scope important to customers reading a certificate?",
+      "options": [
+        {
+          "text": "It shows the price of the certification"
+        },
+        {
+          "text": "It shows which services, locations and activities the certification actually covers",
+          "correct": true
+        },
+        {
+          "text": "It lists the organisation's customers"
+        },
+        {
+          "text": "It replaces the need for a risk assessment"
+        }
+      ],
+      "explanation": "A certificate covers only its stated scope.",
+      "key": "grc-022",
+      "kind": "single",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "intermediate",
+      "objective": "Describe the certification cycle",
+      "prompt": "What normally happens in years two and three of an ISO/IEC 27001 certification cycle?",
+      "options": [
+        {
+          "text": "Nothing until recertification"
+        },
+        {
+          "text": "Surveillance audits covering parts of the ISMS",
+          "correct": true
+        },
+        {
+          "text": "A new Stage 1 audit each year"
+        },
+        {
+          "text": "Self-assessment submitted to ISO"
+        }
+      ],
+      "explanation": "Certification bodies perform periodic surveillance audits between certification and recertification.",
+      "key": "grc-023",
+      "kind": "single",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "advanced",
+      "objective": "Distinguish correction and corrective action",
+      "prompt": "An internal audit finds that two leavers kept access for a month because HR emails to IT were missed. Which is a corrective action rather than a correction?",
+      "options": [
+        {
+          "text": "Disabling the two accounts immediately"
+        },
+        {
+          "text": "Triggering account disablement automatically from the HR system's leaver record",
+          "correct": true
+        },
+        {
+          "text": "Recording the nonconformity"
+        },
+        {
+          "text": "Apologising to the auditor"
+        }
+      ],
+      "explanation": "Corrective action removes the cause; correction fixes the instance.",
+      "key": "grc-024",
+      "kind": "single",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "iso27001",
+      "difficulty": "intermediate",
+      "objective": "Explain management review",
+      "prompt": "Which TWO are typical outputs of an ISMS management review?",
+      "kind": "multiple",
+      "options": [
+        {
+          "text": "Decisions on improvement opportunities",
+          "correct": true
+        },
+        {
+          "text": "Decisions on resources and changes to the ISMS",
+          "correct": true
+        },
+        {
+          "text": "A new certificate"
+        },
+        {
+          "text": "Accreditation of the internal auditor"
+        }
+      ],
+      "explanation": "Management review produces leadership decisions, not certificates.",
+      "key": "grc-025",
+      "tags": [
+        "iso27001"
+      ]
+    },
+    {
+      "category": "controls",
+      "difficulty": "foundation",
+      "objective": "Describe CIS Implementation Groups",
+      "prompt": "A small organisation with limited IT staff is starting with the CIS Controls. Where should it begin?",
+      "options": [
+        {
+          "text": "Implementation Group 1",
+          "correct": true
+        },
+        {
+          "text": "Implementation Group 3"
+        },
+        {
+          "text": "Control 18 Penetration Testing"
+        },
+        {
+          "text": "Whichever Safeguards are cheapest"
+        }
+      ],
+      "explanation": "IG1 is essential cyber hygiene and the recommended starting point.",
+      "key": "grc-026",
+      "kind": "single",
+      "tags": [
+        "controls"
+      ]
+    },
+    {
+      "category": "controls",
+      "difficulty": "intermediate",
+      "objective": "Explain CIS ordering",
+      "prompt": "Why do inventories of enterprise and software assets come first in the CIS Controls?",
+      "options": [
+        {
+          "text": "They are the cheapest controls"
+        },
+        {
+          "text": "You cannot secure, monitor or patch assets you do not know you have",
+          "correct": true
+        },
+        {
+          "text": "Auditors only test the first two Controls"
+        },
+        {
+          "text": "They replace the need for access control"
+        }
+      ],
+      "explanation": "Visibility underpins every other control.",
+      "key": "grc-027",
+      "kind": "single",
+      "tags": [
+        "controls"
+      ]
+    },
+    {
+      "category": "controls",
+      "difficulty": "intermediate",
+      "objective": "Map controls responsibly",
+      "prompt": "A CIS Safeguard and a CSF Subcategory overlap but the CSF outcome also covers identity proofing. How should the mapping be described?",
+      "options": [
+        {
+          "text": "Equivalent"
+        },
+        {
+          "text": "Partial (the Safeguard is a subset of the outcome)",
+          "correct": true
+        },
+        {
+          "text": "Unrelated"
+        },
+        {
+          "text": "Superset"
+        }
+      ],
+      "explanation": "State the relationship; most mappings are partial.",
+      "key": "grc-028",
+      "kind": "single",
+      "tags": [
+        "controls"
+      ]
+    },
+    {
+      "category": "controls",
+      "difficulty": "foundation",
+      "objective": "Classify controls",
+      "prompt": "Which is a corrective control?",
+      "options": [
+        {
+          "text": "Multi-factor authentication"
+        },
+        {
+          "text": "Log monitoring alerts"
+        },
+        {
+          "text": "Restoring systems from tested backups after ransomware",
+          "correct": true
+        },
+        {
+          "text": "A warning banner on login"
+        }
+      ],
+      "explanation": "Corrective controls limit damage and restore operations.",
+      "key": "grc-029",
+      "kind": "single",
+      "tags": [
+        "controls"
+      ]
+    },
+    {
+      "category": "controls",
+      "difficulty": "intermediate",
+      "objective": "Define control ownership",
+      "prompt": "What is the difference between a control owner and a control operator?",
+      "options": [
+        {
+          "text": "There is none"
+        },
+        {
+          "text": "The owner is accountable that the control exists and works; the operator performs it",
+          "correct": true
+        },
+        {
+          "text": "The operator approves the control; the owner performs it"
+        },
+        {
+          "text": "Owners are always external auditors"
+        }
+      ],
+      "explanation": "Separating accountability from performance supports segregation of duties.",
+      "key": "grc-030",
+      "kind": "single",
+      "tags": [
+        "controls"
+      ]
+    },
+    {
+      "category": "controls",
+      "difficulty": "advanced",
+      "objective": "Design compensating controls",
+      "prompt": "A legacy application cannot support MFA. Which is the strongest compensating control?",
+      "options": [
+        {
+          "text": "Longer passwords only"
+        },
+        {
+          "text": "Access only through a jump server that enforces MFA, with session recording reviewed weekly, approved as a time-limited exception",
+          "correct": true
+        },
+        {
+          "text": "Hiding the application's URL"
+        },
+        {
+          "text": "Annual awareness training"
+        }
+      ],
+      "explanation": "A compensating control should address the same risk to a similar degree and be formally approved and reviewed.",
+      "key": "grc-031",
+      "kind": "single",
+      "tags": [
+        "controls"
+      ]
+    },
+    {
+      "category": "policy",
+      "difficulty": "foundation",
+      "objective": "Write testable policy statements",
+      "prompt": "Which policy statement is best written?",
+      "options": [
+        {
+          "text": "Appropriate security should be applied where possible"
+        },
+        {
+          "text": "Remote access to company systems must require multi-factor authentication",
+          "correct": true
+        },
+        {
+          "text": "Use the VPN product currently installed"
+        },
+        {
+          "text": "Staff are encouraged to think about security"
+        }
+      ],
+      "explanation": "It is mandatory, technology-neutral and testable.",
+      "key": "grc-032",
+      "kind": "single",
+      "tags": [
+        "policy"
+      ]
+    },
+    {
+      "category": "policy",
+      "difficulty": "intermediate",
+      "objective": "Manage exceptions",
+      "prompt": "Which policy exception record is complete?",
+      "options": [
+        {
+          "text": "\"Finance cannot use MFA.\""
+        },
+        {
+          "text": "\"Approved by the requester; no expiry.\""
+        },
+        {
+          "text": "Requirement not met, reason, resulting risk, compensating controls, approver at the right level, expiry date and remediation plan",
+          "correct": true
+        },
+        {
+          "text": "A verbal agreement with the CISO"
+        }
+      ],
+      "explanation": "Exceptions need risk, compensating controls, authorised approval and an expiry.",
+      "key": "grc-033",
+      "kind": "single",
+      "tags": [
+        "policy"
+      ]
+    },
+    {
+      "category": "policy",
+      "difficulty": "intermediate",
+      "objective": "Maintain version control",
+      "prompt": "Why keep previous versions of a security policy after it is updated?",
+      "options": [
+        {
+          "text": "To reduce storage costs"
+        },
+        {
+          "text": "To show what the policy required at a given time, for example during an investigation or dispute",
+          "correct": true
+        },
+        {
+          "text": "Because policies may never be deleted by law in every country"
+        },
+        {
+          "text": "So staff can choose which version to follow"
+        }
+      ],
+      "explanation": "Archived versions support investigations, audits and disputes.",
+      "key": "grc-034",
+      "kind": "single",
+      "tags": [
+        "policy"
+      ]
+    },
+    {
+      "category": "policy",
+      "difficulty": "intermediate",
+      "objective": "Maintain traceability",
+      "prompt": "In a traceability matrix, a technical control exists that no policy or standard requires. What does this suggest?",
+      "options": [
+        {
+          "text": "The policy set is complete"
+        },
+        {
+          "text": "Work that nobody mandated, which may be unfunded, inconsistent or unknown to governance",
+          "correct": true
+        },
+        {
+          "text": "The control should be deleted immediately"
+        },
+        {
+          "text": "The control is automatically compliant"
+        }
+      ],
+      "explanation": "Controls without policy backing are a traceability gap in the other direction.",
+      "key": "grc-035",
+      "kind": "single",
+      "tags": [
+        "policy"
+      ]
+    },
+    {
+      "category": "policy",
+      "difficulty": "foundation",
+      "objective": "Embed security in the lifecycle",
+      "prompt": "When is it cheapest to address security requirements for a new system?",
+      "options": [
+        {
+          "text": "During design or procurement",
+          "correct": true
+        },
+        {
+          "text": "At go-live"
+        },
+        {
+          "text": "After the first incident"
+        },
+        {
+          "text": "During the annual audit"
+        }
+      ],
+      "explanation": "Requirements defined early avoid costly redesign.",
+      "key": "grc-036",
+      "kind": "single",
+      "tags": [
+        "policy"
+      ]
+    },
+    {
+      "category": "policy",
+      "difficulty": "intermediate",
+      "objective": "Apply architecture governance",
+      "prompt": "Which TWO are typical inputs to a security architecture review?",
+      "kind": "multiple",
+      "options": [
+        {
+          "text": "Approved security patterns and principles",
+          "correct": true
+        },
+        {
+          "text": "Applicable security standards, such as logging and encryption",
+          "correct": true
+        },
+        {
+          "text": "The vendor's marketing brochure alone"
+        },
+        {
+          "text": "The project's social media plan"
+        }
+      ],
+      "explanation": "Designs are reviewed against principles, patterns and standards.",
+      "key": "grc-037",
+      "tags": [
+        "policy"
+      ]
+    },
+    {
+      "category": "audit",
+      "difficulty": "foundation",
+      "objective": "Judge evidence quality",
+      "prompt": "Which evidence is most reliable for showing an access review took place last quarter?",
+      "options": [
+        {
+          "text": "An undated screenshot"
+        },
+        {
+          "text": "The IT manager's verbal assurance"
+        },
+        {
+          "text": "A system-generated review record showing reviewer, date and decisions",
+          "correct": true
+        },
+        {
+          "text": "The access control policy"
+        }
+      ],
+      "explanation": "Reliable, dated, system-generated records are strongest.",
+      "key": "grc-038",
+      "kind": "single",
+      "tags": [
+        "audit"
+      ]
+    },
+    {
+      "category": "audit",
+      "difficulty": "intermediate",
+      "objective": "Distinguish design and operating effectiveness",
+      "prompt": "A quarterly access review is performed faithfully but covers only email accounts, while the key risk is core banking access. This is a:",
+      "options": [
+        {
+          "text": "Design deficiency",
+          "correct": true
+        },
+        {
+          "text": "Operating deficiency"
+        },
+        {
+          "text": "Correction"
+        },
+        {
+          "text": "Observation with no risk"
+        }
+      ],
+      "explanation": "The control, even when performed, does not address the risk.",
+      "key": "grc-039",
+      "kind": "single",
+      "tags": [
+        "audit"
+      ]
+    },
+    {
+      "category": "audit",
+      "difficulty": "intermediate",
+      "objective": "Sample from complete populations",
+      "prompt": "To test whether all joiners received approved access, which population should you sample from?",
+      "options": [
+        {
+          "text": "Access tickets in the service desk queue"
+        },
+        {
+          "text": "The list of joiners from the HR system",
+          "correct": true
+        },
+        {
+          "text": "Accounts the IT manager remembers creating"
+        },
+        {
+          "text": "Last year's audit sample"
+        }
+      ],
+      "explanation": "The population must not depend on the control being tested.",
+      "key": "grc-040",
+      "kind": "single",
+      "tags": [
+        "audit"
+      ]
+    },
+    {
+      "category": "audit",
+      "difficulty": "foundation",
+      "objective": "Choose testing techniques",
+      "prompt": "Independently recomputing which leavers still have active accounts is an example of:",
+      "options": [
+        {
+          "text": "Inquiry"
+        },
+        {
+          "text": "Observation"
+        },
+        {
+          "text": "Re-performance",
+          "correct": true
+        },
+        {
+          "text": "Walkthrough"
+        }
+      ],
+      "explanation": "Re-performance repeats the control independently and is the strongest technique.",
+      "key": "grc-041",
+      "kind": "single",
+      "tags": [
+        "audit"
+      ]
+    },
+    {
+      "category": "audit",
+      "difficulty": "intermediate",
+      "objective": "Write findings",
+      "prompt": "Which element of an audit finding explains *why* the condition occurred?",
+      "options": [
+        {
+          "text": "Criteria"
+        },
+        {
+          "text": "Cause",
+          "correct": true
+        },
+        {
+          "text": "Effect"
+        },
+        {
+          "text": "Recommendation"
+        }
+      ],
+      "explanation": "Cause leads to an effective corrective action.",
+      "key": "grc-042",
+      "kind": "single",
+      "tags": [
+        "audit"
+      ]
+    },
+    {
+      "category": "audit",
+      "difficulty": "advanced",
+      "objective": "Track corrective actions",
+      "prompt": "The same access-review finding has appeared in three consecutive annual audits. What does this most strongly indicate?",
+      "options": [
+        {
+          "text": "The auditors are too strict"
+        },
+        {
+          "text": "Corrective actions are not addressing the root cause, which is a governance issue to report to the board",
+          "correct": true
+        },
+        {
+          "text": "The finding should be downgraded"
+        },
+        {
+          "text": "The control should be removed from scope"
+        }
+      ],
+      "explanation": "Repeat findings show that corrective action is ineffective.",
+      "key": "grc-043",
+      "kind": "single",
+      "tags": [
+        "audit"
+      ]
+    },
+    {
+      "category": "third-party",
+      "difficulty": "foundation",
+      "objective": "Tier suppliers",
+      "prompt": "Which supplier most needs the deepest due diligence?",
+      "options": [
+        {
+          "text": "An office stationery vendor"
+        },
+        {
+          "text": "A hosting provider storing all customer financial records",
+          "correct": true
+        },
+        {
+          "text": "A catering company"
+        },
+        {
+          "text": "A marketing agency with no data access"
+        }
+      ],
+      "explanation": "Tier by data sensitivity, access and criticality.",
+      "key": "grc-044",
+      "kind": "single",
+      "tags": [
+        "third-party"
+      ]
+    },
+    {
+      "category": "third-party",
+      "difficulty": "intermediate",
+      "objective": "Evaluate assurance",
+      "prompt": "When reading a supplier's independent assurance report, what are complementary user entity controls?",
+      "options": [
+        {
+          "text": "Controls the auditor performed"
+        },
+        {
+          "text": "Controls the supplier expects its customers to operate for the assurance to hold",
+          "correct": true
+        },
+        {
+          "text": "Controls at the supplier's sub-processors"
+        },
+        {
+          "text": "Controls that failed testing"
+        }
+      ],
+      "explanation": "Customers must operate these themselves.",
+      "key": "grc-045",
+      "kind": "single",
+      "tags": [
+        "third-party"
+      ]
+    },
+    {
+      "category": "third-party",
+      "difficulty": "intermediate",
+      "objective": "Identify red flags",
+      "prompt": "A supplier's questionnaire says it uses no sub-processors, but its assurance report names an offshore database support company with remote access. What should you do?",
+      "options": [
+        {
+          "text": "Trust the questionnaire, since the supplier wrote it"
+        },
+        {
+          "text": "Treat the contradiction as a red flag; require disclosure and assessment of the sub-processor and check transfer requirements",
+          "correct": true
+        },
+        {
+          "text": "Ignore it if the supplier is ISO certified"
+        },
+        {
+          "text": "Reject all offshore suppliers automatically"
+        }
+      ],
+      "explanation": "Independent evidence that contradicts self-reported answers needs follow-up.",
+      "key": "grc-046",
+      "kind": "single",
+      "tags": [
+        "third-party"
+      ]
+    },
+    {
+      "category": "third-party",
+      "difficulty": "intermediate",
+      "objective": "Specify contract clauses",
+      "prompt": "Which TWO clauses most directly support a clean exit from a supplier?",
+      "kind": "multiple",
+      "options": [
+        {
+          "text": "Return of data in a usable format",
+          "correct": true
+        },
+        {
+          "text": "Certified deletion of data within a defined period",
+          "correct": true
+        },
+        {
+          "text": "A logo usage agreement"
+        },
+        {
+          "text": "An annual price review"
+        }
+      ],
+      "explanation": "Exit clauses cover data return and deletion.",
+      "key": "grc-047",
+      "tags": [
+        "third-party"
+      ]
+    },
+    {
+      "category": "third-party",
+      "difficulty": "advanced",
+      "objective": "Make supplier recommendations",
+      "prompt": "Due diligence on a critical supplier finds a weak notification clause and an open high-severity finding, but otherwise strong controls. What is the most appropriate recommendation?",
+      "options": [
+        {
+          "text": "Approve as proposed"
+        },
+        {
+          "text": "Approve with conditions: contract changes, a dated remediation plan, and residual risk recorded with the business owner",
+          "correct": true
+        },
+        {
+          "text": "Reject the supplier permanently"
+        },
+        {
+          "text": "Ask the supplier to self-certify that the issues are fixed"
+        }
+      ],
+      "explanation": "Proportionate, conditional approval with recorded residual risk is usually best.",
+      "key": "grc-048",
+      "kind": "single",
+      "tags": [
+        "third-party"
+      ]
+    },
+    {
+      "category": "privacy",
+      "difficulty": "foundation",
+      "objective": "Explain controller and processor roles",
+      "prompt": "Who decides the purposes and means of processing personal data?",
+      "options": [
+        {
+          "text": "The data controller",
+          "correct": true
+        },
+        {
+          "text": "The data processor"
+        },
+        {
+          "text": "The data subject"
+        },
+        {
+          "text": "The hosting provider"
+        }
+      ],
+      "explanation": "Controllers decide why and how; processors act on their instructions.",
+      "key": "grc-049",
+      "kind": "single",
+      "tags": [
+        "privacy"
+      ]
+    },
+    {
+      "category": "privacy",
+      "difficulty": "intermediate",
+      "objective": "Recall NDPA breach notification",
+      "prompt": "Under the Nigeria Data Protection Act 2023, within what period must a controller notify the Commission of a personal data breach likely to result in risk to individuals' rights?",
+      "options": [
+        {
+          "text": "24 hours"
+        },
+        {
+          "text": "72 hours",
+          "correct": true
+        },
+        {
+          "text": "30 days"
+        },
+        {
+          "text": "Only at the next annual filing"
+        }
+      ],
+      "explanation": "The Act requires notification to the NDPC within 72 hours of becoming aware of such a breach.",
+      "key": "grc-050",
+      "kind": "single",
+      "tags": [
+        "privacy"
+      ]
+    },
+    {
+      "category": "privacy",
+      "difficulty": "intermediate",
+      "objective": "Apply privacy principles",
+      "prompt": "A loan app collects customers' entire phone contact lists \"in case they are useful later\". Which principle is most clearly breached?",
+      "options": [
+        {
+          "text": "Accuracy"
+        },
+        {
+          "text": "Data minimisation and purpose limitation",
+          "correct": true
+        },
+        {
+          "text": "Availability"
+        },
+        {
+          "text": "Non-repudiation"
+        }
+      ],
+      "explanation": "Collect only what is needed for specified purposes.",
+      "key": "grc-051",
+      "kind": "single",
+      "tags": [
+        "privacy"
+      ]
+    },
+    {
+      "category": "privacy",
+      "difficulty": "intermediate",
+      "objective": "Identify DPIA triggers",
+      "prompt": "When should a data protection impact assessment be carried out?",
+      "options": [
+        {
+          "text": "After a breach only"
+        },
+        {
+          "text": "Before processing that is likely to result in high risk to individuals",
+          "correct": true
+        },
+        {
+          "text": "Only when the regulator requests one"
+        },
+        {
+          "text": "Every five years for all processing"
+        }
+      ],
+      "explanation": "DPIAs assess and reduce risk before high-risk processing starts.",
+      "key": "grc-052",
+      "kind": "single",
+      "tags": [
+        "privacy"
+      ]
+    },
+    {
+      "category": "privacy",
+      "difficulty": "foundation",
+      "objective": "Explain accountability for processors",
+      "prompt": "A processor suffers a breach of a controller's customer data. Which statement is correct?",
+      "options": [
+        {
+          "text": "Only the processor is accountable"
+        },
+        {
+          "text": "The controller remains accountable and must have chosen and contracted the processor appropriately",
+          "correct": true
+        },
+        {
+          "text": "Nobody is accountable because the breach was external"
+        },
+        {
+          "text": "The data subjects are accountable for sharing their data"
+        }
+      ],
+      "explanation": "Controllers remain accountable for personal data they entrust to processors.",
+      "key": "grc-053",
+      "kind": "single",
+      "tags": [
+        "privacy"
+      ]
+    },
+    {
+      "category": "reporting",
+      "difficulty": "foundation",
+      "objective": "Structure executive reports",
+      "prompt": "What should open an executive risk report?",
+      "options": [
+        {
+          "text": "A description of the assessment method"
+        },
+        {
+          "text": "The headline conclusion and any decision required",
+          "correct": true
+        },
+        {
+          "text": "A list of all control identifiers"
+        },
+        {
+          "text": "The full risk register"
+        }
+      ],
+      "explanation": "Lead with the conclusion; detail goes in appendices.",
+      "key": "grc-054",
+      "kind": "single",
+      "tags": [
+        "reporting"
+      ]
+    },
+    {
+      "category": "reporting",
+      "difficulty": "intermediate",
+      "objective": "Express impact in business terms",
+      "prompt": "Which is the best way to describe a risk to a board?",
+      "options": [
+        {
+          "text": "\"CVE scores on three hosts exceed 9.0\""
+        },
+        {
+          "text": "\"A likely compromise of core banking could expose 30,000 customers' data and trigger regulatory sanction; ₦18m over six months brings it within appetite\"",
+          "correct": true
+        },
+        {
+          "text": "\"We are very worried about hackers\""
+        },
+        {
+          "text": "\"PR.AA is at Tier 1\""
+        }
+      ],
+      "explanation": "Boards decide on impact, cost and options, with honest likelihood.",
+      "key": "grc-055",
+      "kind": "single",
+      "tags": [
+        "reporting"
+      ]
+    },
+    {
+      "category": "reporting",
+      "difficulty": "intermediate",
+      "objective": "Prioritise remediation",
+      "prompt": "Which remediation action should usually come first?",
+      "options": [
+        {
+          "text": "A large, expensive project that closes many low-rated gaps"
+        },
+        {
+          "text": "A low-cost action that substantially reduces a risk above appetite, such as enabling already-licensed MFA",
+          "correct": true
+        },
+        {
+          "text": "Rewriting all policies"
+        },
+        {
+          "text": "Buying a GRC platform"
+        }
+      ],
+      "explanation": "Prioritise by risk reduction per unit of effort.",
+      "key": "grc-056",
+      "kind": "single",
+      "tags": [
+        "reporting"
+      ]
+    },
+    {
+      "category": "reporting",
+      "difficulty": "advanced",
+      "objective": "Report honestly",
+      "prompt": "Why should a GRC analyst avoid overstating risks to win budget?",
+      "options": [
+        {
+          "text": "Boards prefer low ratings"
+        },
+        {
+          "text": "Credibility is lost when exaggerated risks do not materialise, weakening future reports",
+          "correct": true
+        },
+        {
+          "text": "Overstated risks are illegal"
+        },
+        {
+          "text": "It shortens the report too much"
+        }
+      ],
+      "explanation": "Honest uncertainty preserves trust in future reports.",
+      "key": "grc-057",
+      "kind": "single",
+      "tags": [
+        "reporting"
+      ]
+    }
+  ]
+}
