@@ -26,7 +26,7 @@
         @endforeach
     </x-ui.container>
     <x-ui.container class="flex flex-col gap-2 border-t border-border py-6 text-xs text-subtle sm:flex-row sm:justify-between">
-        <p>© {{ now()->year }} AMANIQ Projects Limited. All rights reserved.</p>
+        <p>© {{ now()->year }} AMANIQ Digital Labs. All rights reserved.</p>
         <p>AMANIQ certificates confirm course completion. They are not government-accredited qualifications or vendor certifications.</p>
     </x-ui.container>
 </footer>
