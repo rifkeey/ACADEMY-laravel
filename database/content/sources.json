@@ -2323,6 +2323,28 @@
       "versionNote": "Benchmark v2; check for updates.",
       "supports": "Network security control recommendations across clouds.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "suricata-docs",
+      "title": "Suricata User Guide",
+      "publisher": "Open Information Security Foundation (OISF)",
+      "url": "https://docs.suricata.io/en/latest/",
+      "topic": "Network IDS/IPS",
+      "sourceType": "vendor_documentation",
+      "versionNote": "The \"latest\" guide tracks development; use the guide for your installed version.",
+      "supports": "Signature-based IDS/IPS concepts and rule structure (example tool).",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "zeek-docs",
+      "title": "Zeek Documentation (Book of Zeek)",
+      "publisher": "The Zeek Project",
+      "url": "https://docs.zeek.org/en/current/",
+      "topic": "Network monitoring",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Current release documentation.",
+      "supports": "Connection and protocol logs for network security monitoring (example tool).",
+      "dateChecked": "2026-10-23"
     }
   ]
 }

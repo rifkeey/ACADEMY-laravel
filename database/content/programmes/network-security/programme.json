@@ -989,37 +989,293 @@
     {
       "slug": "ids-ips",
       "title": "IDS, IPS and Network Detection",
-      "purpose": "Interpret and tune network detection.",
-      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "purpose": "Detection tools only help if their alerts are trusted. This module covers how network detection works, alert quality, sensor placement and telemetry, triage and tuning, and the limits that encryption and prevention impose. You finish by triaging a night of alerts and writing a tuning plan.\n\n**To complete this module:** finish all five lessons and pass the lab (80%), including the written tuning plan.",
+      "prerequisiteKnowledge": "Modules 1, 3 and 4.",
       "objectives": [
-        "Compare signature and behavioural detection.",
-        "Interpret IDS alerts.",
-        "Tune noisy detections responsibly."
+        "Explain detection methods, IDS versus IPS, and alert contents",
+        "Measure alert quality and coverage",
+        "Place sensors and collect telemetry",
+        "Triage alerts with context",
+        "Tune detections without creating blind spots",
+        "Explain encrypted-traffic limits and TLS inspection trade-offs"
       ],
       "keyConcepts": [
-        "Signatures",
-        "Anomaly detection",
-        "Placement",
-        "Tuning",
-        "Blind spots"
+        "Signature, anomaly and protocol analysis",
+        "IDS and IPS",
+        "True and false positives and negatives",
+        "Coverage",
+        "Tap, SPAN and inline",
+        "Flow and protocol telemetry",
+        "Triage routine",
+        "Scoped exceptions and thresholds",
+        "Enrichment",
+        "Selective TLS inspection"
       ],
       "assessmentCriteria": [
-        "Demonstrates the ability to compare signature and behavioural detection.",
-        "Demonstrates the ability to interpret IDS alerts.",
-        "Demonstrates the ability to tune noisy detections responsibly."
+        "Summarises alert volume with KQL",
+        "Triages alerts correctly using context",
+        "Designs scoped, safe tuning",
+        "Writes a complete tuning plan"
       ],
-      "contentStatus": "starter",
+      "instructorNotes": "Estimated time: 2.5 hours of lessons plus 1 hour of lab. Lessons name Suricata and Zeek as example open-source tools; the concepts apply to commercial products.",
+      "contentStatus": "complete",
       "lessons": [
         {
-          "slug": "network-detection-basics",
+          "slug": "how-network-detection-works",
           "title": "How network detection works",
-          "minutes": 25,
-          "objectives": [
-            "Compare signature and behavioural detection.",
-            "Interpret IDS alerts."
-          ],
+          "minutes": 30,
           "sources": [
-            "nist-sp-800-94"
+            "nist-sp-800-94",
+            "suricata-docs"
+          ],
+          "objectives": [
+            "Compare signature, anomaly and stateful protocol analysis",
+            "Explain IDS versus IPS and network versus host detection",
+            "Read what an alert contains"
+          ],
+          "checks": [
+            {
+              "question": "Which detection method is most precise for known threats but misses new ones?",
+              "options": [
+                "Anomaly-based",
+                "Signature-based",
+                "Stateful protocol analysis",
+                "Random sampling"
+              ],
+              "answerIndex": 1,
+              "explanation": "Signatures match known patterns."
+            },
+            {
+              "question": "What is the main extra risk of running a system inline as an IPS?",
+              "options": [
+                "It cannot see traffic",
+                "A wrong block stops legitimate traffic, and the device can become a bottleneck or single point of failure",
+                "It needs no tuning",
+                "It only works in the cloud"
+              ],
+              "answerIndex": 1,
+              "explanation": "Prevention needs well-tuned rules and resilience."
+            },
+            {
+              "question": "Which details does a useful alert include? Select all that apply.",
+              "options": [
+                "Time and the rule that fired",
+                "Source and destination addresses and ports",
+                "Severity and some context",
+                "The analyst's home address"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Enough to start triage."
+            }
+          ]
+        },
+        {
+          "slug": "alert-quality",
+          "title": "Alert quality: true and false positives",
+          "minutes": 30,
+          "sources": [
+            "nist-sp-800-94",
+            "mitre-attack"
+          ],
+          "objectives": [
+            "Use the four outcomes: TP, FP, TN, FN",
+            "Explain why most alerts are noise",
+            "Measure detections by volume, true-positive rate, coverage and time to triage"
+          ],
+          "checks": [
+            {
+              "question": "Which outcome is the most dangerous?",
+              "options": [
+                "True positive",
+                "False positive",
+                "True negative",
+                "False negative"
+              ],
+              "answerIndex": 3,
+              "explanation": "A missed attack leaves no alert at all."
+            },
+            {
+              "question": "How do you measure coverage?",
+              "options": [
+                "Count alerts per day",
+                "Map detections to the attacker behaviours (ATT&CK techniques) they can see",
+                "Ask the vendor",
+                "Measure disk use"
+              ],
+              "answerIndex": 1,
+              "explanation": "Coverage is about what you can detect at all."
+            },
+            {
+              "question": "A rule produces 300 alerts a day and almost none are worth investigating. What is the effect?",
+              "options": [
+                "Better security",
+                "Analysts lose trust in the rule and may miss the real one",
+                "No effect",
+                "Lower cost"
+              ],
+              "answerIndex": 1,
+              "explanation": "Noise hides signal."
+            }
+          ]
+        },
+        {
+          "slug": "sensor-placement-and-telemetry",
+          "title": "Sensor placement and telemetry",
+          "minutes": 30,
+          "sources": [
+            "nist-sp-800-94",
+            "zeek-docs",
+            "rfc-7011"
+          ],
+          "objectives": [
+            "Choose how traffic reaches a sensor",
+            "Place sensors where they see what matters",
+            "Collect telemetry beyond alerts and keep time and context consistent"
+          ],
+          "checks": [
+            {
+              "question": "Which way of feeding a sensor is most reliable and complete?",
+              "options": [
+                "A switch mirror port under heavy load",
+                "A passive network tap",
+                "Guessing",
+                "Email reports"
+              ],
+              "answerIndex": 1,
+              "explanation": "Mirror ports can drop copies under load."
+            },
+            {
+              "question": "Which placement sees movement between internal zones towards critical systems?",
+              "options": [
+                "Only the internet edge",
+                "The data-centre core, between zones",
+                "The guest Wi-Fi",
+                "The printer VLAN"
+              ],
+              "answerIndex": 1,
+              "explanation": "East-west traffic needs internal sensors."
+            },
+            {
+              "question": "Which telemetry helps triage beyond alerts? Select all that apply.",
+              "options": [
+                "Connection (flow) records",
+                "DNS and TLS protocol logs",
+                "Selective packet capture",
+                "Office temperature"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Context comes from many sources."
+            }
+          ]
+        },
+        {
+          "slug": "triage-and-tuning",
+          "title": "Triage and tuning",
+          "minutes": 35,
+          "sources": [
+            "nist-sp-800-94",
+            "attack-t1046"
+          ],
+          "objectives": [
+            "Apply a five-step triage routine",
+            "Tell true positives, benign true positives and false positives apart",
+            "Tune with scoped exceptions, thresholds and enrichment without creating blind spots"
+          ],
+          "checks": [
+            {
+              "question": "The vulnerability scanner triggers a port-scan rule during its scheduled window. What is the best tuning?",
+              "options": [
+                "Disable the rule",
+                "A scoped exception for that source, rule and time window",
+                "Raise the threshold for everyone",
+                "Ignore all port-scan alerts"
+              ],
+              "answerIndex": 1,
+              "explanation": "Scope the exception narrowly."
+            },
+            {
+              "question": "The same rule fires for an unknown VPN address with no change ticket. What is it most likely to be?",
+              "options": [
+                "A false positive",
+                "A possible true positive to investigate and escalate",
+                "A benign true positive",
+                "A sensor fault"
+              ],
+              "answerIndex": 1,
+              "explanation": "Only context separates the two."
+            },
+            {
+              "question": "When is disabling a rule acceptable?",
+              "options": [
+                "Whenever it is noisy",
+                "Only with a documented reason and a replacement detection or accepted risk",
+                "Never",
+                "On Fridays"
+              ],
+              "answerIndex": 1,
+              "explanation": "Disabling creates a blind spot."
+            }
+          ]
+        },
+        {
+          "slug": "encrypted-traffic-and-limits",
+          "title": "Encrypted traffic and the limits of detection",
+          "minutes": 25,
+          "sources": [
+            "nist-sp-800-94",
+            "rfc-8446"
+          ],
+          "objectives": [
+            "Explain what encryption hides and what remains visible",
+            "Weigh selective TLS inspection",
+            "Treat detection as a programme, not a device"
+          ],
+          "checks": [
+            {
+              "question": "What can a sensor still see in encrypted TLS traffic without decryption?",
+              "options": [
+                "Full URLs and form data",
+                "Addresses, timing, volumes and usually the server name",
+                "Passwords",
+                "File contents"
+              ],
+              "answerIndex": 1,
+              "explanation": "Metadata remains."
+            },
+            {
+              "question": "What is a risk of TLS inspection?",
+              "options": [
+                "It improves privacy",
+                "The inspection device holds decrypted data and becomes a high-value target",
+                "It speeds up traffic",
+                "It removes the need for certificates"
+              ],
+              "answerIndex": 1,
+              "explanation": "Inspect selectively, with documented exemptions."
+            },
+            {
+              "question": "What makes detection effective over time? Select all that apply.",
+              "options": [
+                "Combining network, host and identity telemetry",
+                "Regular tuning and testing",
+                "Measuring coverage",
+                "Buying one device and leaving it"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Detection is a programme."
+            }
           ]
         }
       ]
@@ -12133,6 +12389,2624 @@
         },
         "debrief": "## Worked solution (one good answer; others are possible)\n\n**Weaknesses:** rules 2 and 4 (the path in INC-2318), the flat servers zone, user access to management and RDP everywhere, unlogged allow rules, single firewall and link, broad VPN and weak vendor access. WPA3-Enterprise, modern TLS and the SIEM are strengths.\n\n**Target zones**\n\n| Zone | Contents | Reached from |\n| --- | --- | --- |\n| DMZ | Public website | Internet on 443 only |\n| Application servers | Core banking app, other app servers, patch server | Users on 443 to the app; DMZ only to the new rates API |\n| Restricted | Core banking database, finance file server | Application servers on named ports only |\n| Management | Jump host, admin workstations | IT staff via MFA; device management only from here |\n| Users | Staff laptops | Internet via proxy; app servers on 443 |\n| Kiosk | Lobby kiosk | One published calculator endpoint only |\n| Guest | Visitors | Internet only |\n| (none) | Vendors and remote staff | ZTNA to named applications, time-limited for vendors |\n\n**Flows:** F1, F2 and F6 allowed on named ports and logged; F3 only via the jump host with MFA; F4 through ZTNA; F5 redesigned as a read-only rates API (the DMZ never reaches the database); F7 through the patch server or egress proxy.\n\n**Policy statements:** default deny at every boundary; every boundary allow rule logs; every rule has an owner, purpose and review date (temporary rules expire automatically); quarterly rule review; changes through change control with rollback; devices hardened to CIS benchmarks with central MFA authentication.\n\n**Monitoring plan:** SIEM detections for any connection into the restricted zone from outside the application servers, any DMZ connection to internal zones other than the rates API, large outbound volumes, management access not from the jump host, and logging changes on firewalls.\n\n**Roadmap:** *Now:* remove rule 2; restrict rules 4, 7, 10 and 11; log every boundary rule; retire dmz-vendor-01 and move the vendor to ZTNA. *Next:* HA firewall pair and second link; split servers into application and restricted zones; ZTNA for remote staff. *Later (year two):* NAC and microsegmentation of the restricted zone.\n\n**Validation:** approved tests under rules of engagement: guest reaches nothing internal; the DMZ reaches only the rates API; the users zone cannot reach management except via the jump host; every boundary rule produces SIEM logs; firewall failover completes within the agreed time; an independent penetration test of the DMZ and restricted zone.\n\n**CSF 2.0:** Govern (policy, owners, acceptances), Identify (asset and flow inventory, register), Protect (zones, rules, ZTNA, hardening), Detect (logging and detections), Respond (module 9 playbooks), Recover (HA, configuration backups, tested failover).\n\n## What you have practised\n\nThe whole job of a network security architect: turning evidence and requirements into a defensible design, a funded plan and tests that prove it. Keep these deliverables for your portfolio."
       }
+    },
+    {
+      "slug": "ids-alert-triage",
+      "title": "Triage a night of IDS alerts and tune the rules",
+      "difficulty": "intermediate",
+      "labType": "detection_engineering",
+      "summary": "Use KQL over a night of synthetic IDS alerts to find what is noise, what is authorised and what needs escalating, then design tuning that cuts noise without creating blind spots.",
+      "minutes": 60,
+      "moduleSlug": "ids-ips",
+      "passPercent": 80,
+      "content": {
+        "objectives": [
+          "Summarise alert volume by rule",
+          "Triage alerts with context",
+          "Tell true positives, benign true positives and false positives apart",
+          "Design scoped tuning",
+          "Write a tuning plan"
+        ],
+        "scenario": "The overnight shift at Kanem Financial Services (fictional) ended with **241 IDS alerts** and a tired analyst. You are asked to triage the night and propose tuning so tomorrow is better.",
+        "scope": "IdsAlerts is a synthetic table for Tuesday 17 March 2026 (UTC). The asset and change context is in the document tab.",
+        "instructions": "1. Read the context document, then explore IdsAlerts in the KQL console.\n2. Answer tasks 1–7.\n3. Write the tuning plan in task 8. It is saved to your portfolio.\n\nYou need 80% to pass.",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated for training.",
+        "workspace": {
+          "kind": "kql",
+          "sampleQuery": "IdsAlerts\n| take 20",
+          "tables": [
+            {
+              "name": "IdsAlerts",
+              "description": "Network IDS alerts, 17 March 2026.",
+              "columns": [
+                "TimeGenerated",
+                "Signature",
+                "Severity",
+                "SrcIP",
+                "DstIP",
+                "DstPort",
+                "Sensor"
+              ],
+              "rows": [
+                {
+                  "TimeGenerated": "2026-03-17T00:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.59",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T00:15:09Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.205",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T00:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.31",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T00:47:12Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.208",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.13",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:04:46Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.58",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:09:26Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.175",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:19:13Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.203",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.13",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:30:25Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.55",
+                  "DstPort": 148,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:31:00Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.22",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:31:26Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.56",
+                  "DstPort": 633,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:32:41Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.40",
+                  "DstPort": 974,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:32:56Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.208",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:33:30Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.17",
+                  "DstPort": 741,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:34:43Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.51",
+                  "DstPort": 193,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:35:20Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.163",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:35:55Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.39",
+                  "DstPort": 68,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:37:00Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.16",
+                  "DstPort": 877,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:38:18Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.14",
+                  "DstPort": 558,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:39:49Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.20",
+                  "DstPort": 441,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:40:43Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.58",
+                  "DstPort": 973,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:41:47Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.33",
+                  "DstPort": 887,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:42:57Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.17",
+                  "DstPort": 361,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:44:21Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.55",
+                  "DstPort": 149,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:45:13Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.17",
+                  "DstPort": 149,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:46:34Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.29",
+                  "DstPort": 331,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:47:57Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.48",
+                  "DstPort": 449,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:48:15Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.206",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:48:55Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.27",
+                  "DstPort": 118,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:50:01Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 618,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:51:04Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 468,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:52:12Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.60",
+                  "DstPort": 183,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:53:46Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.56",
+                  "DstPort": 829,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:54:42Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.36",
+                  "DstPort": 478,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:55:56Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.16",
+                  "DstPort": 523,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:57:20Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.39",
+                  "DstPort": 85,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:58:13Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.52",
+                  "DstPort": 864,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T01:59:24Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 641,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.39",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:00:30Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.58",
+                  "DstPort": 907,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:01:49Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 798,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:02:48Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.10",
+                  "DstPort": 380,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:03:57Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.58",
+                  "DstPort": 677,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:05:07Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 827,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:06:10Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 289,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:07:27Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.51",
+                  "DstPort": 800,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:08:34Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.54",
+                  "DstPort": 905,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:09:40Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.28",
+                  "DstPort": 804,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:10:57Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.56",
+                  "DstPort": 615,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:12:07Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 879,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:13:33Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.34",
+                  "DstPort": 941,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:14:46Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.17",
+                  "DstPort": 899,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:15:33Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.53",
+                  "DstPort": 545,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:15:37Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.207",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:16:52Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 297,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:18:09Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 34,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:19:15Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 552,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:20:28Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.23",
+                  "DstPort": 219,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:21:23Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.28",
+                  "DstPort": 156,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:22:31Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.40",
+                  "DstPort": 181,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:24:02Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.28",
+                  "DstPort": 552,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:25:12Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 767,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:26:01Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 807,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:27:33Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.31",
+                  "DstPort": 425,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:28:31Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.59",
+                  "DstPort": 262,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:29:41Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 12,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.60",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:30:47Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.15",
+                  "DstPort": 195,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:32:02Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.60",
+                  "DstPort": 238,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:33:10Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.39",
+                  "DstPort": 331,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:34:13Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 442,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:35:48Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.60",
+                  "DstPort": 822,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:36:40Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.24",
+                  "DstPort": 913,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:38:08Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.31",
+                  "DstPort": 436,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:38:52Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.19",
+                  "DstPort": 357,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:40:20Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.22",
+                  "DstPort": 372,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:41:16Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.38",
+                  "DstPort": 824,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:42:29Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.23",
+                  "DstPort": 753,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:43:53Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.34",
+                  "DstPort": 278,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:44:45Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.21",
+                  "DstPort": 205,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:46:20Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.30",
+                  "DstPort": 643,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:47:17Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.12",
+                  "DstPort": 276,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:47:26Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.209",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:48:31Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.11",
+                  "DstPort": 109,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:49:36Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.22",
+                  "DstPort": 94,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:50:33Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.35",
+                  "DstPort": 537,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:52:10Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.19",
+                  "DstPort": 189,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:53:16Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.58",
+                  "DstPort": 194,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:54:27Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.33",
+                  "DstPort": 630,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:55:15Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.21",
+                  "DstPort": 819,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:56:37Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 782,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:57:37Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.12",
+                  "DstPort": 723,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T02:58:42Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.26",
+                  "DstPort": 609,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.53",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:00:11Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.48",
+                  "DstPort": 889,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:01:23Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.18",
+                  "DstPort": 633,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:02:28Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.28",
+                  "DstPort": 834,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:03:25Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.14",
+                  "DstPort": 61,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:05:00Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 251,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:06:08Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.12",
+                  "DstPort": 379,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:07:05Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.28",
+                  "DstPort": 573,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:08:14Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.34",
+                  "DstPort": 864,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:09:30Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.32",
+                  "DstPort": 27,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:10:12Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.209",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:10:49Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.31",
+                  "DstPort": 852,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:11:43Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.49",
+                  "DstPort": 412,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:12:22Z",
+                  "Signature": "SMB: workstation connecting to several servers",
+                  "Severity": "Medium",
+                  "SrcIP": "10.20.6.31",
+                  "DstIP": "10.10.0.22",
+                  "DstPort": 445,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:12:41Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.48",
+                  "DstPort": 738,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:12:52Z",
+                  "Signature": "SMB: workstation connecting to several servers",
+                  "Severity": "Medium",
+                  "SrcIP": "10.20.6.31",
+                  "DstIP": "10.10.0.21",
+                  "DstPort": 445,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:13:03Z",
+                  "Signature": "SMB: workstation connecting to several servers",
+                  "Severity": "Medium",
+                  "SrcIP": "10.20.6.31",
+                  "DstIP": "10.10.0.23",
+                  "DstPort": 445,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:13:21Z",
+                  "Signature": "SMB: workstation connecting to several servers",
+                  "Severity": "Medium",
+                  "SrcIP": "10.20.6.31",
+                  "DstIP": "10.10.0.24",
+                  "DstPort": 445,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:13:52Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.18",
+                  "DstPort": 54,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:14:05Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.20.6.31",
+                  "DstIP": "10.10.0.0/24",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:15:14Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 451,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:16:20Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.21",
+                  "DstPort": 970,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:17:25Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.29",
+                  "DstPort": 726,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:18:35Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 728,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:20:03Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.18",
+                  "DstPort": 486,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:21:02Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.55",
+                  "DstPort": 189,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:22:29Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.31",
+                  "DstPort": 973,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:23:20Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.58",
+                  "DstPort": 88,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:24:24Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.29",
+                  "DstPort": 318,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:25:34Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.15",
+                  "DstPort": 353,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:26:43Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.18",
+                  "DstPort": 293,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:27:52Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 920,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:29:05Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.50",
+                  "DstPort": 752,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:30:11Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.34",
+                  "DstPort": 170,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:30:53Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.130",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:31:50Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.33",
+                  "DstPort": 446,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:32:52Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.40",
+                  "DstPort": 461,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:33:53Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.36",
+                  "DstPort": 86,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:35:02Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.57",
+                  "DstPort": 187,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:36:17Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.21",
+                  "DstPort": 423,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:37:14Z",
+                  "Signature": "Internal port sweep",
+                  "Severity": "Medium",
+                  "SrcIP": "10.99.0.20",
+                  "DstIP": "10.10.0.24",
+                  "DstPort": 525,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:41:04Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.207",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:43:37Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.191",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T03:46:17Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.164",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T04:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.16",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T04:14:45Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.200",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T04:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.41",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T04:44:27Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.210",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T05:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.52",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T05:13:46Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.200",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T05:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.19",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T05:46:48Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.200",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T06:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.28",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T06:17:49Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.200",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T06:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T06:45:12Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.207",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T07:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.15",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T07:15:48Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.85",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T07:19:56Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.204",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T07:26:05Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.210",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T07:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.10",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T07:42:49Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.209",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.56",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:09:54Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.74",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:15:30Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.110",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:19:38Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.209",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.48",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:44:43Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.201",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T08:58:12Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.113",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.49",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:16:05Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.201",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:26:16Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.3.19",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.55",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:31:51Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.48",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:35:22Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.3",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:41:12Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.202",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T09:44:33Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.5.12",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T10:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T10:19:34Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.203",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T10:20:37Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.3.19",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T10:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.13",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T10:33:24Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.169",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T10:47:20Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.204",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.17",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:12:15Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.5.12",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:18:06Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.204",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.17",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:38:37Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.191",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:43:19Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.201",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T11:54:21Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.202",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T12:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.25",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T12:13:27Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.208",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T12:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.33",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T12:49:36Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.206",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T12:55:21Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.3.19",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T13:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.40",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T13:18:08Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.207",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T13:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.41",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T13:44:24Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.85",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T13:46:14Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.205",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T13:55:33Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.187",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T14:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.12",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T14:12:31Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.207",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T14:15:14Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.106",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T14:24:30Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.5.40",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T14:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.37",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T14:45:16Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.201",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T15:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.15",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T15:19:21Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.200",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T15:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.36",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T15:41:07Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.209",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T15:59:38Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.5.40",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.47",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:18:28Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.5.12",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:18:55Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.201",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:20:33Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.163",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:29:30Z",
+                  "Signature": "DNS: newly observed domain",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.5.40",
+                  "DstIP": "10.30.0.53",
+                  "DstPort": 53,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.12",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T16:42:05Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.208",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T17:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.20",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T17:17:37Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.200",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T17:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.18",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T17:43:29Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.210",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T18:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.34",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T18:00:26Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.60",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T18:05:29Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.184",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T18:18:21Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.208",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T18:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.18",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T18:40:21Z",
+                  "Signature": "Policy: outdated TLS version",
+                  "Severity": "Low",
+                  "SrcIP": "10.20.9.210",
+                  "DstIP": "10.10.0.45",
+                  "DstPort": 443,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T19:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T19:21:38Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.41",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T19:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.43",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T20:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.39",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T20:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.12",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T21:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.35",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T21:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.42",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T21:55:07Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.171",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.41",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:16:04Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.134",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:19:12Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.99",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.10",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:40:39Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.122",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:46:53Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.206",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T22:50:46Z",
+                  "Signature": "Web: SQL keywords in URL",
+                  "Severity": "Low",
+                  "SrcIP": "198.51.100.25",
+                  "DstIP": "10.30.0.10",
+                  "DstPort": 443,
+                  "Sensor": "edge-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T23:00:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.55",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                },
+                {
+                  "TimeGenerated": "2026-03-17T23:30:00Z",
+                  "Signature": "ICMP: large ping packets",
+                  "Severity": "Low",
+                  "SrcIP": "10.99.0.12",
+                  "DstIP": "10.10.0.54",
+                  "DstPort": 0,
+                  "Sensor": "core-1"
+                }
+              ]
+            }
+          ],
+          "documents": [
+            {
+              "title": "Asset, change and VPN context",
+              "format": "markdown",
+              "body": "| Address | What it is | Notes |\n| --- | --- | --- |\n| 10.99.0.20 | Vulnerability scanner (management zone) | **CHG-310**: scheduled nightly scans 01:30–03:30 |\n| 10.99.0.12 | Network monitoring server | Sends large ICMP packets every 30 minutes to measure path MTU |\n| 10.20.9.200–210 | Branch label printers | Firmware supports only TLS 1.0; replacement ordered for April (CHG-334) |\n| 10.20.5.12, 10.20.5.40, 10.20.3.19 | Marketing laptops | New events partner announced last week (domain verified by IT) |\n| 10.20.6.0/24 | VPN address pool | Addresses are reassigned; check VPN logs for the user |\n| 10.30.0.10 | Public website (DMZ) | Web logs show all requests with SQL keywords received HTTP 404 or 403 |\n| 10.10.0.21–24 | Core banking application and database servers | Restricted data |\n\nVPN log extract: **10.20.6.31** assigned to user **t.okafor** (Finance) at 02:58, from a device that is not company-managed. No change ticket covers activity from 10.20.6.0/24 tonight."
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "volume",
+            "points": 2,
+            "prompt": "Write a query that returns **one row per Signature** with the number of alerts for each.",
+            "hints": [
+              "| summarize count() by Signature"
+            ],
+            "input": {
+              "type": "kql",
+              "table": "IdsAlerts"
+            }
+          },
+          {
+            "id": "sources",
+            "points": 1,
+            "prompt": "Which source address raised the **\"Internal port sweep\"** alert outside the scanner?",
+            "hints": [
+              "| where Signature == \"Internal port sweep\" | distinct SrcIP"
+            ],
+            "input": {
+              "type": "text",
+              "placeholder": "10.x.x.x"
+            }
+          },
+          {
+            "id": "triage",
+            "points": 2,
+            "prompt": "Classify each group of alerts.",
+            "hints": [
+              "Lesson 4: what would a true positive look like, and what does the context say?"
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "scan",
+                  "label": "Port sweeps from 10.99.0.20, 01:30–03:30"
+                },
+                {
+                  "id": "ping",
+                  "label": "Large ICMP from 10.99.0.12"
+                },
+                {
+                  "id": "tls",
+                  "label": "Outdated TLS from the branch label printers"
+                },
+                {
+                  "id": "sqli",
+                  "label": "SQL keywords in URLs to the website, all answered 404/403"
+                },
+                {
+                  "id": "newdom",
+                  "label": "Newly observed domain from marketing laptops"
+                },
+                {
+                  "id": "smb",
+                  "label": "SMB to four core servers plus a port sweep from 10.20.6.31"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "outcome",
+                  "label": "Outcome",
+                  "options": [
+                    {
+                      "id": "tp",
+                      "label": "True positive: escalate"
+                    },
+                    {
+                      "id": "btp",
+                      "label": "Benign true positive: authorised or expected, document"
+                    },
+                    {
+                      "id": "fp",
+                      "label": "False positive: the rule is wrong for this traffic"
+                    },
+                    {
+                      "id": "lowtp",
+                      "label": "Real but failed or low risk: record and track"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "escalate",
+            "points": 1,
+            "prompt": "What should happen with the 10.20.6.31 alerts?",
+            "hints": [
+              "Who was on that address, from what device, and what did it touch?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "escalate",
+                  "label": "Escalate now: Finance user t.okafor on an unmanaged device reached four restricted servers over SMB and swept the server zone, with no change ticket; check flows, VPN and endpoint data, and consider suspending the VPN session"
+                },
+                {
+                  "id": "suppress",
+                  "label": "Add 10.20.6.0/24 to the scanner exception"
+                },
+                {
+                  "id": "wait",
+                  "label": "Wait for tomorrow's shift"
+                },
+                {
+                  "id": "close",
+                  "label": "Close: VPN users often do this"
+                }
+              ]
+            }
+          },
+          {
+            "id": "scanner",
+            "points": 1,
+            "prompt": "How should the scanner alerts be tuned?",
+            "hints": [
+              "Lesson 4 table."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "scoped",
+                  "label": "A scoped exception: source 10.99.0.20, this rule only, 01:30–03:30, tied to CHG-310, with an expiry review"
+                },
+                {
+                  "id": "disable",
+                  "label": "Disable the port-sweep rule"
+                },
+                {
+                  "id": "subnet",
+                  "label": "Suppress the rule for the whole 10.0.0.0/8 range"
+                },
+                {
+                  "id": "threshold",
+                  "label": "Raise the threshold to 500 sweeps per minute for everyone"
+                }
+              ]
+            }
+          },
+          {
+            "id": "others",
+            "points": 2,
+            "prompt": "Which other tuning changes are sensible? Select all that apply.",
+            "hints": [
+              "Each change must not hide something useful."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "ping",
+                  "label": "Scoped exception for 10.99.0.12 on the large-ICMP rule"
+                },
+                {
+                  "id": "printers",
+                  "label": "Keep the TLS alert but lower it to informational for the printers until CHG-334 completes, then remove the exception"
+                },
+                {
+                  "id": "sqli",
+                  "label": "Raise SQL-keyword alerts to High only when the web server responds with HTTP 200 or 500"
+                },
+                {
+                  "id": "enrich",
+                  "label": "Raise severity automatically when the destination is a restricted core server"
+                },
+                {
+                  "id": "disableall",
+                  "label": "Disable every Low-severity rule"
+                },
+                {
+                  "id": "vpn",
+                  "label": "Exclude the VPN pool from all internal rules"
+                }
+              ]
+            }
+          },
+          {
+            "id": "gap",
+            "points": 1,
+            "prompt": "All the alerts come from sensors core-1 and edge-1. What gap should the tuning plan also mention?",
+            "hints": [
+              "Lesson 3: where else should sensors look?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "vpn",
+                  "label": "There is no sensor or flow telemetry after the VPN concentrator or between the core banking application and database tiers, so movement there would be missed"
+                },
+                {
+                  "id": "none",
+                  "label": "No gap: two sensors are enough"
+                },
+                {
+                  "id": "guest",
+                  "label": "Guest Wi-Fi needs the most sensors"
+                },
+                {
+                  "id": "printers",
+                  "label": "Every printer needs its own sensor"
+                }
+              ]
+            }
+          },
+          {
+            "id": "plan",
+            "points": 2,
+            "prompt": "Write the **tuning plan** for the SOC lead: alert volume before and expected after, each tuning change with its scope, owner and review date, what you escalated and why, the coverage gap, and how you will check that tuning did not hide real activity.",
+            "hints": [
+              "Lesson 2: tune for precision, test for coverage."
+            ],
+            "input": {
+              "type": "deliverable",
+              "title": "IDS tuning plan",
+              "competency": "Triaging and tuning network detections",
+              "minWords": 150,
+              "rubric": [
+                "States the volume by rule and the expected reduction",
+                "Each change is scoped (source, rule, time) with owner and review date",
+                "Explains the escalation of 10.20.6.31 with evidence",
+                "Identifies the sensor coverage gap",
+                "Describes how tuning will be tested, for example replaying known-bad examples"
+              ],
+              "template": "Volume today:\n\nTuning changes (scope, owner, review date):\n\nEscalated:\n\nCoverage gap:\n\nTesting the tuning:\n"
+            }
+          }
+        ],
+        "reflection": [
+          "What would have happened if the scanner exception had been scoped to the whole subnet?",
+          "Which of tonight's rules gives the most value per alert?",
+          "How would you know if a tuning change caused a false negative?",
+          "What telemetry would have made the 10.20.6.31 decision faster?"
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "volume": {
+            "type": "kql",
+            "column": "Signature",
+            "values": [
+              "Internal port sweep",
+              "Policy: outdated TLS version",
+              "Web: SQL keywords in URL",
+              "DNS: newly observed domain",
+              "SMB: workstation connecting to several servers",
+              "ICMP: large ping packets"
+            ],
+            "mode": "set",
+            "unique": true,
+            "feedback": {
+              "correct": "Right: six rules, dominated by the scanner and monitoring.",
+              "incorrect": "Summarize by Signature so each appears once."
+            }
+          },
+          "sources": {
+            "type": "text",
+            "accept": [
+              "10.20.6.31"
+            ],
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "List the distinct SrcIP values for that signature."
+            }
+          },
+          "triage": {
+            "type": "grid",
+            "minCorrectRatio": 0.8,
+            "cells": {
+              "scan": {
+                "outcome": [
+                  "btp"
+                ]
+              },
+              "ping": {
+                "outcome": [
+                  "fp",
+                  "btp"
+                ]
+              },
+              "tls": {
+                "outcome": [
+                  "lowtp",
+                  "btp"
+                ]
+              },
+              "sqli": {
+                "outcome": [
+                  "lowtp"
+                ]
+              },
+              "newdom": {
+                "outcome": [
+                  "btp"
+                ]
+              },
+              "smb": {
+                "outcome": [
+                  "tp"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Your triage matches.",
+              "incorrect": "Use the context: authorised scanner, monitoring server, known printers, failed web probes, a verified partner, and one unexplained VPN user."
+            }
+          },
+          "escalate": {
+            "type": "choice",
+            "correct": "escalate",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "An unmanaged device reaching restricted servers with no ticket needs escalation now."
+            }
+          },
+          "scanner": {
+            "type": "choice",
+            "correct": "scoped",
+            "feedback": {
+              "correct": "Right: and it would not have hidden 10.20.6.31.",
+              "incorrect": "Broad suppression or disabling would have hidden tonight's real alert."
+            }
+          },
+          "others": {
+            "type": "multi",
+            "correct": [
+              "ping",
+              "printers",
+              "sqli",
+              "enrich"
+            ],
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Disabling all Low rules or excluding the VPN pool would create blind spots; the VPN pool produced the real alert."
+            }
+          },
+          "gap": {
+            "type": "choice",
+            "correct": "vpn",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Think about where 10.20.6.31's traffic entered, and where restricted data moves."
+            }
+          },
+          "plan": {
+            "type": "deliverable",
+            "minWords": 150,
+            "mustMention": [
+              {
+                "label": "the scanner exception scoped to 10.99.0.20",
+                "any": [
+                  "10.99.0.20",
+                  "scanner"
+                ]
+              },
+              {
+                "label": "the escalation of 10.20.6.31",
+                "any": [
+                  "10.20.6.31",
+                  "t.okafor"
+                ]
+              },
+              {
+                "label": "owners or review dates",
+                "any": [
+                  "owner",
+                  "review"
+                ]
+              },
+              {
+                "label": "the sensor gap",
+                "any": [
+                  "sensor",
+                  "coverage",
+                  "vpn concentrator"
+                ]
+              },
+              {
+                "label": "testing the tuning",
+                "any": [
+                  "test",
+                  "replay",
+                  "known-bad"
+                ]
+              }
+            ],
+            "feedback": {
+              "correct": "Tuning plan complete. Compare it with the rubric and the debrief.",
+              "incorrect": "Your tuning plan is not complete yet."
+            }
+          }
+        },
+        "debrief": "## Worked solution\n\n**Volume:**\n\n```text\nIdsAlerts\n| summarize Alerts = count() by Signature\n| sort by Alerts desc\n```\n\nThe scanner's port sweeps (110) and the monitoring server's ICMP (48) make up most of the night; the printers' TLS alerts (38) and website probes (31) follow; 9 newly observed domain alerts and 5 alerts from 10.20.6.31.\n\n**Triage:** scanner, benign true positive (CHG-310); large ICMP, false positive for the monitoring server's MTU checks; printers, a real policy issue already being fixed (CHG-334); SQL keywords, real but failed probes (404/403); new domain, benign (verified partner); **10.20.6.31, true positive: escalate**. A Finance user on an unmanaged device reached four restricted servers over SMB and swept the server zone at 03:12–03:14, with no ticket.\n\n**Tuning that cuts noise without blind spots:**\n\n| Change | Scope | Owner / review |\n| --- | --- | --- |\n| Scanner exception | Source 10.99.0.20, port-sweep rule only, 01:30–03:30, CHG-310 | SOC lead, review quarterly |\n| Monitoring exception | Source 10.99.0.12, large-ICMP rule only | SOC lead, quarterly |\n| Printer TLS to informational | 10.20.9.200–210 until CHG-334 closes | Network team, April |\n| SQL keywords | High only when the response is 200 or 500 | Detection engineer |\n| Enrichment | Raise severity for restricted core servers as destination | Detection engineer |\n\nExpected effect: about 160 fewer alerts a night (the scanner and monitoring exceptions), with the printers downgraded and the 10.20.6.31 alerts still firing.\n\n**Gap:** no sensor after the VPN concentrator or between the core banking tiers; add one (or flow telemetry) there.\n\n**Testing tuning:** replay tonight's alerts and known-bad examples against the new rules; confirm that a sweep from any address other than 10.99.0.20 still alerts.\n\n## What you have practised\n\nThe daily detection work of a SOC: triage with context, scoped tuning and measuring what you can see.\n\n**Next:** module 6 covers secure remote access."
+      }
     }
   ],
   "questions": [
@@ -15039,6 +17913,359 @@
         },
         {
           "text": "Checking the Wi-Fi password"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-01",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "foundation",
+      "objective": "Compare detection methods",
+      "prompt": "Which method compares traffic with a baseline of normal behaviour?",
+      "explanation": "It can catch the unknown but is noisier.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Signature-based"
+        },
+        {
+          "text": "Anomaly-based",
+          "correct": true
+        },
+        {
+          "text": "Stateful protocol analysis"
+        },
+        {
+          "text": "Packet filtering"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-02",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "foundation",
+      "objective": "Compare IDS and IPS",
+      "prompt": "What is the main difference between an IDS and an IPS?",
+      "explanation": "Prevention needs inline placement.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "There is none"
+        },
+        {
+          "text": "An IPS sits inline and can block; an IDS only alerts",
+          "correct": true
+        },
+        {
+          "text": "An IDS encrypts traffic"
+        },
+        {
+          "text": "An IPS only works on hosts"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-03",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "foundation",
+      "objective": "Classify outcomes",
+      "prompt": "Benign traffic triggers an alert because the rule is wrong for it. What is this?",
+      "explanation": "Wasted effort and lost trust.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "True positive"
+        },
+        {
+          "text": "False positive",
+          "correct": true
+        },
+        {
+          "text": "True negative"
+        },
+        {
+          "text": "False negative"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-04",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Classify outcomes",
+      "prompt": "An authorised scanner triggers a port-scan rule during its scheduled window. What is this?",
+      "explanation": "The rule worked; the activity is authorised.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "False positive"
+        },
+        {
+          "text": "Benign true positive",
+          "correct": true
+        },
+        {
+          "text": "False negative"
+        },
+        {
+          "text": "True negative"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-05",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Measure detections",
+      "prompt": "How do you find what attacker behaviours you cannot detect at all?",
+      "explanation": "Coverage mapping shows blind spots.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Count alerts"
+        },
+        {
+          "text": "Map detections to ATT&CK techniques and look for gaps",
+          "correct": true
+        },
+        {
+          "text": "Ask users"
+        },
+        {
+          "text": "Check CPU use"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-06",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "foundation",
+      "objective": "Place sensors",
+      "prompt": "Which feed is best for a sensor on a busy core link?",
+      "explanation": "Taps copy everything reliably.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "A mirror port under load"
+        },
+        {
+          "text": "A passive network tap",
+          "correct": true
+        },
+        {
+          "text": "Email"
+        },
+        {
+          "text": "A printer port"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-07",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Place sensors",
+      "prompt": "Where must a sensor sit to see VPN users' traffic to internal servers?",
+      "explanation": "Traffic is decrypted after the concentrator.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Only at the internet edge"
+        },
+        {
+          "text": "After the VPN concentrator, inside the network",
+          "correct": true
+        },
+        {
+          "text": "In the guest network"
+        },
+        {
+          "text": "On the website"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-08",
+      "kind": "multiple",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Collect telemetry",
+      "prompt": "Which telemetry helps triage an alert? Select all that apply.",
+      "explanation": "Context decides the outcome.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Flow records for the hosts involved",
+          "correct": true
+        },
+        {
+          "text": "DNS and TLS logs",
+          "correct": true
+        },
+        {
+          "text": "VPN and authentication logs",
+          "correct": true
+        },
+        {
+          "text": "The rule author's name only"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-09",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Tune safely",
+      "prompt": "Which tuning creates the biggest blind-spot risk?",
+      "explanation": "Disabling removes visibility.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "A scoped exception for one source and rule"
+        },
+        {
+          "text": "Disabling a rule without a replacement",
+          "correct": true
+        },
+        {
+          "text": "Enrichment with asset data"
+        },
+        {
+          "text": "Raising severity for restricted servers"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-10",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Tune safely",
+      "prompt": "Why scope a scanner exception to its source, rule and time window?",
+      "explanation": "Context, not the rule, separates benign from malicious.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "It is faster to write"
+        },
+        {
+          "text": "So the same rule still alerts for any other source",
+          "correct": true
+        },
+        {
+          "text": "Scanners require it"
+        },
+        {
+          "text": "To save disk space"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-11",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "foundation",
+      "objective": "Triage",
+      "prompt": "What is the first step of the triage routine?",
+      "explanation": "Read the rule before the data.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Close the alert"
+        },
+        {
+          "text": "Understand what the rule detects and what a true positive would look like",
+          "correct": true
+        },
+        {
+          "text": "Disable the rule"
+        },
+        {
+          "text": "Email the user"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-12",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Handle encryption",
+      "prompt": "What remains visible to a sensor in TLS 1.3 traffic without decryption?",
+      "explanation": "Metadata remains.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Page content"
+        },
+        {
+          "text": "Addresses, timing, volume and usually the server name",
+          "correct": true
+        },
+        {
+          "text": "Passwords"
+        },
+        {
+          "text": "Certificates"
+        }
+      ]
+    },
+    {
+      "key": "net-ids-13",
+      "kind": "single",
+      "category": "detection",
+      "difficulty": "intermediate",
+      "objective": "Decide on inspection",
+      "prompt": "Which is a good TLS inspection policy?",
+      "explanation": "Balance visibility, privacy and risk.",
+      "tags": [
+        "detection"
+      ],
+      "options": [
+        {
+          "text": "Decrypt everything, no exceptions"
+        },
+        {
+          "text": "Inspect selectively with documented exemptions for categories such as banking and health",
+          "correct": true
+        },
+        {
+          "text": "Never inspect anything"
+        },
+        {
+          "text": "Inspect only on weekends"
         }
       ]
     }
