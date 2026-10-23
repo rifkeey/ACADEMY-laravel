@@ -18,7 +18,7 @@
                     @csrf
                     @foreach ($questions as $i => $q)
                         @php $multi = $q['kind'] === 'multiple'; $pos = $q['position']; @endphp
-                        <fieldset x-show="isCurrent({{ $i }})" @if ($i > 0) x-cloak @endif class="rounded-2xl border border-border bg-surface p-6">
+                        <fieldset x-show="isCurrent({{ $i }})" @if ($i > 0) x-cloak @endif class="min-w-0 rounded-2xl border border-border bg-surface p-6">
                             <legend class="sr-only">Question {{ $pos }}</legend>
                             <p class="text-xs font-semibold uppercase tracking-wide text-subtle">Question {{ $pos }} of {{ count($questions) }}{{ $multi ? ' · select all that apply' : '' }}</p>
                             <x-markdown class="mt-2" :compact="true" :source="$q['prompt']" />

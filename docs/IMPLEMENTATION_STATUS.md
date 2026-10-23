@@ -4,7 +4,7 @@ Last updated: 19 October 2026. "Tested" means covered by the automated suite (PH
 
 ## Automated tests
 
-`php artisan test`: **40 tests, 676 assertions, all passing** (unit: KQL interpreter, firewall, grading rules, colour contrast; feature: content integrity, full learner journey, every page over HTTP, the admin area).
+`php artisan test`: **44 tests, 759 assertions, all passing** (unit: KQL interpreter, firewall, grading rules, colour contrast; feature: content integrity, full learner journey, every page over HTTP, the admin area).
 
 Specific checks the migration brief asked for:
 
@@ -43,8 +43,8 @@ Specific checks the migration brief asked for:
 | --- | --- |
 | SOC Analyst | Complete: lessons, 6 labs, 46 questions, published exam. Enrolment open |
 | Governance, Risk and Compliance | Complete: lessons, 5 labs, 57 questions, published exam. Enrolment open |
-| Network Security | **In development**: 9 starter lessons, 2 labs, no questions, so its exam cannot be published. Enrolment closed |
-| Cloud Security | **In development**: 10 starter lessons, 2 labs, no questions, exam unpublished. Enrolment closed |
+| Network Security | **In development**: restructured into 10 modules; module 3 (Firewalls and NAC) complete as the pilot (5 lessons, lab, 14 questions); other modules are outlines or starter lessons. Exam unpublished. Enrolment closed |
+| Cloud Security | **In development**: module 2 (IAM) complete as the pilot (5 lessons, lab, 14 questions); other modules are starter lessons. Exam unpublished. Enrolment closed |
 | Penetration Testing and Ethical Hacking | **Outline only**: module structure, no lessons, labs or questions. Enrolment closed |
 
 ## Placeholders to fill before launch

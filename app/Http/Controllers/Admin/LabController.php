@@ -23,7 +23,7 @@ use Illuminate\View\View;
  */
 class LabController extends Controller
 {
-    private const TASK_TYPES = ['text', 'number', 'choice', 'multi', 'kql', 'firewall', 'grid'];
+    private const TASK_TYPES = ['text', 'number', 'choice', 'multi', 'kql', 'firewall', 'grid', 'iam-policy', 'deliverable'];
 
     public function __construct(private readonly VersionService $versions) {}
 

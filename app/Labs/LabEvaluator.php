@@ -9,7 +9,7 @@ use App\Labs\Kql\KqlError;
  * Server-side lab marking. Pure and deterministic: given a lab's public content, its private
  * validator and the learner's answers, returns per-task results and whether the lab is passed.
  *
- * Task types: text, number, choice, multi, kql, firewall, grid.
+ * Task types: text, number, choice, multi, kql, firewall, grid, iam-policy, deliverable.
  */
 final class LabEvaluator
 {
@@ -134,6 +134,45 @@ final class LabEvaluator
                 $first = $failures[0];
 
                 return [false, count($failures)." of {$total} test flows failed, e.g. \"{$first['label']}\" should be ".($first['expect'] === 'allow' ? 'allowed' : 'blocked').'.'];
+
+            case 'iam-policy':
+                $parsed = IamPolicyEvaluator::parse($answer);
+                if (! $parsed['ok']) {
+                    return [false, $parsed['error']];
+                }
+                $failures = array_values(array_filter($v['requests'], fn ($r) => IamPolicyEvaluator::evaluate($parsed['statements'], $r['action'], $r['resource'])['decision'] !== $r['expect']));
+                $total = count($v['requests']);
+                if (! $failures) {
+                    return [true, "All {$total} test requests were decided as required."];
+                }
+                $first = $failures[0];
+
+                return [false, count($failures)." of {$total} test requests were decided incorrectly, e.g. \"{$first['label']}\" should be ".($first['expect'] === 'allow' ? 'allowed' : 'denied').'.'];
+
+            case 'deliverable':
+                // Completeness check only: enough words and the required points mentioned. The
+                // quality of the reasoning is judged by the learner against the rubric.
+                if (! is_string($answer) || mb_strlen($answer) > 20_000) {
+                    return [false, 'Write your deliverable in the box (at most 20,000 characters).'];
+                }
+                $words = preg_match_all('/[\p{L}\p{N}][\p{L}\p{N}\'._\/-]*/u', $answer);
+                $min = (int) ($v['minWords'] ?? 0);
+                if ($words < $min) {
+                    return [false, "Your deliverable has {$words} words; write at least {$min}."];
+                }
+                $text = mb_strtolower($answer);
+                $missing = [];
+                foreach ($v['mustMention'] ?? [] as $group) {
+                    $terms = (array) ($group['any'] ?? []);
+                    if (! array_filter($terms, fn ($t) => str_contains($text, mb_strtolower($t)))) {
+                        $missing[] = $group['label'];
+                    }
+                }
+                if ($missing) {
+                    return [false, 'Your deliverable does not yet cover: '.implode('; ', $missing).'.'];
+                }
+
+                return [true, "{$words} words; all required points are covered. Now check it against the rubric."];
 
             case 'grid':
                 $grid = is_array($answer) && ! array_is_list($answer) ? $answer : [];

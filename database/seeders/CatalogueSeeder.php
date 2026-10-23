@@ -55,7 +55,7 @@ class CatalogueSeeder extends Seeder
             SourceReference::firstOrCreate(['key' => $s['key']], [
                 'title' => $s['title'], 'publisher' => $s['publisher'], 'url' => $s['url'], 'topic' => $s['topic'],
                 'source_type' => $s['sourceType'], 'version_note' => $s['versionNote'], 'supports' => $s['supports'],
-                'date_checked' => $data['checks']['checkedOn'],
+                'date_checked' => $s['dateChecked'] ?? $data['checks']['checkedOn'],   // per-source date when it was checked separately
                 'verification_status' => in_array($s['key'], $unavailable, true) ? 'unavailable' : 'verified',
             ]);
         }

@@ -1,4 +1,4 @@
-﻿<x-layouts.site :title="$lesson->title" :noindex="true">
+<x-layouts.site :title="$lesson->title" :noindex="true">
     @php
         $sourceLabel = ['official_standard' => 'Official standard', 'vendor_documentation' => 'Vendor documentation', 'open_resource' => 'Open resource', 'practice_environment' => 'Practice environment'];
     @endphp
@@ -41,16 +41,30 @@
                             <p class="mt-1 text-sm text-muted">Self-check questions. They are not graded.</p>
                             <div class="mt-6 space-y-8">
                                 @foreach ($lesson->knowledge_checks as $qi => $check)
-                                    <fieldset x-data="knowledgeCheck" data-answer="{{ $check['answerIndex'] }}">
+                                    @php
+                                        $multi = isset($check['answerIndexes']);
+                                        $answer = $multi ? implode(',', $check['answerIndexes']) : $check['answerIndex'];
+                                    @endphp
+                                    <fieldset x-data="knowledgeCheck" data-answer="{{ $answer }}" data-multi="{{ $multi ? 1 : 0 }}" class="min-w-0">
                                         <legend class="font-medium">{{ $qi + 1 }}. {{ $check['question'] }}</legend>
+                                        @if ($multi)<p class="mt-1 text-xs text-subtle">Select all that apply, then check your answer.</p>@endif
+                                        @if (! empty($check['code']))<pre class="mt-3 overflow-x-auto rounded-lg border border-border bg-[#070c18] p-3 font-mono text-xs leading-relaxed"><code>{{ $check['code'] }}</code></pre>@endif
                                         <div class="mt-3 space-y-2">
                                             @foreach ($check['options'] as $oi => $option)
-                                                <label data-index="{{ $oi }}" :class="optionClass" class="flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors">
-                                                    <input type="radio" name="kc-{{ $qi }}" data-index="{{ $oi }}" class="accent-[var(--accent)]" @change="choose" :disabled="answered">
-                                                    <span class="flex-1">{{ $option }}</span>
+                                                <label data-index="{{ $oi }}" :class="optionClass" class="block cursor-pointer rounded-lg border px-3 py-2.5 text-sm transition-colors">
+                                                    <span class="flex items-center gap-3">
+                                                        <input type="{{ $multi ? 'checkbox' : 'radio' }}" name="kc-{{ $qi }}" data-index="{{ $oi }}" class="accent-[var(--accent)]" @change="choose" :disabled="answered">
+                                                        <span class="flex-1">{{ $option }}</span>
+                                                    </span>
+                                                    @if (! empty($check['optionFeedback'][$oi]))
+                                                        <span data-index="{{ $oi }}" x-show="showFeedback" x-cloak class="mt-1.5 block pl-7 text-xs text-muted">{{ $check['optionFeedback'][$oi] }}</span>
+                                                    @endif
                                                 </label>
                                             @endforeach
                                         </div>
+                                        @if ($multi)
+                                            <button type="button" x-show="canCheck" x-cloak @click="check" class="mt-3 rounded-lg border border-border-strong px-3 py-1.5 text-sm hover:bg-elevated">Check answer</button>
+                                        @endif
                                         <p x-show="answered" x-cloak role="status" class="mt-3 text-sm text-muted">
                                             <span x-show="isCorrect" class="font-semibold text-success">Correct. </span><span x-show="! isCorrect" class="font-semibold text-danger">Not quite. </span>{{ $check['explanation'] }}
                                             <button type="button" class="ml-2 text-text underline" @click="reset">Try again</button>

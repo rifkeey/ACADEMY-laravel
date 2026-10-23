@@ -3,13 +3,14 @@
  * attribute strings: every interactive behaviour is a named component registered below.
  */
 import Alpine from '@alpinejs/csp';
-import { confirmDialog, countdown, knowledgeCheck } from './components/basics';
+import { confirmDialog, countdown, knowledgeCheck, printPage } from './components/basics';
 import { evidenceExplorer, kqlConsole, labRunner, workspaceTabs } from './components/lab-runner';
 import { examTaker } from './components/exam-taker';
 
 Alpine.data('confirmDialog', confirmDialog);
 Alpine.data('knowledgeCheck', knowledgeCheck);
 Alpine.data('countdown', countdown);
+Alpine.data('printPage', printPage);
 Alpine.data('labRunner', labRunner);
 Alpine.data('evidenceExplorer', evidenceExplorer);
 Alpine.data('kqlConsole', kqlConsole);

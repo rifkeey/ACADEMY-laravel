@@ -1,4 +1,4 @@
-﻿{{-- Enquiry form shared by Contact and Corporate. Spam protection: a hidden honeypot field + rate limiting. --}}
+{{-- Enquiry form shared by Contact and Corporate. Spam protection: a hidden honeypot field + rate limiting. --}}
 @props(['kind' => 'general', 'programme' => '', 'programmes'])
     <form method="POST" action="{{ route('contact.store') }}" class="space-y-5" novalidate>
         @csrf

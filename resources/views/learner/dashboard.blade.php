@@ -3,6 +3,7 @@
     <x-ui.container class="py-12">
         <x-ui.page-header eyebrow="Dashboard" :title="'Welcome back, '.(explode(' ', $user->name)[0] ?: 'there')" description="Pick up where you left off, track requirements and download your credentials.">
             <x-slot:actions>
+                <x-ui.button :href="route('portfolio')" variant="ghost" size="sm">Portfolio</x-ui.button>
                 <x-ui.button :href="route('dashboard.payments')" variant="ghost" size="sm">Payment history</x-ui.button>
                 <x-ui.button :href="route('account')" variant="secondary" size="sm">Account</x-ui.button>
             </x-slot:actions>

@@ -16,32 +16,50 @@ export function confirmDialog() {
  */
 export function knowledgeCheck() {
     return {
-        picked: null,
-        answer: 0,
+        // Single-answer checks lock on the first choice; multi-select checks collect ticks and
+        // are marked when the learner presses "Check answer".
+        multi: false,
+        answers: [],
+        selected: [],
+        answered: false,
         init() {
-            this.answer = Number(this.$el.dataset.answer);
+            this.multi = this.$el.dataset.multi === '1';
+            this.answers = this.$el.dataset.answer.split(',').map(Number);
         },
         choose() {
-            if (this.picked === null) this.picked = Number(this.$el.dataset.index);
+            const i = Number(this.$el.dataset.index);
+            if (this.answered) return;
+            if (!this.multi) {
+                this.selected = [i];
+                this.answered = true;
+                return;
+            }
+            this.selected = this.selected.includes(i) ? this.selected.filter((x) => x !== i) : [...this.selected, i];
+        },
+        check() {
+            if (this.selected.length) this.answered = true;
         },
         reset() {
-            this.picked = null;
+            this.selected = [];
+            this.answered = false;
+            for (const input of this.$root.querySelectorAll('input')) input.checked = false;
         },
-        get answered() {
-            return this.picked !== null;
+        get canCheck() {
+            return this.multi && !this.answered && this.selected.length > 0;
         },
         get isCorrect() {
-            return this.picked === this.answer;
+            return this.selected.length === this.answers.length && this.answers.every((a) => this.selected.includes(a));
         },
         optionClass() {
             const i = Number(this.$el.dataset.index);
-            if (this.picked === null) return 'border-border hover:bg-elevated';
-            if (i === this.answer) return 'border-success/60 bg-success/10';
-            if (i === this.picked) return 'border-danger/60 bg-danger/10';
+            if (!this.answered) return this.selected.includes(i) ? 'border-accent/60 bg-accent/5' : 'border-border hover:bg-elevated';
+            if (this.answers.includes(i)) return 'border-success/60 bg-success/10';
+            if (this.selected.includes(i)) return 'border-danger/60 bg-danger/10';
             return 'border-border';
         },
-        isPicked() {
-            return this.picked === Number(this.$el.dataset.index);
+        /** Per-option feedback is shown for the options the learner picked, once answered. */
+        showFeedback() {
+            return this.answered && this.selected.includes(Number(this.$el.dataset.index));
         },
     };
 }
@@ -74,6 +92,15 @@ export function countdown() {
         },
         get urgent() {
             return this.left < 5 * 60000;
+        },
+    };
+}
+
+/** Opens the browser print dialog (print or save the page as PDF). */
+export function printPage() {
+    return {
+        print() {
+            window.print();
         },
     };
 }

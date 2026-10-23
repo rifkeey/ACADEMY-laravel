@@ -52,6 +52,8 @@ export function labRunner() {
                 // Shapes each input type expects, so x-model always has a place to write.
                 if (t.input.type === 'multi' || t.input.type === 'firewall') fresh[t.id] = [];
                 else if (t.input.type === 'grid') fresh[t.id] = Object.fromEntries(t.input.rows.map((r) => [r.id, Object.fromEntries(t.input.columns.map((c) => [c.id, '']))]));
+                else if (t.input.type === 'iam-policy') fresh[t.id] = t.input.starter ?? '';
+                else if (t.input.type === 'deliverable') fresh[t.id] = t.input.template ?? '';
                 else fresh[t.id] = '';
                 this.hints[t.id] = 0;
                 if (t.input.type === 'kql' && !this.selectedKqlTask) this.selectedKqlTask = t.id;

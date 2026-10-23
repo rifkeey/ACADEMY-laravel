@@ -101,5 +101,25 @@ code, pre, kbd, samp, .font-mono { font-variant-ligatures: none; font-feature-se
 .prose-amaniq th { color: var(--muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .prose-amaniq blockquote { border-left: 3px solid var(--accent); background: var(--surface); padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; color: var(--muted); }
 .prose-amaniq input[type='checkbox'] { accent-color: var(--accent); margin-right: 0.4em; }
+.prose-amaniq img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); }
+.prose-amaniq figure figcaption, .prose-amaniq img + em { display: block; font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+
+/* Teaching blocks from App\Support\RichMarkdown: callouts and revealable answers. */
+.md-callout { border: 1px solid var(--border-strong); border-left-width: 4px; border-radius: 0 10px 10px 0; background: var(--surface); padding: 0.85rem 1.1rem; }
+.md-callout > * + * { margin-top: 0.6em; }
+.md-callout-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.md-callout-note { border-left-color: var(--blue); } .md-callout-note .md-callout-title { color: var(--blue); }
+.md-callout-tip { border-left-color: var(--accent); } .md-callout-tip .md-callout-title { color: var(--accent-strong); }
+.md-callout-warning { border-left-color: var(--warning); } .md-callout-warning .md-callout-title { color: var(--warning); }
+.md-callout-scenario { border-left-color: var(--accent-strong); background: var(--elevated); } .md-callout-scenario .md-callout-title { color: var(--accent-strong); }
+.md-callout-takeaway { border-left-color: var(--success); } .md-callout-takeaway .md-callout-title { color: var(--success); }
+.md-reveal { border: 1px dashed var(--border-strong); border-radius: 10px; background: var(--surface); }
+.md-reveal > summary { cursor: pointer; padding: 0.7rem 1rem; font-weight: 600; color: var(--accent-strong); list-style: none; }
+.md-reveal > summary::-webkit-details-marker { display: none; }
+.md-reveal > summary::before { content: '▸ '; }
+.md-reveal[open] > summary::before { content: '▾ '; }
+.md-reveal-body { padding: 0 1rem 1rem; }
+.md-reveal-body > * + * { margin-top: 0.8em; }
+
 .prose-compact { font-size: 0.9rem; line-height: 1.6; }
 .prose-compact > * + * { margin-top: 0.6em; }

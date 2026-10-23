@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\LearnController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\VerifyController;
@@ -47,6 +48,7 @@ Route::post('/webhooks/payments', WebhookController::class)->middleware('throttl
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/payments', [DashboardController::class, 'payments'])->name('dashboard.payments');
+    Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
     Route::get('/account', [AccountController::class, 'show'])->name('account');
     Route::get('/account/security', [AccountController::class, 'security'])->middleware('password.confirm')->name('account.security');
 

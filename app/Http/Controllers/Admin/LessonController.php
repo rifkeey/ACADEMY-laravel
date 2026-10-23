@@ -99,18 +99,37 @@ class LessonController extends Controller
         if (! is_array($checks) || ! array_is_list($checks) || count($checks) > 20) {
             throw new RuleViolation('Knowledge checks must be a JSON list of at most 20 items.');
         }
+        $clean = [];
         foreach ($checks as $i => $c) {
             $n = $i + 1;
+            $options = is_array($c) ? ($c['options'] ?? null) : null;
+            $count = is_array($options) ? count($options) : 0;
+            $valid = fn ($x) => is_int($x) && $x >= 0 && $x < $count;
+            // Either one answer (answerIndex) or several (answerIndexes, for select-all-that-apply).
+            $multi = is_array($c) && array_key_exists('answerIndexes', $c);
             $ok = is_array($c) && is_string($c['question'] ?? null) && trim($c['question']) !== ''
-                && is_array($c['options'] ?? null) && array_is_list($c['options']) && count($c['options']) >= 2 && count($c['options']) <= 6
-                && count(array_filter($c['options'], 'is_string')) === count($c['options'])
-                && is_int($c['answerIndex'] ?? null) && $c['answerIndex'] >= 0 && $c['answerIndex'] < count($c['options'])
-                && is_string($c['explanation'] ?? '');
+                && is_array($options) && array_is_list($options) && $count >= 2 && $count <= 8
+                && count(array_filter($options, 'is_string')) === $count
+                && ($multi
+                    ? is_array($c['answerIndexes']) && $c['answerIndexes'] && count(array_filter($c['answerIndexes'], $valid)) === count($c['answerIndexes'])
+                    : $valid($c['answerIndex'] ?? null))
+                && is_string($c['explanation'] ?? '') && is_string($c['code'] ?? '')
+                && (! isset($c['optionFeedback']) || (is_array($c['optionFeedback']) && count($c['optionFeedback']) <= $count));
             if (! $ok) {
-                throw new RuleViolation("Knowledge check {$n} needs a question, 2–6 text options, a valid answerIndex and an explanation.");
+                throw new RuleViolation("Knowledge check {$n} needs a question, 2–8 text options, a valid answerIndex (or answerIndexes) and an explanation.");
             }
+            $item = ['question' => $c['question'], 'options' => $options];
+            $item += $multi ? ['answerIndexes' => array_values(array_unique($c['answerIndexes']))] : ['answerIndex' => $c['answerIndex']];
+            $item['explanation'] = $c['explanation'] ?? '';
+            if (! empty($c['code'])) {
+                $item['code'] = $c['code'];
+            }
+            if (! empty($c['optionFeedback'])) {
+                $item['optionFeedback'] = array_map(fn ($f) => is_string($f) ? $f : '', array_values($c['optionFeedback']));
+            }
+            $clean[] = $item;
         }
 
-        return array_map(fn ($c) => ['question' => $c['question'], 'options' => $c['options'], 'answerIndex' => $c['answerIndex'], 'explanation' => $c['explanation'] ?? ''], $checks);
+        return $clean;
     }
 }

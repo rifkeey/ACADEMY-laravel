@@ -14,6 +14,7 @@ use App\Models\Specialization;
 use App\Models\User;
 use App\Payments\PaymentProvider;
 use App\Payments\SandboxProvider;
+use App\Services\CheckoutService;
 use Database\Seeders\CatalogueSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
@@ -214,6 +215,45 @@ class HttpPagesTest extends TestCase
         $this->post('/contact', ['name' => 'Ngozi', 'email' => 'ngozi@example.com', 'kind' => 'general', 'message' => 'Please tell me about the SOC programme start dates.'])
             ->assertRedirect();
         $this->assertDatabaseHas('enquiries', ['email' => 'ngozi@example.com']);
+    }
+
+    #[Test]
+    public function pilot_modules_render_and_release_the_debrief_only_after_a_pass(): void
+    {
+        $learner = $this->user();
+        $admin = $this->user('admin');
+        foreach (['network-security', 'cloud-security'] as $slug) {
+            app(CheckoutService::class)->grantComplimentary($admin, $learner->email, Specialization::where('slug', $slug)->firstOrFail(), 'Pilot review');
+        }
+        $this->actingAs($learner);
+
+        foreach (['network-security' => ['firewalls', 'firewall-policy-builder'], 'cloud-security' => ['iam', 'iam-excessive-permissions']] as $slug => [$module, $labSlug]) {
+            $enrolment = Enrolment::where('user_id', $learner->id)->whereHas('specialization', fn ($q) => $q->where('slug', $slug))->firstOrFail();
+            $lessons = Lesson::whereHas('module', fn ($q) => $q->where('course_version_id', $enrolment->course_version_id)->where('slug', $module))->get();
+            $this->assertCount(5, $lessons);
+            foreach ($lessons as $lesson) {
+                $page = $this->get(route('learn.lesson', [$slug, $lesson->id]))->assertOk();
+                // Every teaching block was rendered (ARNs such as arn:aws:s3::: legitimately contain colons).
+                $this->assertDoesNotMatchRegularExpression('/:::(note|tip|warning|scenario|takeaway|reveal)/', $page->getContent());
+                $this->assertStringStartsWith('<!doctype html>', ltrim($page->getContent(), '
+'));   // no byte-order mark before the doctype
+            }
+
+            $page = $this->get(route('learn.lab', [$slug, $labSlug]))->assertOk();
+            foreach (['Worked solution', '"requests"', '"flows"', 'mustMention'] as $secret) {
+                $page->assertDontSee($secret, false);
+            }
+
+            $fail = $this->postJson(route('learn.lab.submit', [$slug, $labSlug]), ['answers' => []])->assertOk();
+            $this->assertNull($fail->json('debriefHtml'));
+            $pass = $this->postJson(route('learn.lab.submit', [$slug, $labSlug]), ['answers' => LabSolutions::ALL[$labSlug]])->assertOk();
+            $this->assertTrue($pass->json('passed'));
+            $this->assertStringContainsString('Worked solution', $pass->json('debriefHtml'));
+        }
+
+        // The portfolio shows this learner's deliverables, and nobody else's.
+        $this->get(route('portfolio'))->assertOk()->assertSee('Firewall change request')->assertSee('Access-review finding')->assertSee('retire rules 2, 4 and 8');
+        $this->actingAs($this->user())->get(route('portfolio'))->assertOk()->assertDontSee('retire rules 2, 4 and 8')->assertSee('Your portfolio is empty');
     }
 
     #[Test]

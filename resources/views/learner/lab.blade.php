@@ -184,7 +184,7 @@
                                         </div>
                                         @break
                                     @case('choice')
-                                        <fieldset aria-labelledby="{{ $fid }}-prompt" class="space-y-2">
+                                        <fieldset aria-labelledby="{{ $fid }}-prompt" class="min-w-0 space-y-2">
                                             @foreach ($in['options'] as $o)
                                                 <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-border px-3 py-2.5 text-sm hover:bg-elevated">
                                                     <input type="radio" name="{{ $fid }}" value="{{ $o['id'] }}" x-model="answers[{{ $key }}]" class="mt-0.5 accent-[var(--accent)]"><span>{{ $o['label'] }}</span>
@@ -193,7 +193,7 @@
                                         </fieldset>
                                         @break
                                     @case('multi')
-                                        <fieldset aria-labelledby="{{ $fid }}-prompt" class="space-y-2">
+                                        <fieldset aria-labelledby="{{ $fid }}-prompt" class="min-w-0 space-y-2">
                                             <p class="text-xs text-subtle">Select all that apply.</p>
                                             @foreach ($in['options'] as $o)
                                                 <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-border px-3 py-2.5 text-sm hover:bg-elevated">
@@ -233,6 +233,28 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                        </div>
+                                        @break
+                                    @case('iam-policy')
+                                        {{-- Policy editor: graded by a server-side evaluator against hidden access requests. --}}
+                                        <div class="space-y-2">
+                                            <label for="{{ $fid }}" class="text-sm font-medium">Your policy (JSON)</label>
+                                            <textarea id="{{ $fid }}" rows="18" maxlength="20000" spellcheck="false" x-model="answers[{{ $key }}]" class="{{ $field }} font-mono text-xs leading-relaxed"></textarea>
+                                            <p class="text-xs text-subtle">Evaluation: an explicit Deny wins; otherwise an Allow is needed; anything not allowed is denied. Wildcards * and ? are supported. Conditions are not evaluated in this simulator.</p>
+                                        </div>
+                                        @break
+                                    @case('deliverable')
+                                        {{-- Written deliverable: kept in your portfolio. The automatic check covers completeness only. --}}
+                                        <div class="space-y-3">
+                                            <label for="{{ $fid }}" class="text-sm font-medium">Your deliverable</label>
+                                            <textarea id="{{ $fid }}" rows="14" maxlength="20000" x-model="answers[{{ $key }}]" class="{{ $field }} leading-relaxed"></textarea>
+                                            <p class="text-xs text-subtle">At least {{ $in['minWords'] ?? 0 }} words. Saved to your portfolio when you submit. The automatic check confirms the required points are covered; use the rubric to judge the quality of your reasoning.</p>
+                                            @if (! empty($in['rubric']))
+                                                <details class="rounded-lg border border-border bg-bg/40 p-3 text-sm">
+                                                    <summary class="cursor-pointer font-medium text-accent-strong">Marking rubric</summary>
+                                                    <ul class="mt-2 list-disc space-y-1 pl-5 text-muted">@foreach ($in['rubric'] as $r)<li>{{ $r }}</li>@endforeach</ul>
+                                                </details>
+                                            @endif
                                         </div>
                                         @break
                                     @case('firewall')
@@ -291,7 +313,21 @@
                     <p class="mt-1 text-sm text-muted"><span x-text="result ? result.score : 0"></span> of <span x-text="result ? result.maxScore : 0"></span> points. Pass mark {{ $lab->pass_percent }}%.</p>
                     <p x-show="result && result.passed" class="mt-3 text-sm"><a href="{{ route('learn.course', $slug) }}" class="font-semibold text-text underline">Back to the course</a></p>
                 </div>
+
+                {{-- Worked solution and professional debrief: sent by the server only after a pass. --}}
+                <div x-show="result && result.debriefHtml" x-cloak class="mt-6 rounded-xl border border-border bg-bg/40 p-5">
+                    <h3 class="font-semibold">Debrief and worked solution</h3>
+                    <div class="prose-amaniq prose-compact mt-3" x-html="result ? result.debriefHtml : ''"></div>
+                </div>
             </section>
+
+            @if (! empty($c['reflection']))
+                <section aria-labelledby="refl-h" class="rounded-2xl border border-border bg-surface p-6">
+                    <h2 id="refl-h" class="font-semibold">Reflect and apply</h2>
+                    <p class="mt-1 text-sm text-muted">Questions a senior colleague would ask you about this work. Note your answers; they make good interview preparation.</p>
+                    <ol class="mt-3 list-decimal space-y-1.5 pl-5 text-sm text-muted">@foreach ($c['reflection'] as $q)<li>{{ $q }}</li>@endforeach</ol>
+                </section>
+            @endif
 
             @if ($attempts->isNotEmpty())
                 <section aria-labelledby="hist-h">

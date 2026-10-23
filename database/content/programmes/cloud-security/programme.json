@@ -100,39 +100,308 @@
     },
     {
       "slug": "iam",
-      "title": "Identity and Access Management",
-      "purpose": "Design least-privilege cloud identity.",
-      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "title": "Cloud Identity and Access Management",
+      "purpose": "Kanem Financial Services' invoice application is about to go live in the cloud with a policy \"copied from a tutorial\". In this module you learn how cloud identities authenticate, how AWS, Azure and Google Cloud decide what an identity may do, how to apply least privilege with evidence, how workloads should get credentials, and how attackers escalate privileges. You finish with a real-looking access review.\n\n**To complete this module:** finish all five lessons and pass the lab (80%), including the policy you write and your written finding.",
+      "prerequisiteKnowledge": "Cloud service models and shared responsibility (module 1). Comfortable reading JSON.",
       "objectives": [
-        "Explain users, roles, policies and federation.",
-        "Apply least privilege to policies.",
-        "Protect privileged access and credentials."
+        "Distinguish authentication from authorisation and classify cloud principals",
+        "Predict access decisions from AWS IAM policies and explain Azure RBAC and Google Cloud IAM inheritance",
+        "Design least-privilege permissions from documented needs and usage evidence",
+        "Recommend workload identity mechanisms instead of long-lived keys",
+        "Identify privilege-escalation and defence-evasion permissions and design privileged access controls"
       ],
       "keyConcepts": [
-        "Principals",
-        "Policies",
-        "Roles and federation",
-        "MFA",
-        "Long-lived keys"
+        "Principals and federation",
+        "Authentication vs authorisation",
+        "Explicit deny, allow and implicit deny",
+        "Scope and inheritance",
+        "Least privilege and ABAC",
+        "Temporary credentials and workload identity",
+        "Privilege escalation (PassRole, role assignment)",
+        "Just-in-time and break-glass access"
       ],
       "assessmentCriteria": [
-        "Demonstrates the ability to explain users, roles, policies and federation.",
-        "Demonstrates the ability to apply least privilege to policies.",
-        "Demonstrates the ability to protect privileged access and credentials."
+        "Correctly identifies excessive, escalation and evasion permissions",
+        "Writes a policy that passes all hidden access tests",
+        "Interprets access-activity evidence and escalates appropriately",
+        "Communicates the finding clearly to a manager"
       ],
-      "contentStatus": "starter",
+      "instructorNotes": "Estimated time: 2.75 hours of lessons plus 1.5 hours of lab. The 28 February PassRole activity seeds the module 9 incident.",
+      "contentStatus": "complete",
       "lessons": [
         {
-          "slug": "least-privilege-policies",
-          "title": "Least-privilege policies",
-          "minutes": 25,
+          "slug": "identities-authn-authz",
+          "title": "Identities, authentication and authorisation in the cloud",
+          "minutes": 30,
           "objectives": [
-            "Explain users, roles, policies and federation.",
-            "Apply least privilege to policies."
+            "Classify human, group and workload principals across AWS, Azure and Google Cloud",
+            "Distinguish authentication from authorisation in a cloud API request",
+            "Recommend controls for human access (federation, MFA, groups, protected root accounts)"
           ],
           "sources": [
             "aws-iam-best-practices",
-            "ms-cloud-benchmark"
+            "nist-sp-800-210",
+            "attack-t1078-004"
+          ],
+          "checks": [
+            {
+              "question": "A user signs in with a password and MFA, then deletes a production database they should never have been able to touch. Which control failed?",
+              "options": [
+                "Authentication",
+                "Authorisation",
+                "Encryption",
+                "Logging"
+              ],
+              "answerIndex": 1,
+              "explanation": "The user proved who they were; the problem is that policy allowed the action. MFA does not reduce what an authenticated identity is allowed to do."
+            },
+            {
+              "question": "Which practices improve human access to a cloud environment? Select all that apply.",
+              "options": [
+                "Single sign-on from the corporate identity provider",
+                "Granting permissions to groups rather than individuals",
+                "Sharing one administrator account among the IT team",
+                "Using the root or Global Administrator account only for tasks that require it"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                3
+              ],
+              "explanation": "Federation, groups and a protected top-level account are standard guidance. Shared accounts destroy accountability and are hard to protect."
+            },
+            {
+              "question": "In AWS, an IAM role is best described as:",
+              "options": [
+                "A user with a password",
+                "A set of permissions that a person or service assumes temporarily",
+                "A group of users",
+                "An encryption key"
+              ],
+              "answerIndex": 1,
+              "explanation": "Roles have no long-term password; principals assume them and receive temporary credentials."
+            }
+          ]
+        },
+        {
+          "slug": "how-policies-are-evaluated",
+          "title": "How cloud access policies are evaluated",
+          "minutes": 35,
+          "objectives": [
+            "Read an IAM policy statement as Effect, Action, Resource and Condition",
+            "Predict AWS decisions using explicit deny, allow and implicit deny",
+            "Explain how scope and inheritance work in Azure RBAC and Google Cloud IAM"
+          ],
+          "sources": [
+            "aws-policy-evaluation",
+            "aws-policy-elements",
+            "azure-rbac",
+            "azure-deny-assignments",
+            "gcp-iam",
+            "gcp-deny"
+          ],
+          "checks": [
+            {
+              "question": "A policy allows \"s3:*\" on \"arn:aws:s3:::kanem-invoices/*\" and denies \"s3:DeleteObject\" on the same resource. What happens to a DeleteObject request on an invoice?",
+              "options": [
+                "Allowed, because s3:* includes DeleteObject",
+                "Denied, because an explicit deny overrides any allow",
+                "Allowed if the user has MFA",
+                "Denied only if no other policy allows it"
+              ],
+              "answerIndex": 1,
+              "explanation": "In AWS evaluation an explicit deny always wins, regardless of allows elsewhere."
+            },
+            {
+              "question": "Policy: Allow s3:GetObject on arn:aws:s3:::kanem-invoices/*. Which requests are denied? Select all that apply.",
+              "code": "Request A: s3:GetObject  arn:aws:s3:::kanem-invoices/2026/inv-1.pdf\nRequest B: s3:GetObject  arn:aws:s3:::kanem-payroll/march.csv\nRequest C: s3:ListBucket arn:aws:s3:::kanem-invoices\nRequest D: s3:PutObject  arn:aws:s3:::kanem-invoices/2026/inv-2.pdf",
+              "options": [
+                "Request A",
+                "Request B",
+                "Request C",
+                "Request D"
+              ],
+              "answerIndexes": [
+                1,
+                2,
+                3
+              ],
+              "explanation": "Only A matches both the action and the resource. B is another bucket, C is a different action on the bucket ARN, D is a different action. All three are implicitly denied."
+            },
+            {
+              "question": "In Azure, a user is assigned Contributor on a subscription. What access do they have to a resource group inside it?",
+              "options": [
+                "None, unless also assigned on the resource group",
+                "Contributor, because assignments are inherited by child scopes",
+                "Reader only",
+                "Owner, because subscription roles are promoted"
+              ],
+              "answerIndex": 1,
+              "explanation": "Azure RBAC assignments apply at their scope and every scope beneath it."
+            }
+          ]
+        },
+        {
+          "slug": "least-privilege-in-practice",
+          "title": "Least privilege in practice",
+          "minutes": 35,
+          "objectives": [
+            "Derive the minimum permissions for a workload from its documented needs",
+            "Recognise dangerous wildcards and broad built-in roles",
+            "Use usage evidence and access reviews to remove unneeded permissions"
+          ],
+          "sources": [
+            "nist-sp-800-210",
+            "aws-access-analyzer",
+            "gcp-role-recommendations",
+            "csa-ccm"
+          ],
+          "checks": [
+            {
+              "question": "Which statement is the least privileged way to let an application store generated invoices?",
+              "options": [
+                "Allow s3:* on *",
+                "Allow s3:PutObject on arn:aws:s3:::kanem-invoices/generated/*",
+                "Allow s3:PutObject on *",
+                "Allow s3:* on arn:aws:s3:::kanem-invoices/*"
+              ],
+              "answerIndex": 1,
+              "explanation": "One action, scoped to the one prefix the application writes to."
+            },
+            {
+              "question": "Which of these are reasonable ways to find and remove unused permissions? Select all that apply.",
+              "options": [
+                "IAM last-accessed information or Access Analyzer unused-access findings in AWS",
+                "Google Cloud IAM role recommendations",
+                "Asking each developer which permissions they would like",
+                "Regular access reviews where the owner confirms each grant"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                3
+              ],
+              "explanation": "Usage evidence and owner-confirmed reviews remove excess. Wish lists add it."
+            },
+            {
+              "question": "Why must tags be protected when access decisions use them (ABAC)?",
+              "options": [
+                "Tags are expensive",
+                "If a user can change a resource's tags, they may be able to change who can access it",
+                "Tags are not supported in Azure",
+                "ABAC does not use tags"
+              ],
+              "answerIndex": 1,
+              "explanation": "In ABAC, attributes are part of the policy. Whoever controls the attributes controls access."
+            }
+          ]
+        },
+        {
+          "slug": "workload-identities",
+          "title": "Workload identities and temporary credentials",
+          "minutes": 30,
+          "objectives": [
+            "Explain the risks of long-lived access keys and client secrets",
+            "Choose the right workload identity mechanism in each provider",
+            "Respond to an exposed access key"
+          ],
+          "sources": [
+            "aws-temp-credentials",
+            "azure-managed-identities",
+            "gcp-sa-best-practices",
+            "gcp-wif",
+            "aws-imds"
+          ],
+          "checks": [
+            {
+              "question": "An application on an Azure VM needs to read from a storage account. What is the best way for it to authenticate?",
+              "options": [
+                "Store the storage account key in the application settings",
+                "Use a managed identity for the VM with a role scoped to that storage account",
+                "Use the administrator's personal account",
+                "Make the storage account public"
+              ],
+              "answerIndex": 1,
+              "explanation": "A managed identity removes stored secrets; the scoped role keeps it least privilege."
+            },
+            {
+              "question": "You discover a valid cloud access key committed to a Git repository eight months ago. What should you do first?",
+              "options": [
+                "Delete the file from the latest commit",
+                "Deactivate the key, then investigate its use in the audit logs",
+                "Make the repository private",
+                "Wait for the 90-day rotation"
+              ],
+              "answerIndex": 1,
+              "explanation": "Clones and forks already hold copies, so the key must be treated as compromised and disabled before anything else."
+            },
+            {
+              "question": "What is the critical security control in workload identity federation for a CI pipeline?",
+              "options": [
+                "The length of the access key",
+                "The trust rule that says which issuer, repository and branch may obtain credentials",
+                "The pipeline's colour theme",
+                "Running the pipeline at night"
+              ],
+              "answerIndex": 1,
+              "explanation": "Federation is only as strong as the conditions on the trust rule. \"Any repository\" is effectively public access."
+            }
+          ]
+        },
+        {
+          "slug": "privileged-access-and-escalation",
+          "title": "Privileged access and privilege escalation",
+          "minutes": 35,
+          "objectives": [
+            "Identify permissions that enable privilege escalation in each provider",
+            "Explain the iam:PassRole escalation path",
+            "Design privileged access with just-in-time elevation, break-glass accounts and guardrails"
+          ],
+          "sources": [
+            "aws-passrole",
+            "azure-pim",
+            "aws-scps",
+            "attack-t1098",
+            "attack-t1548-005"
+          ],
+          "checks": [
+            {
+              "question": "Which permissions should be treated as administrative because they allow privilege escalation? Select all that apply.",
+              "options": [
+                "iam:CreatePolicyVersion on a policy attached to yourself",
+                "Microsoft.Authorization/roleAssignments/write",
+                "s3:GetObject on one bucket",
+                "iam:PassRole on *"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                3
+              ],
+              "explanation": "Editing your own policy, writing role assignments and passing any role all let an identity gain more access. Reading objects in one bucket does not."
+            },
+            {
+              "question": "An identity has ec2:RunInstances and iam:PassRole on *. Why is this dangerous?",
+              "options": [
+                "It can launch an instance with an administrator role attached and use that role's credentials",
+                "It can read every bucket directly",
+                "It can delete the account",
+                "It is not dangerous"
+              ],
+              "answerIndex": 0,
+              "explanation": "The identity can create compute that holds more privilege than it has, then use it."
+            },
+            {
+              "question": "What makes a break-glass account safe enough to keep?",
+              "options": [
+                "It has no password",
+                "Strong credentials stored offline, exclusion from controls that could lock everyone out, and an alert on every use",
+                "It is shared with all administrators",
+                "It is only used by contractors"
+              ],
+              "answerIndex": 1,
+              "explanation": "Break-glass accounts exist for emergencies, so they must be protected and every use must be noticed."
+            }
           ]
         }
       ]
@@ -444,47 +713,53 @@
   "labs": [
     {
       "slug": "iam-excessive-permissions",
-      "title": "Identify excessive permissions in an IAM policy",
-      "difficulty": "foundation",
+      "title": "Access review: least privilege for the invoice application",
+      "difficulty": "intermediate",
       "labType": "config_review",
-      "summary": "Review the policy attached to a fictional invoice-processing application and decide which statements break least privilege.",
-      "minutes": 30,
+      "summary": "Review the invoice application's cloud permissions and usage evidence, find the escalation and evasion paths, write a least-privilege policy that passes 15 hidden access tests, and report the findings.",
+      "minutes": 90,
       "moduleSlug": "iam",
       "passPercent": 80,
       "content": {
         "objectives": [
-          "Read an IAM policy",
-          "Recognise wildcard and privilege-escalation risks",
-          "Propose a least-privilege alternative"
+          "Identify excessive, escalation and defence-evasion permissions in a policy",
+          "Interpret access-activity evidence",
+          "Write a least-privilege policy that meets the application's needs exactly",
+          "Report an access-review finding to a security manager"
         ],
-        "scenario": "Kanem's invoice application reads invoice files from one storage bucket, decrypts them with one key and writes application logs. A developer attached the policy below during a deadline. Review it.",
-        "scope": "The policy uses AWS IAM syntax (provider-specific); the principles apply to every cloud. Account IDs and ARNs are documentation placeholders.",
-        "instructions": "Read the policy and the application's needs, then answer the tasks.",
-        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real systems, people or organisations are involved, and nothing you do here leaves the platform.",
+        "scenario": "Kanem Financial Services (fictional) has moved its **invoice application** to AWS. Before go-live, the security manager has asked you to review the permissions of its identity, `invoice-app-prod`. The application team says the policy was \"copied from a tutorial to get it working\". You have the policy, the application's documented needs and 90 days of access activity.",
+        "scope": "Account 111122223333, region eu-west-1. All identifiers are synthetic. The policy simulator uses AWS-style identity-policy evaluation (explicit deny wins, otherwise an allow is needed); conditions are not evaluated.",
+        "instructions": "1. Read the three documents in the workspace.\n2. Answer tasks 1–5.\n3. In task 6, **edit the policy** so it grants exactly what the application needs. The grader runs 15 access requests you cannot see; all must be decided correctly.\n4. In task 7, write the finding for the security manager. It is saved to your portfolio.\n\nYou need 80% to pass.\n\n:::reveal Advanced challenge (optional)\nAdd an explicit Deny statement that protects invoices from deletion even if someone later attaches a broad policy to this identity. Does your policy still pass? Explain in your finding why an explicit deny is useful here, and what it cannot protect against (hint: other identities and bucket policies).\n:::",
+        "simulationNotice": "This is a simulation. All data is synthetic and generated by AMANIQ Academy for training. No real cloud accounts are used, nothing here costs money, and nothing you do leaves the platform.",
         "workspace": {
           "kind": "documents",
           "documents": [
             {
-              "title": "invoice-app-policy.json",
+              "title": "invoice-app-prod policy (current)",
               "format": "code",
               "language": "json",
-              "body": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    { \"Sid\": \"S1\", \"Effect\": \"Allow\", \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/*\" },\n    { \"Sid\": \"S2\", \"Effect\": \"Allow\", \"Action\": \"s3:*\", \"Resource\": \"*\" },\n    { \"Sid\": \"S3\", \"Effect\": \"Allow\", \"Action\": [\"logs:CreateLogStream\", \"logs:PutLogEvents\"], \"Resource\": \"arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:*\" },\n    { \"Sid\": \"S4\", \"Effect\": \"Allow\", \"Action\": \"iam:PassRole\", \"Resource\": \"*\" },\n    { \"Sid\": \"S5\", \"Effect\": \"Allow\", \"Action\": \"kms:Decrypt\", \"Resource\": \"arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666\" },\n    { \"Sid\": \"S6\", \"Effect\": \"Allow\", \"Action\": \"ec2:*\", \"Resource\": \"*\" }\n  ]\n}"
+              "body": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    { \"Sid\": \"S1\", \"Effect\": \"Allow\", \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/*\" },\n    { \"Sid\": \"S2\", \"Effect\": \"Allow\", \"Action\": \"s3:*\", \"Resource\": \"*\" },\n    { \"Sid\": \"S3\", \"Effect\": \"Allow\", \"Action\": [\"logs:CreateLogStream\", \"logs:PutLogEvents\"], \"Resource\": \"arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:*\" },\n    { \"Sid\": \"S4\", \"Effect\": \"Allow\", \"Action\": \"iam:PassRole\", \"Resource\": \"*\" },\n    { \"Sid\": \"S5\", \"Effect\": \"Allow\", \"Action\": \"kms:Decrypt\", \"Resource\": \"arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666\" },\n    { \"Sid\": \"S6\", \"Effect\": \"Allow\", \"Action\": \"ec2:*\", \"Resource\": \"*\" },\n    { \"Sid\": \"S7\", \"Effect\": \"Allow\", \"Action\": [\"cloudtrail:StopLogging\", \"cloudtrail:DeleteTrail\"], \"Resource\": \"*\" }\n  ]\n}"
             },
             {
-              "title": "What the application needs",
+              "title": "What the application needs (from the application team)",
               "format": "markdown",
-              "body": "- Read objects from the `kanem-invoices` bucket\n- Decrypt with the invoice KMS key\n- Write logs to `/kanem/invoice-app`\n- Nothing else"
+              "body": "1. **Read** invoice PDFs: any object in the `kanem-invoices` bucket.\n2. **Write** newly generated invoices, only under the `generated/` prefix of `kanem-invoices`.\n3. **Decrypt** with the invoice KMS key `arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666`.\n4. **Write logs** to the log group `/kanem/invoice-app` (create log streams and put log events).\n5. Nothing else. Invoices must never be deleted by the application (7-year retention)."
+            },
+            {
+              "title": "Access activity for invoice-app-prod (last 90 days)",
+              "format": "markdown",
+              "body": "| Permission | Last used | Notes |\n| --- | --- | --- |\n| s3:GetObject | today | ~42,000 calls/day from the application servers |\n| s3:PutObject | today | Only under `kanem-invoices/generated/` |\n| kms:Decrypt | today | Invoice key only |\n| logs:CreateLogStream, logs:PutLogEvents | today | `/kanem/invoice-app` |\n| s3:DeleteObject, s3:PutBucketPolicy | never | |\n| ec2:RunInstances | 28 Feb 2026, 02:41 UTC | **1 call**, source IP `203.0.113.50` (not a Kanem address) |\n| iam:PassRole | 28 Feb 2026, 02:41 UTC | **1 call**, role `kanem-admin`, source IP `203.0.113.50` |\n| cloudtrail:StopLogging | never | |\n\n*The application team says the application has never launched servers.*"
             }
           ]
         },
         "tasks": [
           {
             "id": "excessive",
-            "prompt": "Which statements grant more than the application needs? Select all.",
-            "points": 4,
+            "points": 3,
+            "prompt": "Which statements grant more than the application needs? Select all that apply.",
             "hints": [
-              "Look for '*' in Action or Resource.",
-              "Compare each statement with the needs list."
+              "Compare each statement with the five needs.",
+              "Wildcards and unrelated services are the giveaway."
             ],
             "input": {
               "type": "multi",
@@ -512,16 +787,49 @@
                 {
                   "id": "S6",
                   "label": "S6"
+                },
+                {
+                  "id": "S7",
+                  "label": "S7"
                 }
               ]
             }
           },
           {
             "id": "escalation",
-            "prompt": "Which statement creates the most direct privilege-escalation risk, because it lets the application hand any role to a service it launches?",
-            "points": 3,
+            "points": 1,
+            "prompt": "Which **combination** of statements would let this identity effectively become an administrator?",
             "hints": [
-              "Which action relates to roles?"
+              "Lesson 5: what can you do if you can launch compute and pass any role to it?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "s4s6",
+                  "label": "S4 and S6 together"
+                },
+                {
+                  "id": "s2",
+                  "label": "S2 alone"
+                },
+                {
+                  "id": "s1s5",
+                  "label": "S1 and S5 together"
+                },
+                {
+                  "id": "s3",
+                  "label": "S3 alone"
+                }
+              ]
+            }
+          },
+          {
+            "id": "evasion",
+            "points": 1,
+            "prompt": "Which statement would let an attacker using this identity **hide** what they do next?",
+            "hints": [
+              "Which service records API activity?"
             ],
             "input": {
               "type": "choice",
@@ -531,41 +839,122 @@
                   "label": "S2"
                 },
                 {
-                  "id": "S4",
-                  "label": "S4"
+                  "id": "S5",
+                  "label": "S5"
                 },
                 {
                   "id": "S6",
                   "label": "S6"
+                },
+                {
+                  "id": "S7",
+                  "label": "S7"
                 }
               ]
             }
           },
           {
-            "id": "fix",
-            "prompt": "What is the best remediation?",
-            "points": 3,
+            "id": "evidence",
+            "points": 1,
+            "prompt": "What does the access activity for `ec2:RunInstances` and `iam:PassRole` on 28 February most likely indicate?",
             "hints": [
-              "Least privilege keeps only what is needed."
+              "Who made the calls, from where, and what does the application team say?"
             ],
             "input": {
               "type": "choice",
               "options": [
                 {
-                  "id": "remove",
-                  "label": "Remove S2, S4 and S6; keep S1, S3 and S5"
+                  "id": "normal",
+                  "label": "Normal deployment activity"
                 },
                 {
-                  "id": "mfa",
-                  "label": "Keep the policy but require MFA"
+                  "id": "incident",
+                  "label": "Possible misuse of the application's credentials from an external address to obtain the kanem-admin role: escalate as a potential incident"
                 },
                 {
-                  "id": "deny",
-                  "label": "Add a Deny for s3:DeleteObject only"
+                  "id": "billing",
+                  "label": "A billing alert"
+                },
+                {
+                  "id": "nothing",
+                  "label": "Nothing, because PassRole is read-only"
                 }
               ]
             }
+          },
+          {
+            "id": "credentials",
+            "points": 1,
+            "prompt": "The application currently authenticates with an access key stored in its configuration file. What is the best change?",
+            "hints": [
+              "Lesson 4."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "role",
+                  "label": "Attach the role to the application's compute so it receives temporary credentials, then deactivate and delete the key"
+                },
+                {
+                  "id": "rotate",
+                  "label": "Rotate the key every 90 days"
+                },
+                {
+                  "id": "mfa",
+                  "label": "Add MFA to the key"
+                },
+                {
+                  "id": "env",
+                  "label": "Move the key to an environment variable"
+                }
+              ]
+            }
+          },
+          {
+            "id": "policy",
+            "points": 6,
+            "prompt": "Edit the policy so it grants **exactly** the five documented needs. Remove everything else. The grader tests 15 requests against your policy.",
+            "hints": [
+              "Needs 1 and 2 use different actions and different resource paths.",
+              "The log group ARN in S3 is already correct.",
+              "Check: could your policy read the payroll bucket? Change a bucket policy? Pass the kanem-admin role?"
+            ],
+            "input": {
+              "type": "iam-policy",
+              "starter": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    { \"Sid\": \"S1\", \"Effect\": \"Allow\", \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/*\" },\n    { \"Sid\": \"S2\", \"Effect\": \"Allow\", \"Action\": \"s3:*\", \"Resource\": \"*\" },\n    { \"Sid\": \"S3\", \"Effect\": \"Allow\", \"Action\": [\"logs:CreateLogStream\", \"logs:PutLogEvents\"], \"Resource\": \"arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:*\" },\n    { \"Sid\": \"S4\", \"Effect\": \"Allow\", \"Action\": \"iam:PassRole\", \"Resource\": \"*\" },\n    { \"Sid\": \"S5\", \"Effect\": \"Allow\", \"Action\": \"kms:Decrypt\", \"Resource\": \"arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666\" },\n    { \"Sid\": \"S6\", \"Effect\": \"Allow\", \"Action\": \"ec2:*\", \"Resource\": \"*\" },\n    { \"Sid\": \"S7\", \"Effect\": \"Allow\", \"Action\": [\"cloudtrail:StopLogging\", \"cloudtrail:DeleteTrail\"], \"Resource\": \"*\" }\n  ]\n}"
+            }
+          },
+          {
+            "id": "finding",
+            "points": 2,
+            "prompt": "Write the **access-review finding** for the security manager: what is wrong, the escalation path, what the activity evidence shows, and what should happen now.",
+            "hints": [
+              "Lead with the most serious issue.",
+              "Be specific: name statements, actions, the IP address and the date."
+            ],
+            "input": {
+              "type": "deliverable",
+              "title": "Access-review finding",
+              "competency": "Assessing cloud permissions, recognising escalation risk and escalating evidence of misuse",
+              "minWords": 150,
+              "rubric": [
+                "States the most serious risk first, in plain language",
+                "Explains the S4 + S6 escalation path and the S7 logging risk",
+                "Uses the activity evidence (date, source IP, kanem-admin) and recommends incident escalation",
+                "Recommends specific remediation: least-privilege policy, role-based credentials, key deactivation",
+                "Notes what remains to be checked (other identities, CloudTrail for 28 Feb, the kanem-admin role's activity)"
+              ],
+              "template": "Summary of the finding:\n\nWhy it matters (escalation and evasion paths):\n\nEvidence:\n\nRecommended actions (now / this week):\n\nWhat still needs to be checked:\n"
+            }
           }
+        ],
+        "reflection": [
+          "Which finding would you report first, and why?",
+          "If you could make only one change today, which would reduce the most risk?",
+          "How would you explain \"PassRole on *\" to an application owner who says the permission is harmless?",
+          "What would you check in the audit logs before declaring the incident closed?",
+          "How would you stop the next project from copying a tutorial policy into production?"
         ]
       },
       "validator": {
@@ -575,30 +964,191 @@
             "correct": [
               "S2",
               "S4",
-              "S6"
+              "S6",
+              "S7"
             ],
             "feedback": {
-              "correct": "Correct: three wildcard statements unrelated to the application's needs.",
-              "incorrect": "Check each statement against the needs list; wildcards are the giveaway."
+              "correct": "Correct: S2, S4, S6 and S7 go beyond the documented needs.",
+              "incorrect": "Compare each statement with the needs list. S1, S3 and S5 match needs; four statements do not."
             }
           },
           "escalation": {
             "type": "choice",
-            "correct": "S4",
+            "correct": "s4s6",
             "feedback": {
-              "correct": "Correct: iam:PassRole on * can let a workload assume far more privilege.",
-              "incorrect": "Look for the IAM action that relates to roles."
+              "correct": "Right: launch an instance and pass it the admin role.",
+              "incorrect": "Look for a permission that hands a role to a service, plus one that creates something to hand it to."
             }
           },
-          "fix": {
+          "evasion": {
             "type": "choice",
-            "correct": "remove",
+            "correct": "S7",
             "feedback": {
-              "correct": "Correct.",
-              "incorrect": "MFA does not apply to workload identities, and a single Deny leaves most excess in place."
+              "correct": "Right: stopping or deleting the trail removes the audit record.",
+              "incorrect": "Which service records API activity in AWS?"
+            }
+          },
+          "evidence": {
+            "type": "choice",
+            "correct": "incident",
+            "feedback": {
+              "correct": "Right: unexpected, external, admin-role activity is an incident until proven otherwise.",
+              "incorrect": "The application never launches servers, the source IP is not Kanem's, and the role passed was kanem-admin."
+            }
+          },
+          "credentials": {
+            "type": "choice",
+            "correct": "role",
+            "feedback": {
+              "correct": "Right: temporary credentials from a role remove the stored secret.",
+              "incorrect": "Rotating, moving or adding MFA keeps a long-lived secret; MFA does not apply to keys used by applications."
+            }
+          },
+          "policy": {
+            "type": "iam-policy",
+            "requests": [
+              {
+                "label": "Read an invoice",
+                "action": "s3:GetObject",
+                "resource": "arn:aws:s3:::kanem-invoices/2026/03/inv-1042.pdf",
+                "expect": "allow"
+              },
+              {
+                "label": "Store a generated invoice",
+                "action": "s3:PutObject",
+                "resource": "arn:aws:s3:::kanem-invoices/generated/inv-1043.pdf",
+                "expect": "allow"
+              },
+              {
+                "label": "Decrypt with the invoice key",
+                "action": "kms:Decrypt",
+                "resource": "arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666",
+                "expect": "allow"
+              },
+              {
+                "label": "Create a log stream",
+                "action": "logs:CreateLogStream",
+                "resource": "arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:log-stream:web-01",
+                "expect": "allow"
+              },
+              {
+                "label": "Write log events",
+                "action": "logs:PutLogEvents",
+                "resource": "arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:log-stream:web-01",
+                "expect": "allow"
+              },
+              {
+                "label": "Delete an invoice",
+                "action": "s3:DeleteObject",
+                "resource": "arn:aws:s3:::kanem-invoices/2026/03/inv-1042.pdf",
+                "expect": "deny"
+              },
+              {
+                "label": "Overwrite an existing invoice outside generated/",
+                "action": "s3:PutObject",
+                "resource": "arn:aws:s3:::kanem-invoices/2026/03/inv-1042.pdf",
+                "expect": "deny"
+              },
+              {
+                "label": "Read the payroll bucket",
+                "action": "s3:GetObject",
+                "resource": "arn:aws:s3:::kanem-payroll/2026/march.csv",
+                "expect": "deny"
+              },
+              {
+                "label": "Change the invoice bucket policy",
+                "action": "s3:PutBucketPolicy",
+                "resource": "arn:aws:s3:::kanem-invoices",
+                "expect": "deny"
+              },
+              {
+                "label": "Pass the kanem-admin role",
+                "action": "iam:PassRole",
+                "resource": "arn:aws:iam::111122223333:role/kanem-admin",
+                "expect": "deny"
+              },
+              {
+                "label": "Launch an instance",
+                "action": "ec2:RunInstances",
+                "resource": "arn:aws:ec2:eu-west-1:111122223333:instance/*",
+                "expect": "deny"
+              },
+              {
+                "label": "Stop audit logging",
+                "action": "cloudtrail:StopLogging",
+                "resource": "arn:aws:cloudtrail:eu-west-1:111122223333:trail/kanem-org-trail",
+                "expect": "deny"
+              },
+              {
+                "label": "Decrypt with another key",
+                "action": "kms:Decrypt",
+                "resource": "arn:aws:kms:eu-west-1:111122223333:key/9999ffff-88ee-77dd-66cc-555544443333",
+                "expect": "deny"
+              },
+              {
+                "label": "Write to the payroll log group",
+                "action": "logs:PutLogEvents",
+                "resource": "arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/payroll:log-stream:a",
+                "expect": "deny"
+              },
+              {
+                "label": "Edit its own policy",
+                "action": "iam:CreatePolicyVersion",
+                "resource": "arn:aws:iam::111122223333:policy/invoice-app-policy",
+                "expect": "deny"
+              }
+            ],
+            "feedback": {
+              "correct": "Your policy grants exactly the documented needs.",
+              "incorrect": "At least one request was decided incorrectly. Check each need, and remove every statement the needs do not justify."
+            }
+          },
+          "finding": {
+            "type": "deliverable",
+            "minWords": 150,
+            "mustMention": [
+              {
+                "label": "the escalation path (iam:PassRole)",
+                "any": [
+                  "passrole",
+                  "pass role",
+                  "pass the"
+                ]
+              },
+              {
+                "label": "the suspicious activity in the evidence (source IP or date)",
+                "any": [
+                  "203.0.113.50",
+                  "28 feb",
+                  "28 february",
+                  "external ip",
+                  "external address"
+                ]
+              },
+              {
+                "label": "what should happen to the access key",
+                "any": [
+                  "access key",
+                  "the key",
+                  "keys"
+                ]
+              },
+              {
+                "label": "escalation as an incident",
+                "any": [
+                  "incident",
+                  "escalat",
+                  "investigat"
+                ]
+              }
+            ],
+            "feedback": {
+              "correct": "Finding complete. Compare it with the rubric and the example in the debrief.",
+              "incorrect": "Your finding is not complete yet."
             }
           }
-        }
+        },
+        "debrief": "## Worked solution\n\n**Excessive: S2, S4, S6, S7.** S2 (`s3:*` on `*`) lets the application read, change and delete every bucket, including payroll; S4 (`iam:PassRole` on `*`) and S6 (`ec2:*`) together are a privilege-escalation path; S7 lets anyone holding these credentials switch off or delete the audit trail. S1, S3 and S5 match needs 1, 4 and 3; need 2 (writing to `generated/`) was not granted at all, which is why the team added S2.\n\n**Evidence:** on 28 February, from an address that is not Kanem's, the application identity launched an instance and passed it `kanem-admin`. The application never does this. Treat it as a probable credential compromise: escalate now, review CloudTrail around 02:41 UTC, find the instance and everything `kanem-admin` did, and deactivate the access key. (You will investigate this incident in module 9.)\n\n### A policy that passes\n\n```json\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    { \"Sid\": \"ReadInvoices\", \"Effect\": \"Allow\", \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/*\" },\n    { \"Sid\": \"WriteGenerated\", \"Effect\": \"Allow\", \"Action\": \"s3:PutObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/generated/*\" },\n    { \"Sid\": \"DecryptInvoices\", \"Effect\": \"Allow\", \"Action\": \"kms:Decrypt\", \"Resource\": \"arn:aws:kms:eu-west-1:111122223333:key/0000aaaa-11bb-22cc-33dd-444455556666\" },\n    { \"Sid\": \"WriteLogs\", \"Effect\": \"Allow\", \"Action\": [\"logs:CreateLogStream\", \"logs:PutLogEvents\"], \"Resource\": \"arn:aws:logs:eu-west-1:111122223333:log-group:/kanem/invoice-app:*\" },\n    { \"Sid\": \"NeverDeleteInvoices\", \"Effect\": \"Deny\", \"Action\": \"s3:DeleteObject\", \"Resource\": \"arn:aws:s3:::kanem-invoices/*\" }\n  ]\n}\n```\n\nThe final Deny is optional (the advanced challenge). It protects against a broad policy being attached to this identity later, but not against other identities or the bucket policy: retention is better enforced with S3 Object Lock or a bucket policy as well.\n\n### What a strong finding says\n\n\"The invoice application's identity can make itself an administrator (iam:PassRole on all roles plus full EC2), read and delete every S3 bucket, and turn off audit logging. Activity on 28 February shows this path being used from an external address (203.0.113.50) to obtain the kanem-admin role, which the application never does: this should be handled as a security incident today. Recommended: deactivate the access key; attach a role with the attached least-privilege policy; investigate CloudTrail for 28 February and all kanem-admin activity; add an organisation guardrail preventing CloudTrail from being stopped.\"\n\n## What you have practised\n\nThis is a cloud access review: reading policy as the platform does, connecting permissions to attack paths (ATT&CK T1098, T1548.005), using evidence instead of opinion, and turning findings into actions a manager can approve. It maps to the Identity and Access Management domain of the CSA Cloud Controls Matrix and AWS IAM security best practices.\n\n**Next:** module 3 applies the same thinking to cloud networks; module 9 picks up the 28 February activity as a full incident."
       }
     },
     {
@@ -1225,5 +1775,388 @@
       }
     }
   ],
-  "questions": []
+  "questions": [
+    {
+      "key": "cld-iam-01",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "foundation",
+      "objective": "Distinguish authentication and authorisation",
+      "prompt": "Which question does authorisation answer?",
+      "explanation": "Authentication proves identity; authorisation evaluates policy for the requested action and resource.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Who are you?"
+        },
+        {
+          "text": "Are you allowed to perform this action on this resource?",
+          "correct": true
+        },
+        {
+          "text": "Is the connection encrypted?"
+        },
+        {
+          "text": "Which region is the request in?"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-02",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "foundation",
+      "objective": "Classify principals",
+      "prompt": "Which is a workload identity rather than a human identity?",
+      "explanation": "Managed identities, IAM roles used by services and Google service accounts are identities for workloads.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "An Entra ID user"
+        },
+        {
+          "text": "An Azure managed identity",
+          "correct": true
+        },
+        {
+          "text": "A Google group of developers"
+        },
+        {
+          "text": "An IAM Identity Center user"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-03",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Predict AWS decisions",
+      "prompt": "No policy mentions s3:DeleteObject for a role. What happens when the role calls it?",
+      "explanation": "In AWS everything is denied unless a policy allows it.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Allowed, because nothing denies it"
+        },
+        {
+          "text": "Denied by default (implicit deny)",
+          "correct": true
+        },
+        {
+          "text": "Allowed only with MFA"
+        },
+        {
+          "text": "Allowed in the same region"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-04",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Predict AWS decisions",
+      "prompt": "One policy allows s3:* on a bucket's objects and another denies s3:GetObject on the same objects. A GetObject request is:",
+      "explanation": "Explicit deny always wins in AWS policy evaluation.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Allowed, because allows are evaluated first"
+        },
+        {
+          "text": "Denied, because an explicit deny overrides any allow",
+          "correct": true
+        },
+        {
+          "text": "Allowed if both policies are in the same account"
+        },
+        {
+          "text": "Undecided"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-05",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Read resource ARNs",
+      "prompt": "An Allow statement has Resource \"arn:aws:s3:::kanem-invoices/*\". Which request does it NOT cover?",
+      "explanation": "The \"/*\" form matches objects in the bucket. Bucket-level actions use the bucket ARN without \"/*\".",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "s3:GetObject on kanem-invoices/a.pdf"
+        },
+        {
+          "text": "s3:GetObject on kanem-invoices/2026/b.pdf"
+        },
+        {
+          "text": "s3:PutBucketPolicy on arn:aws:s3:::kanem-invoices",
+          "correct": true
+        },
+        {
+          "text": "None; it covers the whole bucket"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-06",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Explain inheritance",
+      "prompt": "A user is granted the Google Cloud basic Editor role on a project. What is the main concern?",
+      "explanation": "Basic roles grant wide permissions and are inherited by resources in the project; predefined or custom roles are preferred.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Editor is read-only"
+        },
+        {
+          "text": "Basic roles are very broad and apply to resources across the whole project",
+          "correct": true
+        },
+        {
+          "text": "Editor only works in one region"
+        },
+        {
+          "text": "Basic roles cannot be removed"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-07",
+      "kind": "multiple",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Design least privilege",
+      "prompt": "Which practices support least privilege? Select all that apply.",
+      "explanation": "Least privilege is built from documented needs, evidence of use and separation of environments.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Granting only the actions and resources a documented need requires",
+          "correct": true
+        },
+        {
+          "text": "Removing permissions that usage data shows are never used",
+          "correct": true
+        },
+        {
+          "text": "Granting Owner at subscription scope to speed up projects"
+        },
+        {
+          "text": "Separating development and production into different accounts or subscriptions",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-08",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "foundation",
+      "objective": "Explain RBAC and ABAC",
+      "prompt": "What distinguishes attribute-based access control (ABAC)?",
+      "explanation": "ABAC evaluates attributes of the principal, resource and request; RBAC grants permissions through roles.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "It only uses user names"
+        },
+        {
+          "text": "Decisions use attributes such as tags, department or request context",
+          "correct": true
+        },
+        {
+          "text": "It replaces authentication"
+        },
+        {
+          "text": "It only works on-premises"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-09",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "foundation",
+      "objective": "Recommend workload identity",
+      "prompt": "Why are temporary credentials preferred over long-lived access keys for workloads?",
+      "explanation": "Short-lived credentials from roles, managed identities or attached service accounts remove the stored secret.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "They are cheaper"
+        },
+        {
+          "text": "They expire and rotate automatically, so a leaked copy has limited value and nothing is stored in code",
+          "correct": true
+        },
+        {
+          "text": "They give more permissions"
+        },
+        {
+          "text": "They work without a network"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-10",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Respond to exposed keys",
+      "prompt": "A valid access key is found in a public code repository. Which action comes first?",
+      "explanation": "Copies may already exist, so the key is disabled first; then investigate its use and replace it.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Rewrite the Git history"
+        },
+        {
+          "text": "Deactivate the key",
+          "correct": true
+        },
+        {
+          "text": "Email the developer"
+        },
+        {
+          "text": "Increase the key's permissions"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-11",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Secure federation",
+      "prompt": "A CI role trust policy accepts tokens from any repository on the CI platform. What is the risk?",
+      "explanation": "Federation must restrict the issuer, repository and branch that may assume the role.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "None, because tokens are signed"
+        },
+        {
+          "text": "Any repository owner on that platform could obtain the role's credentials",
+          "correct": true
+        },
+        {
+          "text": "The pipeline will run slower"
+        },
+        {
+          "text": "Tokens will expire too quickly"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-12",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "advanced",
+      "objective": "Identify escalation paths",
+      "prompt": "An identity can call iam:PassRole on * and lambda:CreateFunction. How can it escalate?",
+      "explanation": "Passing any role to compute the identity controls lets it act with that role's permissions.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "It cannot"
+        },
+        {
+          "text": "Create a function that runs with a highly privileged role and use it to act as that role",
+          "correct": true
+        },
+        {
+          "text": "Read every log group"
+        },
+        {
+          "text": "Change its password"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-13",
+      "kind": "single",
+      "category": "iam",
+      "difficulty": "intermediate",
+      "objective": "Identify escalation paths",
+      "prompt": "Which Azure built-in roles can create role assignments by default?",
+      "explanation": "Contributor can manage resources but not grant access; Owner and User Access Administrator can write role assignments.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Reader"
+        },
+        {
+          "text": "Contributor"
+        },
+        {
+          "text": "Owner and User Access Administrator",
+          "correct": true
+        },
+        {
+          "text": "All roles"
+        }
+      ]
+    },
+    {
+      "key": "cld-iam-14",
+      "kind": "multiple",
+      "category": "iam",
+      "difficulty": "advanced",
+      "objective": "Design privileged access",
+      "prompt": "Which controls reduce the risk of privileged cloud accounts? Select all that apply.",
+      "explanation": "Fewer standing privileges, guardrails above accounts and alerting on privilege changes are core controls. Shared accounts remove accountability.",
+      "tags": [
+        "iam"
+      ],
+      "options": [
+        {
+          "text": "Just-in-time activation of admin roles with a reason and time limit",
+          "correct": true
+        },
+        {
+          "text": "Organisation-level guardrails that prevent disabling audit logging",
+          "correct": true
+        },
+        {
+          "text": "Sharing one admin account so fewer accounts exist"
+        },
+        {
+          "text": "Alerts on new role assignments, policy changes and break-glass sign-ins",
+          "correct": true
+        }
+      ]
+    }
+  ]
 }

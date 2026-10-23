@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" role="img" aria-labelledby="t d" font-family="Inter, Segoe UI, Arial, sans-serif">
+  <title id="t">Kanem Financial Services head-office network zones</title>
+  <desc id="d">A central firewall, FW-HQ-01, connects six zones: internet, DMZ with the public web server, users with staff laptops, guest Wi-Fi, servers with the core banking application and database, and management with IT admin workstations. Every connection between zones passes through the firewall.</desc>
+  <rect width="880" height="470" rx="18" fill="#0f172b"/>
+  <g font-size="14" fill="#edf1f8">
+    <!-- firewall -->
+    <rect x="370" y="195" width="140" height="80" rx="12" fill="#162038" stroke="#2dd4bf" stroke-width="2"/>
+    <text x="440" y="230" text-anchor="middle" font-weight="700">FW-HQ-01</text>
+    <text x="440" y="252" text-anchor="middle" font-size="12" fill="#a6b1c4">stateful firewall</text>
+    <!-- links -->
+    <g stroke="#34446a" stroke-width="2">
+      <line x1="440" y1="195" x2="440" y2="120"/><line x1="370" y1="220" x2="230" y2="150"/><line x1="510" y1="220" x2="650" y2="150"/>
+      <line x1="370" y1="250" x2="230" y2="330"/><line x1="510" y1="250" x2="650" y2="330"/><line x1="440" y1="275" x2="440" y2="350"/>
+    </g>
+    <!-- zones -->
+    <g>
+      <rect x="360" y="40" width="160" height="80" rx="12" fill="#162038" stroke="#8792a8"/>
+      <text x="440" y="74" text-anchor="middle" font-weight="700">internet</text>
+      <text x="440" y="96" text-anchor="middle" font-size="12" fill="#a6b1c4">untrusted</text>
+    </g>
+    <g>
+      <rect x="70" y="95" width="180" height="90" rx="12" fill="#162038" stroke="#fbbf24"/>
+      <text x="160" y="128" text-anchor="middle" font-weight="700">dmz</text>
+      <text x="160" y="150" text-anchor="middle" font-size="12" fill="#a6b1c4">public web server</text>
+      <text x="160" y="168" text-anchor="middle" font-size="12" fill="#a6b1c4">10.30.0.0/24</text>
+    </g>
+    <g>
+      <rect x="630" y="95" width="180" height="90" rx="12" fill="#162038" stroke="#7cb3ff"/>
+      <text x="720" y="128" text-anchor="middle" font-weight="700">users</text>
+      <text x="720" y="150" text-anchor="middle" font-size="12" fill="#a6b1c4">staff laptops</text>
+      <text x="720" y="168" text-anchor="middle" font-size="12" fill="#a6b1c4">10.20.0.0/16</text>
+    </g>
+    <g>
+      <rect x="70" y="295" width="180" height="90" rx="12" fill="#162038" stroke="#f87171"/>
+      <text x="160" y="328" text-anchor="middle" font-weight="700">guest</text>
+      <text x="160" y="350" text-anchor="middle" font-size="12" fill="#a6b1c4">visitor Wi-Fi</text>
+      <text x="160" y="368" text-anchor="middle" font-size="12" fill="#a6b1c4">172.16.50.0/24</text>
+    </g>
+    <g>
+      <rect x="630" y="295" width="180" height="90" rx="12" fill="#162038" stroke="#4ade80"/>
+      <text x="720" y="328" text-anchor="middle" font-weight="700">servers</text>
+      <text x="720" y="350" text-anchor="middle" font-size="12" fill="#a6b1c4">core banking app + DB</text>
+      <text x="720" y="368" text-anchor="middle" font-size="12" fill="#a6b1c4">10.10.0.0/24</text>
+    </g>
+    <g>
+      <rect x="350" y="350" width="180" height="90" rx="12" fill="#162038" stroke="#5eead4"/>
+      <text x="440" y="383" text-anchor="middle" font-weight="700">management</text>
+      <text x="440" y="405" text-anchor="middle" font-size="12" fill="#a6b1c4">IT admin workstations</text>
+      <text x="440" y="423" text-anchor="middle" font-size="12" fill="#a6b1c4">10.99.0.0/24</text>
+    </g>
+  </g>
+</svg>

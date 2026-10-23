@@ -25,8 +25,11 @@ class ContentIntegrityTest extends TestCase
     public function catalogue_matches_the_authored_content(): void
     {
         $this->assertSame(5, Specialization::count());
-        $this->assertSame(69, Lesson::count());
-        $this->assertSame(15, Lab::count());
+        // Every lesson and lab in the authored files reaches the database.
+        $authored = collect(glob(database_path('content/programmes/*/programme.json')))->map(fn ($f) => json_decode(file_get_contents($f), true));
+        $this->assertSame($authored->sum(fn ($p) => collect($p['modules'])->sum(fn ($m) => count($m['lessons']))), Lesson::count());
+        $this->assertSame($authored->sum(fn ($p) => count($p['labs'])), Lab::count());
+        $this->assertGreaterThanOrEqual(73, Lesson::count());
         $this->assertEqualsCanonicalizing(
             ['soc-analyst' => 18000000, 'penetration-testing' => 22000000, 'governance-risk-compliance' => 15000000, 'network-security' => 18000000, 'cloud-security' => 22000000],
             Specialization::with('offers')->get()->mapWithKeys(fn ($s) => [$s->slug => $s->offers->first()->amount_minor])->all(),
