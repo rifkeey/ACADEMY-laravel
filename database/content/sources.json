@@ -1300,6 +1300,160 @@
       "versionNote": "Google Cloud documentation, current.",
       "supports": "Organisation-level findings.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-190",
+      "title": "SP 800-190: Application Container Security Guide",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/190/final",
+      "topic": "Container security",
+      "sourceType": "official_standard",
+      "versionNote": "Final, September 2017. Principles still apply; tooling has evolved.",
+      "supports": "Image, registry, orchestrator and host risks and countermeasures.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-40r4",
+      "title": "SP 800-40 Rev. 4: Guide to Enterprise Patch Management Planning",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/40/r4/final",
+      "topic": "Patch management",
+      "sourceType": "official_standard",
+      "versionNote": "Revision 4, April 2022.",
+      "supports": "Patching as preventive maintenance.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cis-kubernetes",
+      "title": "CIS Kubernetes Benchmarks",
+      "publisher": "Center for Internet Security",
+      "url": "https://www.cisecurity.org/benchmark/kubernetes",
+      "topic": "Kubernetes configuration",
+      "sourceType": "official_standard",
+      "versionNote": "Check the benchmark version for your Kubernetes release.",
+      "supports": "Cluster configuration baseline.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "k8s-security",
+      "title": "Kubernetes security concepts",
+      "publisher": "Kubernetes",
+      "url": "https://kubernetes.io/docs/concepts/security/",
+      "topic": "Kubernetes security",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Official documentation, current.",
+      "supports": "RBAC, secrets, network policies and cluster hardening.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "k8s-pod-security-standards",
+      "title": "Pod Security Standards",
+      "publisher": "Kubernetes",
+      "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/",
+      "topic": "Workload restrictions",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Official documentation, current.",
+      "supports": "Privileged, Baseline and Restricted profiles.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-lambda-security",
+      "title": "Security in AWS Lambda",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-security.html",
+      "topic": "Serverless security",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Lambda Developer Guide, current.",
+      "supports": "Shared responsibility for serverless functions.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-52r2",
+      "title": "SP 800-52 Rev. 2: Guidelines for the Selection, Configuration, and Use of TLS Implementations",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/52/r2/final",
+      "topic": "TLS configuration",
+      "sourceType": "official_standard",
+      "versionNote": "Revision 2, August 2019.",
+      "supports": "TLS versions, cipher suites and certificate guidance.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-153",
+      "title": "SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs)",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/153/final",
+      "topic": "Wi-Fi security",
+      "sourceType": "official_standard",
+      "versionNote": "Final, February 2012. Predates WPA3; principles still apply.",
+      "supports": "WLAN security configuration and monitoring.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "wifi-alliance-security",
+      "title": "Wi-Fi security (WPA3)",
+      "publisher": "Wi-Fi Alliance",
+      "url": "https://www.wi-fi.org/discover-wi-fi/security",
+      "topic": "Wi-Fi security",
+      "sourceType": "official_standard",
+      "versionNote": "Live page.",
+      "supports": "WPA3 Personal and Enterprise.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-4253",
+      "title": "RFC 4253: The Secure Shell (SSH) Transport Layer Protocol",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4253",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 4253; check for updating RFCs.",
+      "supports": "SSH transport security.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-5280",
+      "title": "RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5280",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 5280; check for updating RFCs.",
+      "supports": "Certificate format and path validation.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-63b",
+      "title": "SP 800-63B: Digital Identity Guidelines, Authentication and Authenticator Management",
+      "publisher": "NIST",
+      "url": "https://pages.nist.gov/800-63-4/sp800-63b.html",
+      "topic": "Authentication",
+      "sourceType": "official_standard",
+      "versionNote": "Revision 4 web edition; check the page for status.",
+      "supports": "Authenticator types, phishing resistance and assurance levels.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cisa-phishing-resistant-mfa",
+      "title": "Implementing Phishing-Resistant MFA (fact sheet)",
+      "publisher": "CISA",
+      "url": "https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf",
+      "topic": "MFA",
+      "sourceType": "official_standard",
+      "versionNote": "PDF fact sheet.",
+      "supports": "Prioritising phishing-resistant MFA.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "entra-conditional-access",
+      "title": "Microsoft Entra Conditional Access overview",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview",
+      "topic": "Conditional access",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Signal-based access policies (example product).",
+      "dateChecked": "2026-10-23"
     }
   ]
 }

@@ -97,3 +97,15 @@ Status key: **Tested** = checked by an automated test that was run and passed, o
 Cloud module 5, *Cloud Logging, Monitoring and Detection*: 5 lessons (audit logs; identity and sign-in events; centralising and protecting logs; managed detection, SIEM and prioritisation; gaps and detection engineering), 15 checks, a logging-coverage assessment lab (grid across four accounts, storage, retention, prioritisation and a written design) and 13 exam questions (`logging`). 8 sources added (CloudTrail and integrity validation, Azure activity log, Entra sign-in logs, Google Cloud Audit Logs, GuardDuty, Defender for Cloud, Security Command Center); all HTTP 200 with matching titles. Written at a high level (risks, detection and fixes). Tests: 44 passing (932 assertions).
 
 Network module 5 lessons are drafted but unpublished; its module definition, lab and questions were stopped by the safety check (see the plan, section 6).
+
+## Batch 4 (23 October 2026): Cloud module 6 and Network module 6
+
+| | Cloud module 6: Workload and Compute Security | Network module 6: Secure Remote Access, VPNs and Network Cryptography |
+| --- | --- | --- |
+| Lessons | 5: VM hardening and patching; container image security; Kubernetes basics; serverless; runtime protection and vulnerability management | 5: choosing remote access; IPsec; TLS and certificates; secure admin protocols and Wi-Fi; MFA, conditional access and troubleshooting |
+| In-lesson checks | 15 | 15 |
+| Lab | *Review three ways of running the reporting service* (6 tasks, pass 80%) | *Diagnose and secure Kanem's remote access* (7 tasks, pass 80%) |
+| Exam questions | 13 (`workloads`) | 13 (`remote-access`) |
+| Sources | 6 added (SP 800-190, SP 800-40r4, CIS Kubernetes, Kubernetes security and Pod Security Standards, Lambda security) | 8 added (SP 800-52r2, SP 800-153, WPA3, RFC 4253, RFC 5280, SP 800-63B, CISA phishing-resistant MFA, Entra Conditional Access) |
+
+All new URLs returned HTTP 200 with matching titles (the CISA item is a PDF). Written at a high level. No content was stopped in this batch. Tests: 44 passing (998 assertions). Consistency fix: the Kano branch uses 10.60.0.0/16 so it does not overlap the cloud invoice network.
