@@ -75,3 +75,19 @@ Status key: **Tested** = checked by an automated test that was run and passed, o
 **Accuracy notes:** the lab's fault was designed so the symptoms are consistent (printer reachable on the same /24, gateway unreachable, Windows "Destination host unreachable" reported by the host itself). Statements about provider responsibilities follow the providers' own pages; one unsupported phrasing ("overwhelmingly") was replaced by a qualitative statement with a note that the course does not quote a percentage. Legal references (Nigeria Data Protection Act 2023, NDPC) are pointers, not legal advice.
 
 **Still not checked in the browser:** answer feedback appearing on screen (Alpine `x-show`), because the app window was hidden during testing.
+
+## Batch 2 (23 October 2026): Network module 4 and Cloud module 4
+
+| | Network module 4: Segmentation and Zero Trust | Cloud module 4: Data Protection and Cryptography |
+| --- | --- | --- |
+| Lessons | 5: zones and DMZs; VLANs and enforcement; microsegmentation; Zero Trust Architecture (NIST SP 800-207, CISA ZTMM); management plane and validation | 5: classification and discovery; encryption and key management; secrets management; preventing public storage access; backup and recovery |
+| In-lesson checks | 15 | 15 |
+| Lab | *Segment the Lagos data centre* (6 tasks, pass 80%): zone placement, policy tested against 24 hidden flows, three access decisions, written rationale | *Remediate an exposed loan-documents bucket* (7 tasks, pass 80%): classification, configuration causes, response order, prevention, written remediation plan |
+| Exam questions | 13 (`segmentation`) | 13 (`data`) |
+| Sources | 4 added (SP 800-207A, SP 800-215, CISA ZTMM, IEEE 802.1Q); all HTTP 200 with matching titles | 12 added (SP 800-57 Pt 1 r5, KMS/Key Vault/Cloud KMS, secrets managers, public-access prevention ×3, Object Lock, Macie, ATT&CK T1530); all HTTP 200 with matching titles |
+
+**Tests:** 44 passing (899 assertions); worked solutions pass, empty submissions fail, lab pages hold no answer keys or solutions, and every lesson renders.
+
+**Accuracy notes:** the data-protection lab states the NDPA 2023 regulator-notification duty (72 hours for notifiable breaches) as a pointer for the DPO, not legal advice. Have a lawyer confirm it before publication.
+
+**Written at a high level by request:** attack and misconfiguration topics cover risks, detection and fixes only. Lessons stopped by the safety check, and drafts awaiting review, are listed in `docs/NETWORK_CLOUD_PLAN.md` section 6.

@@ -1080,6 +1080,138 @@
       "versionNote": "802.1Q-2022. Paid standard: cited by title only.",
       "supports": "VLAN tagging and bridged networks.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-57p1r5",
+      "title": "SP 800-57 Part 1 Rev. 5: Recommendation for Key Management: Part 1 – General",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final",
+      "topic": "Key management",
+      "sourceType": "official_standard",
+      "versionNote": "Revision 5, May 2020.",
+      "supports": "Key lifecycle, separation of duties and rotation principles.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-kms",
+      "title": "AWS KMS keys",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html",
+      "topic": "Key management service",
+      "sourceType": "vendor_documentation",
+      "versionNote": "AWS KMS Developer Guide, current.",
+      "supports": "Customer-managed keys, key policies, envelope encryption.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-key-vault",
+      "title": "Azure Key Vault overview",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/key-vault/general/overview",
+      "topic": "Keys, secrets and certificates",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Key and secret management in Azure.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-kms",
+      "title": "Cloud Key Management Service overview",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/kms/docs/key-management-service",
+      "topic": "Key management service",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Customer-managed keys in Google Cloud.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-secrets-manager",
+      "title": "What is AWS Secrets Manager?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "topic": "Secrets management",
+      "sourceType": "vendor_documentation",
+      "versionNote": "AWS documentation, current.",
+      "supports": "Central storage, access control and rotation of secrets.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-secret-manager",
+      "title": "Secret Manager overview",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/secret-manager/docs/overview",
+      "topic": "Secrets management",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Secrets management in Google Cloud.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-s3-block-public-access",
+      "title": "Blocking public access to your Amazon S3 storage",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+      "topic": "Preventing public storage",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Amazon S3 User Guide, current.",
+      "supports": "Account- and bucket-level public access blocking.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-anonymous-access",
+      "title": "Remediate anonymous read access to blob data",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/anonymous-read-access-prevent",
+      "topic": "Preventing public storage",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Disallowing anonymous blob access.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-public-access-prevention",
+      "title": "Public access prevention",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/storage/docs/public-access-prevention",
+      "topic": "Preventing public storage",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Bucket- and organisation-level public access prevention.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-s3-object-lock",
+      "title": "Locking objects with Object Lock",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+      "topic": "Immutable storage",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Amazon S3 User Guide, current.",
+      "supports": "Write-once retention for backups and records.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-macie",
+      "title": "What is Amazon Macie?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html",
+      "topic": "Sensitive data discovery",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Amazon Macie User Guide, current.",
+      "supports": "Discovering sensitive data in S3.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1530",
+      "title": "ATT&CK T1530: Data from Cloud Storage",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1530/",
+      "topic": "Cloud data access",
+      "sourceType": "open_resource",
+      "versionNote": "Enterprise ATT&CK.",
+      "supports": "Why data-access logging matters for sensitive stores.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }
