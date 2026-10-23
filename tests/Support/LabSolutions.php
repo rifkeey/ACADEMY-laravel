@@ -76,6 +76,25 @@ final class LabSolutions
             'order' => ['arp' => ['step' => '1'], 'dns' => ['step' => '2'], 'syn' => ['step' => '3'], 'route' => ['step' => '4'], 'tls' => ['step' => '5']],
             'resolution' => 'Root cause: LN-PC-14 was configured manually with DHCP disabled after re-imaging. Its default gateway is 10.40.9.1, which does not exist, and its mask is 255.255.255.0 instead of /22. Evidence: ping to the printer at 10.40.9.30 works because it is on the same /24, but ping to 10.40.9.1 and to 10.10.0.15 both return destination host unreachable from the laptop itself. Fix applied: re-enabled DHCP so the laptop received mask 255.255.252.0, gateway 10.40.8.1 and DNS 10.10.0.53. Validation: ipconfig shows the DHCP values, ping 10.40.8.1 replies, nslookup returns 10.10.0.15, tracert shows the path through 10.40.8.1 and the VPN, and the loans officer opened the core banking app. Other findings: the copier uploading 40 GB saturates the internet link but is unrelated. Prevention: check every laptop the contractor re-imaged and use the standard image with DHCP enabled.',
         ],
+        'segmentation-design' => [
+            'placement' => ['web' => ['zone' => 'dmz'], 'coreapp' => ['zone' => 'app'], 'coredb' => ['zone' => 'db'], 'card' => ['zone' => 'cards'], 'jump' => ['zone' => 'mgmt'], 'laptops' => ['zone' => 'users'], 'wifi' => ['zone' => 'guest']],
+            'policy' => [
+                ['action' => 'allow', 'source' => 'internet', 'destination' => 'dmz', 'protocol' => 'tcp', 'port' => 443],
+                ['action' => 'allow', 'source' => 'dmz', 'destination' => 'app', 'protocol' => 'tcp', 'port' => 8443],
+                ['action' => 'allow', 'source' => 'users', 'destination' => 'app', 'protocol' => 'tcp', 'port' => 443],
+                ['action' => 'allow', 'source' => 'app', 'destination' => 'db', 'protocol' => 'tcp', 'port' => 1433],
+                ['action' => 'allow', 'source' => 'app', 'destination' => 'cards', 'protocol' => 'tcp', 'port' => 9443],
+                ['action' => 'allow', 'source' => 'cards', 'destination' => 'internet', 'protocol' => 'tcp', 'port' => 443],
+                ['action' => 'allow', 'source' => 'mgmt', 'destination' => 'dmz', 'protocol' => 'tcp', 'port' => 22],
+                ['action' => 'allow', 'source' => 'mgmt', 'destination' => 'app', 'protocol' => 'tcp', 'port' => 22],
+                ['action' => 'allow', 'source' => 'mgmt', 'destination' => 'db', 'protocol' => 'tcp', 'port' => 22],
+                ['action' => 'allow', 'source' => 'mgmt', 'destination' => 'cards', 'protocol' => 'tcp', 'port' => 22],
+                ['action' => 'allow', 'source' => 'users', 'destination' => 'internet', 'protocol' => 'tcp', 'port' => 443],
+                ['action' => 'allow', 'source' => 'guest', 'destination' => 'internet', 'protocol' => 'tcp', 'port' => 443],
+            ],
+            'requestA' => 'ztna', 'requestB' => 'jump', 'requestC' => 'micro',
+            'rationale' => 'Zones and why: the public website sits in the dmz because it is internet-facing; application servers, databases and the card switch each get their own zone because they hold more sensitive data and need different partners. Key boundary decisions: the dmz may only call the application API on 8443 and never the database, so a compromised website cannot read customer accounts directly. The cards zone is isolated because it is the highest-value system and needs only the core banking call and the processor connection. Nothing may connect into mgmt, and app and db cannot start internet connections. East-west controls: host firewalls and microsegmentation allow only the cluster flows between database servers. Remote and third-party access follows zero trust: the contractor gets application-level access with MFA, device checks and an end date instead of a VPN. Validation plan: run an expected-allow test for each approved flow and expected-deny tests from every other zone, review the firewall configuration and check flow logs for traffic on closed paths after every major change and at least once a year. Residual risks: shared admin tooling on the jump host.',
+        ],
         'packet-and-dns-analysis' => ['handshake' => ['1', '2', '3'], 'rtt' => '31', 'retransmission' => '6', 'tunnel-host' => '10.20.4.57', 'tunnel-domain' => 'stat-relay.example'],
         // Cloud Security
         'shared-responsibility-mapping' => [

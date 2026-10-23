@@ -1036,6 +1036,50 @@
       "versionNote": "Google Cloud documentation, current.",
       "supports": "Organization, folders and projects; policy inheritance.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-207a",
+      "title": "SP 800-207A: A Zero Trust Architecture Model for Access Control in Cloud-Native Applications in Multi-Location Environments",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/207/a/final",
+      "topic": "Zero trust for cloud-native applications",
+      "sourceType": "official_standard",
+      "versionNote": "Final, September 2023.",
+      "supports": "Identity-based, application-level policy (further reading).",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-215",
+      "title": "SP 800-215: Guide to a Secure Enterprise Network Landscape",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/215/final",
+      "topic": "Enterprise network security",
+      "sourceType": "official_standard",
+      "versionNote": "Final, November 2022.",
+      "supports": "Modern enterprise network architecture and segmentation context.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cisa-ztmm",
+      "title": "Zero Trust Maturity Model",
+      "publisher": "CISA",
+      "url": "https://www.cisa.gov/zero-trust-maturity-model",
+      "topic": "Zero trust planning",
+      "sourceType": "official_standard",
+      "versionNote": "Version 2.0 (April 2023); check the page for the current version.",
+      "supports": "Five pillars, cross-cutting capabilities and four maturity stages.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "ieee-8021q",
+      "title": "IEEE 802.1Q-2022: Bridges and Bridged Networks",
+      "publisher": "IEEE Standards Association",
+      "url": "https://standards.ieee.org/ieee/802.1Q/10323/",
+      "topic": "VLANs",
+      "sourceType": "official_standard",
+      "versionNote": "802.1Q-2022. Paid standard: cited by title only.",
+      "supports": "VLAN tagging and bridged networks.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }
