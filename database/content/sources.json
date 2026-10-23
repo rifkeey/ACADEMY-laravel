@@ -2345,6 +2345,149 @@
       "versionNote": "Current release documentation.",
       "supports": "Connection and protocol logs for network security monitoring (example tool).",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1595",
+      "title": "ATT&CK T1595: Active Scanning",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1595/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1557",
+      "title": "ATT&CK T1557: Adversary-in-the-Middle",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1557/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1498",
+      "title": "ATT&CK T1498: Network Denial of Service",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1498/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1499",
+      "title": "ATT&CK T1499: Endpoint Denial of Service",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1499/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1110-003",
+      "title": "ATT&CK T1110.003: Brute Force: Password Spraying",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1110/003/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1110-004",
+      "title": "ATT&CK T1110.004: Brute Force: Credential Stuffing",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1110/004/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1078",
+      "title": "ATT&CK T1078: Valid Accounts",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1078/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1021",
+      "title": "ATT&CK T1021: Remote Services",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1021/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1071-001",
+      "title": "ATT&CK T1071.001: Application Layer Protocol: Web Protocols",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1071/001/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1573",
+      "title": "ATT&CK T1573: Encrypted Channel",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1573/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1102",
+      "title": "ATT&CK T1102: Web Service",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1102/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection and mitigation notes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-ta0011",
+      "title": "ATT&CK TA0011: Command and Control (tactic)",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/tactics/TA0011/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Overview of the tactic and its mitigations.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-2827",
+      "title": "RFC 2827 (BCP 38): Network Ingress Filtering",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc2827",
+      "topic": "Anti-spoofing",
+      "sourceType": "official_standard",
+      "versionNote": "BCP 38; updated by RFC 3704.",
+      "supports": "Filtering forged source addresses at network edges.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }

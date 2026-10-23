@@ -107,34 +107,25 @@ Notes for reviewers:
 | 3 Source register | Pilot sources verified (35 cited, all HTTP 200 on 23 Oct 2026); the rest per module as it is written |
 | 4 Reusable components | Done: teaching blocks, multi-select checks with per-option feedback, `iam-policy` and `deliverable` lab tasks, post-pass debrief, reflection questions, Portfolio page |
 | 5 Pilot modules (Network 3, Cloud 2) | Done, see `docs/QA_PILOT_MODULES.md`. Awaiting review before the remaining modules are written in the same pattern |
-| 6 Remaining modules | Done: Network 1, 3–10; Cloud 1–10. Network 2 needs its module definition, checks, lab and questions written by a person (see section 6); its five lessons are written but unpublished. Question banks: Network 120, Cloud 133 |
+| 6 Remaining modules | **Done: all ten modules in both programmes.** Question banks: Network 133, Cloud 133. Outstanding: a person's review of the lessons listed in section 6, and the follow-ups noted there |
 | 7 Integration testing | Not started |
 | 8 Final review | Not started |
 
-## 6. Content needing a human author or reviewer
+## 6. Content needing a human reviewer
 
-An automated safety check stopped content generation five times while these programmes were being written. Everything it stopped is listed here for AMANIQ's subject-matter experts. Topics are described at a high level only.
+An automated safety check stopped content generation five times while these programmes were being written. Every stopped item has now been written on a later attempt, but in a more conservative form, and several lessons were published without a person reading them first.
 
-### Still to write
+### Please review
 
-| Module | What is missing | Status |
+| Module | Content | Why |
 | --- | --- | --- |
-| Network 2: Network Threats and Attack Surfaces | Module definition (purpose, objectives, key concepts, assessment criteria), in-lesson knowledge checks for the five lessons, the lab (planned: triage synthetic sign-in and flow telemetry and map behaviours to ATT&CK) and 13 exam questions (category `threats`, prefix `net-thr-`) | **Not written**: generation was stopped on 23 October 2026 (second attempt). Please author. Until it is done the module stays at "outline" and learners see no lessons |
+| Network 2 | All five lessons (reconnaissance, spoofing and interception, denial of service, credential attacks and lateral movement, command and control) | Published 23 October 2026 without review; the topics touch attacker behaviour |
+| Network 2 | Lab *Map Kanem's threats to signs and controls* | A replacement design: the planned log-triage lab was stopped twice, so this lab maps threats to signs, controls and ATT&CK entries instead. A log-based triage exercise for this module could be added by a person later |
+| Network 5 | All five lessons | Drafted earlier, published 23 October 2026 without review |
+| Cloud 3 | Four drafted lessons (routing, private connectivity, hybrid, flow logs) and the new security groups and network ACLs lesson | Published 23 October 2026 without review |
 
-### Written, not yet published (please review)
+### Other follow-ups
 
-| Module | Lesson file (`database/content/programmes/network-security/lessons/network-threats/`) | Notes |
-| --- | --- | --- |
-| Network 2 | `reconnaissance-and-scanning.md` | Detection-focused |
-| Network 2 | `spoofing-and-interception.md` | Rewritten on the second attempt: risks, signs and controls only |
-| Network 2 | `denial-of-service.md` | Kinds, signs, preparation and response |
-| Network 2 | `credential-attacks-and-lateral-movement.md` | Evidence patterns and controls |
-| Network 2 | `command-and-control.md` | Behavioural patterns and egress controls |
-
-These files are committed but not listed in `programme.json`, so learners cannot see them. Once reviewed, they are linked in by the Network 2 module definition above.
-
-### Resolved on the second attempt (23 October 2026)
-
-- Cloud 3: the security groups, network ACLs and cloud firewall rules lesson was written; the module (5 lessons, lab, 13 questions) is published.
-- Network 5: the module definition, checks, lab and 13 questions were written; the five drafted lessons are published.
-- The four drafted Cloud 3 lessons and five drafted Network 5 lessons are now published as part of their modules. No person reviewed them before publication, so a reviewer should still read them.
+- Capstone deliverables are checked for completeness only; an instructor review queue is recommended (section 1).
+- The Network 8 capture has not been opened in Wireshark by a reviewer.
+- NDPA notification timing in the data-protection and incident-response labs should be confirmed by a lawyer.

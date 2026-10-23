@@ -186,3 +186,7 @@ One page-safety test treats the word `"flows"` as an answer-key marker, so the n
 | Network 2, module definition, checks, lab and questions | **Stopped again** by the safety check; listed in the plan, section 6, for a person to write |
 
 12 ATT&CK and RFC sources for Network 2 were verified (HTTP 200, matching titles) but are not yet in the register, because the script that would have added them was stopped. Question banks: Network 120, Cloud 133. Lesson drafts published in this batch have not been reviewed by a person.
+
+## Batch 10 (23 October 2026): Network module 2
+
+Network 2, *Network Threats and Attack Surfaces*, is now published: the five lessons with 15 in-lesson checks, the module definition, a control-mapping lab (*Map Kanem's threats to signs and controls*: 6 objective tasks and a written threat summary; no attack data) and 13 exam questions (`threats`). 13 sources added (12 ATT&CK entries and RFC 2827), verified on 23 October 2026. This replaces the planned log-triage lab, whose generation was stopped twice. Nothing was stopped in this batch. Tests: 45 passing (1,379 assertions). All ten modules in both programmes are complete; question banks: Network 133, Cloud 133.
