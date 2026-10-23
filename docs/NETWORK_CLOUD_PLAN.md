@@ -107,21 +107,34 @@ Notes for reviewers:
 | 3 Source register | Pilot sources verified (35 cited, all HTTP 200 on 23 Oct 2026); the rest per module as it is written |
 | 4 Reusable components | Done: teaching blocks, multi-select checks with per-option feedback, `iam-policy` and `deliverable` lab tasks, post-pass debrief, reflection questions, Portfolio page |
 | 5 Pilot modules (Network 3, Cloud 2) | Done, see `docs/QA_PILOT_MODULES.md`. Awaiting review before the remaining modules are written in the same pattern |
-| 6 Remaining modules | Done: Network 1, 3, 4, 6–10; Cloud 1, 2, 4–10. Partly done (see section 6): Network 2, Network 5, Cloud 3, which need a human author. Question banks: Network 107, Cloud 120 (target about 120 each; Network reaches it once modules 2 and 5 add their questions) |
+| 6 Remaining modules | Done: Network 1, 3–10; Cloud 1–10. Network 2 needs its module definition, checks, lab and questions written by a person (see section 6); its five lessons are written but unpublished. Question banks: Network 120, Cloud 133 |
 | 7 Integration testing | Not started |
 | 8 Final review | Not started |
 
-## 6. Lessons needing a human author or reviewer
+## 6. Content needing a human author or reviewer
 
-An automated safety check stopped content generation four times while these lessons were being written. They are left for AMANIQ's subject-matter experts. Topics are listed at a high level only.
+An automated safety check stopped content generation five times while these programmes were being written. Everything it stopped is listed here for AMANIQ's subject-matter experts. Topics are described at a high level only.
 
-| Module | Lesson | Status |
+### Still to write
+
+| Module | What is missing | Status |
 | --- | --- | --- |
-| Network 2 — Network Threats | Spoofing, poisoning and adversary-in-the-middle (risks, detection and mitigations) | **Not written**: please author |
-| Cloud 3 — Cloud Network Security | Security groups, network ACLs and cloud firewall rules compared across AWS, Azure and Google Cloud | **Not written**: please author |
-| Network 5 — IDS, IPS and Network Detection | Module definition, in-lesson checks, lab (alert triage and tuning) and exam questions | **Not written**: stopped while being generated; please author. The five lessons are **drafted but unpublished** (`lessons/ids-ips/*.md` except the old `network-detection-basics.md`); please review |
-| Cloud 3 — Cloud Network Security | Private connectivity and egress; hybrid connectivity; flow logs and monitoring | **Drafted but unpublished** (`lessons/cloud-networking/*.md`, not yet listed in `programme.json`). Please review before they are linked into the module |
+| Network 2: Network Threats and Attack Surfaces | Module definition (purpose, objectives, key concepts, assessment criteria), in-lesson knowledge checks for the five lessons, the lab (planned: triage synthetic sign-in and flow telemetry and map behaviours to ATT&CK) and 13 exam questions (category `threats`, prefix `net-thr-`) | **Not written**: generation was stopped on 23 October 2026 (second attempt). Please author. Until it is done the module stays at "outline" and learners see no lessons |
 
-Also written and published but worth a reviewer's eye, since they discuss attacker behaviour: Network 2 lesson *Reconnaissance and scanning* (detection-focused; file present, not yet linked into the module).
+### Written, not yet published (please review)
 
-Remaining Network 2 topics (denial of service, credential attacks and lateral movement, command-and-control and DNS abuse) will be written at a high level (risks, detection and fixes only); any that are stopped will be added to this table.
+| Module | Lesson file (`database/content/programmes/network-security/lessons/network-threats/`) | Notes |
+| --- | --- | --- |
+| Network 2 | `reconnaissance-and-scanning.md` | Detection-focused |
+| Network 2 | `spoofing-and-interception.md` | Rewritten on the second attempt: risks, signs and controls only |
+| Network 2 | `denial-of-service.md` | Kinds, signs, preparation and response |
+| Network 2 | `credential-attacks-and-lateral-movement.md` | Evidence patterns and controls |
+| Network 2 | `command-and-control.md` | Behavioural patterns and egress controls |
+
+These files are committed but not listed in `programme.json`, so learners cannot see them. Once reviewed, they are linked in by the Network 2 module definition above.
+
+### Resolved on the second attempt (23 October 2026)
+
+- Cloud 3: the security groups, network ACLs and cloud firewall rules lesson was written; the module (5 lessons, lab, 13 questions) is published.
+- Network 5: the module definition, checks, lab and 13 questions were written; the five drafted lessons are published.
+- The four drafted Cloud 3 lessons and five drafted Network 5 lessons are now published as part of their modules. No person reviewed them before publication, so a reviewer should still read them.

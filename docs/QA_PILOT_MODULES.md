@@ -175,3 +175,14 @@ All new URLs returned HTTP 200 with matching titles. The NSA *Network Infrastruc
 **Assessment note:** capstone deliverables are checked for completeness (minimum length and required points) only; learners judge quality against the rubric and the debrief. An instructor review queue for capstone deliverables remains the recommended follow-up (plan section 1).
 
 One page-safety test treats the word `"flows"` as an answer-key marker, so the network capstone's flow task is named `flowplan`. No content was stopped in this batch. Tests: 45 passing (1,272 assertions).
+
+## Batch 9 (23 October 2026): second attempt at the stopped content
+
+| Item | Result |
+| --- | --- |
+| Cloud 3, cloud network security | **Published**: new lesson comparing security groups, network ACLs and cloud firewall rules; the four drafted lessons; an exposed-database redesign lab; 13 questions; 21 provider sources added (all HTTP 200) |
+| Network 5, IDS, IPS and detection | **Published**: the five drafted lessons with checks; a KQL lab triaging 241 synthetic alerts with a tuning plan; 13 questions; Suricata and Zeek documentation added as example-tool sources |
+| Network 2, lessons | **Written**: spoofing and interception; denial of service; credential attacks and lateral movement; command and control (plus the earlier reconnaissance lesson). Committed but not linked, awaiting review |
+| Network 2, module definition, checks, lab and questions | **Stopped again** by the safety check; listed in the plan, section 6, for a person to write |
+
+12 ATT&CK and RFC sources for Network 2 were verified (HTTP 200, matching titles) but are not yet in the register, because the script that would have added them was stopped. Question banks: Network 120, Cloud 133. Lesson drafts published in this batch have not been reviewed by a person.
