@@ -91,3 +91,9 @@ Status key: **Tested** = checked by an automated test that was run and passed, o
 **Accuracy notes:** the data-protection lab states the NDPA 2023 regulator-notification duty (72 hours for notifiable breaches) as a pointer for the DPO, not legal advice. Have a lawyer confirm it before publication.
 
 **Written at a high level by request:** attack and misconfiguration topics cover risks, detection and fixes only. Lessons stopped by the safety check, and drafts awaiting review, are listed in `docs/NETWORK_CLOUD_PLAN.md` section 6.
+
+## Batch 3 (23 October 2026): Cloud module 5
+
+Cloud module 5, *Cloud Logging, Monitoring and Detection*: 5 lessons (audit logs; identity and sign-in events; centralising and protecting logs; managed detection, SIEM and prioritisation; gaps and detection engineering), 15 checks, a logging-coverage assessment lab (grid across four accounts, storage, retention, prioritisation and a written design) and 13 exam questions (`logging`). 8 sources added (CloudTrail and integrity validation, Azure activity log, Entra sign-in logs, Google Cloud Audit Logs, GuardDuty, Defender for Cloud, Security Command Center); all HTTP 200 with matching titles. Written at a high level (risks, detection and fixes). Tests: 44 passing (932 assertions).
+
+Network module 5 lessons are drafted but unpublished; its module definition, lab and questions were stopped by the safety check (see the plan, section 6).

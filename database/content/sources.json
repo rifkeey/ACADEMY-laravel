@@ -1212,6 +1212,94 @@
       "versionNote": "Enterprise ATT&CK.",
       "supports": "Why data-access logging matters for sensitive stores.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-cloudtrail",
+      "title": "What is AWS CloudTrail?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html",
+      "topic": "Cloud audit logging",
+      "sourceType": "vendor_documentation",
+      "versionNote": "CloudTrail User Guide, current.",
+      "supports": "Management and data events, trails, organisation trails.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-cloudtrail-integrity",
+      "title": "Validating CloudTrail log file integrity",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html",
+      "topic": "Log integrity",
+      "sourceType": "vendor_documentation",
+      "versionNote": "CloudTrail User Guide, current.",
+      "supports": "Proving log files were not modified.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-activity-log",
+      "title": "Activity log in Azure Monitor",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log",
+      "topic": "Cloud audit logging",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Subscription-level operations.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "entra-sign-in-logs",
+      "title": "Sign-in logs in Microsoft Entra ID",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-sign-ins",
+      "topic": "Identity logging",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Interactive, non-interactive and workload sign-ins.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-audit-logs",
+      "title": "Cloud Audit Logs overview",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/logging/docs/audit",
+      "topic": "Cloud audit logging",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Admin Activity and Data Access audit logs.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-guardduty",
+      "title": "What is Amazon GuardDuty?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+      "topic": "Managed threat detection",
+      "sourceType": "vendor_documentation",
+      "versionNote": "GuardDuty User Guide, current.",
+      "supports": "Provider-managed detection findings.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-defender-for-cloud",
+      "title": "Microsoft Defender for Cloud overview",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-cloud-introduction",
+      "topic": "Posture and threat protection",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Provider-managed posture and threat detection.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-scc",
+      "title": "Security Command Center overview",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/security-command-center/docs/security-command-center-overview",
+      "topic": "Posture and threat detection",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Organisation-level findings.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }
