@@ -110,3 +110,17 @@ Notes for reviewers:
 | 6 Remaining modules | In progress. Done: Network 1 and 3, Cloud 1 and 2. Next: Network 2 and 4, Cloud 3 and 4 |
 | 7 Integration testing | Not started |
 | 8 Final review | Not started |
+
+## 6. Lessons needing a human author or reviewer
+
+An automated safety check stopped content generation three times while these lessons were being written. They are left for AMANIQ's subject-matter experts. Topics are listed at a high level only.
+
+| Module | Lesson | Status |
+| --- | --- | --- |
+| Network 2 — Network Threats | Spoofing, poisoning and adversary-in-the-middle (risks, detection and mitigations) | **Not written**: please author |
+| Cloud 3 — Cloud Network Security | Security groups, network ACLs and cloud firewall rules compared across AWS, Azure and Google Cloud | **Not written**: please author |
+| Cloud 3 — Cloud Network Security | Private connectivity and egress; hybrid connectivity; flow logs and monitoring | **Drafted but unpublished** (`lessons/cloud-networking/*.md`, not yet listed in `programme.json`). Please review before they are linked into the module |
+
+Also written and published but worth a reviewer's eye, since they discuss attacker behaviour: Network 2 lesson *Reconnaissance and scanning* (detection-focused; file present, not yet linked into the module).
+
+Remaining Network 2 topics (denial of service, credential attacks and lateral movement, command-and-control and DNS abuse) will be written at a high level (risks, detection and fixes only); any that are stopped will be added to this table.
