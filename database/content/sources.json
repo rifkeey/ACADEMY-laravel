@@ -805,6 +805,237 @@
       "versionNote": "Enterprise ATT&CK.",
       "supports": "Abuse of role passing and impersonation.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-791",
+      "title": "RFC 791: Internet Protocol",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc791",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 791; check the RFC page for any updating RFCs.",
+      "supports": "IPv4 header fields and TTL.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-1918",
+      "title": "RFC 1918: Address Allocation for Private Internets",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc1918",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 1918; check the RFC page for any updating RFCs.",
+      "supports": "Private IPv4 ranges.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-4632",
+      "title": "RFC 4632: Classless Inter-domain Routing (CIDR)",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4632",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 4632; check the RFC page for any updating RFCs.",
+      "supports": "Prefix notation and aggregation.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-8200",
+      "title": "RFC 8200: Internet Protocol, Version 6 (IPv6) Specification",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc8200",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 8200; check the RFC page for any updating RFCs.",
+      "supports": "IPv6 basics.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-4291",
+      "title": "RFC 4291: IP Version 6 Addressing Architecture",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4291",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 4291; check the RFC page for any updating RFCs.",
+      "supports": "IPv6 address types, link-local, /64.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-826",
+      "title": "RFC 826: An Ethernet Address Resolution Protocol",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc826",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 826; check the RFC page for any updating RFCs.",
+      "supports": "ARP and why it has no authentication.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-4861",
+      "title": "RFC 4861: Neighbor Discovery for IP version 6 (IPv6)",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4861",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 4861; check the RFC page for any updating RFCs.",
+      "supports": "IPv6 neighbour discovery.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-768",
+      "title": "RFC 768: User Datagram Protocol",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc768",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 768; check the RFC page for any updating RFCs.",
+      "supports": "UDP behaviour.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-2131",
+      "title": "RFC 2131: Dynamic Host Configuration Protocol",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 2131; check the RFC page for any updating RFCs.",
+      "supports": "DHCP exchange and options.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-8446",
+      "title": "RFC 8446: The Transport Layer Security (TLS) Protocol Version 1.3",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc8446",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 8446; check the RFC page for any updating RFCs.",
+      "supports": "TLS goals and handshake.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-3022",
+      "title": "RFC 3022: Traditional IP Network Address Translator (Traditional NAT)",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc3022",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 3022; check the RFC page for any updating RFCs.",
+      "supports": "NAT and port translation.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-6335",
+      "title": "RFC 6335: IANA Procedures for the Management of the Service Name and Transport Protocol Port Number Registry",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc6335",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 6335; check the RFC page for any updating RFCs.",
+      "supports": "Port ranges.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "iana-ports",
+      "title": "Service Name and Transport Protocol Port Number Registry",
+      "publisher": "IANA",
+      "url": "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml",
+      "topic": "Port assignments",
+      "sourceType": "official_standard",
+      "versionNote": "Live registry.",
+      "supports": "Well-known and registered ports.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-shared-responsibility",
+      "title": "Shared responsibility in the cloud",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility",
+      "topic": "Shared responsibility",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Responsibility by service model; responsibilities always retained by the customer.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-shared-fate",
+      "title": "Shared responsibilities and shared fate on Google Cloud",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate",
+      "topic": "Shared responsibility",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud Architecture Framework, current.",
+      "supports": "Shared responsibility and the shared-fate approach.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-regions-azs",
+      "title": "Global Infrastructure: Regions and Availability Zones",
+      "publisher": "Amazon Web Services",
+      "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/",
+      "topic": "Regions and zones",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Live page; region counts change.",
+      "supports": "Regions and Availability Zones.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-availability-zones",
+      "title": "What are Azure availability zones?",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview",
+      "topic": "Regions and zones",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Availability zones; not every region has zones.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-regions",
+      "title": "Geography and regions",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/docs/geography-and-regions",
+      "topic": "Regions and zones",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Regions and zones.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-multi-account",
+      "title": "Organizing Your AWS Environment Using Multiple Accounts",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/organizing-your-aws-environment.html",
+      "topic": "Account structure",
+      "sourceType": "vendor_documentation",
+      "versionNote": "AWS whitepaper, current.",
+      "supports": "Separating workloads and environments into accounts.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-organize-resources",
+      "title": "Organize your Azure resources effectively",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-setup-guide/organize-resources",
+      "topic": "Resource hierarchy",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Cloud Adoption Framework, current.",
+      "supports": "Management groups, subscriptions and resource groups.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-resource-hierarchy",
+      "title": "About resource hierarchy",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy",
+      "topic": "Resource hierarchy",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Organization, folders and projects; policy inheritance.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }

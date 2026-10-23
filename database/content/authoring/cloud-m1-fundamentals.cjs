@@ -1,0 +1,158 @@
+// Cloud Security, module 1: Cloud Computing and the Shared Responsibility Model.
+const { load, save, upsertSources, replaceModule, replaceLab, replaceQuestions, single, multiple } = require('./lib.cjs');
+
+const CHECKED = '2026-10-23';
+const v = 'vendor_documentation';
+upsertSources([
+    { key: 'azure-shared-responsibility', title: 'Shared responsibility in the cloud', publisher: 'Microsoft', url: 'https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility', topic: 'Shared responsibility', sourceType: v, versionNote: 'Microsoft Learn, current.', supports: 'Responsibility by service model; responsibilities always retained by the customer.' },
+    { key: 'gcp-shared-fate', title: 'Shared responsibilities and shared fate on Google Cloud', publisher: 'Google Cloud', url: 'https://cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate', topic: 'Shared responsibility', sourceType: v, versionNote: 'Google Cloud Architecture Framework, current.', supports: 'Shared responsibility and the shared-fate approach.' },
+    { key: 'aws-regions-azs', title: 'Global Infrastructure: Regions and Availability Zones', publisher: 'Amazon Web Services', url: 'https://aws.amazon.com/about-aws/global-infrastructure/regions_az/', topic: 'Regions and zones', sourceType: v, versionNote: 'Live page; region counts change.', supports: 'Regions and Availability Zones.' },
+    { key: 'azure-availability-zones', title: 'What are Azure availability zones?', publisher: 'Microsoft', url: 'https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview', topic: 'Regions and zones', sourceType: v, versionNote: 'Microsoft Learn, current.', supports: 'Availability zones; not every region has zones.' },
+    { key: 'gcp-regions', title: 'Geography and regions', publisher: 'Google Cloud', url: 'https://cloud.google.com/docs/geography-and-regions', topic: 'Regions and zones', sourceType: v, versionNote: 'Google Cloud documentation, current.', supports: 'Regions and zones.' },
+    { key: 'aws-multi-account', title: 'Organizing Your AWS Environment Using Multiple Accounts', publisher: 'Amazon Web Services', url: 'https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/organizing-your-aws-environment.html', topic: 'Account structure', sourceType: v, versionNote: 'AWS whitepaper, current.', supports: 'Separating workloads and environments into accounts.' },
+    { key: 'azure-organize-resources', title: 'Organize your Azure resources effectively', publisher: 'Microsoft', url: 'https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-setup-guide/organize-resources', topic: 'Resource hierarchy', sourceType: v, versionNote: 'Cloud Adoption Framework, current.', supports: 'Management groups, subscriptions and resource groups.' },
+    { key: 'gcp-resource-hierarchy', title: 'About resource hierarchy', publisher: 'Google Cloud', url: 'https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy', topic: 'Resource hierarchy', sourceType: v, versionNote: 'Google Cloud documentation, current.', supports: 'Organization, folders and projects; policy inheritance.' },
+], CHECKED);
+
+const p = load('cloud-security');
+
+const lessons = [
+    { slug: 'what-cloud-computing-is', title: 'What cloud computing is: characteristics, service and deployment models', minutes: 30, sources: ['nist-sp-800-145', 'nist-sp-800-144'],
+        objectives: ['Identify the five essential characteristics of cloud computing and their security consequences', 'Classify a service as IaaS, PaaS or SaaS', 'Distinguish public, private, community and hybrid deployments'],
+        checks: [
+            { question: 'Kanem moves staff email to Microsoft 365. Which service model is this?', options: ['IaaS', 'PaaS', 'SaaS', 'Private cloud'], answerIndex: 2, explanation: 'A complete application delivered by the provider is SaaS.' },
+            { question: 'Which characteristic explains why anyone with permissions can create an exposed resource in seconds?', options: ['Measured service', 'On-demand self-service', 'Resource pooling', 'Community deployment'], answerIndex: 1, explanation: 'Self-service is what makes the cloud fast, and why identity and guardrails matter.' },
+            { question: 'A sudden spike in compute costs at 03:00 could indicate which security problems? Select all that apply.', options: ['Stolen credentials used for crypto-mining', 'A misconfigured auto-scaling rule', 'Encryption at rest being disabled', 'Resources launched by an unauthorised user'], answerIndexes: [0, 1, 3], explanation: 'Measured service makes unusual consumption visible; cost anomalies are a useful security signal.' },
+        ] },
+    { slug: 'regions-accounts-and-hierarchy', title: 'Regions, accounts and the resource hierarchy', minutes: 30, sources: ['aws-regions-azs', 'azure-availability-zones', 'gcp-regions', 'aws-multi-account', 'azure-organize-resources', 'gcp-resource-hierarchy', 'ndpc'],
+        objectives: ['Explain regions and zones and when each improves resilience', 'Recognise data location as a legal and compliance decision', 'Design an account, subscription or project structure that limits blast radius'],
+        checks: [
+            { question: 'Why should production and development run in separate accounts, subscriptions or projects?', options: ['It is cheaper', 'It limits the blast radius: access and mistakes in one do not reach the other, and production can have stricter guardrails', 'Providers require it', 'It makes resources faster'], answerIndex: 1, explanation: 'Accounts, subscriptions and projects are strong isolation boundaries.' },
+            { question: 'A policy assigned at the top of the hierarchy (organisation or management group) applies to:', options: ['Only the top level', 'Everything beneath it, through inheritance', 'Only resources created after it', 'Only production'], answerIndex: 1, explanation: 'Policies and permissions are inherited downwards in all three providers.' },
+            { question: 'Who should be involved in choosing the region for customer personal data?', options: ['Only the engineer creating the resource', 'Security, legal and compliance together', 'Only the cloud provider', 'Nobody: the default region is fine'], answerIndex: 1, explanation: 'Data-protection law and sector regulation affect where personal data may be stored and transferred.' },
+        ] },
+    { slug: 'shared-responsibility-by-model', title: 'The shared responsibility model, service by service', minutes: 35, sources: ['aws-shared-responsibility', 'azure-shared-responsibility', 'gcp-shared-fate'],
+        objectives: ['Assign responsibilities to provider, customer or both for IaaS, PaaS and SaaS', 'Identify the responsibilities that always remain with the customer', 'Explain genuinely shared responsibilities such as backups, patching and encryption'],
+        checks: [
+            { question: 'Kanem\'s reporting server runs on a cloud VM (IaaS). An attacker exploits a six-month-old operating-system vulnerability. Whose responsibility was the patch?', options: ['The provider\'s', 'Kanem\'s', 'Shared equally', 'Nobody\'s'], answerIndex: 1, explanation: 'In IaaS the customer manages the guest operating system.' },
+            { question: 'Which responsibilities stay with the customer in every model, including SaaS? Select all that apply.', options: ['Who has access and with which permissions', 'Classifying and protecting the data stored', 'Patching the provider\'s hypervisor', 'Configuring the settings the service exposes, such as MFA and sharing'], answerIndexes: [0, 1, 3], explanation: 'Identities, data and configuration are always the customer\'s. Hypervisors are always the provider\'s.' },
+            { question: 'A managed database service takes automatic backups. What is still Kanem\'s job?', options: ['Nothing', 'Setting retention, protecting backups from deletion and testing restores', 'Replacing failed disks', 'Patching the host servers'], answerIndex: 1, explanation: 'Backups are shared: the provider takes them, the customer configures, protects and tests them.' },
+        ] },
+    { slug: 'governance-and-adoption-risks', title: 'Cloud governance and adoption risks', minutes: 30, sources: ['nist-csf-2', 'csa-ccm', 'aws-scps'],
+        objectives: ['Identify the main risks of rapid cloud adoption', 'Separate governance decisions from automated guardrails', 'Select first preventive guardrails for a new cloud environment'],
+        checks: [
+            { question: 'Which control stops even an account administrator from disabling audit logging?', options: ['A strong password policy', 'An organisation-level guardrail such as an AWS SCP, Azure Policy deny or Google organisation policy', 'A tag on the log bucket', 'Encryption at rest'], answerIndex: 1, explanation: 'Guardrails applied above the account cannot be overridden from inside it.' },
+            { question: 'Which are sensible first guardrails before the first production workload? Select all that apply.', options: ['Allow only approved regions', 'Prevent disabling audit logging', 'Block public storage unless an exception is approved', 'Allow every service so teams are not slowed down'], answerIndexes: [0, 1, 2], explanation: 'A few high-value preventive guardrails stop the most common and most damaging mistakes.' },
+            { question: 'Which NIST CSF 2.0 function covers organisational context, risk strategy, roles and policy?', options: ['Identify', 'Protect', 'Govern', 'Recover'], answerIndex: 2, explanation: 'CSF 2.0 added Govern, which frames how cloud adoption is decided and overseen.' },
+        ] },
+    { slug: 'cloud-security-misconceptions', title: 'Seven cloud security misconceptions', minutes: 25, sources: ['aws-shared-responsibility', 'azure-shared-responsibility'],
+        objectives: ['Explain why common cloud security beliefs are incomplete', 'Respond to a misconception with a precise question or statement', 'Relate each misconception to the shared responsibility model'],
+        checks: [
+            { question: '"Our provider has ISO/IEC 27001, so our deployment is compliant." What is wrong?', options: ['Nothing', 'The certificate covers the provider\'s controls in scope, not how the customer configured its own account', 'ISO/IEC 27001 does not apply to cloud providers', 'Certificates expire every month'], answerIndex: 1, explanation: 'Provider attestations are evidence about the provider. The customer must evidence its own side.' },
+            { question: 'Why doesn\'t encryption at rest protect a bucket that has been made public?', options: ['Public buckets are not encrypted', 'The service decrypts data for any request it authorises; encryption at rest protects the physical media', 'Encryption only works in private subnets', 'It does protect it'], answerIndex: 1, explanation: 'Access control decides who receives decrypted data through the API.' },
+            { question: 'A database is in a private subnet. How could it still be reached? Select all that apply.', options: ['Through the provider\'s management API with valid credentials', 'Through a compromised application that can reach it', 'Through the internet, because private subnets are public', 'Through an overly broad network rule from another network'], answerIndexes: [0, 1, 3], explanation: 'Network placement is one layer; identities, applications and other rules provide other paths.' },
+        ] },
+];
+
+const R = (id, label) => ({ id, label });
+const opts = [R('customer', 'Customer'), R('provider', 'Provider'), R('shared', 'Shared')];
+const cols = [R('iaas', 'Reporting VM (IaaS)'), R('paas', 'Invoice DB (managed PaaS)'), R('saas', 'Staff email (SaaS)'), R('fn', 'Loan API (serverless)')].map((c) => ({ ...c, options: opts }));
+const all = (x) => ({ iaas: x, paas: x, saas: x, fn: x });
+const c = 'customer', pv = 'provider', s = 'shared';
+
+const lab = {
+    slug: 'shared-responsibility-mapping',
+    title: 'Who secures what? Mapping responsibilities for Kanem\'s first cloud workloads',
+    difficulty: 'foundation',
+    labType: 'architecture_review',
+    summary: 'Assign 40 security responsibilities across four real-looking cloud workloads, decide who was at fault in two incidents, and brief the CFO on what Kanem still owns.',
+    minutes: 60,
+    moduleSlug: 'cloud-fundamentals',
+    passPercent: 80,
+    content: {
+        objectives: ['Assign responsibilities to provider, customer or shared for different service models', 'Attribute incidents to the side of the model that failed', 'Explain residual customer responsibilities to a non-technical executive'],
+        scenario: 'Kanem Financial Services (fictional) is moving four workloads to the cloud: a **reporting server** on a cloud VM (IaaS), the **invoice database** on a managed database service (PaaS), **staff email** on a SaaS suite, and a public **loan-calculator API** on serverless functions. Before contracts are signed, the CFO wants to know exactly what Kanem will still be responsible for.',
+        scope: 'Assume typical arrangements as described in the providers\' shared-responsibility documentation. Where a task is genuinely split, "Shared" is the right answer.',
+        instructions: '1. Read **Workload summaries**.\n2. Complete the responsibility grid in task 1 (40 cells; 85% must match).\n3. Answer tasks 2–6.\n4. Write the CFO briefing in task 7. It is saved to your portfolio.\n\nYou need 80% overall to pass.',
+        simulationNotice: 'This is a simulation. All organisations, workloads and data are fictional. No cloud accounts are used.',
+        workspace: { kind: 'documents', documents: [
+            { title: 'Workload summaries', format: 'markdown', body: '| Workload | Service | What Kanem deploys |\n| --- | --- | --- |\n| Reporting server | Cloud VM (IaaS) with a Linux image | The OS configuration, a reporting application and its database installed on the VM |\n| Invoice database | Managed relational database (PaaS) | The database schema, users and network access settings; the engine is run by the provider |\n| Staff email | SaaS email and documents suite | 420 user accounts, sharing settings, retention policies |\n| Loan-calculator API | Serverless functions behind an API gateway | Function code (Python), its configuration, and the API\'s authentication settings |' },
+            { title: 'Incident notes from other organisations (for tasks 2–3)', format: 'markdown', body: '**Incident A:** a company\'s reporting VM was compromised through a remote-code-execution vulnerability in its Linux kernel, for which a patch had been available for six months.\n\n**Incident B:** an employee\'s SaaS mailbox was taken over by password spraying. MFA was available in the suite but had not been switched on for that organisation.' },
+        ] },
+        tasks: [
+            { id: 'matrix', points: 5, prompt: 'For each responsibility and workload, choose who is responsible.', hints: ['Physical security and hypervisors are always the provider\'s.', 'Identities, data and the configuration you control are always the customer\'s.', 'Backups and logging on managed services are usually shared: the provider offers the capability, you configure, protect and review it.'], input: { type: 'grid', rows: [
+                R('physical', 'Physical data-centre security'), R('hypervisor', 'Host and hypervisor patching'), R('os', 'Guest operating-system patching'), R('engine', 'Database engine / runtime patching'), R('code', 'Security of application code Kanem writes'),
+                R('identity', 'User accounts, access permissions and MFA'), R('data', 'Classifying and protecting the data stored'), R('network', 'Network access rules (who can reach it)'), R('backup', 'Backup configuration and restore testing'), R('logging', 'Enabling and reviewing audit logs'),
+            ], columns: cols } },
+            { id: 'incidentA', points: 1, prompt: 'Incident A: which side of the model failed?', hints: ['Who manages the guest OS in IaaS?'], input: { type: 'choice', options: [R('customer', 'The customer: guest OS patching is the customer\'s job in IaaS'), R('provider', 'The provider: it should patch customer VMs'), R('both', 'Both equally')] } },
+            { id: 'incidentB', points: 1, prompt: 'Incident B: which side of the model failed?', hints: ['The provider built MFA; who decides to switch it on?'], input: { type: 'choice', options: [R('customer', 'The customer: it did not enable the MFA the service provides'), R('provider', 'The provider: it should force MFA on every customer'), R('nobody', 'Nobody: password spraying cannot be prevented')] } },
+            { id: 'always', points: 2, prompt: 'Which responsibilities does Kanem keep for **every** workload, whatever the service model? Select all that apply.', hints: ['Look at the rows that are "Customer" in every column of your grid.'], input: { type: 'multi', options: [R('identity', 'Who has access, with which permissions'), R('data', 'Classifying and protecting data'), R('hypervisor', 'Patching the hypervisor'), R('config', 'Configuring the security settings each service exposes'), R('physical', 'Physical security of the data centre')] } },
+            { id: 'attestation', points: 1, prompt: 'The SaaS provider sends its ISO/IEC 27001 certificate and SOC 2 report. What do they prove?', hints: ['Lesson 5, misconception 2.'], input: { type: 'choice', options: [R('provider', 'That the provider\'s controls, for the services and locations in scope, were assessed independently; they say nothing about Kanem\'s own configuration'), R('kanem', 'That Kanem\'s email deployment is compliant'), R('nothing', 'Nothing useful at all')] } },
+            { id: 'accounts', points: 1, prompt: 'The project team wants all four workloads, plus development and testing, in one cloud account. What is the main security objection?', hints: ['Lesson 2.'], input: { type: 'choice', options: [R('blast', 'One compromise or mistake can reach every workload and environment; separate accounts limit the blast radius and allow stricter guardrails for production'), R('cost', 'It costs more'), R('speed', 'It is slower')] } },
+            { id: 'briefing', points: 2, prompt: 'Write a **briefing for the CFO** (no jargon) explaining what Kanem remains responsible for after the move, and what it needs to put in place.', hints: ['Lead with the principle in one sentence.', 'Give one concrete example per workload.', 'Finish with the two or three things that need owners and budget.'], input: { type: 'deliverable', title: 'Executive briefing: shared responsibility', competency: 'Explaining cloud security responsibilities to a non-technical executive', minWords: 140, rubric: ['States the principle clearly: provider secures the infrastructure, Kanem secures identities, data and configuration', 'Gives a specific example for each workload type', 'Explains why a provider certificate is not enough on its own', 'Names actions that need owners (MFA, access reviews, patching the VM, backups and restore tests, logging)', 'Uses plain language a CFO would understand'], template: 'In one sentence:\n\nWhat changes for each system:\n\nWhat the provider\'s certificates do and do not cover:\n\nWhat we need to put in place (owners and budget):\n' } },
+        ],
+        reflection: ['Which cell in the grid surprised you most, and why?', 'Which responsibility do organisations most often forget in SaaS?', 'How would you explain "shared" backups to the person who signs the contract?', 'What evidence would you ask each provider for before signing?'],
+    },
+    validator: {
+        tasks: {
+            matrix: { type: 'grid', minCorrectRatio: 0.85, cells: {
+                physical: all([pv]),
+                hypervisor: all([pv]),
+                os: { iaas: [c], paas: [pv], saas: [pv], fn: [pv] },
+                engine: { iaas: [c], paas: [pv, s], saas: [pv], fn: [pv, s] },
+                code: { iaas: [c], paas: [c], saas: [pv], fn: [c] },
+                identity: all([c]),
+                data: all([c]),
+                network: { iaas: [c], paas: [c], saas: [s, c], fn: [c, s] },
+                backup: { iaas: [c], paas: [s], saas: [s, c], fn: [c, s] },
+                logging: { iaas: [c, s], paas: [c, s], saas: [c, s], fn: [c, s] },
+            }, feedback: { correct: 'Your responsibility map matches the typical split.', incorrect: 'Revisit lesson 3. Physical and hypervisor rows are always the provider\'s; identity and data are always Kanem\'s.' } },
+            incidentA: { type: 'choice', correct: 'customer', feedback: { correct: 'Right.', incorrect: 'In IaaS the customer patches the guest operating system.' } },
+            incidentB: { type: 'choice', correct: 'customer', feedback: { correct: 'Right: the control existed but was not used.', incorrect: 'The provider built MFA; enabling it is configuration, which is the customer\'s.' } },
+            always: { type: 'multi', correct: ['identity', 'data', 'config'], feedback: { correct: 'Right: identities, data and configuration.', incorrect: 'Three of these are the customer\'s in every model.' } },
+            attestation: { type: 'choice', correct: 'provider', feedback: { correct: 'Right.', incorrect: 'Attestations cover the provider\'s own controls, for what is in scope.' } },
+            accounts: { type: 'choice', correct: 'blast', feedback: { correct: 'Right.', incorrect: 'Think about what a single leaked credential could reach.' } },
+            briefing: { type: 'deliverable', minWords: 140, mustMention: [
+                { label: 'access or identities', any: ['access', 'identit', 'accounts', 'mfa'] },
+                { label: 'data', any: ['data'] },
+                { label: 'configuration or settings', any: ['configur', 'settings', 'set up'] },
+                { label: 'the provider\'s certificate or report', any: ['certificate', 'iso', 'soc 2', 'report', 'attestation'] },
+            ], feedback: { correct: 'Briefing complete. Compare it with the rubric and the debrief.', incorrect: 'Your briefing is not complete yet.' } },
+        },
+        debrief: '## Worked solution\n\n| Responsibility | IaaS VM | PaaS DB | SaaS email | Serverless API |\n| --- | --- | --- | --- | --- |\n| Physical security | Provider | Provider | Provider | Provider |\n| Hypervisor | Provider | Provider | Provider | Provider |\n| Guest OS patching | **Customer** | Provider | Provider | Provider |\n| Engine / runtime patching | **Customer** | Provider (shared: you plan major upgrades) | Provider | Provider (shared: you move off deprecated runtimes) |\n| Application code | **Customer** | **Customer** (schema, queries, the apps using it) | Provider | **Customer** |\n| Identities, access, MFA | **Customer** | **Customer** | **Customer** | **Customer** |\n| Data | **Customer** | **Customer** | **Customer** | **Customer** |\n| Network access rules | **Customer** | **Customer** | Shared (provider network; you set conditional access and sharing) | **Customer** / shared (API gateway authentication) |\n| Backups and restore tests | **Customer** | Shared | Shared (retention; many organisations add third-party backup) | **Customer** / shared |\n| Audit logging | Customer / shared | Customer / shared | Customer / shared | Customer / shared |\n\nBoth incidents were failures on the **customer** side: an unpatched guest OS in IaaS, and MFA available but not enabled in SaaS.\n\n### A strong CFO briefing\n\n"Moving to the cloud means the provider secures the buildings, hardware and platforms; Kanem still secures who can get in, what data we store and how every service is configured. For the reporting server we also keep patching its operating system; for the invoice database the provider patches the engine but we control access, backups and encryption keys; for email the provider runs the service but we must switch on MFA and manage sharing; for the loan API we own the code and its security settings. The providers\' certificates prove their side is well run, not that ours is. We need named owners for MFA and access reviews, VM patching, backup and restore testing, and central logging before go-live."\n\n## What you have practised\n\nDeciding where responsibility sits is the first step of every cloud risk assessment, contract review and incident investigation. The same grid reappears in the capstone, when you design Kanem\'s full landing zone.\n\n**Next:** module 2 tackles the responsibility at the top of every column: identity and access.',
+    },
+};
+
+replaceModule(p.data, 'cloud-fundamentals', {
+    slug: 'cloud-fundamentals',
+    title: 'Cloud Computing and the Shared Responsibility Model',
+    purpose: 'Kanem\'s board is moving three systems to the cloud and one director believes "the provider looks after security". This module gives you the precise vocabulary (characteristics, service and deployment models), the structures that shape cloud security (regions, accounts and hierarchies), the shared responsibility model service by service, the basics of cloud governance, and answers to the most common misconceptions. You finish by mapping responsibilities for four real-looking workloads and briefing the CFO.\n\n**To complete this module:** finish all five lessons and pass the lab (80%), including the written briefing.',
+    prerequisiteKnowledge: 'General IT knowledge. No prior cloud experience is required.',
+    objectives: ['Classify cloud services by characteristics, service model and deployment model', 'Design an account, subscription or project structure that limits blast radius and respects data-location requirements', 'Assign security responsibilities to provider, customer or both for IaaS, PaaS, SaaS and serverless', 'Recommend first governance decisions and preventive guardrails', 'Correct common cloud security misconceptions with precise reasoning'],
+    keyConcepts: ['NIST cloud definition', 'IaaS, PaaS, SaaS, serverless', 'Public, private, community, hybrid', 'Regions and zones', 'Accounts, subscriptions, projects', 'Resource hierarchy and inheritance', 'Shared responsibility and shared fate', 'Governance and guardrails'],
+    assessmentCriteria: ['Correctly maps responsibilities across service models', 'Attributes incidents to the failing side of the model', 'Explains residual responsibilities clearly to an executive'],
+    instructorNotes: 'Estimated time: 2.5 hours of lessons plus 1 hour of lab.',
+    contentStatus: 'complete',
+    lessons,
+});
+replaceLab(p.data, 'shared-responsibility-mapping', lab);
+
+const C = 'fundamentals';
+replaceQuestions(p.data, 'cld-fnd-', [
+    single('cld-fnd-01', C, 'foundation', 'Classify service models', 'A managed relational database where the provider patches the engine is an example of:', ['IaaS', '*PaaS', 'SaaS', 'On-premises hosting'], 'The provider runs the platform; the customer manages data, schema, access and configuration.'),
+    single('cld-fnd-02', C, 'foundation', 'Classify service models', 'In IaaS, who is responsible for patching the guest operating system?', ['The provider', '*The customer', 'Nobody, it is automatic', 'The hardware vendor'], 'The customer manages everything from the guest OS upwards in IaaS.'),
+    single('cld-fnd-03', C, 'foundation', 'Identify cloud characteristics', 'Which is NOT one of NIST\'s five essential characteristics of cloud computing?', ['Rapid elasticity', 'Resource pooling', '*Guaranteed zero downtime', 'Measured service'], 'NIST lists on-demand self-service, broad network access, resource pooling, rapid elasticity and measured service.'),
+    single('cld-fnd-04', C, 'foundation', 'Distinguish deployment models', 'Kanem keeps core banking on-premises and connects it to public-cloud workloads. Which deployment model is this?', ['Public', 'Private', 'Community', '*Hybrid'], 'Hybrid combines deployment models connected so data and applications can move between them.'),
+    single('cld-fnd-05', C, 'intermediate', 'Design for resilience', 'What does spreading a workload across availability zones in one region protect against?', ['A regional outage', '*The failure of a single data centre in the region', 'Data-protection law', 'Account compromise'], 'Zones are isolated locations within a region; multi-region designs protect against regional outages.'),
+    single('cld-fnd-06', C, 'intermediate', 'Limit blast radius', 'What is the main security benefit of separate accounts, subscriptions or projects per environment?', ['Lower cost', '*Isolation that limits what a compromise or mistake can reach', 'Faster deployments', 'Automatic encryption'], 'These containers are strong isolation boundaries with their own access and guardrails.'),
+    single('cld-fnd-07', C, 'foundation', 'Apply shared responsibility', 'Which responsibility is always the customer\'s, even in SaaS?', ['Patching servers', 'Physical security', '*Managing user accounts and access', 'Running the application'], 'Identities, data and the configuration you control are always the customer\'s.'),
+    multiple('cld-fnd-08', C, 'intermediate', 'Apply shared responsibility', 'Which responsibilities are typically shared on a managed database service? Select all that apply.', ['*Backups: the provider takes them, the customer sets retention and tests restores', '*Engine updates: the provider applies them, the customer plans major upgrades', 'Physical disk destruction', '*Encryption: the provider offers it, the customer controls key access'], 'Shared tasks need both sides to do their part.'),
+    single('cld-fnd-09', C, 'intermediate', 'Evaluate provider assurance', 'What does a provider\'s SOC 2 report or ISO/IEC 27001 certificate tell a customer?', ['That the customer\'s configuration is secure', '*That the provider\'s controls in scope were independently assessed', 'That no breach can occur', 'Nothing relevant to security'], 'Attestations are evidence about the provider, often with controls the customer must operate too.'),
+    single('cld-fnd-10', C, 'intermediate', 'Correct misconceptions', 'A public storage bucket contains encrypted-at-rest files. Can anyone on the internet read them?', ['No, encryption at rest protects them', '*Yes, the service decrypts data for any request it authorises', 'Only with the key file', 'Only from inside the provider'], 'Encryption at rest protects physical media; access control decides who gets decrypted data.'),
+    single('cld-fnd-11', C, 'intermediate', 'Select guardrails', 'Which mechanism prevents any account in an AWS organisation from disabling CloudTrail?', ['An IAM password policy', '*A service control policy', 'A security group', 'A tag'], 'SCPs set maximum permissions for accounts in an organisation, including their administrators.'),
+    single('cld-fnd-12', C, 'foundation', 'Explain governance', 'Which NIST CSF 2.0 function was added to address organisational context, strategy, roles and policy?', ['Detect', '*Govern', 'Respond', 'Identify'], 'CSF 2.0 introduced Govern as a sixth function.'),
+    single('cld-fnd-13', C, 'intermediate', 'Recognise data-location risk', 'Why is choosing a cloud region for customer personal data not just a technical decision?', ['Regions have different colours', '*Data-protection law and regulators can restrict where data is stored and transferred', 'Providers charge the same everywhere', 'Regions are chosen automatically'], 'Legal and compliance input is needed; guardrails can then enforce the approved regions.'),
+]);
+
+save(p);
+console.log('cloud module 1 applied:', lessons.length, 'lessons,', p.data.labs.length, 'labs,', p.data.questions.length, 'questions');

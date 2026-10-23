@@ -59,3 +59,19 @@ Status key: **Tested** = checked by an automated test that was run and passed, o
 - Module completion is enforced through the course requirements (all lessons marked complete + labs passed + exam). Lesson completion is learner-declared; labs are graded on the server.
 - Neither exam can be published yet: each bank needs about 120 approved questions (12 per module) for a balanced 40-question draw. Each currently has 14.
 - The other 18 modules are still outlines or starter lessons (see `docs/NETWORK_CLOUD_PLAN.md`).
+
+## Batch 1 (23 October 2026): Network module 1 and Cloud module 1
+
+| | Network module 1: Networking Foundations | Cloud module 1: Cloud Computing and Shared Responsibility |
+| --- | --- | --- |
+| Lessons | 5 (≈ 3 h): layer models; IP addressing and subnetting (with refresher); switching, ARP and routing; TCP/UDP and ports; DHCP, DNS, NAT and TLS | 5 (≈ 2.5 h): NIST definition and models; regions, accounts and hierarchy; shared responsibility by model; governance and adoption risks; seven misconceptions |
+| In-lesson checks | 16 | 15 |
+| Lab | *Trace the packet path* (9 tasks, 60 min, pass 80%): subnet maths, host and router forwarding decisions, root-cause diagnosis from command output, separating an unrelated symptom, ordered packet path, written ticket resolution | *Who secures what?* (7 tasks, 60 min, pass 80%): 40-cell responsibility grid across IaaS/PaaS/SaaS/serverless, incident attribution, attestation scope, account structure, written CFO briefing |
+| Exam questions added | 13 (category `foundations`) | 13 (category `fundamentals`) |
+| Sources | 13 RFCs and the IANA port registry added; all URLs HTTP 200 with matching titles on 23 Oct 2026 | 8 provider pages added (shared responsibility, regions, hierarchy, multi-account); all HTTP 200 with matching titles |
+
+**Tests:** the HTTP test now covers every module marked `complete` in both programmes (lessons render with all teaching blocks converted; lab pages hold no answer keys, hidden tests, grid answers or worked solutions; debrief only after a pass). Full suite: 44 tests passing.
+
+**Accuracy notes:** the lab's fault was designed so the symptoms are consistent (printer reachable on the same /24, gateway unreachable, Windows "Destination host unreachable" reported by the host itself). Statements about provider responsibilities follow the providers' own pages; one unsupported phrasing ("overwhelmingly") was replaced by a qualitative statement with a note that the course does not quote a percentage. Legal references (Nigeria Data Protection Act 2023, NDPC) are pointers, not legal advice.
+
+**Still not checked in the browser:** answer feedback appearing on screen (Alpine `x-show`), because the app window was hidden during testing.
