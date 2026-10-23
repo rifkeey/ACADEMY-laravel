@@ -159,3 +159,19 @@ All new URLs returned HTTP 200 with matching titles. **ATT&CK change found while
 **Labs:** both replace earlier starters. The old `cloud-audit-log-investigation` lab is superseded by the two-table cloud investigation; Network module 9 had no lab before. Lab data is generated deterministically by the authoring scripts. The network incident follows from the unfixed module 3 findings (rules 2 and 4, logging off), so learners see why logging every boundary-crossing allow rule matters. Every example query in the lessons and debriefs was run through the platform's KQL interpreter against the lab tables. The NDPA 72-hour notification window is stated as a pointer for the DPO, not legal advice; have a lawyer confirm it. No content was stopped in this batch. Tests: 45 passing (1,206 assertions).
 
 **Question banks:** Network 92, Cloud 105 (about 120 each are needed before the exams can be published; the capstone modules will add more).
+
+## Batch 8 (23 October 2026): Cloud module 10 and Network module 10 (capstones)
+
+| | Cloud module 10: Cloud Security Architecture and Capstone | Network module 10: Network Security Architecture and Capstone |
+| --- | --- | --- |
+| Lessons | 5: landing zones; identity governance; logging and key architecture; resilience and guardrails; threat modelling, trade-offs and validation | 5: threat modelling a network; resilient design; hardening and security assessment; risk prioritisation; documenting the architecture |
+| In-lesson checks | 15 | 15 |
+| Capstone lab | *Secure cloud design for Kanem Pay*: 7 objective tasks plus 3 deliverables (threat model; secure design with CSF 2.0 mapping and a decision record; risk register, roadmap and validation checklist) | *Target network architecture for Kanem*: 7 objective tasks plus 3 deliverables (threat model; target architecture pack; risk register, roadmap and validation checklist) |
+| Exam questions | 15 (`cloud-capstone`), bank now **120** | 15 (`network-capstone`), bank now **107** |
+| Sources | 12 added (AWS Well-Architected Security, Reliability and Cost pillars; Azure landing zone and Well-Architected security; Google Cloud landing zones; STRIDE; Threat Modeling Manifesto; OWASP threat modelling; SP 800-34r1; SP 800-160 Vol. 2 Rev. 1; ADRs) | None new (uses CSF 2.0, SP 800-30r1, SP 800-115, SP 800-41r1, CIS Benchmarks and Controls, plus the new threat-modelling and resilience sources) |
+
+All new URLs returned HTTP 200 with matching titles. The NSA *Network Infrastructure Security Guide* was considered but its PDF refused automated requests (HTTP 403), so it is not cited. The network capstone continues the story from the module 3 review and the module 9 incident. Both starter "capstone overview" lessons were replaced.
+
+**Assessment note:** capstone deliverables are checked for completeness (minimum length and required points) only; learners judge quality against the rubric and the debrief. An instructor review queue for capstone deliverables remains the recommended follow-up (plan section 1).
+
+One page-safety test treats the word `"flows"` as an answer-key marker, so the network capstone's flow task is named `flowplan`. No content was stopped in this batch. Tests: 45 passing (1,272 assertions).

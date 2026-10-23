@@ -1960,6 +1960,138 @@
       "versionNote": "Live page; ATT&CK is versioned.",
       "supports": "Detection notes for data leaving over an existing session.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-wa-security",
+      "title": "AWS Well-Architected Framework: Security Pillar",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html",
+      "topic": "Cloud architecture",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Current web edition.",
+      "supports": "Security design principles and review questions.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-wa-reliability",
+      "title": "AWS Well-Architected Framework: Reliability Pillar",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html",
+      "topic": "Resilience",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Current web edition.",
+      "supports": "Availability, backup and recovery design.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-wa-cost",
+      "title": "AWS Well-Architected Framework: Cost Optimization Pillar",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/cost-optimization-pillar/welcome.html",
+      "topic": "Cost trade-offs",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Current web edition.",
+      "supports": "Weighing cost against other design goals.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-landing-zone",
+      "title": "What is an Azure landing zone? (Cloud Adoption Framework)",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/",
+      "topic": "Landing zones",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Landing zone design areas and management groups.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-wa-security",
+      "title": "Azure Well-Architected Framework: Security",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/",
+      "topic": "Cloud architecture",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Security design principles and checklists for Azure.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-landing-zones",
+      "title": "Landing zone design in Google Cloud",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/architecture/landing-zones",
+      "topic": "Landing zones",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Cloud Architecture Center, current.",
+      "supports": "Resource hierarchy, identity, networking and security decisions.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "ms-threat-modeling-stride",
+      "title": "Threats: Microsoft Threat Modeling Tool (STRIDE)",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats",
+      "topic": "Threat modelling",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "The STRIDE threat categories.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "threat-modeling-manifesto",
+      "title": "Threat Modeling Manifesto",
+      "publisher": "Threat Modeling Manifesto working group",
+      "url": "https://www.threatmodelingmanifesto.org/",
+      "topic": "Threat modelling",
+      "sourceType": "open_resource",
+      "versionNote": "Published 2020.",
+      "supports": "The four key threat-modelling questions and principles.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "owasp-threat-modeling",
+      "title": "Threat Modeling (OWASP community page)",
+      "publisher": "OWASP",
+      "url": "https://owasp.org/www-community/Threat_Modeling",
+      "topic": "Threat modelling",
+      "sourceType": "open_resource",
+      "versionNote": "Community page.",
+      "supports": "Threat modelling process overview.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-34r1",
+      "title": "SP 800-34 Rev. 1: Contingency Planning Guide for Federal Information Systems",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final",
+      "topic": "Contingency planning",
+      "sourceType": "official_standard",
+      "versionNote": "Rev. 1, May 2010 (updated 2010). Old but still the NIST contingency planning reference.",
+      "supports": "Business impact analysis, RTO, RPO and recovery planning.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-160v2r1",
+      "title": "SP 800-160 Vol. 2 Rev. 1: Developing Cyber-Resilient Systems",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/160/v2/r1/final",
+      "topic": "Cyber resiliency",
+      "sourceType": "official_standard",
+      "versionNote": "December 2021.",
+      "supports": "Anticipate, withstand, recover and adapt.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "adr-github",
+      "title": "Architectural Decision Records (ADRs)",
+      "publisher": "ADR GitHub organisation",
+      "url": "https://adr.github.io/",
+      "topic": "Architecture documentation",
+      "sourceType": "open_resource",
+      "versionNote": "Community resource.",
+      "supports": "Recording design decisions, options and reasons.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }
