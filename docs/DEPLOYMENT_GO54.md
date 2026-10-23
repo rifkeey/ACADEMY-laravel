@@ -20,12 +20,14 @@ This guide assumes a GO54 Linux web-hosting plan with cPanel. **Confirm the item
 ## 2. Prepare the release on your computer
 
 ```bash
-composer install --no-dev --optimize-autoloader
-npm ci && npm run build          # only if you changed CSS/JS; public/build is already committed
-php artisan test                 # optional but recommended, needs a local MySQL test database
+npm ci && npm run build          # only if you changed CSS/JS; commit public/build afterwards
+php artisan test                 # recommended, needs a local MySQL test database
+bash scripts/build-release.sh    # writes release/amaniq-academy-<commit>.tar.gz
 ```
 
-If the server has no SSH/Composer, upload the project **including the `vendor/` folder** produced by `composer install --no-dev` above. Do not upload `node_modules/`, `.env`, `storage/logs/*` or `tests/`.
+The build script packages **only what is committed** (uncommitted drafts never ship), installs production dependencies into a temporary copy (your local `vendor/` is untouched), removes tests, `.env`, `node_modules` and other development files, and checks that `public/build` exists. The archive includes `vendor/`, so the server does not need Composer. Set `PHP=` or `COMPOSER=` if your tools are not on the default paths.
+
+The archive does not run Composer's package discovery, because the app (correctly) refuses to boot in production without a real `.env`; Laravel rebuilds that cache automatically on the first request.
 
 ## 3. Upload and folder layout
 
@@ -40,7 +42,7 @@ Then, in cPanel → Domains, create `academy.amaniqgroup.com` (or edit the domai
 
 If your plan does not let you change the document root of the main domain, use a subdomain (recommended) or ask GO54 support to set it. Do not move `index.php` into `public_html` and edit paths unless you have no other option; it is easy to expose `.env` that way.
 
-Upload with cPanel File Manager (zip, upload, extract) or SFTP.
+Upload the `.tar.gz` from step 2 with cPanel File Manager (upload into `/home/USER/academy/`, then Extract) or with SFTP.
 
 ## 4. Database
 

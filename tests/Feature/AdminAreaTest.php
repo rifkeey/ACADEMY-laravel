@@ -225,6 +225,33 @@ class AdminAreaTest extends TestCase
     }
 
     #[Test]
+    public function programmes_under_review_load_draft_questions_that_staff_approve_in_bulk(): void
+    {
+        $network = \App\Models\Specialization::where('slug', 'network-security')->firstOrFail();
+        $bank = $network->questionBank;
+        // Authored questions for a programme under review are not exam-ready until a person approves them.
+        $this->assertSame(0, Question::where('question_bank_id', $bank->id)->where('review_status', 'approved')->count());
+        $exam = Exam::where('course_version_id', $network->current_version_id)->firstOrFail();
+        $settings = ['title' => $exam->title, 'question_count' => 40, 'pass_percent' => 75, 'duration_minutes' => 60, 'max_attempts' => 3, 'cooldown_hours' => 24, 'show_explanations' => 1, 'status' => 'published'];
+
+        $this->actingAs($this->user('learner'));
+        $this->post(route('admin.questions.status'), ['ids' => [1], 'review_status' => 'approved'])->assertNotFound();   // the admin area is hidden from learners
+
+        $admin = $this->user('admin');
+        $this->actingAs($admin);
+        $this->put(route('admin.exams.update', $exam), $settings)->assertSessionHas('error');
+
+        $ids = Question::where('question_bank_id', $bank->id)->orderBy('id')->limit(40)->pluck('id')->all();
+        $this->post(route('admin.questions.status'), ['ids' => $ids, 'review_status' => 'approved'])->assertSessionHas('success', '40 question(s) marked approved.');
+        $this->assertSame(40, Question::whereIn('id', $ids)->where('review_status', 'approved')->count());
+        $this->assertSame(40, \App\Models\AuditEvent::where('action', 'question.reviewed')->where('actor_id', $admin->id)->count());
+        $this->post(route('admin.questions.status'), ['ids' => $ids, 'review_status' => 'bogus'])->assertSessionHasErrors('review_status');
+
+        $this->put(route('admin.exams.update', $exam), $settings)->assertSessionHas('success');
+        $this->get(route('admin.questions.index', ['bank' => $bank->id]))->assertOk()->assertSee('Apply to selected');
+    }
+
+    #[Test]
     public function certificates_can_be_revoked_and_reinstated_with_a_reason(): void
     {
         $admin = $this->user('admin');

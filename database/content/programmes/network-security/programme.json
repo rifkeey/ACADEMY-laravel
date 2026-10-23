@@ -42,6 +42,7 @@
   "sortOrder": 4,
   "enrolmentOpen": false,
   "contentStatus": "in_development",
+  "questionReviewStatus": "draft",
   "badge": {
     "name": "AMANIQ Network Security",
     "description": "Awarded for completing the AMANIQ Academy Network Security programme.",

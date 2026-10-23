@@ -119,6 +119,9 @@ class CatalogueSeeder extends Seeder
         }
 
         $bank = QuestionBank::firstOrCreate(['specialization_id' => $spec->id], ['title' => "{$def['title']} question bank"]);
+        // Programmes still under review load their questions as drafts, so a person must approve them in
+        // Admin before they can be drawn into an exam.
+        $reviewStatus = $def['questionReviewStatus'] ?? 'approved';
         foreach ($def['questions'] as $q) {
             if (Question::where('question_bank_id', $bank->id)->where('external_key', $q['key'])->exists()) {
                 continue;
@@ -126,7 +129,7 @@ class CatalogueSeeder extends Seeder
             $question = Question::create([
                 'question_bank_id' => $bank->id, 'external_key' => $q['key'], 'kind' => $q['kind'], 'category' => $q['category'],
                 'difficulty' => $q['difficulty'], 'objective' => $q['objective'], 'tags' => $q['tags'] ?? [],
-                'prompt' => $q['prompt'], 'explanation' => $q['explanation'], 'review_status' => 'approved',
+                'prompt' => $q['prompt'], 'explanation' => $q['explanation'], 'review_status' => $reviewStatus,
             ]);
             foreach ($q['options'] as $pos => $o) {
                 $question->options()->create(['position' => $pos + 1, 'text' => $o['text'], 'is_correct' => ! empty($o['correct'])]);

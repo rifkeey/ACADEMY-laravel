@@ -104,6 +104,30 @@ class QuestionController extends Controller
         return back()->with('success', 'Question saved. Past attempts keep the version they were given.');
     }
 
+    /** Review several questions at once, for example approving a reviewed category. Each change is audited. */
+    public function bulkStatus(Request $request): RedirectResponse
+    {
+        $this->authorize('questions.edit');
+        $data = $request->validate([
+            'ids' => ['required', 'array', 'min:1', 'max:100'],
+            'ids.*' => ['integer', 'distinct'],
+            'review_status' => ['required', Rule::in(self::STATUSES)],
+        ]);
+
+        $changed = DB::transaction(function () use ($request, $data) {
+            $questions = Question::whereIn('id', $data['ids'])->where('review_status', '!=', $data['review_status'])->lockForUpdate()->get();
+            foreach ($questions as $question) {
+                $from = $question->review_status;
+                $question->forceFill(['review_status' => $data['review_status']])->save();
+                AuditLogger::record($request->user()->id, 'question.reviewed', 'question', $question->id, ['from' => $from, 'to' => $data['review_status']]);
+            }
+
+            return $questions->count();
+        });
+
+        return back()->with('success', "{$changed} question(s) marked {$data['review_status']}.");
+    }
+
     private function validated(Request $request, bool $creating): array
     {
         $data = $request->validate([

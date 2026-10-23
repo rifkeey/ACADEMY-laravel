@@ -110,6 +110,7 @@ Route::middleware(['auth', 'verified', 'staff'])->prefix('admin')->name('admin.'
     Route::get('/questions', [Admin\QuestionController::class, 'index'])->name('questions.index');
     Route::get('/questions/create', [Admin\QuestionController::class, 'create'])->name('questions.create');
     Route::post('/questions', [Admin\QuestionController::class, 'store'])->name('questions.store');
+    Route::post('/questions/status', [Admin\QuestionController::class, 'bulkStatus'])->name('questions.status');
     Route::get('/questions/{question}', [Admin\QuestionController::class, 'edit'])->name('questions.edit');
     Route::put('/questions/{question}', [Admin\QuestionController::class, 'update'])->name('questions.update');
 
