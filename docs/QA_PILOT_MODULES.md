@@ -123,3 +123,23 @@ All new URLs returned HTTP 200 with matching titles (the CISA item is a PDF). Wr
 All new URLs returned HTTP 200 with matching titles. Two sources were updated while checking: NIST SP 800-81-2 has been withdrawn and replaced by **SP 800-81 Rev. 3** (March 2026), and DMARC's RFC 7489 is obsoleted by **RFC 9989**. The lessons cite the current versions. Network module 7 teaches DNS indicators for detection only; lab domains use the reserved `.example` name. No content was stopped in this batch. Tests: 44 passing (1,064 assertions).
 
 **Question banks:** Network 66, Cloud 79 (about 120 each are needed before the exams can be published).
+
+## Batch 6 (23 October 2026): Cloud module 8 and Network module 8
+
+| | Cloud module 8: Cloud Application, API and DevSecOps Security | Network module 8: Network Traffic Analysis with Wireshark |
+| --- | --- | --- |
+| Lessons | 5: API security and the OWASP API Top 10; securing CI/CD pipelines; dependencies, images and SBOMs; security testing in the pipeline; software supply chain | 5: capturing safely and lawfully; Wireshark navigation and display filters; TCP behaviour; DNS and TLS in captures; documenting packet evidence |
+| In-lesson checks | 15 | 15 |
+| Lab | *Review and fix the loans API pipeline* (7 tasks, pass 80%) | *Why is the portal slow? Analyse a capture* (9 tasks, pass 80%), with a **downloadable synthetic PCAP** and the same frames in the browser |
+| Exam questions | 13 (`devsecops`) | 13 (`traffic-analysis`) |
+| Sources | 12 added (OWASP API Top 10 2023, OWASP Top 10:2025, ASVS, OWASP CI/CD Top 10, GitHub Actions secure use and OIDC, CISA SBOM and KEV, SP 800-218, SP 800-204D, SLSA v1.1, Sigstore) | 6 added (Wireshark display filter reference and filter syntax, pcap-filter, RFC 6298, SP 800-86, pcap Internet-Draft) |
+
+All new URLs returned HTTP 200 with matching titles. SSDF v1.2 (SP 800-218 Rev. 1) is still a draft, so v1.1 is cited and the draft is mentioned.
+
+**Cloud module order now matches the plan:** workloads (6) before posture (7), the new DevSecOps module as 8, cloud incident response as 9, capstone as 10. The old `governance-resilience` starter module (one short lesson) was removed; resilience and governance are covered in the capstone, as planned.
+
+**The capture:** `public/content/network-security/kanem-portal-slow.pcap` (27 frames, 9,305 bytes) is produced by `database/content/authoring/pcap-kanem-portal.cjs`, which is deterministic and re-checks every IPv4, TCP and UDP checksum. A new test checks that the published file's hash and frame count match the lab. Served locally with HTTP 200 and `application/vnd.tcpdump.pcap`. **Not yet opened in Wireshark** (not installed on the build machine): a reviewer should confirm the Info text and duplicate-ACK numbering match their Wireshark version.
+
+The old starter lab `packet-and-dns-analysis` was replaced by the capture lab; its DNS-tunnelling task is now covered in Network module 7. An admin test that created a source called `cisa-kev` now uses its own key, because `cisa-kev` is in the register. No content was stopped in this batch. Tests: 45 passing (1,129 assertions).
+
+**Question banks:** Network 79, Cloud 92 (about 120 each are needed before the exams can be published).

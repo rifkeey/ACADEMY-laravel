@@ -63,6 +63,25 @@ class ContentIntegrityTest extends TestCase
     }
 
     #[Test]
+    public function the_downloadable_capture_matches_its_lab(): void
+    {
+        $lab = Lab::where('slug', 'portal-capture-analysis')->firstOrFail();
+        $file = public_path('content/network-security/kanem-portal-slow.pcap');
+        $this->assertFileExists($file);
+        $bytes = file_get_contents($file);
+
+        // The hash and frame count shown to learners describe this exact file.
+        $doc = collect($lab->content['workspace']['documents'])->firstWhere('title', 'Capture file');
+        $this->assertStringContainsString(hash('sha256', $bytes), $doc['body']);
+        $this->assertSame("\xd4\xc3\xb2\xa1", substr($bytes, 0, 4), 'libpcap magic (microseconds, little-endian)');
+        $frames = 0;
+        for ($off = 24; $off < strlen($bytes); $off += 16 + unpack('V', $bytes, $off + 8)[1]) {
+            $frames++;
+        }
+        $this->assertSame(count($lab->content['workspace']['datasets'][0]['rows']), $frames);
+    }
+
+    #[Test]
     public function open_programmes_have_a_published_exam_with_enough_approved_questions(): void
     {
         foreach (Specialization::where('enrolment_open', true)->get() as $spec) {

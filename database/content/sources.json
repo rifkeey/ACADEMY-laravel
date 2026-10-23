@@ -1641,6 +1641,204 @@
       "versionNote": "Live page; ATT&CK is versioned.",
       "supports": "Description and detection notes for dynamically generated domains.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "owasp-api-top10-2023",
+      "title": "OWASP Top 10 API Security Risks – 2023",
+      "publisher": "OWASP",
+      "url": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+      "topic": "API security",
+      "sourceType": "open_resource",
+      "versionNote": "2023 edition.",
+      "supports": "The common API weaknesses and their mitigations.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "owasp-top10-2025",
+      "title": "OWASP Top 10:2025",
+      "publisher": "OWASP",
+      "url": "https://owasp.org/Top10/2025/",
+      "topic": "Web application security",
+      "sourceType": "open_resource",
+      "versionNote": "2025 edition.",
+      "supports": "Common web application risks.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "owasp-asvs",
+      "title": "OWASP Application Security Verification Standard (ASVS)",
+      "publisher": "OWASP",
+      "url": "https://owasp.org/www-project-application-security-verification-standard/",
+      "topic": "Application security requirements",
+      "sourceType": "open_resource",
+      "versionNote": "Project page; check the current version.",
+      "supports": "Testable application security requirements.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "owasp-cicd-top10",
+      "title": "OWASP Top 10 CI/CD Security Risks",
+      "publisher": "OWASP",
+      "url": "https://owasp.org/www-project-top-10-ci-cd-security-risks/",
+      "topic": "Pipeline security",
+      "sourceType": "open_resource",
+      "versionNote": "Project page.",
+      "supports": "Common CI/CD pipeline risks.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "github-actions-secure-use",
+      "title": "Secure use reference (GitHub Actions)",
+      "publisher": "GitHub",
+      "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+      "topic": "Pipeline security",
+      "sourceType": "vendor_documentation",
+      "versionNote": "GitHub Docs, current (example platform).",
+      "supports": "Token permissions, pinning actions, untrusted input and runner guidance.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "github-actions-oidc",
+      "title": "OpenID Connect (GitHub Actions)",
+      "publisher": "GitHub",
+      "url": "https://docs.github.com/en/actions/concepts/security/openid-connect",
+      "topic": "Workload identity federation",
+      "sourceType": "vendor_documentation",
+      "versionNote": "GitHub Docs, current (example platform).",
+      "supports": "Short-lived cloud credentials for pipelines.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cisa-sbom",
+      "title": "Software Bill of Materials (SBOM)",
+      "publisher": "CISA",
+      "url": "https://www.cisa.gov/sbom",
+      "topic": "SBOM",
+      "sourceType": "official_standard",
+      "versionNote": "Live topic page.",
+      "supports": "What SBOMs are and how they are used.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cisa-kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+      "topic": "Vulnerability prioritisation",
+      "sourceType": "official_standard",
+      "versionNote": "Live catalogue.",
+      "supports": "Prioritising vulnerabilities known to be exploited.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-218",
+      "title": "SP 800-218: Secure Software Development Framework (SSDF) Version 1.1",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "topic": "Secure development",
+      "sourceType": "official_standard",
+      "versionNote": "Version 1.1, February 2022. SP 800-218 Rev. 1 (SSDF v1.2) was an initial public draft in December 2025; check for the final.",
+      "supports": "Secure software development practices.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-204d",
+      "title": "SP 800-204D: Strategies for the Integration of Software Supply Chain Security in DevSecOps CI/CD Pipelines",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/204/d/final",
+      "topic": "Supply chain security",
+      "sourceType": "official_standard",
+      "versionNote": "Final, February 2024.",
+      "supports": "Supply-chain controls in cloud-native pipelines.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "slsa-levels",
+      "title": "SLSA security levels (v1.1)",
+      "publisher": "OpenSSF (SLSA)",
+      "url": "https://slsa.dev/spec/v1.1/levels",
+      "topic": "Build integrity",
+      "sourceType": "open_resource",
+      "versionNote": "Specification v1.1.",
+      "supports": "Build levels and provenance.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "sigstore-docs",
+      "title": "Sigstore documentation",
+      "publisher": "Sigstore (OpenSSF)",
+      "url": "https://docs.sigstore.dev/",
+      "topic": "Artefact signing",
+      "sourceType": "open_resource",
+      "versionNote": "Project documentation.",
+      "supports": "Signing and verifying software artefacts.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "wireshark-dfref",
+      "title": "Wireshark Display Filter Reference",
+      "publisher": "Wireshark Foundation",
+      "url": "https://www.wireshark.org/docs/dfref/",
+      "topic": "Packet analysis",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Live reference; fields change between versions.",
+      "supports": "Display filter field names.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "wireshark-filter-man",
+      "title": "wireshark-filter(4): Wireshark display filter syntax",
+      "publisher": "Wireshark Foundation",
+      "url": "https://www.wireshark.org/docs/man-pages/wireshark-filter.html",
+      "topic": "Packet analysis",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Manual page for the current release.",
+      "supports": "Display filter operators and syntax.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "tcpdump-pcap-filter",
+      "title": "pcap-filter(7): packet filter syntax",
+      "publisher": "The Tcpdump Group",
+      "url": "https://www.tcpdump.org/manpages/pcap-filter.7.html",
+      "topic": "Packet capture",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Manual page.",
+      "supports": "Capture (BPF) filter syntax.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-6298",
+      "title": "RFC 6298: Computing TCP's Retransmission Timer",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc6298",
+      "topic": "Protocol standard",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 6298; check for updating RFCs.",
+      "supports": "Retransmission timeout and back-off.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-86",
+      "title": "SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/86/final",
+      "topic": "Digital forensics",
+      "sourceType": "official_standard",
+      "versionNote": "Final, August 2006. Old, but its evidence-handling principles still apply.",
+      "supports": "Collecting and handling data as evidence.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "ietf-pcap-draft",
+      "title": "PCAP Capture File Format (draft-ietf-opsawg-pcap)",
+      "publisher": "IETF",
+      "url": "https://datatracker.ietf.org/doc/draft-ietf-opsawg-pcap/",
+      "topic": "Capture file format",
+      "sourceType": "open_resource",
+      "versionNote": "Internet-Draft, not yet an RFC.",
+      "supports": "The libpcap file format used by the lab capture.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }

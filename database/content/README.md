@@ -24,6 +24,8 @@ The curriculum of the original AMANIQ Academy (Next.js) was exported here unchan
 
 Large modules are written as small Node scripts that update `programme.json` and `sources.json` (run with `node database/content/authoring/<script>.cjs`). Each script owns one module: it replaces that module's lessons, lab and questions (by key prefix), and adds its sources with the date they were checked. Lesson text lives in the Markdown files. Running a script twice gives identical files.
 
+Downloadable lab files are generated the same way. `pcap-kanem-portal.cjs` builds the synthetic capture for Network module 8 and checks its checksums; `network-m8-traffic-analysis.cjs` writes it to `public/content/network-security/` and puts its packet list and SHA-256 in the lab. Commit the regenerated file whenever the generator changes.
+
 ## Teaching features available to content
 
 **Lesson Markdown blocks** (rendered by `App\Support\RichMarkdown`, HTML still escaped):

@@ -289,8 +289,8 @@ class AdminAreaTest extends TestCase
         $this->assertSame(['soc', 'triage'], Article::where('slug', 'triage-basics')->value('tags'));
 
         $this->post(route('admin.sources.store'), ['key' => 'bad-link', 'title' => 'X', 'publisher' => 'Y', 'url' => 'javascript:alert(1)', 'topic' => 'Z', 'source_type' => 'open_resource', 'verification_status' => 'verified'])->assertSessionHasErrors('url');
-        $this->post(route('admin.sources.store'), ['key' => 'cisa-kev', 'title' => 'Known Exploited Vulnerabilities Catalog', 'publisher' => 'CISA', 'url' => 'https://www.cisa.gov/known-exploited-vulnerabilities-catalog', 'topic' => 'Vulnerability management', 'source_type' => 'official_standard', 'verification_status' => 'pending_review'])->assertSessionHas('success');
-        $this->assertTrue(SourceReference::where('key', 'cisa-kev')->exists());
+        $this->post(route('admin.sources.store'), ['key' => 'admin-test-source', 'title' => 'Known Exploited Vulnerabilities Catalog', 'publisher' => 'CISA', 'url' => 'https://www.cisa.gov/known-exploited-vulnerabilities-catalog', 'topic' => 'Vulnerability management', 'source_type' => 'official_standard', 'verification_status' => 'pending_review'])->assertSessionHas('success');
+        $this->assertTrue(SourceReference::where('key', 'admin-test-source')->exists());
 
         $this->put(route('admin.settings.update'), ['contact_email' => 'academy@example.com', 'support_hours' => 'Weekdays', 'verification_name_display' => 'initials'])->assertSessionHas('success');
         $this->get('/contact')->assertSee('academy@example.com');
