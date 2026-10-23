@@ -670,38 +670,300 @@
     },
     {
       "slug": "cloud-networking",
-      "title": "Secure Cloud Networking",
-      "purpose": "Segment cloud networks and control exposure.",
-      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "title": "Cloud Network Security",
+      "purpose": "Cloud networks are software-defined but follow familiar rules. This module covers virtual networks and routing, security groups, network ACLs and cloud firewall rules across the three major providers, private connectivity and egress, hybrid connectivity, and flow logs. You finish by fixing an exposed database network and writing the redesign.\n\n**To complete this module:** finish all five lessons and pass the lab (80%), including the written redesign.",
+      "prerequisiteKnowledge": "Modules 1 and 2; Network Security modules 1, 3 and 4 help.",
       "objectives": [
-        "Design virtual networks and subnets.",
-        "Configure security groups and network ACLs.",
-        "Use private endpoints and secure admin access."
+        "Design virtual networks with private application and database tiers",
+        "Write stateful and stateless filtering rules across providers",
+        "Reach provider services privately and control egress",
+        "Design hybrid connectivity with central inspection",
+        "Use flow logs for detection and investigation"
       ],
       "keyConcepts": [
-        "VPC/VNet",
-        "Security groups",
+        "VPC, VNet and VPC network",
+        "Public and private subnets",
+        "Security groups, NSGs and VPC firewall rules",
+        "Network ACLs and hierarchical policies",
+        "Group-to-group rules",
         "Private endpoints",
-        "Bastions"
+        "Egress control",
+        "Hub-and-spoke",
+        "Flow logs",
+        "Reachability analysis"
       ],
       "assessmentCriteria": [
-        "Demonstrates the ability to design virtual networks and subnets.",
-        "Demonstrates the ability to configure security groups and network ACLs.",
-        "Demonstrates the ability to use private endpoints and secure admin access."
+        "Explains exposure from routes, settings and rules",
+        "Designs tiered rules correctly",
+        "Chooses private connectivity and guardrails",
+        "Writes a complete redesign with validation"
       ],
-      "contentStatus": "starter",
+      "instructorNotes": "Estimated time: 2.5 hours of lessons plus 1 hour of lab. Provider features change often; check the linked documentation before teaching details.",
+      "contentStatus": "complete",
       "lessons": [
         {
-          "slug": "virtual-network-design",
-          "title": "Virtual network design",
-          "minutes": 25,
-          "objectives": [
-            "Design virtual networks and subnets.",
-            "Configure security groups and network ACLs."
-          ],
+          "slug": "virtual-networks-and-routing",
+          "title": "Virtual networks and routing",
+          "minutes": 30,
           "sources": [
-            "nist-sp-800-207",
-            "aws-security-docs"
+            "aws-vpc-how-it-works",
+            "azure-vnet-overview",
+            "gcp-vpc-networks",
+            "mcsb-v2-network"
+          ],
+          "objectives": [
+            "Map virtual network concepts across AWS, Azure and Google Cloud",
+            "Explain what makes a subnet public",
+            "Design a three-tier layout with private application and database tiers"
+          ],
+          "checks": [
+            {
+              "question": "In AWS, what makes a subnet public?",
+              "options": [
+                "Its name",
+                "A route to an internet gateway in its route table",
+                "A NAT gateway",
+                "Encryption"
+              ],
+              "answerIndex": 1,
+              "explanation": "Routes, not labels, decide exposure."
+            },
+            {
+              "question": "Where should the invoice database sit?",
+              "options": [
+                "In a public subnet with a public IP",
+                "In a private subnet with no route to the internet",
+                "In the load balancer subnet",
+                "On the internet gateway"
+              ],
+              "answerIndex": 1,
+              "explanation": "Only the front door is internet-facing."
+            },
+            {
+              "question": "Why does cloud network security depend on identity too?",
+              "options": [
+                "It does not",
+                "Anyone with the right permissions can change routes or add public IPs with an API call",
+                "Identities encrypt packets",
+                "Firewalls need passwords"
+              ],
+              "answerIndex": 1,
+              "explanation": "Protect network changes with IAM and guardrails."
+            }
+          ]
+        },
+        {
+          "slug": "security-groups-and-network-acls",
+          "title": "Security groups, network ACLs and cloud firewall rules",
+          "minutes": 35,
+          "sources": [
+            "aws-security-groups",
+            "aws-network-acls",
+            "azure-nsg",
+            "azure-asg",
+            "gcp-vpc-firewall",
+            "gcp-firewall-policies",
+            "aws-reachability-analyzer",
+            "azure-ip-flow-verify",
+            "gcp-connectivity-tests"
+          ],
+          "objectives": [
+            "Compare stateful and stateless filters across providers",
+            "Write group-to-group rules per tier",
+            "Use a coarse second layer as a guardrail and validate reachability"
+          ],
+          "checks": [
+            {
+              "question": "An AWS network ACL allows inbound TCP 443 but the website still fails. What is the likely cause?",
+              "options": [
+                "TLS is broken",
+                "Network ACLs are stateless, so return traffic to the client's high ports must also be allowed",
+                "Security groups block HTTPS by default",
+                "DNS"
+              ],
+              "answerIndex": 1,
+              "explanation": "Stateless rules need both directions."
+            },
+            {
+              "question": "What should the database security group allow?",
+              "options": [
+                "TCP 5432 from 0.0.0.0/0",
+                "TCP 5432 from the app tier's security group only",
+                "All traffic from the VPC",
+                "SSH from the internet"
+              ],
+              "answerIndex": 1,
+              "explanation": "Reference groups, not the whole internet."
+            },
+            {
+              "question": "Which tools check whether a path is open without sending traffic? Select all that apply.",
+              "options": [
+                "AWS Reachability Analyzer",
+                "Azure Network Watcher IP flow verify",
+                "Google Cloud Connectivity Tests",
+                "A spreadsheet of guesses"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Use them to validate changes."
+            }
+          ]
+        },
+        {
+          "slug": "private-connectivity-and-egress",
+          "title": "Private connectivity and egress control",
+          "minutes": 30,
+          "sources": [
+            "aws-privatelink",
+            "azure-private-endpoint",
+            "gcp-private-service-connect"
+          ],
+          "objectives": [
+            "Reach provider services privately",
+            "Restrict egress to named needs",
+            "Avoid public IPs and administer through identity-based session services"
+          ],
+          "checks": [
+            {
+              "question": "What do private endpoints allow you to do next?",
+              "options": [
+                "Turn off encryption",
+                "Disable public access to the service and limit use through endpoint policies",
+                "Remove IAM",
+                "Open SSH"
+              ],
+              "answerIndex": 1,
+              "explanation": "Remove the public path."
+            },
+            {
+              "question": "How should administrators reach private servers?",
+              "options": [
+                "Public SSH from anywhere",
+                "Identity-based session services such as Session Manager, Azure Bastion or IAP",
+                "A shared password over RDP",
+                "By giving servers public IPs"
+              ],
+              "answerIndex": 1,
+              "explanation": "Identity-based, logged access."
+            },
+            {
+              "question": "After creating a private endpoint, an application still uses the public endpoint. What should you check first?",
+              "options": [
+                "CPU usage",
+                "DNS resolution from inside the network",
+                "Disk size",
+                "The billing account"
+              ],
+              "answerIndex": 1,
+              "explanation": "Private endpoints usually rely on DNS."
+            }
+          ]
+        },
+        {
+          "slug": "hybrid-connectivity",
+          "title": "Hybrid connectivity and hub-and-spoke",
+          "minutes": 30,
+          "sources": [
+            "aws-vpc-connectivity-options",
+            "azure-hub-spoke",
+            "nist-sp-800-207"
+          ],
+          "objectives": [
+            "Compare VPNs and dedicated links",
+            "Design a hub with central inspection",
+            "Apply least privilege and zero trust across the hybrid boundary"
+          ],
+          "checks": [
+            {
+              "question": "Are dedicated private links (Direct Connect, ExpressRoute, Interconnect) encrypted by default at the network layer?",
+              "options": [
+                "Yes, always",
+                "No; decide explicitly whether extra encryption is needed",
+                "Only on weekends",
+                "They cannot be encrypted"
+              ],
+              "answerIndex": 1,
+              "explanation": "Private is not the same as encrypted."
+            },
+            {
+              "question": "Why route spokes through a hub?",
+              "options": [
+                "To slow traffic",
+                "So traffic is inspected and logged centrally",
+                "To avoid IP addressing",
+                "Providers require it"
+              ],
+              "answerIndex": 1,
+              "explanation": "Central policy and visibility."
+            },
+            {
+              "question": "Traffic arrives from on-premises over the private link. Should the cloud trust it?",
+              "options": [
+                "Yes, the link is private",
+                "No; apply the same least-privilege rules and authentication as between any zones",
+                "Only on port 22",
+                "Only if it is encrypted"
+              ],
+              "answerIndex": 1,
+              "explanation": "The link is plumbing, not permission."
+            }
+          ]
+        },
+        {
+          "slug": "flow-logs-and-monitoring",
+          "title": "Flow logs and network monitoring",
+          "minutes": 30,
+          "sources": [
+            "aws-vpc-flow-logs",
+            "azure-vnet-flow-logs",
+            "gcp-vpc-flow-logs"
+          ],
+          "objectives": [
+            "Read a flow log record",
+            "Use flow logs for investigation, detection and validating segmentation",
+            "Know their blind spots and make them useful"
+          ],
+          "checks": [
+            {
+              "question": "A flow log shows ACCEPT from 198.51.100.77 to the database on 5432. What does it prove?",
+              "options": [
+                "Data was stolen",
+                "The network accepted a connection from the internet to the database: an exposure to investigate",
+                "The database is encrypted",
+                "Nothing"
+              ],
+              "answerIndex": 1,
+              "explanation": "It shows the connection, not what happened over it."
+            },
+            {
+              "question": "What do flow logs not show? Select all that apply.",
+              "options": [
+                "Payload content",
+                "Which user or role made the connection",
+                "Some platform traffic, such as provider DNS on AWS",
+                "Source and destination addresses"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Combine with audit and application logs."
+            },
+            {
+              "question": "Which alert is most valuable from flow logs?",
+              "options": [
+                "Every accepted connection",
+                "Accepted inbound connections from the internet to private tiers",
+                "All rejected connections from the internet",
+                "Traffic inside the app tier"
+              ],
+              "answerIndex": 1,
+              "explanation": "Alert on the few patterns that matter."
+            }
           ]
         }
       ]
@@ -10266,6 +10528,459 @@
         },
         "debrief": "## Worked solution (one good answer; others are possible)\n\n**Flaws in v0.3:** one account for all environments; IAM users and shared admins; pipeline with a stored admin key; logs in the workload account for 30 days; public KYC bucket; database open to the internet; one key usable by everyone; backups only in the same account. The managed, encrypted, multi-zone database, TLS 1.2+ and Terraform are good.\n\n**Target design in brief**\n\n| Area | Design |\n| --- | --- |\n| Landing zone | Security OU (log archive, security tooling), infrastructure OU (shared networking), production and non-production Kanem Pay accounts, sandbox, backup account; organisation policies on all |\n| Identity | SSO with phishing-resistant MFA; roles per job; developers read-only in production; just-in-time admin; two break-glass accounts; no IAM users |\n| Pipeline | OIDC to a deploy role limited to the infra repository, main branch and production environment; approvals; IaC scanning (module 8) |\n| Network | Database in private subnets reachable only from the payments API; vendor migration through a private, time-limited path; egress through shared networking |\n| Data | KYC bucket private with block public access; app shows images through short-lived signed URLs after authorisation; partner API checks that each account belongs to the calling partner |\n| Logging | Organisation trail and data-access logs to the log archive with object lock; 1 year searchable, 7 years archived; alerts on log changes |\n| Keys | Customer-managed keys per data class (payments, KYC, logs); key admins cannot decrypt; usage logged |\n| Resilience | Multi-zone; continuous backups copied to the immutable backup account in a second region; quarterly restore tests to meet RTO 4 h / RPO 5 min |\n| Guardrails | Preventive: deny log tampering, public storage, unapproved regions, IAM users. Detective: open database ports, break-glass use. Corrective: re-apply public-access blocks. Pipeline: block insecure plans |\n\n**CSF 2.0 mapping (examples):** Govern: decision records, guardrail ownership, access reviews. Identify: data classification and asset inventory. Protect: SSO and MFA, private networking, encryption, guardrails. Detect: organisation trail, threat detection, SIEM rules. Respond: incident playbooks and responder role (module 9). Recover: immutable cross-region backups and tested restores.\n\n**Top risks before launch:** R1 public KYC bucket and R2 open database (high/high: fix before launch); stored admin key; logs in the workload account. Region loss (low/high) is treated by tested restore, not active-active, and recorded as a decision.\n\n**Validation checklist (examples):** a test public bucket is blocked; the database is unreachable from the internet; no IAM users with keys exist; a partner cannot read another partner's account; stopping the trail is denied; a restore completes within 4 hours.\n\n## What you have practised\n\nEnd-to-end secure cloud design: reviewing a real-looking proposal, applying every module of the programme, and producing the artefacts a cloud security architect delivers. Keep these deliverables: they show employers how you think."
       }
+    },
+    {
+      "slug": "invoice-network-redesign",
+      "title": "Fix the invoice app's exposed network",
+      "difficulty": "intermediate",
+      "labType": "architecture_review",
+      "summary": "Find why the invoice database answers from the internet, read the flow log evidence, design tier-by-tier rules, private connectivity and egress, choose validation steps and write the redesign.",
+      "minutes": 60,
+      "moduleSlug": "cloud-networking",
+      "passPercent": 80,
+      "content": {
+        "objectives": [
+          "Explain an exposure from routes, settings and rules",
+          "Read flow log evidence",
+          "Design group-to-group rules per tier",
+          "Choose private connectivity, egress and guardrails",
+          "Write a redesign with validation"
+        ],
+        "scenario": "Kanem Financial Services' (fictional) security scan reports that the **invoice database answers on TCP 5432 from the internet**. The configuration and yesterday's flow logs for the database subnet are in the workspace.",
+        "scope": "Work from the documents. The configuration uses AWS terms; the same ideas apply on Azure and Google Cloud. All data is synthetic.",
+        "instructions": "1. Read both documents.\n2. Answer tasks 1–7.\n3. Write the redesign in task 8. It is saved to your portfolio.\n\nYou need 80% to pass.",
+        "simulationNotice": "This is a simulation. All data is synthetic.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "Current configuration (extract)",
+              "format": "markdown",
+              "body": "```text\nSubnet subnet-db-a (10.50.30.0/24)    route table: rt-public\n  10.50.0.0/16   local\n  0.0.0.0/0      igw-0a1b2c\n\nDatabase invoice-db   publicly accessible: YES   public IP: 203.0.113.60\n\nSecurity group sg-db (attached to invoice-db)\n  inbound   TCP 5432   0.0.0.0/0          \"temp - migration tool\"\n  inbound   TCP 22     0.0.0.0/0          \"admin\"\n  outbound  all        0.0.0.0/0\n\nSecurity group sg-app (attached to app servers)\n  inbound   TCP 8080   0.0.0.0/0\n  outbound  all        0.0.0.0/0\n\nSecurity group sg-lb (load balancer)\n  inbound   TCP 443    0.0.0.0/0\n\nNetwork ACL (all subnets): default, allow all in and out\nApp servers reach the invoice storage bucket through the NAT gateway (public endpoint).\nVPC flow logs: enabled for subnet-db-a only (enabled yesterday).\n```"
+            },
+            {
+              "title": "Flow log extract: subnet-db-a, last 24 hours",
+              "format": "markdown",
+              "body": "```text\nsrcaddr        dstaddr      srcport dstport protocol packets bytes  action\n198.51.100.77  10.50.30.12  51544   5432    6        5       312    ACCEPT\n198.51.100.77  10.50.30.12  51545   5432    6        41      18220  ACCEPT\n203.0.113.200  10.50.30.12  40112   22      6        3       180    ACCEPT\n10.50.20.15    10.50.30.12  33010   5432    6        120     98400  ACCEPT\n192.0.2.31     10.50.30.12  61002   3389    6        1       44     REJECT\n```\n*(Synthetic.)* 10.50.20.15 is an invoice app server. No address outside 10.50.0.0/16 is expected to reach the database."
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "cause",
+            "points": 2,
+            "prompt": "Which settings together expose the database to the internet? Select all that apply.",
+            "hints": [
+              "Lesson 1 (routes) and lesson 2 (rules)."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "route",
+                  "label": "subnet-db-a's route table has a route to the internet gateway"
+                },
+                {
+                  "id": "public",
+                  "label": "The database is set to publicly accessible, with a public IP"
+                },
+                {
+                  "id": "sg",
+                  "label": "sg-db allows TCP 5432 from 0.0.0.0/0"
+                },
+                {
+                  "id": "nat",
+                  "label": "There is a NAT gateway in the VPC"
+                },
+                {
+                  "id": "lb",
+                  "label": "The load balancer accepts TCP 443 from the internet"
+                },
+                {
+                  "id": "flowlogs",
+                  "label": "Flow logs are enabled on subnet-db-a"
+                }
+              ]
+            }
+          },
+          {
+            "id": "evidence",
+            "points": 1,
+            "prompt": "What does the flow log show, and what should happen next?",
+            "hints": [
+              "Which rows come from outside 10.50.0.0/16, and what was the action?"
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "incident",
+                  "label": "Two internet addresses were accepted on 5432 and 22, one with about 18 KB of traffic; treat it as a possible incident: check the database and SSH logs for logins, rotate credentials and close the exposure now"
+                },
+                {
+                  "id": "fine",
+                  "label": "Nothing to worry about: the database is encrypted"
+                },
+                {
+                  "id": "rejected",
+                  "label": "All internet connections were rejected"
+                },
+                {
+                  "id": "app",
+                  "label": "Only the app server connected"
+                }
+              ]
+            }
+          },
+          {
+            "id": "rules",
+            "points": 2,
+            "prompt": "Choose the allowed source for each inbound rule in the target design.",
+            "hints": [
+              "Reference groups, not addresses; one internet-facing rule."
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "lb443",
+                  "label": "Load balancer: TCP 443"
+                },
+                {
+                  "id": "app8080",
+                  "label": "App servers: TCP 8080"
+                },
+                {
+                  "id": "db5432",
+                  "label": "Database: TCP 5432"
+                },
+                {
+                  "id": "admin",
+                  "label": "Administration of app servers and database"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "src",
+                  "label": "Allowed from",
+                  "options": [
+                    {
+                      "id": "internet",
+                      "label": "0.0.0.0/0 (internet)"
+                    },
+                    {
+                      "id": "sglb",
+                      "label": "sg-lb only"
+                    },
+                    {
+                      "id": "sgapp",
+                      "label": "sg-app only"
+                    },
+                    {
+                      "id": "vpc",
+                      "label": "The whole VPC 10.50.0.0/16"
+                    },
+                    {
+                      "id": "none",
+                      "label": "No inbound rule: identity-based session service instead"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "placement",
+            "points": 1,
+            "prompt": "Where should the database live?",
+            "hints": [
+              "Lesson 1 three-tier layout."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "private",
+                  "label": "Private database subnets in two zones with no route to the internet or NAT, publicly accessible set to No"
+                },
+                {
+                  "id": "public",
+                  "label": "Keep it in subnet-db-a but rely on the security group"
+                },
+                {
+                  "id": "lb",
+                  "label": "Behind the internet-facing load balancer"
+                },
+                {
+                  "id": "nat",
+                  "label": "In a subnet routed through the NAT gateway with a public IP"
+                }
+              ]
+            }
+          },
+          {
+            "id": "guardrail",
+            "points": 1,
+            "prompt": "Which second layer best backs up the security groups?",
+            "hints": [
+              "Coarse, stateless, deny-only for dangerous ports."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "nacl",
+                  "label": "A network ACL on the database and app subnets denying inbound 22, 3389 and 5432 from outside 10.50.0.0/16, plus a posture rule and pipeline check that block 0.0.0.0/0 on those ports"
+                },
+                {
+                  "id": "allowall",
+                  "label": "Keep the default allow-all network ACL"
+                },
+                {
+                  "id": "denyall",
+                  "label": "A network ACL denying all traffic everywhere"
+                },
+                {
+                  "id": "none",
+                  "label": "Nothing; security groups are enough"
+                }
+              ]
+            }
+          },
+          {
+            "id": "private",
+            "points": 1,
+            "prompt": "How should the app servers reach the invoice storage bucket and the internet?",
+            "hints": [
+              "Lesson 3."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "endpoint",
+                  "label": "A VPC endpoint for storage with an endpoint policy limited to the invoice bucket, and the bucket policy requiring that endpoint; other egress only to named destinations through the NAT and an egress firewall"
+                },
+                {
+                  "id": "nat",
+                  "label": "Keep using the public endpoint through NAT with all outbound allowed"
+                },
+                {
+                  "id": "publicip",
+                  "label": "Give app servers public IPs"
+                },
+                {
+                  "id": "none",
+                  "label": "Block all access to storage"
+                }
+              ]
+            }
+          },
+          {
+            "id": "validate",
+            "points": 2,
+            "prompt": "Which steps validate the redesign? Select all that apply.",
+            "hints": [
+              "Lessons 2 and 5."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "reach",
+                  "label": "Run Reachability Analyzer from the internet gateway to the database: expect \"not reachable\""
+                },
+                {
+                  "id": "flow",
+                  "label": "Keep flow logs on all subnets and alert on any accepted connection from outside 10.50.0.0/16 to the app or database tiers"
+                },
+                {
+                  "id": "posture",
+                  "label": "Confirm the posture rule flags a test security group that opens 5432 to 0.0.0.0/0"
+                },
+                {
+                  "id": "scanother",
+                  "label": "Scan other companies' cloud addresses to compare"
+                },
+                {
+                  "id": "disablelogs",
+                  "label": "Turn off flow logs once the fix is in to save cost"
+                }
+              ]
+            }
+          },
+          {
+            "id": "redesign",
+            "points": 2,
+            "prompt": "Write the **redesign** for the invoice team: what was wrong, the immediate actions, the target network (subnets, routes, rules per tier, administration, private connectivity, egress), guardrails, and how you will validate it.",
+            "hints": [
+              "Include the flow log evidence and the incident follow-up."
+            ],
+            "input": {
+              "type": "deliverable",
+              "title": "Invoice app network redesign",
+              "competency": "Securing cloud network architecture",
+              "minWords": 160,
+              "rubric": [
+                "Explains the exposure from routes, the public setting and sg-db",
+                "Treats the accepted internet connections as a possible incident with immediate actions",
+                "Target three-tier design with private subnets and group-to-group rules",
+                "Identity-based administration, private endpoints and controlled egress",
+                "Guardrails and validation steps"
+              ],
+              "template": "What was wrong:\n\nImmediate actions:\n\nTarget design:\n\nGuardrails:\n\nValidation:\n"
+            }
+          }
+        ],
+        "reflection": [
+          "Which single setting, if it had been blocked by a guardrail, would have prevented the exposure?",
+          "Why is \"temporary\" in a rule description a warning sign?",
+          "What can the flow log not tell you about the 18 KB connection?",
+          "How would the design differ on Azure or Google Cloud?"
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "cause": {
+            "type": "multi",
+            "correct": [
+              "route",
+              "public",
+              "sg"
+            ],
+            "feedback": {
+              "correct": "Right: route, public setting and rule together.",
+              "incorrect": "Exposure needs a path (route), an address (public IP) and permission (rule). The NAT gateway, load balancer and flow logs are not causes."
+            }
+          },
+          "evidence": {
+            "type": "choice",
+            "correct": "incident",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Rows 1–3 are accepted connections from outside the VPC."
+            }
+          },
+          "rules": {
+            "type": "grid",
+            "minCorrectRatio": 0.75,
+            "cells": {
+              "lb443": {
+                "src": [
+                  "internet"
+                ]
+              },
+              "app8080": {
+                "src": [
+                  "sglb"
+                ]
+              },
+              "db5432": {
+                "src": [
+                  "sgapp"
+                ]
+              },
+              "admin": {
+                "src": [
+                  "none"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Your rules match.",
+              "incorrect": "Each tier accepts only from the tier in front of it; administration goes through identity."
+            }
+          },
+          "placement": {
+            "type": "choice",
+            "correct": "private",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "The database needs no path to or from the internet."
+            }
+          },
+          "guardrail": {
+            "type": "choice",
+            "correct": "nacl",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "A coarse deny for dangerous ports catches security-group mistakes without breaking everything."
+            }
+          },
+          "private": {
+            "type": "choice",
+            "correct": "endpoint",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Keep service traffic private and egress to named needs."
+            }
+          },
+          "validate": {
+            "type": "multi",
+            "correct": [
+              "reach",
+              "flow",
+              "posture"
+            ],
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Never test systems you don't own; keep the logs that would show a regression."
+            }
+          },
+          "redesign": {
+            "type": "deliverable",
+            "minWords": 160,
+            "mustMention": [
+              {
+                "label": "the public route or setting",
+                "any": [
+                  "internet gateway",
+                  "route",
+                  "publicly accessible",
+                  "public ip"
+                ]
+              },
+              {
+                "label": "the security group rules",
+                "any": [
+                  "sg-db",
+                  "sg-app",
+                  "security group"
+                ]
+              },
+              {
+                "label": "the possible incident",
+                "any": [
+                  "incident",
+                  "rotate",
+                  "credential",
+                  "logins"
+                ]
+              },
+              {
+                "label": "private endpoints or egress",
+                "any": [
+                  "endpoint",
+                  "egress"
+                ]
+              },
+              {
+                "label": "validation",
+                "any": [
+                  "reachability",
+                  "validat",
+                  "test"
+                ]
+              }
+            ],
+            "feedback": {
+              "correct": "Redesign complete. Compare it with the rubric and the debrief.",
+              "incorrect": "Your redesign is not complete yet."
+            }
+          }
+        },
+        "debrief": "## Worked solution\n\n**Why it was exposed:** subnet-db-a routes 0.0.0.0/0 to the internet gateway, the database is publicly accessible with a public IP, and sg-db allows 5432 (and 22) from anywhere. All three were needed; removing any one would have closed the path.\n\n**Evidence:** 198.51.100.77 connected twice on 5432, once moving about 18 KB, and 203.0.113.200 connected on 22. Treat this as a possible incident: check database and host logs for successful logins, rotate the database and host credentials, and preserve the flow logs (module 9).\n\n**Immediate actions (today):** remove the 0.0.0.0/0 rules from sg-db; set publicly accessible to No; then move the database.\n\n**Target design:**\n\n| Tier | Subnets | Route to internet | Inbound |\n| --- | --- | --- | --- |\n| Load balancer | Public, 2 zones | Internet gateway | 443 from 0.0.0.0/0 |\n| App | Private, 2 zones | NAT gateway (named egress only) | 8080 from sg-lb |\n| Database | Private, 2 zones | None | 5432 from sg-app |\n\nAdministration through Session Manager (no SSH rules). A storage gateway endpoint with an endpoint policy for the invoice bucket, and a bucket policy requiring it. Egress through an egress firewall allowing named destinations.\n\n**Guardrails:** network ACL deny for 22, 3389 and 5432 from outside the VPC; a posture rule for 0.0.0.0/0 on administration and database ports; a pipeline policy blocking such rules and publicly accessible databases; an organisation policy limiting public IPs.\n\n**Validation:** Reachability Analyzer from the internet gateway to the database returns not reachable; flow logs on all subnets with an alert for accepted external connections to private tiers; the posture rule fires on a test group.\n\n## What you have practised\n\nReading cloud network configuration and evidence, and redesigning it in layers: the daily work of a cloud security engineer.\n\n**Next:** module 4 covers data protection."
+      }
     }
   ],
   "questions": [
@@ -13526,6 +14241,359 @@
         },
         {
           "text": "\"Logs are big\""
+        }
+      ]
+    },
+    {
+      "key": "cld-net-01",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "foundation",
+      "objective": "Design networks",
+      "prompt": "Which makes an AWS subnet public?",
+      "explanation": "Routes decide exposure.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "A NAT gateway"
+        },
+        {
+          "text": "A route to an internet gateway",
+          "correct": true
+        },
+        {
+          "text": "A security group"
+        },
+        {
+          "text": "Its CIDR range"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-02",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "foundation",
+      "objective": "Design networks",
+      "prompt": "Which tier should normally be the only internet-facing one?",
+      "explanation": "Keep everything else private.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "The database"
+        },
+        {
+          "text": "The load balancer or API gateway",
+          "correct": true
+        },
+        {
+          "text": "The app servers"
+        },
+        {
+          "text": "The log store"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-03",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Compare filters",
+      "prompt": "What is the key difference between a security group and a network ACL in AWS?",
+      "explanation": "Stateless rules need return traffic allowed.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "There is none"
+        },
+        {
+          "text": "Security groups are stateful; network ACLs are stateless and evaluated in order",
+          "correct": true
+        },
+        {
+          "text": "Network ACLs attach to instances"
+        },
+        {
+          "text": "Security groups only deny"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-04",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Write rules",
+      "prompt": "Which source is best for the database's inbound 5432 rule?",
+      "explanation": "Reference groups, not ranges.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "0.0.0.0/0"
+        },
+        {
+          "text": "The whole VPC"
+        },
+        {
+          "text": "The app tier's security group",
+          "correct": true
+        },
+        {
+          "text": "The load balancer's public IP"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-05",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "foundation",
+      "objective": "Know defaults",
+      "prompt": "What do Google Cloud's implied VPC firewall rules do?",
+      "explanation": "Know your platform's defaults.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "Allow all ingress"
+        },
+        {
+          "text": "Allow all egress and deny all ingress",
+          "correct": true
+        },
+        {
+          "text": "Deny all egress"
+        },
+        {
+          "text": "Nothing"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-06",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Group workloads",
+      "prompt": "Which Azure feature lets NSG rules refer to groups of workloads instead of IP addresses?",
+      "explanation": "ASGs group network interfaces.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "Azure Bastion"
+        },
+        {
+          "text": "Application security groups",
+          "correct": true
+        },
+        {
+          "text": "ExpressRoute"
+        },
+        {
+          "text": "Private DNS"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-07",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Validate reachability",
+      "prompt": "Which tool analyses whether an AWS path is open without sending traffic?",
+      "explanation": "Azure IP flow verify and Google Connectivity Tests are equivalents.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "GuardDuty"
+        },
+        {
+          "text": "Reachability Analyzer",
+          "correct": true
+        },
+        {
+          "text": "Macie"
+        },
+        {
+          "text": "CloudTrail"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-08",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Use private connectivity",
+      "prompt": "What is the main security benefit of a private endpoint for storage?",
+      "explanation": "Remove the public path.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "Faster uploads"
+        },
+        {
+          "text": "Service traffic stays private and public access can be disabled or restricted to the endpoint",
+          "correct": true
+        },
+        {
+          "text": "Free storage"
+        },
+        {
+          "text": "No need for IAM"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-09",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "foundation",
+      "objective": "Administer securely",
+      "prompt": "What should replace public SSH access to cloud servers?",
+      "explanation": "Session Manager, Azure Bastion or IAP.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "A longer password"
+        },
+        {
+          "text": "An identity-based session service with logging",
+          "correct": true
+        },
+        {
+          "text": "Telnet"
+        },
+        {
+          "text": "A shared key on a wiki"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-10",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Control egress",
+      "prompt": "Which egress design is best for app servers that call two partner APIs?",
+      "explanation": "Egress to named needs.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "Allow all outbound"
+        },
+        {
+          "text": "Allow only those destinations through an egress firewall or proxy",
+          "correct": true
+        },
+        {
+          "text": "Give each server a public IP"
+        },
+        {
+          "text": "Block DNS"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-11",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Design hybrid networks",
+      "prompt": "Why share only the routes each side needs over a hybrid link?",
+      "explanation": "Least privilege applies to routing.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "It is faster"
+        },
+        {
+          "text": "So a dev network cannot reach production on-premises systems",
+          "correct": true
+        },
+        {
+          "text": "Providers charge per route"
+        },
+        {
+          "text": "It is required by BGP"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-12",
+      "kind": "multiple",
+      "category": "networking",
+      "difficulty": "intermediate",
+      "objective": "Use flow logs",
+      "prompt": "What can flow logs help with? Select all that apply.",
+      "explanation": "Flows have no payload content.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "Investigating which hosts an instance talked to",
+          "correct": true
+        },
+        {
+          "text": "Detecting internet connections to private tiers",
+          "correct": true
+        },
+        {
+          "text": "Validating that closed paths stay closed",
+          "correct": true
+        },
+        {
+          "text": "Reading the SQL queries sent to a database"
+        }
+      ]
+    },
+    {
+      "key": "cld-net-13",
+      "kind": "single",
+      "category": "networking",
+      "difficulty": "foundation",
+      "objective": "Read flow logs",
+      "prompt": "A flow record shows action REJECT. What does it mean?",
+      "explanation": "REJECT means the filters blocked it.",
+      "tags": [
+        "networking"
+      ],
+      "options": [
+        {
+          "text": "Data was stolen"
+        },
+        {
+          "text": "The network's rules did not allow the connection",
+          "correct": true
+        },
+        {
+          "text": "The record is invalid"
+        },
+        {
+          "text": "The connection succeeded"
         }
       ]
     }

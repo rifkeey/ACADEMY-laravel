@@ -2092,6 +2092,237 @@
       "versionNote": "Community resource.",
       "supports": "Recording design decisions, options and reasons.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-vpc-how-it-works",
+      "title": "How Amazon VPC works",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html",
+      "topic": "Cloud networking",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Subnets, route tables, internet and NAT gateways.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-vnet-overview",
+      "title": "What is Azure Virtual Network?",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview",
+      "topic": "Cloud networking",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Azure virtual network concepts.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-vpc-networks",
+      "title": "VPC networks",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/vpc/docs/vpc",
+      "topic": "Cloud networking",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Global VPC networks, subnets and routes.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-security-groups",
+      "title": "Control traffic to your AWS resources using security groups",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html",
+      "topic": "Cloud network filtering",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Stateful security groups.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-network-acls",
+      "title": "Control subnet traffic with network access control lists",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html",
+      "topic": "Cloud network filtering",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Stateless network ACLs.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-nsg",
+      "title": "Azure network security groups overview",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
+      "topic": "Cloud network filtering",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "NSG rules, priorities and defaults.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-asg",
+      "title": "Azure application security groups overview",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/virtual-network/application-security-groups",
+      "topic": "Cloud network filtering",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Grouping workloads in NSG rules.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-vpc-firewall",
+      "title": "VPC firewall rules",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/firewall/docs/firewalls",
+      "topic": "Cloud network filtering",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Firewall rules, targets and implied rules.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-firewall-policies",
+      "title": "Firewall policies and rules",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/firewall/docs/firewall-policies-overview",
+      "topic": "Cloud network filtering",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Hierarchical and network firewall policies.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-reachability-analyzer",
+      "title": "What is Reachability Analyzer?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html",
+      "topic": "Network validation",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Analysing reachability without sending traffic.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-ip-flow-verify",
+      "title": "IP flow verify overview (Azure Network Watcher)",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/network-watcher/ip-flow-verify-overview",
+      "topic": "Network validation",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Checking whether NSG rules allow a flow.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-connectivity-tests",
+      "title": "Connectivity Tests overview",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview",
+      "topic": "Network validation",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Analysing network paths and configuration.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-privatelink",
+      "title": "What is AWS PrivateLink?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html",
+      "topic": "Private connectivity",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Interface endpoints for services.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-private-endpoint",
+      "title": "What is a private endpoint? (Azure Private Link)",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/private-link/private-endpoint-overview",
+      "topic": "Private connectivity",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Private IP addresses for Azure services.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-private-service-connect",
+      "title": "Private Service Connect",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/vpc/docs/private-service-connect",
+      "topic": "Private connectivity",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Private access to Google APIs and services.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-vpc-connectivity-options",
+      "title": "Amazon VPC connectivity options (whitepaper)",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-vpc-connectivity-options/introduction.html",
+      "topic": "Hybrid connectivity",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "VPN, Direct Connect and transit options.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-hub-spoke",
+      "title": "Hub-spoke network topology in Azure",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/architecture/networking/architecture/hub-spoke",
+      "topic": "Hybrid connectivity",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Hub-and-spoke design with central inspection.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-vpc-flow-logs",
+      "title": "Logging IP traffic using VPC Flow Logs",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html",
+      "topic": "Flow logs",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Flow log records, fields and limitations.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-vnet-flow-logs",
+      "title": "Virtual network flow logs (Azure Network Watcher)",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/network-watcher/vnet-flow-logs-overview",
+      "topic": "Flow logs",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Azure flow logging.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-vpc-flow-logs",
+      "title": "VPC Flow Logs",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/vpc/docs/flow-logs",
+      "topic": "Flow logs",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Provider documentation, current; features change often.",
+      "supports": "Sampled flow logs per subnet.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "mcsb-v2-network",
+      "title": "Microsoft cloud security benchmark v2: Network Security",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/security/benchmark/azure/mcsb-v2-network-security",
+      "topic": "Cloud network controls",
+      "sourceType": "official_standard",
+      "versionNote": "Benchmark v2; check for updates.",
+      "supports": "Network security control recommendations across clouds.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }
