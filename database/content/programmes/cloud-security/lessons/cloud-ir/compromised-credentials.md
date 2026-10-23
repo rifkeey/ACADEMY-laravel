@@ -1,34 +1,45 @@
-## Why credentials are the main target
+Most cloud incidents begin with a valid credential in the wrong hands: an access key committed to a repository, a password reused from another breach, a session token copied from a compromised laptop. The attacker then uses ordinary, legitimate API calls. MITRE ATT&CK's cloud matrix lists Valid Accounts: Cloud Accounts (T1078.004) among the most common initial access techniques.
 
-Cloud attackers rarely need to break infrastructure. Stolen credentials, leaked keys in code repositories, phished passwords and tokens taken from compromised laptops give them legitimate API access. MITRE ATT&CK's cloud matrix lists the techniques involved, with Valid Accounts (T1078) prominent among them.
+## Signs that an identity is compromised
 
-## Signs of a compromised identity
+| Signal | Example |
+| --- | --- |
+| New source | Calls from an IP address or network never seen for this identity |
+| New credential type | A developer who normally signs in through single sign-on suddenly uses a long-lived access key |
+| Unusual time or region | Activity at 02:00, or in a region Kanem never uses |
+| "Who am I?" and listing calls | Identity checks and listing users, roles and buckets, typical of someone learning the environment |
+| Bursts of access-denied errors | Someone testing what the identity is allowed to do |
+| Identity and policy changes | New users, keys or roles (next lesson) |
+| Logging changes | Trails stopped or deleted |
 
-- API calls from unfamiliar IP addresses, networks or countries.
-- Activity in regions the organisation never uses.
-- Reconnaissance calls: "who am I", listing users, roles, buckets and permissions.
-- Bursts of access-denied errors as the attacker probes permissions.
-- New access keys, new users or new role trust relationships (persistence).
-- Policy changes that open data to the public or to another account.
-- Logging disabled or modified (defence evasion).
-- Unexpected compute launches, often for cryptocurrency mining.
+Managed detection services (module 5) raise many of these automatically, but you still need to confirm them in the audit log.
 
-## Investigation steps
+## Scoping: what did this identity do?
 
-1. **Scope the identity**: every action it performed in the window of interest, from every source IP.
-2. **Identify persistence**: new keys, users, roles, federated trust or OAuth applications.
-3. **Assess data access**: data-plane logs for reads and downloads, where they are enabled.
-4. **Check for spread**: did the identity assume other roles or create new identities?
-5. **Find the source of the leak**: code repository, CI system, laptop, phishing.
+1. List **every action** by the identity in the window, from **every** source IP, including failures.
+2. Separate the **suspicious source** from the user's normal activity (Kanem's NAT addresses, the SSO session).
+3. Find **new identities or credentials** it created, and scope those too.
+4. Check **data access** logs for reads and downloads (lesson 4).
+5. Find the **source of the leak**: repository, pipeline, laptop or phishing (module 8 explains how keys leak through pipelines).
 
-## Containment
+## Containment for a leaked credential
 
-Contain the identity completely and at once:
+Contain completely and quickly, but preserve evidence first where it costs little:
 
-- disable or delete **all** its access keys, including any created by the attacker;
-- revoke active sessions and tokens;
-- remove attacker-created identities, keys and trust relationships;
-- revert malicious policy changes;
-- re-enable and protect logging.
+| Step | Why |
+| --- | --- |
+| Export or confirm the audit log for the period | Containment changes will add events; you want the clean record |
+| **Deactivate** (don't delete yet) the leaked key and any keys the attacker created | Stops use immediately, keeps the record |
+| **Revoke active sessions** for the identity and any role it assumed | Temporary credentials remain valid until revoked or expired |
+| Attach a **deny-all** policy to attacker-created identities | Stops them while you investigate |
+| **Restore logging** and protect it with an organisation policy | Visibility first |
+| Reset the user's password and MFA if the account itself may be affected | Covers more than the key |
+| Rotate any secrets the identity could read | Assume they were copied |
 
-Then rotate any secrets the identity could read, and continue monitoring closely. The capstone lab for this module walks through a compromised developer identity using a synthetic audit log.
+:::warning Don't tip your hand too early, but don't wait either
+In a small incident, contain at once. In a larger one, the incident lead may scope first so that every attacker foothold is removed at the same moment; removing one key while the attacker holds another just warns them. Make that decision deliberately and quickly.
+:::
+
+:::takeaway
+Treat new sources, new credential types, listing calls, access-denied bursts and logging changes as signs of compromise. Scope everything the identity did and created, then contain completely: deactivate keys, revoke sessions, block attacker-created identities, restore logging and rotate secrets.
+:::

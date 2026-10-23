@@ -107,7 +107,7 @@ Notes for reviewers:
 | 3 Source register | Pilot sources verified (35 cited, all HTTP 200 on 23 Oct 2026); the rest per module as it is written |
 | 4 Reusable components | Done: teaching blocks, multi-select checks with per-option feedback, `iam-policy` and `deliverable` lab tasks, post-pass debrief, reflection questions, Portfolio page |
 | 5 Pilot modules (Network 3, Cloud 2) | Done, see `docs/QA_PILOT_MODULES.md`. Awaiting review before the remaining modules are written in the same pattern |
-| 6 Remaining modules | In progress. Done: Network 1, 3, 4, 6–8; Cloud 1, 2, 4–8. Partly done (see section 6): Network 2, Network 5, Cloud 3. Next: Network 9–10, Cloud 9–10 |
+| 6 Remaining modules | In progress. Done: Network 1, 3, 4, 6–9; Cloud 1, 2, 4–9. Partly done (see section 6): Network 2, Network 5, Cloud 3. Next: Network 10, Cloud 10 (capstones) |
 | 7 Integration testing | Not started |
 | 8 Final review | Not started |
 

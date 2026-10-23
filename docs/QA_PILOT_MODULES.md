@@ -143,3 +143,19 @@ All new URLs returned HTTP 200 with matching titles. SSDF v1.2 (SP 800-218 Rev. 
 The old starter lab `packet-and-dns-analysis` was replaced by the capture lab; its DNS-tunnelling task is now covered in Network module 7. An admin test that created a source called `cisa-kev` now uses its own key, because `cisa-kev` is in the register. No content was stopped in this batch. Tests: 45 passing (1,129 assertions).
 
 **Question banks:** Network 79, Cloud 92 (about 120 each are needed before the exams can be published).
+
+## Batch 7 (23 October 2026): Cloud module 9 and Network module 9
+
+| | Cloud module 9: Cloud Incident Response and Threat Hunting | Network module 9: Network Security Monitoring and Incident Response |
+| --- | --- | --- |
+| Lessons | 5: preparing for cloud incidents; responding to compromised credentials; finding persistence and privilege changes; data exposure and access; evidence, recovery, hunting and lessons learned | 5: evidence sources and flow data; correlation in a SIEM; triage, severity and escalation; containment, evidence and recovery; reporting and lessons learned |
+| In-lesson checks | 15 | 15 |
+| Lab | *Investigate a compromised developer key* (KQL over CloudAudit and DataAccess; 10 tasks, pass 80%) | *Investigate an overnight network incident* (KQL over FlowRecords, FirewallLogs, IdsAlerts and DnsLogs; 10 tasks, pass 80%) |
+| Exam questions | 13 (`cloud-ir`) | 13 (`network-ir`) |
+| Sources | 5 added (ATT&CK T1136.003 and T1685.002, AWS IR guide, Azure IR overview, Google Cloud data incident response) | 6 added (RFC 7011 IPFIX, CISA event logging guidance, FIRST TLP, ATT&CK T1110, T1021.002, T1041) |
+
+All new URLs returned HTTP 200 with matching titles. **ATT&CK change found while checking:** "Disable or Modify Cloud Logs" moved from T1562.008 to **T1685.002**; the old ID redirects. The lessons cite the new ID and mention the old one.
+
+**Labs:** both replace earlier starters. The old `cloud-audit-log-investigation` lab is superseded by the two-table cloud investigation; Network module 9 had no lab before. Lab data is generated deterministically by the authoring scripts. The network incident follows from the unfixed module 3 findings (rules 2 and 4, logging off), so learners see why logging every boundary-crossing allow rule matters. Every example query in the lessons and debriefs was run through the platform's KQL interpreter against the lab tables. The NDPA 72-hour notification window is stated as a pointer for the DPO, not legal advice; have a lawyer confirm it. No content was stopped in this batch. Tests: 45 passing (1,206 assertions).
+
+**Question banks:** Network 92, Cloud 105 (about 120 each are needed before the exams can be published; the capstone modules will add more).

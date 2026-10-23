@@ -1839,6 +1839,127 @@
       "versionNote": "Internet-Draft, not yet an RFC.",
       "supports": "The libpcap file format used by the lab capture.",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1136-003",
+      "title": "ATT&CK T1136.003: Create Account: Cloud Account",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1136/003/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection notes for new cloud accounts.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1685-002",
+      "title": "ATT&CK T1685.002: Disable or Modify Tools: Disable or Modify Cloud Log",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1685/002/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page. Formerly T1562.008; the old ID redirects here.",
+      "supports": "Detection notes for changes to cloud logging.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-ir-guide",
+      "title": "AWS Security Incident Response Guide",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-security-incident-response-guide/welcome.html",
+      "topic": "Cloud incident response",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Whitepaper, current web edition.",
+      "supports": "Preparation, isolation and forensics in AWS (example provider).",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-ir-overview",
+      "title": "Incident response overview for Azure",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/incident-response-overview",
+      "topic": "Cloud incident response",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Incident response in Azure (example provider).",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-data-incident-response",
+      "title": "Data incident response process",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/docs/security/incident-response",
+      "topic": "Cloud incident response",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "How the provider handles incidents on its side of shared responsibility.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-7011",
+      "title": "RFC 7011: Specification of the IP Flow Information Export (IPFIX) Protocol",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc7011",
+      "topic": "Flow data",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 7011; check for updating RFCs.",
+      "supports": "What flow records contain and how they are exported.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cisa-event-logging",
+      "title": "Best Practices for Event Logging and Threat Detection",
+      "publisher": "CISA and partner agencies",
+      "url": "https://www.cisa.gov/resources-tools/resources/best-practices-event-logging-and-threat-detection",
+      "topic": "Log management",
+      "sourceType": "official_standard",
+      "versionNote": "Joint guidance, August 2024.",
+      "supports": "Logging policy, centralisation, retention and time synchronisation.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "first-tlp",
+      "title": "Traffic Light Protocol (TLP)",
+      "publisher": "FIRST",
+      "url": "https://www.first.org/tlp/",
+      "topic": "Information sharing",
+      "sourceType": "open_resource",
+      "versionNote": "TLP 2.0.",
+      "supports": "Labels for how far incident information may be shared.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1110",
+      "title": "ATT&CK T1110: Brute Force",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1110/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection notes for repeated authentication attempts.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1021-002",
+      "title": "ATT&CK T1021.002: Remote Services: SMB/Windows Admin Shares",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1021/002/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection notes for unexpected SMB connections.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1041",
+      "title": "ATT&CK T1041: Exfiltration Over C2 Channel",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1041/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Detection notes for data leaving over an existing session.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }
