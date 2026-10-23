@@ -1454,6 +1454,193 @@
       "versionNote": "Microsoft Learn, current.",
       "supports": "Signal-based access policies (example product).",
       "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-128",
+      "title": "SP 800-128: Guide for Security-Focused Configuration Management of Information Systems",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/128/upd1/final",
+      "topic": "Configuration management",
+      "sourceType": "official_standard",
+      "versionNote": "Update 1 (2019).",
+      "supports": "Baselines, configuration change control and monitoring.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-security-hub",
+      "title": "Introduction to AWS Security Hub",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html",
+      "topic": "Posture management",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Security Hub User Guide, current.",
+      "supports": "CSPM findings mapped to standards.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "aws-config",
+      "title": "What is AWS Config?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html",
+      "topic": "Configuration history and rules",
+      "sourceType": "vendor_documentation",
+      "versionNote": "AWS Config Developer Guide, current.",
+      "supports": "Configuration recording, rules and history.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "azure-policy",
+      "title": "Overview of Azure Policy",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/azure/governance/policy/overview",
+      "topic": "Policy as code",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Microsoft Learn, current.",
+      "supports": "Deny, audit and remediation effects.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "gcp-org-policy",
+      "title": "Organization Policy overview",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/resource-manager/docs/organization-policy/overview",
+      "topic": "Guardrails",
+      "sourceType": "vendor_documentation",
+      "versionNote": "Google Cloud documentation, current.",
+      "supports": "Organisation policy constraints.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "opa-docs",
+      "title": "Open Policy Agent documentation",
+      "publisher": "Open Policy Agent (CNCF)",
+      "url": "https://www.openpolicyagent.org/docs/latest/",
+      "topic": "Policy as code",
+      "sourceType": "open_resource",
+      "versionNote": "Latest documentation.",
+      "supports": "General-purpose policy engine (example).",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-4033",
+      "title": "RFC 4033: DNS Security Introduction and Requirements",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4033",
+      "topic": "DNSSEC",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 4033; check for updating RFCs.",
+      "supports": "What DNSSEC provides and does not provide.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-7858",
+      "title": "RFC 7858: Specification for DNS over Transport Layer Security (TLS)",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc7858",
+      "topic": "Encrypted DNS",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 7858; check for updating RFCs.",
+      "supports": "DNS over TLS.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-8484",
+      "title": "RFC 8484: DNS Queries over HTTPS (DoH)",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc8484",
+      "topic": "Encrypted DNS",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 8484; check for updating RFCs.",
+      "supports": "DNS over HTTPS.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-7208",
+      "title": "RFC 7208: Sender Policy Framework (SPF) for Authorizing Use of Domains in Email, Version 1",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc7208",
+      "topic": "Email authentication",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 7208; check for updating RFCs.",
+      "supports": "SPF records.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-6376",
+      "title": "RFC 6376: DomainKeys Identified Mail (DKIM) Signatures",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc6376",
+      "topic": "Email authentication",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 6376; check for updating RFCs.",
+      "supports": "DKIM signing and verification.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "rfc-9989",
+      "title": "RFC 9989: Domain-Based Message Authentication, Reporting, and Conformance (DMARC)",
+      "publisher": "IETF (RFC Editor)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9989",
+      "topic": "Email authentication",
+      "sourceType": "official_standard",
+      "versionNote": "RFC 9989; obsoletes RFC 7489.",
+      "supports": "DMARC policy and reporting.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-81r3",
+      "title": "SP 800-81 Rev. 3: Secure Domain Name System (DNS) Deployment Guide",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/81/r3/final",
+      "topic": "DNS security",
+      "sourceType": "official_standard",
+      "versionNote": "Revision 3, March 2026; supersedes SP 800-81-2.",
+      "supports": "Secure DNS deployment, DNSSEC and protective DNS.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "nist-sp-800-177r1",
+      "title": "SP 800-177 Rev. 1: Trustworthy Email",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/177/r1/final",
+      "topic": "Email security",
+      "sourceType": "official_standard",
+      "versionNote": "Revision 1, February 2019.",
+      "supports": "SPF, DKIM, DMARC and email transport security.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "cisa-protective-dns",
+      "title": "Protective Domain Name System (DNS) Resolver",
+      "publisher": "CISA",
+      "url": "https://www.cisa.gov/resources-tools/services/protective-domain-name-system-dns-resolver",
+      "topic": "Protective DNS",
+      "sourceType": "official_standard",
+      "versionNote": "Live service page.",
+      "supports": "Protective DNS filtering as a service (US federal example).",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1071-004",
+      "title": "ATT&CK T1071.004: Application Layer Protocol: DNS",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1071/004/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Description and detection notes for DNS used as a communication channel.",
+      "dateChecked": "2026-10-23"
+    },
+    {
+      "key": "attack-t1568",
+      "title": "ATT&CK T1568: Dynamic Resolution",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/techniques/T1568/",
+      "topic": "Threat behaviour",
+      "sourceType": "open_resource",
+      "versionNote": "Live page; ATT&CK is versioned.",
+      "supports": "Description and detection notes for dynamically generated domains.",
+      "dateChecked": "2026-10-23"
     }
   ]
 }

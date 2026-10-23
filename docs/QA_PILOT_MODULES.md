@@ -109,3 +109,17 @@ Network module 5 lessons are drafted but unpublished; its module definition, lab
 | Sources | 6 added (SP 800-190, SP 800-40r4, CIS Kubernetes, Kubernetes security and Pod Security Standards, Lambda security) | 8 added (SP 800-52r2, SP 800-153, WPA3, RFC 4253, RFC 5280, SP 800-63B, CISA phishing-resistant MFA, Entra Conditional Access) |
 
 All new URLs returned HTTP 200 with matching titles (the CISA item is a PDF). Written at a high level. No content was stopped in this batch. Tests: 44 passing (998 assertions). Consistency fix: the Kano branch uses 10.60.0.0/16 so it does not overlap the cloud invoice network.
+
+## Batch 5 (23 October 2026): Cloud module 7 and Network module 7
+
+| | Cloud module 7: Security Posture and Configuration Management | Network module 7: DNS, DHCP and Web Protocol Security |
+| --- | --- | --- |
+| Lessons | 5: misconfiguration and CSPM; baselines and policy as code; infrastructure-as-code security; drift and continuous validation; prioritising remediation | 5: securing DNS; DNS logs as evidence; DHCP security; web traffic, proxies and email authentication; joining evidence and escalating |
+| In-lesson checks | 15 | 15 |
+| Lab | *Prioritise Kanem's posture findings* (6 tasks, pass 80%) | *Triage DNS, DHCP and email evidence at Kanem* (7 tasks, pass 80%) |
+| Exam questions | 13 (`posture`) | 13 (`protocol-security`) |
+| Sources | 6 added (SP 800-128, Security Hub, AWS Config, Azure Policy, Google Cloud organization policy, OPA) | 11 added (RFC 4033, 7858, 8484, 7208, 6376, 9989; SP 800-81 Rev. 3; SP 800-177 Rev. 1; CISA Protective DNS; ATT&CK T1071.004 and T1568) |
+
+All new URLs returned HTTP 200 with matching titles. Two sources were updated while checking: NIST SP 800-81-2 has been withdrawn and replaced by **SP 800-81 Rev. 3** (March 2026), and DMARC's RFC 7489 is obsoleted by **RFC 9989**. The lessons cite the current versions. Network module 7 teaches DNS indicators for detection only; lab domains use the reserved `.example` name. No content was stopped in this batch. Tests: 44 passing (1,064 assertions).
+
+**Question banks:** Network 66, Cloud 79 (about 120 each are needed before the exams can be published).

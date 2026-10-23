@@ -1306,38 +1306,291 @@
     },
     {
       "slug": "posture",
-      "title": "Cloud Security Posture and Configuration",
-      "purpose": "Find and fix misconfiguration at scale.",
-      "prerequisiteKnowledge": "Earlier modules in this programme.",
+      "title": "Cloud Security Posture and Configuration Management",
+      "purpose": "Kanem's first posture report lists 1,240 findings, and the CISO wants to know which matter and how to stop new ones. This module covers misconfiguration and CSPM, baselines and policy as code, infrastructure-as-code security, drift and continuous validation, and risk-based remediation with compliance mapping. You finish by turning a findings report into a roadmap.\n\n**To complete this module:** finish all five lessons and pass the lab (80%), including the written roadmap.",
+      "prerequisiteKnowledge": "Modules 1–6.",
       "objectives": [
-        "Explain misconfiguration risk.",
-        "Use configuration baselines.",
-        "Prioritise remediation."
+        "Explain CSPM and the main misconfiguration categories",
+        "Define baselines and enforce them with preventive, detective and corrective controls",
+        "Secure infrastructure as code and its pipeline",
+        "Detect and correct drift and validate controls",
+        "Prioritise and plan remediation, mapping to frameworks"
       ],
       "keyConcepts": [
         "CSPM",
-        "Baselines",
+        "Configuration baselines",
+        "Preventive, detective and corrective controls",
         "Policy as code",
-        "Prioritisation"
+        "Exceptions",
+        "IaC scanning and secure modules",
+        "Drift detection",
+        "Risk-based prioritisation",
+        "Compliance mapping"
       ],
       "assessmentCriteria": [
-        "Demonstrates the ability to explain misconfiguration risk.",
-        "Demonstrates the ability to use configuration baselines.",
-        "Demonstrates the ability to prioritise remediation."
+        "Prioritises findings defensibly",
+        "Groups remediation by root cause",
+        "Chooses effective preventive controls",
+        "Writes a complete roadmap with measures"
       ],
-      "contentStatus": "starter",
+      "instructorNotes": "Estimated time: 2.25 hours of lessons plus 1 hour of lab.",
+      "contentStatus": "complete",
       "lessons": [
         {
-          "slug": "posture-management",
-          "title": "Posture management",
+          "slug": "misconfiguration-and-cspm",
+          "title": "Misconfiguration and posture management",
           "minutes": 25,
-          "objectives": [
-            "Explain misconfiguration risk.",
-            "Use configuration baselines."
-          ],
           "sources": [
-            "cis-benchmarks",
-            "ms-cloud-benchmark"
+            "aws-security-hub",
+            "azure-defender-for-cloud",
+            "gcp-scc",
+            "cis-benchmarks"
+          ],
+          "objectives": [
+            "Recognise the main categories of cloud misconfiguration",
+            "Explain what CSPM tools do and what a finding contains",
+            "Plan the response to a first, overwhelming report"
+          ],
+          "checks": [
+            {
+              "question": "Which field in a finding most helps get it fixed?",
+              "options": [
+                "The finding ID",
+                "The owner of the resource",
+                "The scan time",
+                "The tool version"
+              ],
+              "answerIndex": 1,
+              "explanation": "Without an owner, findings sit unassigned; tagging supplies owners."
+            },
+            {
+              "question": "What should you do first with a report of 1,240 findings?",
+              "options": [
+                "Fix them in order of the report",
+                "Confirm coverage, then sort by real risk",
+                "Ignore it",
+                "Turn the tool off"
+              ],
+              "answerIndex": 1,
+              "explanation": "Coverage first, then risk-based prioritisation, then prevention."
+            },
+            {
+              "question": "Why must configuration be checked continuously in the cloud?",
+              "options": [
+                "Providers require it",
+                "Resources and settings change constantly through self-service and automation",
+                "Audits happen daily",
+                "It is cheaper"
+              ],
+              "answerIndex": 1,
+              "explanation": "Annual checks miss changes made every day."
+            }
+          ]
+        },
+        {
+          "slug": "baselines-and-policy-as-code",
+          "title": "Baselines, guardrails and policy as code",
+          "minutes": 30,
+          "sources": [
+            "nist-sp-800-128",
+            "azure-policy",
+            "gcp-org-policy",
+            "aws-scps",
+            "opa-docs"
+          ],
+          "objectives": [
+            "Write a configuration baseline from recognised benchmarks",
+            "Choose preventive, detective or corrective controls",
+            "Manage policies as reviewed and tested code with explicit exceptions"
+          ],
+          "checks": [
+            {
+              "question": "Which settings deserve preventive (blocking) controls? Select all that apply.",
+              "options": [
+                "Audit logging must not be disabled",
+                "Restricted data must not be public",
+                "Every resource must have a description field",
+                "Only approved regions may be used"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                3
+              ],
+              "explanation": "Prevent the few settings that must never be wrong; detect the rest."
+            },
+            {
+              "question": "Why should automatic remediation be used carefully?",
+              "options": [
+                "It is slow",
+                "An automatic fix can break a service if applied blindly",
+                "It is not supported",
+                "It disables logging"
+              ],
+              "answerIndex": 1,
+              "explanation": "Automate fixes only where they cannot cause outages."
+            },
+            {
+              "question": "What makes an exception well managed?",
+              "options": [
+                "It covers the whole account forever",
+                "A business reason, approval, narrow scope and an expiry date",
+                "Nobody knows about it",
+                "It is granted verbally"
+              ],
+              "answerIndex": 1,
+              "explanation": "Scoped, time-limited, approved exceptions keep controls credible."
+            }
+          ]
+        },
+        {
+          "slug": "infrastructure-as-code-security",
+          "title": "Infrastructure as code security",
+          "minutes": 25,
+          "sources": [
+            "nist-sp-800-128"
+          ],
+          "objectives": [
+            "Explain how IaC improves security",
+            "Place IaC scanning in the editor, pull request and pipeline",
+            "Apply secure IaC practices and recognise IaC's limits"
+          ],
+          "checks": [
+            {
+              "question": "Where should IaC security scanning run? Select all that apply.",
+              "options": [
+                "In the developer's editor or pre-commit",
+                "In pull requests as a required check",
+                "In the deployment pipeline",
+                "Only once a year"
+              ],
+              "answerIndexes": [
+                0,
+                1,
+                2
+              ],
+              "explanation": "Earlier checks give faster feedback; the pipeline check is the gate."
+            },
+            {
+              "question": "Why must IaC state files be protected?",
+              "options": [
+                "They are large",
+                "They can contain sensitive values",
+                "They are public by design",
+                "They replace backups"
+              ],
+              "answerIndex": 1,
+              "explanation": "Store state encrypted with restricted access."
+            },
+            {
+              "question": "What can IaC scanning NOT see?",
+              "options": [
+                "Settings in the templates",
+                "Resources created by hand in the console",
+                "Module parameters",
+                "Pull request changes"
+              ],
+              "answerIndex": 1,
+              "explanation": "Runtime posture checks cover what the code does not."
+            }
+          ]
+        },
+        {
+          "slug": "drift-and-continuous-validation",
+          "title": "Drift and continuous control validation",
+          "minutes": 25,
+          "sources": [
+            "aws-config",
+            "nist-sp-800-128"
+          ],
+          "objectives": [
+            "Identify sources of configuration drift",
+            "Detect drift with IaC, configuration history, CSPM and audit logs",
+            "Validate that controls actually work"
+          ],
+          "checks": [
+            {
+              "question": "Which signal strongly indicates drift in production?",
+              "options": [
+                "A change made by the deployment pipeline",
+                "A change made by an identity other than the pipeline",
+                "A successful backup",
+                "A new log entry"
+              ],
+              "answerIndex": 1,
+              "explanation": "Production should change through the pipeline; anything else needs review."
+            },
+            {
+              "question": "An emergency fix was made in the console. What should happen next?",
+              "options": [
+                "Nothing",
+                "Decide the source of truth: update the code or revert, and record why",
+                "Delete the resource",
+                "Disable logging"
+              ],
+              "answerIndex": 1,
+              "explanation": "Code and reality must be reconciled, with a record."
+            },
+            {
+              "question": "How do you show a preventive guardrail works?",
+              "options": [
+                "Read the policy",
+                "Test it: attempt the blocked action in a test account and confirm it is denied",
+                "Ask the vendor",
+                "Assume it does"
+              ],
+              "answerIndex": 1,
+              "explanation": "Validation is evidence, not assumption."
+            }
+          ]
+        },
+        {
+          "slug": "prioritising-remediation",
+          "title": "Prioritising remediation and mapping to compliance",
+          "minutes": 30,
+          "sources": [
+            "csa-ccm",
+            "cis-benchmarks"
+          ],
+          "objectives": [
+            "Prioritise findings by risk factors",
+            "Build a remediation plan grouped by root cause",
+            "Map findings to frameworks without confusing compliance with security"
+          ],
+          "checks": [
+            {
+              "question": "Which finding should normally be fixed first?",
+              "options": [
+                "A missing tag on a development VM",
+                "Public access on a production bucket holding restricted data",
+                "An old image in a sandbox",
+                "A low-severity naming issue"
+              ],
+              "answerIndex": 1,
+              "explanation": "Exposure plus sensitive production data is critical."
+            },
+            {
+              "question": "300 findings come from one insecure IaC module. What is the best remediation?",
+              "options": [
+                "Fix each resource by hand",
+                "Fix the module once and redeploy",
+                "Accept all 300",
+                "Delete the module"
+              ],
+              "answerIndex": 1,
+              "explanation": "Group by root cause."
+            },
+            {
+              "question": "Why is a 95% compliance score not enough on its own?",
+              "options": [
+                "Scores are always wrong",
+                "It can hide one critical exposure; critical items must be reported explicitly",
+                "Frameworks are optional",
+                "95% is too low"
+              ],
+              "answerIndex": 1,
+              "explanation": "Compliance sets minimums; risk lives in the exceptions."
+            }
           ]
         }
       ]
@@ -4570,6 +4823,387 @@
         },
         "debrief": "## Worked solution\n\n**Option A** meets the baseline in every area reviewed. **Option B** needs four fixes before production: move the database password from the image to the secrets manager, give pods their own workload identities, apply the Restricted (or at least Baseline) Pod Security Standard to the namespace, and collect audit logs; its base image is also 14 months old. **Option C** needs one major fix: a least-privilege role per function instead of one shared administrator role.\n\n**Vulnerabilities:** fix V1 first (critical, known exploited, internet-facing) by rebuilding from an updated base image, rescanning and redeploying; then V3, then V2; V4 is in a development image only and can follow.\n\n**Recommendation (one defensible answer):** A is ready now; C is attractive once roles are split; B needs the most work before it is safe, but could be revisited with a hardened cluster baseline.\n\n## What you have practised\n\nReviewing workloads against a baseline is routine work for cloud security teams. The same checklist applies whatever the compute model; what changes is who owns each item.\n\n**Next:** module 7 automates these checks with posture management."
       }
+    },
+    {
+      "slug": "posture-findings-prioritisation",
+      "title": "Turn 1,240 findings into a remediation plan",
+      "difficulty": "intermediate",
+      "labType": "risk_assessment",
+      "summary": "Prioritise a sample of posture findings by risk, group them by root cause, choose preventive controls, and write the remediation roadmap for the CISO.",
+      "minutes": 60,
+      "moduleSlug": "posture",
+      "passPercent": 80,
+      "content": {
+        "objectives": [
+          "Prioritise posture findings using exposure, sensitivity, environment, privilege and control weakening",
+          "Group findings by root cause",
+          "Choose preventive and detective controls",
+          "Write a remediation roadmap with measures"
+        ],
+        "scenario": "Kanem Financial Services (fictional) has its first full posture report. You have a representative sample of findings and the summary counts. The CISO wants a roadmap she can take to the board.",
+        "scope": "Use Kanem's classification (module 4) and baseline (lesson 2). All findings are fictional.",
+        "instructions": "1. Read **Sample findings** and **Summary**.\n2. Prioritise the findings in task 1.\n3. Answer tasks 2–5.\n4. Write the roadmap in task 6. It is saved to your portfolio.\n\nYou need 80% to pass.",
+        "simulationNotice": "This is a simulation. No cloud accounts are used.",
+        "workspace": {
+          "kind": "documents",
+          "documents": [
+            {
+              "title": "Sample findings",
+              "format": "markdown",
+              "body": "| ID | Account | Finding | Data | Internet-exposed? |\n| --- | --- | --- | --- | --- |\n| F1 | loans-prod | Storage public access not blocked; bucket readable by anyone | Restricted | Yes |\n| F2 | invoice-prod | Organisation audit trail stopped | n/a (control) | n/a |\n| F3 | invoice-prod | Database encrypted with provider-managed key; baseline requires customer-managed key | Confidential | No |\n| F4 | invoice-dev | Container namespace allows privileged pods | Synthetic | No |\n| F5 | marketing-sandbox | Resource missing `owner` tag | Unknown | No |\n| F6 | loans-prod | Administrator user without MFA | n/a (identity) | n/a |\n| F7 | shared-tools | Old base image with high-severity vulnerability, not deployed | n/a | No |\n| F8 | invoice-prod | VM disk snapshot shared with another account outside Kanem | Confidential | Yes (external share) |"
+            },
+            {
+              "title": "Summary",
+              "format": "markdown",
+              "body": "- 1,240 findings across 4 accounts.\n- **612** come from storage buckets created with an old internal IaC module `kanem-bucket v1` (public access block not set, no encryption setting).\n- 210 are missing tags.\n- Coverage: marketing-sandbox was added to the scan only yesterday."
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "priority",
+            "points": 3,
+            "prompt": "Assign a priority to each finding.",
+            "hints": [
+              "Critical: exposure or control weakening on production with sensitive data or privileged identities.",
+              "Development with synthetic data rarely comes first."
+            ],
+            "input": {
+              "type": "grid",
+              "rows": [
+                {
+                  "id": "f1",
+                  "label": "F1"
+                },
+                {
+                  "id": "f2",
+                  "label": "F2"
+                },
+                {
+                  "id": "f3",
+                  "label": "F3"
+                },
+                {
+                  "id": "f4",
+                  "label": "F4"
+                },
+                {
+                  "id": "f5",
+                  "label": "F5"
+                },
+                {
+                  "id": "f6",
+                  "label": "F6"
+                },
+                {
+                  "id": "f7",
+                  "label": "F7"
+                },
+                {
+                  "id": "f8",
+                  "label": "F8"
+                }
+              ],
+              "columns": [
+                {
+                  "id": "p",
+                  "label": "Priority",
+                  "options": [
+                    {
+                      "id": "critical",
+                      "label": "Critical"
+                    },
+                    {
+                      "id": "high",
+                      "label": "High"
+                    },
+                    {
+                      "id": "medium",
+                      "label": "Medium"
+                    },
+                    {
+                      "id": "low",
+                      "label": "Low"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "id": "rootcause",
+            "points": 1,
+            "prompt": "What is the most efficient fix for the 612 bucket findings?",
+            "hints": [
+              "Lesson 5: group by root cause."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "module",
+                  "label": "Fix the kanem-bucket module (public access blocked, encryption set), redeploy affected buckets, and retire v1"
+                },
+                {
+                  "id": "manual",
+                  "label": "Fix all 612 buckets by hand in the console"
+                },
+                {
+                  "id": "accept",
+                  "label": "Accept them as legacy risk"
+                }
+              ]
+            }
+          },
+          {
+            "id": "prevent",
+            "points": 2,
+            "prompt": "Which controls would stop F1 and F2 recurring? Select all that apply.",
+            "hints": [
+              "Lesson 2: preventive guardrails above accounts."
+            ],
+            "input": {
+              "type": "multi",
+              "options": [
+                {
+                  "id": "pab",
+                  "label": "Organisation policy enforcing storage public-access blocking"
+                },
+                {
+                  "id": "trail",
+                  "label": "Organisation policy preventing audit trails from being stopped"
+                },
+                {
+                  "id": "email",
+                  "label": "An email reminding teams"
+                },
+                {
+                  "id": "iac",
+                  "label": "IaC scanning in pull requests and the pipeline"
+                }
+              ]
+            }
+          },
+          {
+            "id": "drift",
+            "points": 1,
+            "prompt": "F2 was caused by a console change. Which alert would catch this kind of drift immediately?",
+            "hints": [
+              "Lesson 4."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "nonpipeline",
+                  "label": "Alert on production changes made by any identity other than the deployment pipeline, and on logging configuration changes"
+                },
+                {
+                  "id": "cost",
+                  "label": "Alert on cost"
+                },
+                {
+                  "id": "weekly",
+                  "label": "A weekly report"
+                }
+              ]
+            }
+          },
+          {
+            "id": "score",
+            "points": 1,
+            "prompt": "The board asks for \"our compliance score\". What should the report also show?",
+            "hints": [
+              "Lesson 5."
+            ],
+            "input": {
+              "type": "choice",
+              "options": [
+                {
+                  "id": "critical",
+                  "label": "Critical and high findings explicitly, time to remediate and recurrence, not just a percentage"
+                },
+                {
+                  "id": "nothing",
+                  "label": "Nothing else"
+                },
+                {
+                  "id": "all",
+                  "label": "All 1,240 findings in full"
+                }
+              ]
+            }
+          },
+          {
+            "id": "roadmap",
+            "points": 2,
+            "prompt": "Write the **remediation roadmap** for the CISO: now / next / prevent / accept, owners, and the measures you will report.",
+            "hints": [
+              "Lead with the critical items and who owns them."
+            ],
+            "input": {
+              "type": "deliverable",
+              "title": "Posture remediation roadmap",
+              "competency": "Prioritising cloud posture findings and planning remediation and prevention",
+              "minWords": 140,
+              "rubric": [
+                "Lists critical items first with owners and timescales (F1, F2, F6, F8)",
+                "Groups fixes by root cause (the bucket module)",
+                "Adds preventive guardrails and IaC checks so findings do not recur",
+                "States accepted risks with owners and review dates",
+                "Defines measures: critical/high counts, time to remediate, recurrence, coverage"
+              ],
+              "template": "Now (this week):\n\nNext (this quarter):\n\nPrevent recurrence:\n\nAccepted risks:\n\nMeasures for the board:\n"
+            }
+          }
+        ],
+        "reflection": [
+          "Which single change would remove the most findings?",
+          "Which critical finding would you tell the CISO about by phone, today?",
+          "How would you stop new accounts from arriving with no tags?",
+          "What does a \"good\" posture report look like to a board member?"
+        ]
+      },
+      "validator": {
+        "tasks": {
+          "priority": {
+            "type": "grid",
+            "minCorrectRatio": 0.75,
+            "cells": {
+              "f1": {
+                "p": [
+                  "critical"
+                ]
+              },
+              "f2": {
+                "p": [
+                  "critical"
+                ]
+              },
+              "f3": {
+                "p": [
+                  "medium",
+                  "high"
+                ]
+              },
+              "f4": {
+                "p": [
+                  "low",
+                  "medium"
+                ]
+              },
+              "f5": {
+                "p": [
+                  "low",
+                  "medium"
+                ]
+              },
+              "f6": {
+                "p": [
+                  "critical",
+                  "high"
+                ]
+              },
+              "f7": {
+                "p": [
+                  "low",
+                  "medium"
+                ]
+              },
+              "f8": {
+                "p": [
+                  "critical",
+                  "high"
+                ]
+              }
+            },
+            "feedback": {
+              "correct": "Your priorities are defensible.",
+              "incorrect": "Use the factors: exposure, sensitive production data, privileged identity and weakened controls come first."
+            }
+          },
+          "rootcause": {
+            "type": "choice",
+            "correct": "module",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "One root cause, one fix."
+            }
+          },
+          "prevent": {
+            "type": "multi",
+            "correct": [
+              "pab",
+              "trail",
+              "iac"
+            ],
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Reminders do not prevent anything."
+            }
+          },
+          "drift": {
+            "type": "choice",
+            "correct": "nonpipeline",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "Look for changes outside the pipeline as they happen."
+            }
+          },
+          "score": {
+            "type": "choice",
+            "correct": "critical",
+            "feedback": {
+              "correct": "Right.",
+              "incorrect": "A percentage can hide a critical exposure."
+            }
+          },
+          "roadmap": {
+            "type": "deliverable",
+            "minWords": 140,
+            "mustMention": [
+              {
+                "label": "F1 or the public bucket",
+                "any": [
+                  "f1",
+                  "public"
+                ]
+              },
+              {
+                "label": "the bucket module",
+                "any": [
+                  "module",
+                  "kanem-bucket"
+                ]
+              },
+              {
+                "label": "preventive guardrails",
+                "any": [
+                  "guardrail",
+                  "organisation policy",
+                  "organization policy",
+                  "scp",
+                  "prevent"
+                ]
+              },
+              {
+                "label": "measures",
+                "any": [
+                  "measure",
+                  "metric",
+                  "time to remediate",
+                  "recurrence"
+                ]
+              }
+            ],
+            "feedback": {
+              "correct": "Roadmap complete. Compare it with the rubric and the debrief.",
+              "incorrect": "Your roadmap is not complete yet."
+            }
+          }
+        },
+        "debrief": "## Worked solution\n\n**Critical:** F1 (restricted data publicly readable), F2 (audit trail stopped in production), F6 (administrator without MFA) and F8 (confidential snapshot shared outside Kanem). **Medium/high:** F3 (baseline gap without exposure). **Low/medium:** F4, F5, F7 (development, tagging, undeployed image).\n\n**Root cause:** fix the `kanem-bucket` module, redeploy the affected buckets and retire v1: one task removes about 612 findings.\n\n**Prevention:** organisation policies enforcing storage public-access blocking and preventing audit trails from being stopped; IaC scanning in pull requests and the pipeline; alerts on production changes by identities other than the pipeline.\n\n**Reporting:** critical and high counts over time, time to remediate by severity, recurrence and coverage, with critical items named, alongside any compliance percentage.\n\n## What you have practised\n\nTurning raw posture output into a risk-based, root-cause-grouped plan with prevention and measures is a core cloud security responsibility, and exactly what boards and regulators expect to see.\n\n**Next:** module 8 secures the pipelines that build all of this."
+      }
     }
   ],
   "questions": [
@@ -6364,6 +6998,359 @@
         },
         {
           "text": "Network routes"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-01",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "foundation",
+      "objective": "Explain CSPM",
+      "prompt": "What does a cloud security posture management (CSPM) tool do?",
+      "explanation": "CSPM finds configuration that deviates from rules and benchmarks.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "Encrypts data"
+        },
+        {
+          "text": "Inventories resources and compares their configuration with security rules",
+          "correct": true
+        },
+        {
+          "text": "Replaces firewalls"
+        },
+        {
+          "text": "Writes application code"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-02",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "foundation",
+      "objective": "Define baselines",
+      "prompt": "What is a configuration baseline?",
+      "explanation": "Baselines define what secure looks like.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "A backup"
+        },
+        {
+          "text": "A documented set of required settings for a type of resource",
+          "correct": true
+        },
+        {
+          "text": "A firewall"
+        },
+        {
+          "text": "A cost report"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-03",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Choose control types",
+      "prompt": "Which is a preventive control?",
+      "explanation": "Preventive controls stop non-compliant changes.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "A weekly findings report"
+        },
+        {
+          "text": "An organisation policy that denies creating public storage",
+          "correct": true
+        },
+        {
+          "text": "An audit log"
+        },
+        {
+          "text": "A dashboard"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-04",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Use policy as code",
+      "prompt": "Which is a benefit of policy as code?",
+      "explanation": "Treating policy as software brings review, history and testing.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "No review needed"
+        },
+        {
+          "text": "Policies are version-controlled, reviewed and testable",
+          "correct": true
+        },
+        {
+          "text": "It removes exceptions"
+        },
+        {
+          "text": "It replaces logging"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-05",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Manage exceptions",
+      "prompt": "Which exception is well managed?",
+      "explanation": "Scoped, time-limited, approved and recorded.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "Whole account exempt indefinitely"
+        },
+        {
+          "text": "One named bucket exempt for 90 days with an approved business reason",
+          "correct": true
+        },
+        {
+          "text": "Verbal approval"
+        },
+        {
+          "text": "An exception nobody recorded"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-06",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "foundation",
+      "objective": "Secure IaC",
+      "prompt": "Where is the earliest place IaC security problems can be caught?",
+      "explanation": "Earlier feedback is cheaper and faster.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "In production"
+        },
+        {
+          "text": "In the developer's editor or pre-commit checks",
+          "correct": true
+        },
+        {
+          "text": "In the annual audit"
+        },
+        {
+          "text": "After an incident"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-07",
+      "kind": "multiple",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Secure IaC",
+      "prompt": "Which are secure IaC practices? Select all that apply.",
+      "explanation": "Keep secrets out of templates and state.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "Reusable modules with secure defaults",
+          "correct": true
+        },
+        {
+          "text": "Encrypted, access-controlled state files",
+          "correct": true
+        },
+        {
+          "text": "Secrets written into templates"
+        },
+        {
+          "text": "Pipeline-only changes to production",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-08",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Detect drift",
+      "prompt": "What is configuration drift?",
+      "explanation": "Drift accumulates through manual and untracked changes.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "A new region"
+        },
+        {
+          "text": "A difference between the intended configuration and what is actually deployed",
+          "correct": true
+        },
+        {
+          "text": "A cost overrun"
+        },
+        {
+          "text": "A log format"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-09",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Detect drift",
+      "prompt": "Which alert catches console changes in production quickly?",
+      "explanation": "Production should change only through the pipeline.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "Monthly cost alerts"
+        },
+        {
+          "text": "Changes made by identities other than the deployment pipeline",
+          "correct": true
+        },
+        {
+          "text": "Backup success alerts"
+        },
+        {
+          "text": "CPU alerts"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-10",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Validate controls",
+      "prompt": "How do you prove a guardrail works?",
+      "explanation": "Validation produces evidence.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "Read the documentation"
+        },
+        {
+          "text": "Test it in a test account and confirm the blocked action is denied",
+          "correct": true
+        },
+        {
+          "text": "Ask a colleague"
+        },
+        {
+          "text": "Assume it works"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-11",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Prioritise findings",
+      "prompt": "Which factor most raises a finding's priority?",
+      "explanation": "Exposure of sensitive production data comes first.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "The finding is old"
+        },
+        {
+          "text": "Restricted production data is exposed to the internet",
+          "correct": true
+        },
+        {
+          "text": "The resource name is long"
+        },
+        {
+          "text": "The account is new"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-12",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "intermediate",
+      "objective": "Plan remediation",
+      "prompt": "Why group findings by root cause?",
+      "explanation": "Fix causes, not symptoms.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "To hide them"
+        },
+        {
+          "text": "One fix to a shared cause (such as an IaC module) can resolve many findings",
+          "correct": true
+        },
+        {
+          "text": "Tools require it"
+        },
+        {
+          "text": "It increases the count"
+        }
+      ]
+    },
+    {
+      "key": "cld-pos-13",
+      "kind": "single",
+      "category": "posture",
+      "difficulty": "foundation",
+      "objective": "Report posture",
+      "prompt": "Which measure shows that prevention is missing?",
+      "explanation": "Recurring findings mean the cause was not prevented.",
+      "tags": [
+        "posture"
+      ],
+      "options": [
+        {
+          "text": "Total number of resources"
+        },
+        {
+          "text": "Recurrence: findings that return after being fixed",
+          "correct": true
+        },
+        {
+          "text": "Number of tools"
+        },
+        {
+          "text": "Report length"
         }
       ]
     }
