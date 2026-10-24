@@ -1,0 +1,185 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 3c: GRC modules 7–9 (audit readiness, third-party risk and privacy, capstone). Drafts for review. The NDPA content is a faithful translation of the Nigerian-law lesson; whether to add Ivorian data protection law is an owner and counsel decision.",
+    "modules": {
+        "audit-readiness": {
+            "title": "Préparation aux audits et gestion des preuves",
+            "purpose": "Se préparer aux audits en recueillant et en validant les preuves et en gérant les constats.",
+            "prerequisite_knowledge": "Modules 1 à 6.",
+            "objectives.0": "Planifier un audit.",
+            "objectives.1": "Recueillir et valider les preuves.",
+            "objectives.2": "Suivre les constats et les actions correctives.",
+            "key_concepts.0": "Planification de l’audit",
+            "key_concepts.1": "Qualité des preuves",
+            "key_concepts.2": "Tests des mesures de sécurité",
+            "key_concepts.3": "Actions correctives",
+            "assessment_criteria.0": "Démontre sa capacité à planifier un audit.",
+            "assessment_criteria.1": "Démontre sa capacité à recueillir et valider les preuves.",
+            "assessment_criteria.2": "Démontre sa capacité à suivre les constats et les actions correctives."
+        },
+        "third-party-privacy": {
+            "title": "Risques liés aux tiers, protection des données et suivi de la conformité",
+            "purpose": "Évaluer les fournisseurs et respecter les obligations de protection des données et de conformité.",
+            "prerequisite_knowledge": "Modules 1 à 7.",
+            "objectives.0": "Apprécier les risques liés aux fournisseurs et mener la diligence raisonnable.",
+            "objectives.1": "Préciser les exigences contractuelles de sécurité.",
+            "objectives.2": "Expliquer les responsabilités en matière de protection des données, y compris en droit nigérian.",
+            "key_concepts.0": "Classement des fournisseurs",
+            "key_concepts.1": "Diligence raisonnable",
+            "key_concepts.2": "Clauses contractuelles",
+            "key_concepts.3": "NDPA 2023",
+            "key_concepts.4": "Suivi",
+            "assessment_criteria.0": "Démontre sa capacité à apprécier les risques liés aux fournisseurs et à mener la diligence raisonnable.",
+            "assessment_criteria.1": "Démontre sa capacité à préciser les exigences contractuelles de sécurité.",
+            "assessment_criteria.2": "Démontre sa capacité à expliquer les responsabilités en matière de protection des données, y compris en droit nigérian."
+        },
+        "grc-capstone": {
+            "title": "Projet final GRC et reporting",
+            "purpose": "Évaluer une organisation fictive et rendre compte des risques à la direction.",
+            "prerequisite_knowledge": "Tous les modules précédents.",
+            "objectives.0": "Construire un registre des risques.",
+            "objectives.1": "Mettre en correspondance les mesures et planifier la remédiation.",
+            "objectives.2": "Rédiger un rapport sur les risques pour la direction.",
+            "key_concepts.0": "Registre des risques",
+            "key_concepts.1": "Plan de remédiation",
+            "key_concepts.2": "Rapports à la direction",
+            "assessment_criteria.0": "Démontre sa capacité à construire un registre des risques.",
+            "assessment_criteria.1": "Démontre sa capacité à mettre en correspondance les mesures et à planifier la remédiation.",
+            "assessment_criteria.2": "Démontre sa capacité à rédiger un rapport sur les risques pour la direction."
+        }
+    },
+    "lessons": {
+        "evidence-quality": {
+            "title": "Ce qui fait une bonne preuve d’audit",
+            "objectives.0": "Planifier un audit : objectif, périmètre, critères et approche",
+            "objectives.1": "Juger la pertinence, la fiabilité, le caractère suffisant et l’actualité des preuves",
+            "body_md": {
+                "file": "lessons/evidence-quality.md"
+            },
+            "knowledge_checks.0.question": "Quelle est la preuve la plus solide que des revues trimestrielles des accès ont eu lieu pendant l’année auditée ?",
+            "knowledge_checks.0.options.0": "Le responsable informatique affirme qu’elles ont toujours lieu",
+            "knowledge_checks.0.options.1": "Une capture d’écran non datée d’une liste d’utilisateurs",
+            "knowledge_checks.0.options.2": "Des comptes rendus de revue générés par le système et datés pour chaque trimestre",
+            "knowledge_checks.0.options.3": "La politique de contrôle d’accès",
+            "knowledge_checks.0.explanation": "Des enregistrements fiables et datés, couvrant toute la période, sont pertinents et suffisants."
+        },
+        "control-testing-and-sampling": {
+            "title": "Tester les mesures de sécurité et échantillonner",
+            "objectives.0": "Choisir les techniques de test et distinguer l’efficacité de la conception de celle du fonctionnement",
+            "objectives.1": "Échantillonner à partir d’une population complète et évaluer les exceptions",
+            "body_md": {
+                "file": "lessons/control-testing-and-sampling.md"
+            },
+            "knowledge_checks.0.question": "Quelle technique de test apporte, à elle seule, la preuve la plus faible ?",
+            "knowledge_checks.0.options.0": "L’entretien",
+            "knowledge_checks.0.options.1": "L’inspection",
+            "knowledge_checks.0.options.2": "La réexécution",
+            "knowledge_checks.0.options.3": "L’observation combinée à l’inspection",
+            "knowledge_checks.0.explanation": "L’entretien doit être corroboré par d’autres preuves.",
+            "knowledge_checks.1.question": "Pourquoi la population des nouveaux arrivants doit-elle provenir du système RH plutôt que de la file de tickets de l’informatique ?",
+            "knowledge_checks.1.options.0": "Les données RH sont toujours plus exactes",
+            "knowledge_checks.1.options.1": "Les arrivants qui n’ont jamais eu de ticket seraient sinon invisibles pour le test",
+            "knowledge_checks.1.options.2": "Les auditeurs ne peuvent pas accéder aux outils de tickets",
+            "knowledge_checks.1.options.3": "L’export est plus rapide",
+            "knowledge_checks.1.explanation": "La complétude de la population compte : la source ne doit pas dépendre de la mesure testée."
+        },
+        "findings-and-corrective-actions": {
+            "title": "Constats, causes premières et actions correctives",
+            "objectives.0": "Rédiger des constats : situation constatée, critère, cause, effet et recommandation",
+            "objectives.1": "Suivre les actions correctives jusqu’à une clôture vérifiée",
+            "body_md": {
+                "file": "lessons/findings-and-corrective-actions.md"
+            },
+            "knowledge_checks.0.question": "Que faut-il avant de clôturer une action corrective ?",
+            "knowledge_checks.0.options.0": "La déclaration du responsable selon laquelle c’est fait",
+            "knowledge_checks.0.options.1": "La preuve que l’action a été menée et qu’elle est efficace",
+            "knowledge_checks.0.options.2": "L’accord de l’équipe auditée",
+            "knowledge_checks.0.options.3": "Douze mois sans récidive",
+            "knowledge_checks.0.explanation": "La clôture exige une vérification, généralement par un nouveau test."
+        },
+        "supplier-risk": {
+            "title": "Risques liés aux fournisseurs et protection des données",
+            "objectives.0": "Décrire le cycle de vie des risques fournisseurs, de l’inventaire à la sortie",
+            "objectives.1": "Expliquer pourquoi le domaine d’application d’une certification doit être vérifié",
+            "body_md": {
+                "file": "lessons/supplier-risk.md"
+            },
+            "knowledge_checks.0.question": "Le certificat ISO/IEC 27001 d’un fournisseur ne couvre que son siège. Vos données sont hébergées dans son centre de données. Que devez-vous en conclure ?",
+            "knowledge_checks.0.options.0": "L’hébergement est certifié",
+            "knowledge_checks.0.options.1": "Le certificat n’apporte aucune assurance sur le service d’hébergement",
+            "knowledge_checks.0.options.2": "Les certificats couvrent toujours tous les sites",
+            "knowledge_checks.0.options.3": "Vous ne devez pas poser d’autres questions",
+            "knowledge_checks.0.explanation": "Vérifiez toujours que le domaine d’application du certificat inclut le service et les sites que vous utilisez."
+        },
+        "due-diligence-and-contracts": {
+            "title": "Diligence raisonnable, rapports d’assurance et contrats",
+            "objectives.0": "Classer les fournisseurs par niveau et choisir une diligence raisonnable proportionnée",
+            "objectives.1": "Préciser les clauses contractuelles de notification, d’audit, de sous-traitance ultérieure et de sortie",
+            "body_md": {
+                "file": "lessons/due-diligence-and-contracts.md"
+            },
+            "knowledge_checks.0.question": "Votre loi exige une notification au régulateur sous 72 heures. Le contrat d’un fournisseur lui accorde 30 jours pour vous informer des violations. Quel est le problème ?",
+            "knowledge_checks.0.options.0": "Aucun ; les fournisseurs fixent leurs propres délais",
+            "knowledge_checks.0.options.1": "Vous risquez de ne pas pouvoir respecter votre propre délai légal",
+            "knowledge_checks.0.options.2": "30 jours, c’est trop court pour le fournisseur",
+            "knowledge_checks.0.options.3": "La notification des violations n’a sa place que dans les politiques",
+            "knowledge_checks.0.explanation": "Les délais de notification du fournisseur doivent permettre de respecter vos propres obligations."
+        },
+        "ndpa-and-compliance-monitoring": {
+            "title": "Le NDPA 2023 et le suivi de la conformité",
+            "objectives.0": "Expliquer les responsabilités du responsable du traitement, du sous-traitant et du DPO selon le NDPA 2023",
+            "objectives.1": "Concevoir un programme de suivi de la conformité avec des indicateurs et un calendrier",
+            "body_md": {
+                "file": "lessons/ndpa-and-compliance-monitoring.md"
+            },
+            "knowledge_checks.0.question": "Une société de microfinance fait appel à un hébergeur pour stocker les dossiers de ses clients. Au regard du droit de la protection des données, l’hébergeur est généralement le :",
+            "knowledge_checks.0.options.0": "Responsable du traitement",
+            "knowledge_checks.0.options.1": "Sous-traitant",
+            "knowledge_checks.0.options.2": "Personne concernée",
+            "knowledge_checks.0.options.3": "Régulateur",
+            "knowledge_checks.0.explanation": "Il traite les données pour le compte du responsable du traitement et sur ses instructions."
+        },
+        "executive-risk-reporting": {
+            "title": "Rendre compte des risques à la direction",
+            "objectives.0": "Structurer un rapport sur les risques pour la direction autour des décisions",
+            "objectives.1": "Exprimer le risque en termes métier, avec une incertitude assumée",
+            "body_md": {
+                "file": "lessons/executive-risk-reporting.md"
+            },
+            "knowledge_checks.0.question": "Que doit contenir la première phrase d’un rapport sur les risques destiné à la direction ?",
+            "knowledge_checks.0.options.0": "La méthode d’appréciation",
+            "knowledge_checks.0.options.1": "La conclusion et la décision qu’elle implique",
+            "knowledge_checks.0.options.2": "Une liste d’identifiants de mesures",
+            "knowledge_checks.0.options.3": "Des remerciements aux contributeurs",
+            "knowledge_checks.0.explanation": "Commencez par la conclusion ; les dirigeants décident de l’affectation de l’argent et de l’attention."
+        },
+        "capstone-assessment-method": {
+            "title": "Conduire une appréciation des risques de bout en bout",
+            "objectives.0": "Planifier et réaliser une évaluation, de la lettre de mission aux constats",
+            "objectives.1": "Construire un plan de remédiation hiérarchisé, relié aux risques",
+            "body_md": {
+                "file": "lessons/capstone-assessment-method.md"
+            },
+            "knowledge_checks.0.question": "Pourquoi les critères de risque et l’appétence doivent-ils être convenus au début d’une évaluation ?",
+            "knowledge_checks.0.options.0": "Pour que les cotations puissent être contestées et défendues de façon cohérente",
+            "knowledge_checks.0.options.1": "Parce que les régulateurs l’exigent dès le premier jour",
+            "knowledge_checks.0.options.2": "Pour raccourcir le rapport",
+            "knowledge_checks.0.options.3": "Pour que tous les risques soient cotés faibles",
+            "knowledge_checks.0.explanation": "Sans critères convenus, les cotations sont des opinions impossibles à comparer ou à défendre."
+        },
+        "measuring-and-sustaining-grc": {
+            "title": "Mesurer et pérenniser un programme GRC",
+            "objectives.0": "Faire vivre un calendrier de fonctionnement de la GRC",
+            "objectives.1": "Mesurer dans le temps la position de risque, la santé des mesures et la discipline de gouvernance",
+            "body_md": {
+                "file": "lessons/measuring-and-sustaining-grc.md"
+            },
+            "knowledge_checks.0.question": "Quelle mesure montre le mieux qu’un programme GRC fonctionne dans la durée ?",
+            "knowledge_checks.0.options.0": "Le nombre de politiques publiées",
+            "knowledge_checks.0.options.1": "Une baisse régulière des risques au-dessus de l’appétence",
+            "knowledge_checks.0.options.2": "La taille du registre des risques",
+            "knowledge_checks.0.options.3": "Le nombre de réunions tenues",
+            "knowledge_checks.0.explanation": "Les tendances de la position de risque montrent une amélioration réelle."
+        }
+    }
+}

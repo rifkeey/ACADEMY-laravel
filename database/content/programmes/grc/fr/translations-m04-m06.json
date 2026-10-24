@@ -1,0 +1,186 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 3b: GRC modules 4–6 (ISO/IEC 27001, CIS Controls, policy governance). Drafts for review. ISO vocabulary follows the usual French terms (SMSI, déclaration d’applicabilité, non-conformité, action corrective). CIS Control names are translated descriptively; Implementation Group codes (IG1–IG3) are unchanged.",
+    "modules": {
+        "iso-27001": {
+            "title": "ISO/IEC 27001 et management de la sécurité de l’information",
+            "purpose": "Expliquer avec exactitude les notions de SMSI et de certification, sans reproduire la norme.",
+            "prerequisite_knowledge": "Modules 1 et 2.",
+            "objectives.0": "Expliquer le domaine d’application d’un SMSI et l’approche par les risques.",
+            "objectives.1": "Décrire le rôle de la déclaration d’applicabilité.",
+            "objectives.2": "Expliquer avec exactitude la certification et l’accréditation.",
+            "key_concepts.0": "SMSI",
+            "key_concepts.1": "Domaine d’application",
+            "key_concepts.2": "Déclaration d’applicabilité",
+            "key_concepts.3": "Audit interne",
+            "key_concepts.4": "Certification et accréditation",
+            "assessment_criteria.0": "Démontre sa capacité à expliquer le domaine d’application d’un SMSI et l’approche par les risques.",
+            "assessment_criteria.1": "Démontre sa capacité à décrire le rôle de la déclaration d’applicabilité.",
+            "assessment_criteria.2": "Démontre sa capacité à expliquer avec exactitude la certification et l’accréditation."
+        },
+        "cis-controls": {
+            "title": "Les CIS Controls et la mise en correspondance des mesures",
+            "purpose": "Mettre en œuvre, attribuer et mettre en correspondance des mesures de sécurité entre référentiels, sans fausse équivalence.",
+            "prerequisite_knowledge": "Modules 1 à 3.",
+            "objectives.0": "Décrire les objectifs des mesures et leur propriété.",
+            "objectives.1": "Établir des correspondances entre référentiels en indiquant le degré de confiance.",
+            "objectives.2": "Définir les preuves de mise en œuvre.",
+            "key_concepts.0": "CIS Controls v8.1",
+            "key_concepts.1": "Groupes de mise en œuvre",
+            "key_concepts.2": "Mise en correspondance des mesures",
+            "key_concepts.3": "Preuves",
+            "assessment_criteria.0": "Démontre sa capacité à décrire les objectifs des mesures et leur propriété.",
+            "assessment_criteria.1": "Démontre sa capacité à établir des correspondances entre référentiels en indiquant le degré de confiance.",
+            "assessment_criteria.2": "Démontre sa capacité à définir les preuves de mise en œuvre."
+        },
+        "policy-governance": {
+            "title": "Politiques, procédures et gouvernance de l’architecture de sécurité",
+            "purpose": "Gérer le cycle de vie des politiques et maintenir la traçabilité de la politique jusqu’à la mesure de sécurité.",
+            "prerequisite_knowledge": "Modules 1 à 5.",
+            "objectives.0": "Conduire le cycle de vie d’une politique, avec revue et approbation.",
+            "objectives.1": "Gérer les dérogations.",
+            "objectives.2": "Maintenir la traçabilité entre politiques et mesures.",
+            "key_concepts.0": "Cycle de vie des politiques",
+            "key_concepts.1": "Dérogations",
+            "key_concepts.2": "Gestion des versions",
+            "key_concepts.3": "Traçabilité",
+            "assessment_criteria.0": "Démontre sa capacité à conduire le cycle de vie d’une politique, avec revue et approbation.",
+            "assessment_criteria.1": "Démontre sa capacité à gérer les dérogations.",
+            "assessment_criteria.2": "Démontre sa capacité à maintenir la traçabilité entre politiques et mesures."
+        }
+    },
+    "lessons": {
+        "isms-essentials": {
+            "title": "L’essentiel du SMSI",
+            "objectives.0": "Expliquer ce qu’est un SMSI et son approche par les risques",
+            "objectives.1": "Distinguer certification, accréditation et qualifications individuelles",
+            "body_md": {
+                "file": "lessons/isms-essentials.md"
+            },
+            "knowledge_checks.0.question": "Qui accrédite un organisme de certification ?",
+            "knowledge_checks.0.options.0": "L’ISO elle-même",
+            "knowledge_checks.0.options.1": "Un organisme national d’accréditation",
+            "knowledge_checks.0.options.2": "Le conseil d’administration de l’organisation certifiée",
+            "knowledge_checks.0.options.3": "Tout auditeur principal qualifié",
+            "knowledge_checks.0.explanation": "Les organismes d’accréditation évaluent la compétence des organismes de certification ; l’ISO ne certifie pas les organisations."
+        },
+        "scope-and-statement-of-applicability": {
+            "title": "Le domaine d’application et la déclaration d’applicabilité",
+            "objectives.0": "Évaluer le domaine d’application d’un SMSI sous l’angle de la complétude et des interfaces",
+            "objectives.1": "Examiner une déclaration d’applicabilité : exclusions justifiées et état exact",
+            "body_md": {
+                "file": "lessons/scope-and-statement-of-applicability.md"
+            },
+            "knowledge_checks.0.question": "Une société de paie dotée d’une équipe de développement interne exclut les mesures de développement sécurisé de sa DdA, au motif que « nous ne développons pas de logiciels ». Quel est le principal problème ?",
+            "knowledge_checks.0.options.0": "Les exclusions ne sont jamais autorisées",
+            "knowledge_checks.0.options.1": "La justification contredit le domaine d’application",
+            "knowledge_checks.0.options.2": "La DdA ne doit pas mentionner le développement",
+            "knowledge_checks.0.options.3": "Aucun ; toute exclusion est acceptable si elle est documentée",
+            "knowledge_checks.0.explanation": "Les exclusions sont autorisées, mais elles doivent être crédibles au regard du domaine d’application."
+        },
+        "internal-audit-and-certification": {
+            "title": "Audit interne, revue de direction et certification",
+            "objectives.0": "Expliquer l’audit interne, la revue de direction et l’action corrective",
+            "objectives.1": "Décrire le cycle de certification et savoir lire un certificat avec esprit critique",
+            "body_md": {
+                "file": "lessons/internal-audit-and-certification.md"
+            },
+            "knowledge_checks.0.question": "Quelle étape de l’audit de certification examine principalement la documentation et l’état de préparation ?",
+            "knowledge_checks.0.options.0": "L’étape 1",
+            "knowledge_checks.0.options.1": "L’étape 2",
+            "knowledge_checks.0.options.2": "L’audit de surveillance",
+            "knowledge_checks.0.options.3": "La revue de direction",
+            "knowledge_checks.0.explanation": "L’étape 1 examine l’état de préparation ; l’étape 2 évalue la mise en œuvre et l’efficacité.",
+            "knowledge_checks.1.question": "Une revue des accès n’a pas été faite. La réaliser maintenant est une ___ ; modifier le processus pour qu’elle ne puisse plus être sautée est une ___.",
+            "knowledge_checks.1.options.0": "action corrective ; correction",
+            "knowledge_checks.1.options.1": "correction ; action corrective",
+            "knowledge_checks.1.options.2": "non-conformité ; observation",
+            "knowledge_checks.1.options.3": "acceptation du risque ; dérogation",
+            "knowledge_checks.1.explanation": "Une correction règle le cas présent ; une action corrective supprime la cause."
+        },
+        "control-mapping": {
+            "title": "Mettre en correspondance des mesures entre référentiels",
+            "objectives.0": "Établir des correspondances entre référentiels en indiquant la relation",
+            "objectives.1": "Éviter les fausses équivalences lors de la réutilisation de preuves",
+            "body_md": {
+                "file": "lessons/control-mapping.md"
+            },
+            "knowledge_checks.0.question": "Deux exigences de référentiels différents parlent toutes deux de journalisation. Que devez-vous faire avant de les déclarer équivalentes ?",
+            "knowledge_checks.0.options.0": "Rien ; des mots communs signifient une équivalence",
+            "knowledge_checks.0.options.1": "Comparer leur objet et indiquer la relation (équivalente, sous-ensemble, sur-ensemble ou apparentée)",
+            "knowledge_checks.0.options.2": "Ne les mettre en correspondance que si elles viennent toutes deux du NIST",
+            "knowledge_checks.0.options.3": "Retenir l’exigence la plus courte",
+            "knowledge_checks.0.explanation": "Comparez l’objet, pas les mots ; la plupart des correspondances sont partielles."
+        },
+        "cis-controls-and-implementation-groups": {
+            "title": "Les CIS Controls et les groupes de mise en œuvre",
+            "objectives.0": "Décrire les 18 CIS Controls et expliquer pourquoi leur ordre compte",
+            "objectives.1": "Choisir le groupe de mise en œuvre adapté à une organisation",
+            "body_md": {
+                "file": "lessons/cis-controls-and-implementation-groups.md"
+            },
+            "knowledge_checks.0.question": "Quel groupe de mise en œuvre du CIS est présenté comme l’hygiène cyber essentielle ?",
+            "knowledge_checks.0.options.0": "IG1",
+            "knowledge_checks.0.options.1": "IG2",
+            "knowledge_checks.0.options.2": "IG3",
+            "knowledge_checks.0.options.3": "IG0",
+            "knowledge_checks.0.explanation": "L’IG1 est le point de départ ; l’IG2 et l’IG3 s’appuient sur lui."
+        },
+        "control-design-and-ownership": {
+            "title": "Conception, propriété et preuves des mesures de sécurité",
+            "objectives.0": "Décrire une mesure avec son objectif, son propriétaire, son opérateur, sa fréquence et ses preuves",
+            "objectives.1": "Classer les mesures et concevoir des mesures compensatoires",
+            "body_md": {
+                "file": "lessons/control-design-and-ownership.md"
+            },
+            "knowledge_checks.0.question": "Une revue trimestrielle des comptes administrateurs est principalement quel type de mesure ?",
+            "knowledge_checks.0.options.0": "Préventive",
+            "knowledge_checks.0.options.1": "Détective",
+            "knowledge_checks.0.options.2": "Corrective",
+            "knowledge_checks.0.options.3": "Dissuasive",
+            "knowledge_checks.0.explanation": "Les revues repèrent les accès inappropriés après leur apparition."
+        },
+        "policy-lifecycle": {
+            "title": "Le cycle de vie des politiques",
+            "objectives.0": "Conduire le cycle de vie d’une politique, avec revue et approbation",
+            "objectives.1": "Gérer les dérogations à une politique, avec expiration et mesures compensatoires",
+            "body_md": {
+                "file": "lessons/policy-lifecycle.md"
+            },
+            "knowledge_checks.0.question": "Quel élément toute dérogation à une politique doit-elle comporter ?",
+            "knowledge_checks.0.options.0": "Une exemption permanente",
+            "knowledge_checks.0.options.1": "Une date d’expiration et un plan de remédiation",
+            "knowledge_checks.0.options.2": "L’approbation par la personne qui la demande",
+            "knowledge_checks.0.options.3": "La suppression de l’exigence de la politique",
+            "knowledge_checks.0.explanation": "Les dérogations non gérées deviennent des lacunes permanentes."
+        },
+        "writing-policies-and-standards": {
+            "title": "Rédiger des politiques et des normes internes applicables",
+            "objectives.0": "Structurer une politique : champ d’application, rôles, conformité et maîtrise documentaire",
+            "objectives.1": "Rédiger des exigences vérifiables",
+            "body_md": {
+                "file": "lessons/writing-policies-and-standards.md"
+            },
+            "knowledge_checks.0.question": "Quel énoncé de politique est le plus facile à auditer ?",
+            "knowledge_checks.0.options.0": "Les mots de passe devraient être robustes dans la mesure du possible",
+            "knowledge_checks.0.options.1": "Des sauvegardes appropriées sont réalisées",
+            "knowledge_checks.0.options.2": "Les systèmes critiques doivent être sauvegardés chaque jour et les restaurations testées au moins une fois par trimestre",
+            "knowledge_checks.0.options.3": "Le personnel est encouragé à faire attention aux données",
+            "knowledge_checks.0.explanation": "Il est obligatoire, précis et mesurable."
+        },
+        "security-architecture-governance": {
+            "title": "Gouvernance de l’architecture de sécurité et traçabilité",
+            "objectives.0": "Intégrer les exigences de sécurité tout au long du cycle de vie des systèmes",
+            "objectives.1": "Tenir une matrice de traçabilité de la politique à la mesure et à la preuve",
+            "body_md": {
+                "file": "lessons/security-architecture-governance.md"
+            },
+            "knowledge_checks.0.question": "Une matrice de traçabilité montre un énoncé de politique sans mesure associée. Qu’est-ce que cela indique ?",
+            "knowledge_checks.0.options.0": "La politique est bien mise en œuvre",
+            "knowledge_checks.0.options.1": "Une intention que rien n’impose réellement",
+            "knowledge_checks.0.options.2": "Une mesure inutile",
+            "knowledge_checks.0.options.3": "Un audit terminé",
+            "knowledge_checks.0.explanation": "Une politique sans mesure est une intention non mise en œuvre."
+        }
+    }
+}

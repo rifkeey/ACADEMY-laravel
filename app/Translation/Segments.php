@@ -14,6 +14,7 @@ namespace App\Translation;
  * Extraction and application use the same walk, so the paths always match. Only prose keys
  * are translated; everything else (ids, types, answer keys, KQL tables, IP addresses, starter
  * policies, code) is never touched, so a translation cannot change how a lab or quiz works.
+ * In a lab workspace only reading documents count: titles, and bodies in markdown format.
  *
  * Two kinds of segment: "prose" replaces the English text; "append" (accepted answers and
  * required terms in written deliverables) adds French terms to the English list, never removes.
@@ -84,6 +85,21 @@ final class Segments
         }
         $isList = array_is_list($node);
         foreach ($node as $k => &$child) {
+            // In a lab workspace only the reading documents are prose: their titles, and the body of
+            // markdown documents. Datasets, tables, queries and code documents stay as they are.
+            if ($rule === 'lab_content' && $k === 'workspace' && ! $isList) {
+                foreach ($child['documents'] ?? [] as $i => $doc) {
+                    $base = "{$path}.workspace.documents.{$i}";
+                    if (is_string($doc['title'] ?? null)) {
+                        $visit($child['documents'][$i]['title'], "{$base}.title", self::PROSE);
+                    }
+                    if (($doc['format'] ?? null) === 'markdown' && is_string($doc['body'] ?? null)) {
+                        $visit($child['documents'][$i]['body'], "{$base}.body", self::PROSE);
+                    }
+                }
+
+                continue;
+            }
             if (! $isList && in_array($k, self::NEVER, true)) {
                 continue;
             }

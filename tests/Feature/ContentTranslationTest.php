@@ -232,19 +232,23 @@ class ContentTranslationTest extends TestCase
             }
         }
 
-        foreach (Lab::where('course_version_id', $this->soc()->current_version_id)->get() as $lab) {
-            $row = $this->row('lab', $lab->id);
+        $labRows = $rows->where('item_type', 'lab');
+        $this->assertGreaterThanOrEqual(11, $labRows->count(), 'SOC and GRC labs are drafted');
+        foreach ($labRows as $row) {
+            $lab = Lab::findOrFail($row->item_id);
             $texts = array_map(fn ($s) => $s['text'], $row->segments);
             $answers = LabSolutions::ALL[$lab->slug];
             $now = config('academy.lab_reference_now');
+            $content = Segments::apply('content', 'lab_content', $lab->content, $texts);
             $en = \App\Labs\LabEvaluator::evaluate($lab->content, $lab->validator, $answers, $lab->pass_percent, $now);
-            $fr = \App\Labs\LabEvaluator::evaluate(
-                Segments::apply('content', 'lab_content', $lab->content, $texts),
-                Segments::apply('validator', 'lab_validator', $lab->validator, $texts),
-                $answers, $lab->pass_percent, $now,
-            );
+            $fr = \App\Labs\LabEvaluator::evaluate($content, Segments::apply('validator', 'lab_validator', $lab->validator, $texts), $answers, $lab->pass_percent, $now);
             $this->assertTrue($en['passed'], $lab->slug);
             $this->assertSame([$en['score'], $en['maxScore'], $en['passed']], [$fr['score'], $fr['maxScore'], $fr['passed']], "{$lab->slug} marks differently in French");
+
+            // Evidence data, tables, queries and code documents are identical; only reading documents change.
+            $data = fn (array $ws) => ['rest' => array_diff_key($ws, ['documents' => 1]), 'code' => array_values(array_filter($ws['documents'] ?? [], fn ($d) => ($d['format'] ?? null) !== 'markdown'))];
+            $this->assertSame($data($lab->content['workspace']), $data($content['workspace']), "{$lab->slug}: lab data changed");
+            $this->assertSame(count($lab->content['workspace']['documents'] ?? []), count($content['workspace']['documents'] ?? []));
         }
     }
 

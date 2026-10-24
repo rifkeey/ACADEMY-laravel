@@ -1,0 +1,191 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 3a: GRC modules 1–3. Drafts for review. NIST CSF Function and Category names are translated descriptively with the official identifiers unchanged; align them with an official French translation if one is adopted.",
+    "modules": {
+        "grc-fundamentals": {
+            "title": "Fondamentaux de la GRC",
+            "purpose": "Expliquer ce que font les équipes de gouvernance, de gestion des risques et de conformité, et comment la sécurité est orientée et supervisée.",
+            "prerequisite_knowledge": "Une expérience professionnelle, quel que soit le domaine. Aucune formation technique n’est requise.",
+            "objectives.0": "Distinguer la gouvernance, la gestion des risques et la conformité.",
+            "objectives.1": "Décrire la hiérarchie des politiques, normes internes, procédures et recommandations.",
+            "objectives.2": "Expliquer les structures de responsabilité et de supervision.",
+            "key_concepts.0": "Structures de gouvernance",
+            "key_concepts.1": "Hiérarchie documentaire",
+            "key_concepts.2": "Responsabilité",
+            "key_concepts.3": "Supervision",
+            "assessment_criteria.0": "Démontre sa capacité à distinguer la gouvernance, la gestion des risques et la conformité.",
+            "assessment_criteria.1": "Démontre sa capacité à décrire la hiérarchie des politiques, normes internes, procédures et recommandations.",
+            "assessment_criteria.2": "Démontre sa capacité à expliquer les structures de responsabilité et de supervision."
+        },
+        "risk-management": {
+            "title": "Gestion des risques de sécurité",
+            "purpose": "Apprécier et traiter les risques liés à la sécurité de l’information de façon structurée et reproductible.",
+            "prerequisite_knowledge": "Module 1.",
+            "objectives.0": "Identifier et classer les actifs.",
+            "objectives.1": "Apprécier la vraisemblance et l’impact.",
+            "objectives.2": "Distinguer risque inhérent et risque résiduel et choisir les traitements.",
+            "key_concepts.0": "Actifs, menaces, vulnérabilités",
+            "key_concepts.1": "Vraisemblance et impact",
+            "key_concepts.2": "Risque inhérent et risque résiduel",
+            "key_concepts.3": "Réduire, transférer, éviter, accepter",
+            "assessment_criteria.0": "Démontre sa capacité à identifier et classer les actifs.",
+            "assessment_criteria.1": "Démontre sa capacité à apprécier la vraisemblance et l’impact.",
+            "assessment_criteria.2": "Démontre sa capacité à distinguer risque inhérent et risque résiduel et à choisir les traitements."
+        },
+        "nist-csf": {
+            "title": "Le NIST Cybersecurity Framework 2.0",
+            "purpose": "Utiliser les résultats et les profils du CSF 2.0 pour décrire et améliorer la posture de sécurité.",
+            "prerequisite_knowledge": "Modules 1 et 2.",
+            "objectives.0": "Décrire les six fonctions du CSF 2.0.",
+            "objectives.1": "Établir des profils actuel et cible.",
+            "objectives.2": "Hiérarchiser un plan d’amélioration.",
+            "key_concepts.0": "Gouverner, Identifier, Protéger, Détecter, Répondre, Rétablir",
+            "key_concepts.1": "Profils",
+            "key_concepts.2": "Niveaux (Tiers)",
+            "key_concepts.3": "Analyse d’écarts",
+            "assessment_criteria.0": "Démontre sa capacité à décrire les six fonctions du CSF 2.0.",
+            "assessment_criteria.1": "Démontre sa capacité à établir des profils actuel et cible.",
+            "assessment_criteria.2": "Démontre sa capacité à hiérarchiser un plan d’amélioration."
+        }
+    },
+    "lessons": {
+        "what-grc-does": {
+            "title": "Ce que fait la GRC et pourquoi c’est important",
+            "objectives.0": "Distinguer la gouvernance, la gestion des risques et la conformité",
+            "objectives.1": "Situer politiques, normes internes, procédures et recommandations dans la hiérarchie documentaire",
+            "body_md": {
+                "file": "lessons/what-grc-does.md"
+            },
+            "knowledge_checks.0.question": "« La MFA doit utiliser une application d’authentification ou une clé matérielle ; le SMS n’est pas autorisé pour les administrateurs. » À quel type de document cette phrase appartient-elle le plus probablement ?",
+            "knowledge_checks.0.options.0": "Politique",
+            "knowledge_checks.0.options.1": "Norme interne",
+            "knowledge_checks.0.options.2": "Recommandation",
+            "knowledge_checks.0.options.3": "Procédure",
+            "knowledge_checks.0.explanation": "C’est une exigence obligatoire et précise qui met en œuvre un énoncé de politique de plus haut niveau."
+        },
+        "governance-structures-and-accountability": {
+            "title": "Structures de gouvernance et responsabilité",
+            "objectives.0": "Décrire les rôles du conseil d’administration, de la direction, de la sécurité et de l’audit interne",
+            "objectives.1": "Utiliser une matrice RACI et la séparation des tâches pour expliciter les responsabilités",
+            "body_md": {
+                "file": "lessons/governance-structures-and-accountability.md"
+            },
+            "knowledge_checks.0.question": "Dans une matrice RACI, combien de personnes doivent rendre compte (Accountable) d’une même activité ?",
+            "knowledge_checks.0.options.0": "Exactement une",
+            "knowledge_checks.0.options.1": "Au moins deux, par sécurité",
+            "knowledge_checks.0.options.2": "Toutes celles qui réalisent l’activité (Responsible)",
+            "knowledge_checks.0.options.3": "Aucune ; la responsabilité incombe collectivement au conseil",
+            "knowledge_checks.0.explanation": "Un seul responsable de la décision évite que les décisions tombent entre deux chaises.",
+            "knowledge_checks.1.question": "Un administrateur accorde les accès à privilèges et il est aussi la seule personne qui revoit ces accès. Quel principe est affaibli ?",
+            "knowledge_checks.1.options.0": "La minimisation des données",
+            "knowledge_checks.1.options.1": "La séparation des tâches",
+            "knowledge_checks.1.options.2": "La défense en profondeur",
+            "knowledge_checks.1.options.3": "Le transfert du risque",
+            "knowledge_checks.1.explanation": "La personne qui réalise une action sensible ne doit pas en être le seul contrôle."
+        },
+        "oversight-and-obligations": {
+            "title": "Supervision, indicateurs et obligations",
+            "objectives.0": "Distinguer KPI, KRI et indicateurs de contrôle",
+            "objectives.1": "Constituer un registre des obligations à partir des lois, des contrats et des engagements",
+            "body_md": {
+                "file": "lessons/oversight-and-obligations.md"
+            },
+            "knowledge_checks.0.question": "Lequel est un indicateur clé de risque plutôt qu’un indicateur de performance ?",
+            "knowledge_checks.0.options.0": "Le nombre de modules de sensibilisation lancés",
+            "knowledge_checks.0.options.1": "Le nombre de comptes à privilèges sans MFA",
+            "knowledge_checks.0.options.2": "Les e-mails traités par la passerelle",
+            "knowledge_checks.0.options.3": "Les heures de formation dispensées",
+            "knowledge_checks.0.explanation": "Il montre si l’exposition augmente et se rapproche de l’appétence au risque."
+        },
+        "assessing-risk": {
+            "title": "Apprécier et traiter les risques",
+            "objectives.0": "Apprécier la vraisemblance et l’impact selon des critères définis",
+            "objectives.1": "Distinguer risque inhérent et risque résiduel et choisir les traitements",
+            "body_md": {
+                "file": "lessons/assessing-risk.md"
+            },
+            "knowledge_checks.0.question": "Souscrire une assurance cyber contre une violation chez un fournisseur est un exemple de quel traitement ?",
+            "knowledge_checks.0.options.0": "Réduire",
+            "knowledge_checks.0.options.1": "Transférer",
+            "knowledge_checks.0.options.2": "Éviter",
+            "knowledge_checks.0.options.3": "Accepter",
+            "knowledge_checks.0.explanation": "L’assurance déplace l’impact financier ; la responsabilité envers les données des clients reste la vôtre."
+        },
+        "assets-threats-vulnerabilities": {
+            "title": "Actifs, menaces et vulnérabilités",
+            "objectives.0": "Identifier et classer les actifs et leurs propriétaires",
+            "objectives.1": "Rédiger des scénarios de risque précis reliant menace, vulnérabilité, actif et impact",
+            "body_md": {
+                "file": "lessons/assets-threats-vulnerabilities.md"
+            },
+            "knowledge_checks.0.question": "Quel est le scénario de risque le mieux formulé ?",
+            "knowledge_checks.0.options.0": "Cyberattaque",
+            "knowledge_checks.0.options.1": "Rançongiciel",
+            "knowledge_checks.0.options.2": "Un attaquant par hameçonnage compromet un compte sans MFA, chiffre le serveur de fichiers et paralyse le traitement des prêts pendant une semaine",
+            "knowledge_checks.0.options.3": "Mots de passe faibles",
+            "knowledge_checks.0.explanation": "Il nomme la menace, la vulnérabilité, l’actif et l’impact : il peut donc être coté et traité."
+        },
+        "risk-appetite-and-register": {
+            "title": "L’appétence au risque et le registre des risques",
+            "objectives.0": "Exprimer l’appétence au risque sous forme de tolérances mesurables",
+            "objectives.1": "Tenir un registre des risques avec des propriétaires, des plans de traitement et des acceptations consignées",
+            "body_md": {
+                "file": "lessons/risk-appetite-and-register.md"
+            },
+            "knowledge_checks.0.question": "Quel élément rend valable l’acceptation d’un risque ?",
+            "knowledge_checks.0.options.0": "Le risque est si faible que personne ne l’a remarqué",
+            "knowledge_checks.0.options.1": "Une décision consignée, prise par une personne qui en a l’autorité, avec sa justification et une date de revue",
+            "knowledge_checks.0.options.2": "L’équipe informatique accepte de ne pas le corriger",
+            "knowledge_checks.0.options.3": "Il figure au registre sans traitement",
+            "knowledge_checks.0.explanation": "L’acceptation est une décision explicite, autorisée et limitée dans le temps."
+        },
+        "csf-functions-and-profiles": {
+            "title": "Les fonctions et les profils du CSF 2.0",
+            "objectives.0": "Décrire les six fonctions du CSF 2.0",
+            "objectives.1": "Expliquer les profils actuel et cible",
+            "body_md": {
+                "file": "lessons/csf-functions-and-profiles.md"
+            },
+            "knowledge_checks.0.question": "Quelle fonction a été ajoutée dans le CSF 2.0 ?",
+            "knowledge_checks.0.options.0": "Identifier",
+            "knowledge_checks.0.options.1": "Gouverner",
+            "knowledge_checks.0.options.2": "Rétablir",
+            "knowledge_checks.0.options.3": "Détecter",
+            "knowledge_checks.0.explanation": "Gouverner a été ajoutée en 2.0 pour couvrir la stratégie, les rôles, la politique, la supervision et les risques liés à la chaîne d’approvisionnement."
+        },
+        "csf-structure-and-govern": {
+            "title": "Catégories, sous-catégories et la fonction Gouverner",
+            "objectives.0": "Naviguer dans la hiérarchie du noyau du CSF et ses ressources en ligne",
+            "objectives.1": "Expliquer les catégories de Gouverner et pourquoi cette fonction sous-tend les autres",
+            "body_md": {
+                "file": "lessons/csf-structure-and-govern.md"
+            },
+            "knowledge_checks.0.question": "Dans le CSF 2.0, de quelle fonction relève la gestion des risques de cybersécurité liés à la chaîne d’approvisionnement (GV.SC) ?",
+            "knowledge_checks.0.options.0": "Identifier",
+            "knowledge_checks.0.options.1": "Protéger",
+            "knowledge_checks.0.options.2": "Gouverner",
+            "knowledge_checks.0.options.3": "Répondre",
+            "knowledge_checks.0.explanation": "La gestion des risques liés à la chaîne d’approvisionnement est passée dans Gouverner avec la version 2.0.",
+            "knowledge_checks.1.question": "Quelle affirmation sur les fonctions du CSF est exacte ?",
+            "knowledge_checks.1.options.0": "Ce sont des phases successives, menées l’une après l’autre",
+            "knowledge_checks.1.options.1": "Elles s’exercent simultanément",
+            "knowledge_checks.1.options.2": "Seule Protéger s’applique aux petites organisations",
+            "knowledge_checks.1.options.3": "Chacune doit être évaluée au niveau 4",
+            "knowledge_checks.1.explanation": "Les fonctions décrivent des activités simultanées et continues."
+        },
+        "gap-analysis-and-improvement": {
+            "title": "Analyse d’écarts et plan d’amélioration",
+            "objectives.0": "Noter un profil actuel à partir des preuves et fixer des cibles fondées sur les risques",
+            "objectives.1": "Hiérarchiser les écarts dans une feuille de route liée aux risques",
+            "body_md": {
+                "file": "lessons/gap-analysis-and-improvement.md"
+            },
+            "knowledge_checks.0.question": "Qu’est-ce qui doit principalement déterminer l’ordre dans lequel les écarts du CSF sont résorbés ?",
+            "knowledge_checks.0.options.0": "Le nombre de sous-catégories couvertes par chaque action",
+            "knowledge_checks.0.options.1": "La réduction de risque qu’apporte chaque résorption",
+            "knowledge_checks.0.options.2": "L’ordre alphabétique des catégories",
+            "knowledge_checks.0.options.3": "Les écarts les moins coûteux, quel que soit le risque",
+            "knowledge_checks.0.explanation": "Hiérarchisez selon la réduction du risque, puis tenez compte du coût, de l’effort et des dépendances."
+        }
+    }
+}

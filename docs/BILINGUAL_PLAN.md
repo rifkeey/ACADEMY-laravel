@@ -284,4 +284,13 @@ Nothing in this phase is approved. Every item is a draft with origin `machine`, 
 
 Full suite: 86 tests passing.
 
-**Next batches:** GRC, then Network Security and Cloud Security (the largest, about 100,000 words together), then the certificate's programme title in French.
+**Batch 3: the whole GRC programme**
+
+- 9 modules, 27 lessons (with knowledge checks), 5 labs, 57 exam questions, the badge and the exam: 101 of 101 items drafted (`programmes/grc/fr/translations-*.json` and `fr/lessons/*.md`). Nothing approved.
+- **Lab reading documents are now translatable.** GRC, Network and Cloud labs give learners documents to read in the lab workspace (criteria tables, interview notes, policies). The segment walker now translates each document's title and, for `markdown` documents, its body. Evidence datasets, KQL tables, sample queries and `code` documents (JSON policies, configuration files) are still never touched; the quality gate checks this for every translated lab.
+- Terminology: ISO vocabulary follows the usual French terms (SMSI, déclaration d'applicabilité (DdA), non-conformité, correction / action corrective, revue de direction). NIST CSF Functions and Categories and CIS Control names are translated descriptively with the official identifiers unchanged (GV.OC, PR.AA, IG1, Control 6); the reviewer should align them with an official French translation if AMANIQ adopts one. Money examples stay in naira (₦), as in the English.
+- The NDPA 2023 lesson and the questions on it are a faithful translation of Nigerian-law content (see owner point 2 above).
+
+Full suite after batch 3: 86 tests passing.
+
+**Next batches:** Network Security and Cloud Security (the largest, about 100,000 words together), then the certificate's programme title in French.

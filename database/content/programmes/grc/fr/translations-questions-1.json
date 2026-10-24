@@ -1,0 +1,267 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 3e: GRC exam questions grc-001 to grc-029. Drafts for review.",
+    "questions": {
+        "grc-001": {
+            "prompt": "Quelle activité relève principalement de la gouvernance ?",
+            "explanation": "La gouvernance fixe le cap, l’appétence et les responsabilités ; les autres activités soutiennent la gestion des risques et la conformité.",
+            "objective": "Distinguer les disciplines de la GRC",
+            "options.1": "Lancer un scan de vulnérabilités",
+            "options.2": "Fixer l’appétence de l’organisation pour les risques liés à la sécurité de l’information",
+            "options.3": "Recueillir des preuves pour un auditeur",
+            "options.4": "Coter la vraisemblance d’un scénario d’hameçonnage"
+        },
+        "grc-002": {
+            "prompt": "« Comment enrôler le téléphone d’un nouveau collaborateur dans l’application d’authentification » relève de quel type de document ?",
+            "explanation": "Les instructions étape par étape sont des procédures.",
+            "objective": "Utiliser la hiérarchie documentaire",
+            "options.1": "Politique",
+            "options.2": "Norme interne",
+            "options.3": "Procédure",
+            "options.4": "Recommandation"
+        },
+        "grc-003": {
+            "prompt": "Qui doit normalement porter le risque de fraude via une application de prêt ?",
+            "explanation": "Les responsables métier portent les risques que créent leurs activités ; la sécurité conseille et l’audit interne apporte l’assurance.",
+            "objective": "Appliquer les responsabilités",
+            "options.1": "Le RSSI",
+            "options.2": "Le responsable métier chargé des prêts",
+            "options.3": "Le centre de services informatique",
+            "options.4": "L’audit interne"
+        },
+        "grc-004": {
+            "prompt": "Dans une entreprise de 12 personnes, un seul administrateur doit à la fois accorder et retirer les accès aux systèmes. Quelle est la meilleure mesure compensatoire ?",
+            "explanation": "Lorsqu’une séparation complète est impossible, une revue indépendante compense.",
+            "objective": "Appliquer la séparation des tâches",
+            "options.1": "Demander à l’administrateur d’être prudent",
+            "options.2": "Une revue mensuelle et indépendante des modifications d’accès par un responsable extérieur à l’informatique",
+            "options.3": "Supprimer toute journalisation pour protéger la vie privée",
+            "options.4": "Documenter que la séparation est impossible et ne rien faire"
+        },
+        "grc-005": {
+            "prompt": "Lesquels sont deux indicateurs clés de risque ?",
+            "explanation": "Les KRI signalent une exposition croissante ; les simples décomptes d’activité, non.",
+            "objective": "Distinguer les types d’indicateurs",
+            "options.1": "Le nombre de vulnérabilités critiques de plus de 30 jours sur les systèmes exposés à Internet",
+            "options.2": "Le nombre de comptes à privilèges sans MFA",
+            "options.3": "Le nombre d’affiches de sensibilisation imprimées",
+            "options.4": "Le nombre de fournisseurs de pare-feu évalués"
+        },
+        "grc-006": {
+            "prompt": "Le contrat d’un client exige la notification des incidents de sécurité sous 24 heures. Où cette exigence doit-elle être consignée ?",
+            "explanation": "Les contrats sont une source d’obligations ; celles-ci ont besoin de responsables et de preuves.",
+            "objective": "Constituer un registre des obligations",
+            "options.1": "Dans le registre des obligations, avec un responsable et des preuves de conformité",
+            "options.2": "Uniquement dans le dossier du contrat",
+            "options.3": "Dans l’inventaire des actifs",
+            "options.4": "Nulle part ; les clauses contractuelles ne sont pas des obligations de conformité"
+        },
+        "grc-007": {
+            "prompt": "« Aucune restauration des sauvegardes n’a jamais été testée » se décrit le mieux comme :",
+            "explanation": "C’est une faiblesse qu’une menace comme un rançongiciel pourrait exploiter.",
+            "objective": "Distinguer les composantes du risque",
+            "options.1": "Une menace",
+            "options.2": "Une vulnérabilité",
+            "options.3": "Un impact",
+            "options.4": "Un actif"
+        },
+        "grc-008": {
+            "prompt": "Pourquoi un score de 20 dans une matrice 5×5 ne doit-il pas être présenté comme « deux fois plus risqué » qu’un score de 10 ?",
+            "explanation": "Les matrices qualitatives classent les risques ; les calculs qu’on peut faire avec elles sont limités.",
+            "objective": "Coter le risque",
+            "options.1": "Parce que les scores au-delà de 15 sont plafonnés",
+            "options.2": "Parce que l’échelle est ordinale : les nombres classent les risques mais ne les mesurent pas proportionnellement",
+            "options.3": "Parce que vraisemblance et impact doivent être additionnés, pas multipliés",
+            "options.4": "Parce que les scores doivent être exprimés en nairas"
+        },
+        "grc-009": {
+            "prompt": "Un risque est coté 20 avant les mesures de sécurité et 8 après l’imposition de la MFA. Que représente 8 ?",
+            "explanation": "Le risque résiduel est la cotation après les mesures existantes, valable seulement si l’efficacité des mesures est prouvée.",
+            "objective": "Distinguer risque inhérent et risque résiduel",
+            "options.1": "Le risque inhérent",
+            "options.2": "Le risque résiduel",
+            "options.3": "L’appétence au risque",
+            "options.4": "Le risque cible, quelles que soient les preuves"
+        },
+        "grc-010": {
+            "prompt": "Une entreprise retire un système qui n’est plus pris en charge au lieu de le sécuriser. De quel traitement s’agit-il ?",
+            "explanation": "Arrêter l’activité permet d’éviter le risque.",
+            "objective": "Choisir les traitements",
+            "options.1": "Réduire",
+            "options.2": "Transférer",
+            "options.3": "Éviter",
+            "options.4": "Accepter"
+        },
+        "grc-011": {
+            "prompt": "Selon la tolérance fixée par le conseil, aucun risque pesant sur les données clients ne peut rester au-dessus de 9 pendant plus de 90 jours. Un risque coté 16 n’a aucun plan de traitement depuis cinq mois. Que faut-il faire ?",
+            "explanation": "Les dépassements de tolérance doivent être escaladés ; il ne faut jamais ajuster une cotation pour la faire entrer dans l’appétence.",
+            "objective": "Appliquer l’appétence au risque",
+            "options.1": "Abaisser la cotation à 9 pour respecter la tolérance",
+            "options.2": "Escalader à l’autorité désignée dans le cadre de gouvernance pour une décision de traitement ou une acceptation formelle",
+            "options.3": "Le retirer du registre",
+            "options.4": "Attendre la revue annuelle"
+        },
+        "grc-012": {
+            "prompt": "Quels DEUX éléments manquent dans l’énoncé de risque « Rançongiciel » ?",
+            "explanation": "Un scénario cotable relie menace, vulnérabilité, actif et impact.",
+            "objective": "Rédiger des scénarios de risque",
+            "options.1": "La vulnérabilité qui serait exploitée",
+            "options.2": "L’actif touché et l’impact sur l’activité",
+            "options.3": "Le nom du chef du groupe de rançongiciel",
+            "options.4": "La couleur utilisée sur la carte thermique"
+        },
+        "grc-013": {
+            "prompt": "Quelle liste contient les six fonctions du NIST CSF 2.0 ?",
+            "explanation": "Le CSF 2.0 a ajouté Gouverner aux cinq fonctions de la version 1.1.",
+            "objective": "Se rappeler les fonctions du CSF",
+            "options.1": "Gouverner, Identifier, Protéger, Détecter, Répondre, Rétablir",
+            "options.2": "Planifier, Déployer, Contrôler, Agir, Revoir, Améliorer",
+            "options.3": "Identifier, Protéger, Détecter, Répondre, Rétablir, Rendre compte",
+            "options.4": "Prévenir, Détecter, Corriger, Dissuader, Rétablir, Se conformer"
+        },
+        "grc-014": {
+            "prompt": "L’établissement des rôles, responsabilités et pouvoirs en matière de gestion des risques de cybersécurité relève de quelle fonction du CSF 2.0 ?",
+            "explanation": "GV.RR (rôles, responsabilités et pouvoirs) est une catégorie de Gouverner.",
+            "objective": "Classer les résultats par fonction",
+            "options.1": "Gouverner",
+            "options.2": "Identifier",
+            "options.3": "Protéger",
+            "options.4": "Répondre"
+        },
+        "grc-015": {
+            "prompt": "Quel est le principal objectif de la comparaison entre un profil actuel et un profil cible ?",
+            "explanation": "L’écart entre les profils guide le plan d’amélioration.",
+            "objective": "Utiliser les profils",
+            "options.1": "Calculer un score de certification",
+            "options.2": "Identifier les écarts qui serviront de base à un plan d’action hiérarchisé",
+            "options.3": "Prouver la conformité à l’ISO/IEC 27001",
+            "options.4": "Classer l’organisation par rapport à ses concurrents"
+        },
+        "grc-016": {
+            "prompt": "Quelle affirmation sur les niveaux (Tiers) du CSF est exacte ?",
+            "explanation": "Les niveaux décrivent la rigueur des pratiques ; ce ne sont ni une cible de maturité obligatoire ni une certification.",
+            "objective": "Interpréter les niveaux",
+            "options.1": "Toute organisation doit viser le niveau 4",
+            "options.2": "Les niveaux sont identiques aux fonctions du CSF",
+            "options.3": "Les niveaux caractérisent la rigueur des pratiques de gouvernance et de gestion des risques et doivent être choisis en fonction du risque de l’organisation",
+            "options.4": "Les niveaux sont attribués par le NIST après un audit"
+        },
+        "grc-017": {
+            "prompt": "Où trouver des actions illustratives montrant comment une organisation peut atteindre une sous-catégorie précise du CSF 2.0 ?",
+            "explanation": "Le NIST publie en ligne, à côté du noyau, des exemples de mise en œuvre et des références informatives.",
+            "objective": "Naviguer dans le noyau du CSF",
+            "options.1": "Dans les niveaux (Tiers)",
+            "options.2": "Dans les exemples de mise en œuvre publiés par le NIST",
+            "options.3": "Dans la déclaration d’applicabilité",
+            "options.4": "Dans le groupe de mise en œuvre 1 du CIS"
+        },
+        "grc-018": {
+            "prompt": "Un petit cabinet comptable sans développeurs établit son premier profil cible. Quelle est la meilleure approche ?",
+            "explanation": "Les cibles découlent du contexte de risque propre à l’organisation.",
+            "objective": "Fixer des profils cibles",
+            "options.1": "Fixer la note la plus élevée pour chaque sous-catégorie",
+            "options.2": "Copier le profil cible d’une grande banque",
+            "options.3": "Fixer les cibles selon ses propres risques, obligations et appétence, en acceptant des cibles plus basses là où les résultats comptent moins",
+            "options.4": "Laisser de côté Gouverner parce que le cabinet est petit"
+        },
+        "grc-019": {
+            "prompt": "Quelle affirmation sur la certification ISO/IEC 27001 est correcte ?",
+            "explanation": "Les organismes de certification certifient ; les organismes d’accréditation les accréditent ; les certificats ont une durée limitée, avec des audits de surveillance.",
+            "objective": "Expliquer la certification avec exactitude",
+            "options.1": "L’ISO certifie directement les organisations",
+            "options.2": "Des organismes de certification accrédités certifient les organisations à l’issue d’un audit externe",
+            "options.3": "Suivre une formation rend une personne certifiée ISO 27001",
+            "options.4": "La certification est définitive une fois obtenue"
+        },
+        "grc-020": {
+            "prompt": "Quelle entrée de DdA a le plus de chances de donner lieu à un constat ?",
+            "explanation": "Les exclusions doivent être crédibles au regard du domaine d’application réel.",
+            "objective": "Examiner une DdA",
+            "options.1": "Le développement externalisé exclu parce qu’aucun développement n’est externalisé",
+            "options.2": "Les mesures de travail à distance exclues parce que « tout le personnel travaille sur site », alors que le personnel travaille à domicile deux jours par semaine",
+            "options.3": "La mesure de sauvegarde retenue pour traiter un risque de perte de données, avec des comptes rendus de restauration datés",
+            "options.4": "La mesure relative à la politique retenue, avec une date d’approbation récente"
+        },
+        "grc-021": {
+            "prompt": "Comment l’annexe A doit-elle être utilisée dans un SMSI fondé sur les risques ?",
+            "explanation": "Les mesures découlent du traitement des risques ; l’annexe A sert de vérification de complétude.",
+            "objective": "Expliquer le rôle de l’annexe A",
+            "options.1": "Mettre en œuvre les 93 mesures quel que soit le risque",
+            "options.2": "Choisir des mesures pour traiter les risques appréciés, puis les comparer à l’annexe A pour vérifier que rien de nécessaire n’a été oublié",
+            "options.3": "L’ignorer, puisqu’il s’agit de recommandations facultatives",
+            "options.4": "S’en servir à la place d’une appréciation des risques"
+        },
+        "grc-022": {
+            "prompt": "Pourquoi le domaine d’application du SMSI est-il important pour les clients qui lisent un certificat ?",
+            "explanation": "Un certificat ne couvre que le domaine d’application qu’il indique.",
+            "objective": "Décrire le domaine d’application d’un SMSI",
+            "options.1": "Il indique le prix de la certification",
+            "options.2": "Il indique quels services, sites et activités la certification couvre réellement",
+            "options.3": "Il liste les clients de l’organisation",
+            "options.4": "Il dispense d’une appréciation des risques"
+        },
+        "grc-023": {
+            "prompt": "Que se passe-t-il normalement la deuxième et la troisième année d’un cycle de certification ISO/IEC 27001 ?",
+            "explanation": "Les organismes de certification réalisent des audits de surveillance périodiques entre la certification et le renouvellement.",
+            "objective": "Décrire le cycle de certification",
+            "options.1": "Rien jusqu’au renouvellement",
+            "options.2": "Des audits de surveillance portant sur des parties du SMSI",
+            "options.3": "Un nouvel audit d’étape 1 chaque année",
+            "options.4": "Une autoévaluation transmise à l’ISO"
+        },
+        "grc-024": {
+            "prompt": "Un audit interne constate que deux partants ont conservé leurs accès pendant un mois parce que des e-mails des RH à l’informatique n’ont pas été traités. Laquelle est une action corrective plutôt qu’une correction ?",
+            "explanation": "L’action corrective supprime la cause ; la correction règle le cas présent.",
+            "objective": "Distinguer correction et action corrective",
+            "options.1": "Désactiver immédiatement les deux comptes",
+            "options.2": "Déclencher automatiquement la désactivation des comptes à partir de la fiche de départ du système RH",
+            "options.3": "Consigner la non-conformité",
+            "options.4": "Présenter des excuses à l’auditeur"
+        },
+        "grc-025": {
+            "prompt": "Quels DEUX éléments sont des éléments de sortie habituels d’une revue de direction du SMSI ?",
+            "explanation": "La revue de direction produit des décisions de la direction, pas des certificats.",
+            "objective": "Expliquer la revue de direction",
+            "options.1": "Des décisions sur les opportunités d’amélioration",
+            "options.2": "Des décisions sur les ressources et les évolutions du SMSI",
+            "options.3": "Un nouveau certificat",
+            "options.4": "L’accréditation de l’auditeur interne"
+        },
+        "grc-026": {
+            "prompt": "Une petite organisation au personnel informatique limité commence avec les CIS Controls. Par où doit-elle commencer ?",
+            "explanation": "L’IG1 correspond à l’hygiène cyber essentielle et constitue le point de départ recommandé.",
+            "objective": "Décrire les groupes de mise en œuvre du CIS",
+            "options.1": "Le groupe de mise en œuvre 1",
+            "options.2": "Le groupe de mise en œuvre 3",
+            "options.3": "Le Control 18, tests d’intrusion",
+            "options.4": "Les mesures les moins coûteuses, quelles qu’elles soient"
+        },
+        "grc-027": {
+            "prompt": "Pourquoi les inventaires des actifs de l’entreprise et des logiciels viennent-ils en premier dans les CIS Controls ?",
+            "explanation": "La visibilité sous-tend toutes les autres mesures.",
+            "objective": "Expliquer l’ordre des CIS Controls",
+            "options.1": "Ce sont les mesures les moins coûteuses",
+            "options.2": "On ne peut pas sécuriser, surveiller ou corriger des actifs dont on ignore l’existence",
+            "options.3": "Les auditeurs ne testent que les deux premiers Controls",
+            "options.4": "Ils dispensent du contrôle d’accès"
+        },
+        "grc-028": {
+            "prompt": "Une mesure (Safeguard) du CIS et une sous-catégorie du CSF se recoupent, mais le résultat du CSF couvre aussi la vérification d’identité. Comment décrire la correspondance ?",
+            "explanation": "Indiquez la relation ; la plupart des correspondances sont partielles.",
+            "objective": "Établir des correspondances de façon responsable",
+            "options.1": "Équivalente",
+            "options.2": "Partielle (la mesure est un sous-ensemble du résultat)",
+            "options.3": "Sans rapport",
+            "options.4": "Sur-ensemble"
+        },
+        "grc-029": {
+            "prompt": "Laquelle est une mesure corrective ?",
+            "explanation": "Les mesures correctives limitent les dégâts et rétablissent les activités.",
+            "objective": "Classer les mesures",
+            "options.1": "L’authentification multifacteur",
+            "options.2": "Les alertes de surveillance des journaux",
+            "options.3": "La restauration des systèmes à partir de sauvegardes testées après un rançongiciel",
+            "options.4": "Un bandeau d’avertissement à la connexion"
+        }
+    }
+}

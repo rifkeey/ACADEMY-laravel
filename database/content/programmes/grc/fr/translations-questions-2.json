@@ -1,0 +1,258 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 3e: GRC exam questions grc-030 to grc-057. Drafts for review.",
+    "questions": {
+        "grc-030": {
+            "prompt": "Quelle est la différence entre le propriétaire d’une mesure et son opérateur ?",
+            "explanation": "Séparer la responsabilité de la réalisation favorise la séparation des tâches.",
+            "objective": "Définir la propriété d’une mesure",
+            "options.1": "Il n’y en a aucune",
+            "options.2": "Le propriétaire répond de l’existence et de l’efficacité de la mesure ; l’opérateur la réalise",
+            "options.3": "L’opérateur approuve la mesure ; le propriétaire la réalise",
+            "options.4": "Les propriétaires sont toujours des auditeurs externes"
+        },
+        "grc-031": {
+            "prompt": "Une ancienne application ne peut pas prendre en charge la MFA. Quelle est la mesure compensatoire la plus solide ?",
+            "explanation": "Une mesure compensatoire doit traiter le même risque dans une mesure comparable, et être formellement approuvée et revue.",
+            "objective": "Concevoir des mesures compensatoires",
+            "options.1": "Uniquement des mots de passe plus longs",
+            "options.2": "Un accès uniquement via un serveur de rebond qui impose la MFA, avec un enregistrement des sessions revu chaque semaine, approuvé comme dérogation limitée dans le temps",
+            "options.3": "Masquer l’URL de l’application",
+            "options.4": "Une sensibilisation annuelle"
+        },
+        "grc-032": {
+            "prompt": "Quel énoncé de politique est le mieux rédigé ?",
+            "explanation": "Il est obligatoire, neutre sur le plan technologique et vérifiable.",
+            "objective": "Rédiger des énoncés de politique vérifiables",
+            "options.1": "Une sécurité appropriée devrait être appliquée dans la mesure du possible",
+            "options.2": "L’accès à distance aux systèmes de l’entreprise doit exiger une authentification multifacteur",
+            "options.3": "Utilisez le produit VPN actuellement installé",
+            "options.4": "Le personnel est encouragé à penser à la sécurité"
+        },
+        "grc-033": {
+            "prompt": "Quelle fiche de dérogation à une politique est complète ?",
+            "explanation": "Une dérogation a besoin du risque, des mesures compensatoires, d’une approbation habilitée et d’une date d’expiration.",
+            "objective": "Gérer les dérogations",
+            "options.1": "« La finance ne peut pas utiliser la MFA. »",
+            "options.2": "« Approuvée par le demandeur ; pas d’expiration. »",
+            "options.3": "Exigence non respectée, raison, risque qui en résulte, mesures compensatoires, approbateur du bon niveau, date d’expiration et plan de remédiation",
+            "options.4": "Un accord verbal avec le RSSI"
+        },
+        "grc-034": {
+            "prompt": "Pourquoi conserver les versions précédentes d’une politique de sécurité après sa mise à jour ?",
+            "explanation": "Les versions archivées servent aux investigations, aux audits et aux litiges.",
+            "objective": "Gérer les versions",
+            "options.1": "Pour réduire les coûts de stockage",
+            "options.2": "Pour montrer ce qu’exigeait la politique à un moment donné, par exemple lors d’une investigation ou d’un litige",
+            "options.3": "Parce que, dans tous les pays, la loi interdit de supprimer une politique",
+            "options.4": "Pour que le personnel puisse choisir quelle version suivre"
+        },
+        "grc-035": {
+            "prompt": "Dans une matrice de traçabilité, il existe une mesure technique qu’aucune politique ni norme interne n’exige. Qu’est-ce que cela suggère ?",
+            "explanation": "Une mesure sans fondement dans une politique est une lacune de traçabilité dans l’autre sens.",
+            "objective": "Maintenir la traçabilité",
+            "options.1": "L’ensemble des politiques est complet",
+            "options.2": "Un travail que personne n’a demandé, qui risque de ne pas être financé, d’être incohérent ou inconnu de la gouvernance",
+            "options.3": "La mesure doit être supprimée immédiatement",
+            "options.4": "La mesure est automatiquement conforme"
+        },
+        "grc-036": {
+            "prompt": "Quand est-il le moins coûteux de traiter les exigences de sécurité d’un nouveau système ?",
+            "explanation": "Des exigences définies tôt évitent une refonte coûteuse.",
+            "objective": "Intégrer la sécurité dans le cycle de vie",
+            "options.1": "Pendant la conception ou l’achat",
+            "options.2": "À la mise en production",
+            "options.3": "Après le premier incident",
+            "options.4": "Pendant l’audit annuel"
+        },
+        "grc-037": {
+            "prompt": "Quels DEUX éléments sont des éléments d’entrée habituels d’une revue d’architecture de sécurité ?",
+            "explanation": "Les conceptions sont examinées au regard de principes, de modèles et de normes internes.",
+            "objective": "Appliquer la gouvernance de l’architecture",
+            "options.1": "Les modèles et principes de sécurité approuvés",
+            "options.2": "Les normes internes de sécurité applicables, comme celles de journalisation et de chiffrement",
+            "options.3": "La seule brochure commerciale du fournisseur",
+            "options.4": "Le plan de communication du projet sur les réseaux sociaux"
+        },
+        "grc-038": {
+            "prompt": "Quelle preuve est la plus fiable pour montrer qu’une revue des accès a eu lieu le trimestre dernier ?",
+            "explanation": "Les enregistrements fiables, datés et générés par le système sont les plus solides.",
+            "objective": "Juger la qualité des preuves",
+            "options.1": "Une capture d’écran non datée",
+            "options.2": "L’assurance verbale du responsable informatique",
+            "options.3": "Un compte rendu de revue généré par le système, indiquant le relecteur, la date et les décisions",
+            "options.4": "La politique de contrôle d’accès"
+        },
+        "grc-039": {
+            "prompt": "Une revue trimestrielle des accès est réalisée fidèlement, mais ne porte que sur les comptes de messagerie, alors que le risque principal concerne l’accès au système bancaire central. Il s’agit :",
+            "explanation": "Même réalisée, la mesure ne traite pas le risque.",
+            "objective": "Distinguer l’efficacité de la conception et du fonctionnement",
+            "options.1": "D’un défaut de conception",
+            "options.2": "D’un défaut de fonctionnement",
+            "options.3": "D’une correction",
+            "options.4": "D’une observation sans risque"
+        },
+        "grc-040": {
+            "prompt": "Pour tester si tous les nouveaux arrivants ont reçu des accès approuvés, dans quelle population faut-il échantillonner ?",
+            "explanation": "La population ne doit pas dépendre de la mesure testée.",
+            "objective": "Échantillonner dans des populations complètes",
+            "options.1": "Les tickets d’accès de la file du centre de services",
+            "options.2": "La liste des arrivants issue du système RH",
+            "options.3": "Les comptes dont le responsable informatique se souvient de la création",
+            "options.4": "L’échantillon de l’audit de l’année dernière"
+        },
+        "grc-041": {
+            "prompt": "Recalculer de façon indépendante quels partants ont encore un compte actif est un exemple :",
+            "explanation": "La réexécution répète la mesure de façon indépendante ; c’est la technique la plus solide.",
+            "objective": "Choisir les techniques de test",
+            "options.1": "D’entretien",
+            "options.2": "D’observation",
+            "options.3": "De réexécution",
+            "options.4": "De test de cheminement"
+        },
+        "grc-042": {
+            "prompt": "Quel élément d’un constat d’audit explique *pourquoi* la situation constatée s’est produite ?",
+            "explanation": "La cause permet de définir une action corrective efficace.",
+            "objective": "Rédiger des constats",
+            "options.1": "Le critère",
+            "options.2": "La cause",
+            "options.3": "L’effet",
+            "options.4": "La recommandation"
+        },
+        "grc-043": {
+            "prompt": "Le même constat sur la revue des accès est apparu lors de trois audits annuels consécutifs. Qu’est-ce que cela indique le plus nettement ?",
+            "explanation": "Les constats récurrents montrent que les actions correctives sont inefficaces.",
+            "objective": "Suivre les actions correctives",
+            "options.1": "Les auditeurs sont trop sévères",
+            "options.2": "Les actions correctives ne traitent pas la cause première ; c’est un problème de gouvernance à signaler au conseil",
+            "options.3": "Le constat doit être déclassé",
+            "options.4": "La mesure doit être retirée du périmètre"
+        },
+        "grc-044": {
+            "prompt": "Quel fournisseur exige le plus la diligence raisonnable la plus approfondie ?",
+            "explanation": "Classez selon la sensibilité des données, les accès et la criticité.",
+            "objective": "Classer les fournisseurs",
+            "options.1": "Un fournisseur de fournitures de bureau",
+            "options.2": "Un hébergeur qui stocke tous les dossiers financiers des clients",
+            "options.3": "Une société de restauration",
+            "options.4": "Une agence de marketing sans accès aux données"
+        },
+        "grc-045": {
+            "prompt": "Dans le rapport d’assurance indépendant d’un fournisseur, que sont les contrôles complémentaires attendus des utilisateurs ?",
+            "explanation": "Les clients doivent les appliquer eux-mêmes.",
+            "objective": "Évaluer l’assurance",
+            "options.1": "Les contrôles réalisés par l’auditeur",
+            "options.2": "Les contrôles que le fournisseur attend de ses clients pour que l’assurance reste valable",
+            "options.3": "Les contrôles chez les sous-traitants ultérieurs du fournisseur",
+            "options.4": "Les contrôles qui ont échoué aux tests"
+        },
+        "grc-046": {
+            "prompt": "Le questionnaire d’un fournisseur indique qu’il n’a aucun sous-traitant ultérieur, mais son rapport d’assurance cite une société de support des bases de données à l’étranger disposant d’un accès à distance. Que devez-vous faire ?",
+            "explanation": "Une preuve indépendante qui contredit les réponses déclaratives exige un suivi.",
+            "objective": "Repérer les signaux d’alerte",
+            "options.1": "Faire confiance au questionnaire, puisque le fournisseur l’a rempli",
+            "options.2": "Traiter la contradiction comme un signal d’alerte ; exiger la déclaration et l’évaluation du sous-traitant ultérieur et vérifier les exigences de transfert",
+            "options.3": "L’ignorer si le fournisseur est certifié ISO",
+            "options.4": "Refuser automatiquement tous les fournisseurs situés à l’étranger"
+        },
+        "grc-047": {
+            "prompt": "Quelles DEUX clauses favorisent le plus directement une sortie propre d’un fournisseur ?",
+            "explanation": "Les clauses de sortie couvrent la restitution et la suppression des données.",
+            "objective": "Préciser les clauses contractuelles",
+            "options.1": "La restitution des données dans un format exploitable",
+            "options.2": "La suppression certifiée des données dans un délai défini",
+            "options.3": "Un accord d’utilisation du logo",
+            "options.4": "Une révision annuelle des prix"
+        },
+        "grc-048": {
+            "prompt": "La diligence raisonnable sur un fournisseur critique révèle une clause de notification faible et un constat de gravité élevée encore ouvert, mais des mesures par ailleurs solides. Quelle est la recommandation la plus appropriée ?",
+            "explanation": "Une approbation proportionnée et conditionnelle, avec un risque résiduel consigné, est généralement la meilleure.",
+            "objective": "Formuler des recommandations sur les fournisseurs",
+            "options.1": "Approuver en l’état",
+            "options.2": "Approuver sous conditions : modifications du contrat, plan de remédiation daté et risque résiduel consigné auprès du propriétaire métier",
+            "options.3": "Refuser définitivement le fournisseur",
+            "options.4": "Demander au fournisseur d’attester lui-même que les problèmes sont corrigés"
+        },
+        "grc-049": {
+            "prompt": "Qui détermine les finalités et les moyens du traitement des données personnelles ?",
+            "explanation": "Le responsable du traitement décide pourquoi et comment ; le sous-traitant agit sur ses instructions.",
+            "objective": "Expliquer les rôles de responsable du traitement et de sous-traitant",
+            "options.1": "Le responsable du traitement",
+            "options.2": "Le sous-traitant",
+            "options.3": "La personne concernée",
+            "options.4": "L’hébergeur"
+        },
+        "grc-050": {
+            "prompt": "Selon le Nigeria Data Protection Act 2023, dans quel délai un responsable du traitement doit-il notifier à la Commission une violation de données personnelles susceptible d’engendrer un risque pour les droits des personnes ?",
+            "explanation": "La loi exige une notification à la NDPC dans les 72 heures après avoir pris connaissance d’une telle violation.",
+            "objective": "Se rappeler la notification des violations selon le NDPA",
+            "options.1": "24 heures",
+            "options.2": "72 heures",
+            "options.3": "30 jours",
+            "options.4": "Seulement lors de la déclaration annuelle suivante"
+        },
+        "grc-051": {
+            "prompt": "Une application de prêt collecte l’intégralité des contacts téléphoniques de ses clients « au cas où ils seraient utiles plus tard ». Quel principe est le plus manifestement enfreint ?",
+            "explanation": "Ne collectez que ce qui est nécessaire à des finalités déterminées.",
+            "objective": "Appliquer les principes de protection des données",
+            "options.1": "L’exactitude",
+            "options.2": "La minimisation des données et la limitation des finalités",
+            "options.3": "La disponibilité",
+            "options.4": "La non-répudiation"
+        },
+        "grc-052": {
+            "prompt": "Quand faut-il réaliser une analyse d’impact relative à la protection des données ?",
+            "explanation": "Les analyses d’impact apprécient et réduisent le risque avant le début d’un traitement à risque élevé.",
+            "objective": "Identifier ce qui déclenche une analyse d’impact",
+            "options.1": "Uniquement après une violation",
+            "options.2": "Avant un traitement susceptible d’engendrer un risque élevé pour les personnes",
+            "options.3": "Uniquement à la demande du régulateur",
+            "options.4": "Tous les cinq ans pour tous les traitements"
+        },
+        "grc-053": {
+            "prompt": "Un sous-traitant subit une violation des données clients d’un responsable du traitement. Quelle affirmation est correcte ?",
+            "explanation": "Le responsable du traitement reste responsable des données personnelles qu’il confie à ses sous-traitants.",
+            "objective": "Expliquer la responsabilité vis-à-vis des sous-traitants",
+            "options.1": "Seul le sous-traitant est responsable",
+            "options.2": "Le responsable du traitement reste responsable et doit avoir choisi le sous-traitant et contracté avec lui de manière appropriée",
+            "options.3": "Personne n’est responsable puisque la violation est externe",
+            "options.4": "Les personnes concernées sont responsables d’avoir partagé leurs données"
+        },
+        "grc-054": {
+            "prompt": "Par quoi doit commencer un rapport sur les risques destiné à la direction ?",
+            "explanation": "Commencez par la conclusion ; le détail va en annexe.",
+            "objective": "Structurer les rapports à la direction",
+            "options.1": "Une description de la méthode d’appréciation",
+            "options.2": "La conclusion principale et toute décision attendue",
+            "options.3": "La liste de tous les identifiants de mesures",
+            "options.4": "Le registre complet des risques"
+        },
+        "grc-055": {
+            "prompt": "Quelle est la meilleure façon de présenter un risque à un conseil d’administration ?",
+            "explanation": "Le conseil décide sur la base de l’impact, du coût et des options, avec une vraisemblance honnête.",
+            "objective": "Exprimer l’impact en termes métier",
+            "options.1": "« Les scores CVE de trois hôtes dépassent 9,0 »",
+            "options.2": "« Une compromission probable du système bancaire central pourrait exposer les données de 30 000 clients et entraîner une sanction réglementaire ; 18 millions de ₦ sur six mois le ramènent dans les limites de l’appétence »",
+            "options.3": "« Nous sommes très inquiets à cause des pirates »",
+            "options.4": "« PR.AA est au niveau 1 »"
+        },
+        "grc-056": {
+            "prompt": "Quelle action de remédiation doit généralement passer en premier ?",
+            "explanation": "Hiérarchisez selon la réduction de risque par unité d’effort.",
+            "objective": "Hiérarchiser la remédiation",
+            "options.1": "Un grand projet coûteux qui résorbe de nombreux écarts faiblement cotés",
+            "options.2": "Une action peu coûteuse qui réduit fortement un risque au-dessus de l’appétence, comme l’activation d’une MFA dont la licence est déjà acquise",
+            "options.3": "La réécriture de toutes les politiques",
+            "options.4": "L’achat d’une plateforme GRC"
+        },
+        "grc-057": {
+            "prompt": "Pourquoi un analyste GRC doit-il éviter d’exagérer les risques pour obtenir un budget ?",
+            "explanation": "Une incertitude assumée préserve la confiance dans les rapports futurs.",
+            "objective": "Rendre compte honnêtement",
+            "options.1": "Les conseils préfèrent les cotations basses",
+            "options.2": "La crédibilité se perd lorsque des risques exagérés ne se réalisent pas, ce qui affaiblit les rapports suivants",
+            "options.3": "Exagérer les risques est illégal",
+            "options.4": "Cela raccourcit trop le rapport"
+        }
+    }
+}
