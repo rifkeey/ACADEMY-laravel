@@ -1,0 +1,99 @@
+{
+    "origin": "machine",
+    "note": "Sample French drafts for Phase 4 (module 1, its first lesson, one lab, one question). Loaded as drafts; a reviewer must approve them in Admin before learners see them.",
+    "modules": {
+        "soc-fundamentals": {
+            "title": "Fondamentaux des opérations de cybersécurité",
+            "purpose": "Comprendre ce que fait un SOC, le vocabulaire des analystes et le parcours d’une alerte, de la détection à l’escalade.",
+            "prerequisite_knowledge": "Culture informatique générale. Aucune expérience préalable en sécurité n’est requise.",
+            "objectives.0": "Décrire les responsabilités principales d’un SOC et les organisations d’équipe courantes.",
+            "objectives.1": "Distinguer événements, alertes et incidents, et classer correctement l’issue d’une alerte.",
+            "objectives.2": "Attribuer une sévérité selon des critères documentés et rédiger un message d’escalade complet.",
+            "key_concepts.0": "Fonctions et niveaux d’un SOC",
+            "key_concepts.1": "Cycle de vie d’une alerte",
+            "key_concepts.2": "Vrais et faux positifs, vrais et faux négatifs",
+            "key_concepts.3": "Sévérité et priorité",
+            "key_concepts.4": "Escalade",
+            "assessment_criteria.0": "Classe correctement l’issue des alertes dans des questions de mise en situation",
+            "assessment_criteria.1": "Rédige une note d’escalade indiquant la sévérité, les faits, le périmètre, les actions menées et la décision attendue"
+        }
+    },
+    "lessons": {
+        "soc-role-and-workflows": {
+            "title": "Ce que fait un SOC et comment il fonctionne",
+            "objectives.0": "Expliquer les trois questions auxquelles tout SOC répond",
+            "objectives.1": "Décrire le cycle de vie d’une alerte et expliquer pourquoi chaque clôture doit être motivée",
+            "body_md": {
+                "file": "lessons/soc-role-and-workflows.md"
+            },
+            "knowledge_checks.0.question": "Un analyste clôture une alerte avec la seule mention « Clôturé ». Quel est le principal problème ?",
+            "knowledge_checks.0.options.0": "Aucun : l’objectif est de clôturer vite",
+            "knowledge_checks.0.options.1": "Sans motif, l’alerte ne peut servir ni à l’ajustement des règles ni à une revue",
+            "knowledge_checks.0.options.2": "Les alertes ne doivent jamais être clôturées par le niveau 1",
+            "knowledge_checks.0.options.3": "L’alerte aurait dû être supprimée",
+            "knowledge_checks.0.explanation": "Les motifs de clôture alimentent l’ajustement des règles de détection et rendent les décisions vérifiables."
+        }
+    },
+    "labs": {
+        "phishing-compromise-timeline": {
+            "title": "Investiguer une compromission par hameçonnage à l’aide d’une chronologie",
+            "summary": "Remettre dans l’ordre les étapes d’une compromission partie d’un e-mail d’hameçonnage, identifier le mécanisme de persistance et déterminer qui d’autre a été ciblé.",
+            "content.scenario": "Des collaborateurs du service financier signalent un e-mail suspect intitulé « remittance details ». Le SOC a regroupé dans une seule vue les événements de la passerelle de messagerie, de la protection des clics sur les liens, du proxy, des postes de travail et du registre.",
+            "content.scope": "Utilisez uniquement l’extrait d’événements combiné. Toutes les heures sont en UTC.",
+            "content.instructions": "Triez et lisez les événements, puis répondez aux questions. Pour la chronologie, attribuez à chaque étape son rang (1 = la plus ancienne).",
+            "content.simulationNotice": "Ceci est une simulation. Toutes les données sont fictives et générées par AMANIQ Academy pour la formation. Aucun système, aucune personne ni aucune organisation réels ne sont concernés, et rien de ce que vous faites ici ne sort de la plateforme.",
+            "content.objectives.0": "Construire une chronologie ordonnée à partir de sources variées",
+            "content.objectives.1": "Identifier la persistance",
+            "content.objectives.2": "Déterminer les destinataires et les clics",
+            "content.tasks[order].prompt": "Remettez dans l’ordre les cinq étapes de la compromission.",
+            "content.tasks[order].hints.0": "Triez par TimeGenerated, par ordre croissant.",
+            "content.tasks[order].input.rows[deliver].label": "E-mail d’hameçonnage remis à trois utilisateurs",
+            "content.tasks[order].input.rows[click].label": "p.etim clique sur le lien",
+            "content.tasks[order].input.rows[download].label": "Téléchargement de l’archive ZIP",
+            "content.tasks[order].input.rows[persist].label": "Création d’une persistance par clé Run",
+            "content.tasks[order].input.rows[c2].label": "Première requête POST sortante vers un nouveau domaine",
+            "content.tasks[order].input.columns[step].label": "Rang",
+            "content.tasks[order].input.columns[step].options[1].label": "Étape 1",
+            "content.tasks[order].input.columns[step].options[2].label": "Étape 2",
+            "content.tasks[order].input.columns[step].options[3].label": "Étape 3",
+            "content.tasks[order].input.columns[step].options[4].label": "Étape 4",
+            "content.tasks[order].input.columns[step].options[5].label": "Étape 5",
+            "content.tasks[persistence].prompt": "Quel est le **nom de la valeur de registre** utilisée pour la persistance ?",
+            "content.tasks[persistence].hints.0": "Regardez la source Registry.",
+            "content.tasks[c2-domain].prompt": "Quel domaine a reçu la première requête POST sortante depuis le poste infecté ?",
+            "content.tasks[c2-domain].hints.0": "L’événement Proxy qui suit la modification du registre.",
+            "content.tasks[recipients].prompt": "Quels utilisateurs ont **reçu** l’e-mail d’hameçonnage ? Sélectionnez toutes les réponses.",
+            "content.tasks[recipients].hints.0": "Les lignes EmailGateway.",
+            "content.tasks[recipients].input.options[p.etim].label": "p.etim",
+            "content.tasks[recipients].input.options[o.adamu].label": "o.adamu",
+            "content.tasks[recipients].input.options[l.usman].label": "l.usman",
+            "content.tasks[recipients].input.options[a.bello].label": "a.bello",
+            "content.tasks[technique].prompt": "Quelle technique ATT&CK décrit l’accès initial ?",
+            "content.tasks[technique].hints.0": "L’e-mail contenait un lien, pas une pièce jointe.",
+            "content.tasks[technique].input.options[t1566002].label": "T1566.002 Phishing: Spearphishing Link (hameçonnage ciblé par lien)",
+            "content.tasks[technique].input.options[t1566001].label": "T1566.001 Phishing: Spearphishing Attachment (hameçonnage ciblé par pièce jointe)",
+            "content.tasks[technique].input.options[t1190].label": "T1190 Exploit Public-Facing Application (exploitation d’une application exposée)",
+            "validator.tasks.order.feedback.correct": "Séquence correcte.",
+            "validator.tasks.order.feedback.incorrect": "Triez l’extrait par heure et vérifiez à nouveau chaque étape.",
+            "validator.tasks.persistence.feedback.correct": "Correct : une clé Run qui se fait passer pour un logiciel Adobe.",
+            "validator.tasks.persistence.feedback.incorrect": "Lisez le nom de la valeur dans l’événement Registry (après Run\\).",
+            "validator.tasks.c2-domain.feedback.correct": "Correct.",
+            "validator.tasks.c2-domain.feedback.incorrect": "Vérifiez l’événement Proxy de 08:55:02.",
+            "validator.tasks.recipients.feedback.correct": "Correct : trois destinataires, une compromission réussie et un clic bloqué.",
+            "validator.tasks.recipients.feedback.incorrect": "Utilisez les lignes de remise EmailGateway.",
+            "validator.tasks.technique.feedback.correct": "Correct.",
+            "validator.tasks.technique.feedback.incorrect": "Le message contenait un lien."
+        }
+    },
+    "questions": {
+        "soc-001": {
+            "prompt": "Quelle affirmation décrit le mieux la différence entre une alerte et un incident ?",
+            "explanation": "Une alerte est une notification qui doit être validée ; un incident est un problème confirmé.",
+            "objective": "Définir les alertes et les incidents",
+            "options.1": "Ce sont des synonymes",
+            "options.2": "Une alerte est une hypothèse qui doit être triée ; un incident est un problème confirmé qui exige une réponse",
+            "options.3": "Les incidents sont générés automatiquement ; les alertes sont signalées par les utilisateurs",
+            "options.4": "Les alertes proviennent uniquement des antivirus"
+        }
+    }
+}

@@ -79,6 +79,13 @@ final class LearningService
                 'labs' => fn ($q) => $q->where('status', 'published')->orderBy('position')->select('id', 'course_module_id', 'slug', 'title', 'summary', 'difficulty', 'estimated_minutes', 'required'),
             ])->get();
 
+        // Titles and summaries in the learner's language where an approved translation exists.
+        $translations = app(TranslationService::class);
+        $translations->localise($enrolment->specialization);
+        $translations->localiseLoaded($modules);
+        $translations->localiseLoaded($modules->flatMap->lessons);
+        $translations->localiseLoaded($modules->flatMap->labs);
+
         $done = LessonProgress::where('user_id', $user->id)->pluck('lesson_id')->flip();
         $passed = LabCompletion::where('user_id', $user->id)->pluck('lab_id')->flip();
         foreach ($modules as $m) {
@@ -113,6 +120,7 @@ final class LearningService
         }
         $summary = $course['orderedLessons'][$index];
         $lesson = Lesson::with('sources')->findOrFail($summary->id);
+        app(TranslationService::class)->localise($lesson);   // full check: approved, complete and current
 
         return [
             'course' => $course,
@@ -146,7 +154,8 @@ final class LearningService
             ->map(function (Enrolment $e) use ($user) {
                 $course = $this->learnerCourse($user, $e->specialization->slug);
 
-                return ['spec' => $e->specialization, 'enrolment' => $e, 'requirements' => $course['requirements'], 'nextLesson' => $course['nextLesson'], 'certificate' => $course['certificate']];
+                // The course's copy of the programme carries the learner's language.
+                return ['spec' => $course['spec'], 'enrolment' => $e, 'requirements' => $course['requirements'], 'nextLesson' => $course['nextLesson'], 'certificate' => $course['certificate']];
             });
 
         return [

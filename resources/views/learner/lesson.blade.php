@@ -17,7 +17,9 @@
                     <div class="border-t border-border p-4"><x-learn.course-nav :course="$course" :module="$module" :lesson="$lesson" :slug="$slug" /></div>
                 </details>
 
-                <article>
+                <x-site.english-notice :item="$lesson" kind="lesson" class="mb-6" />
+                {{-- English shown on a French page is marked as English for screen readers. --}}
+                <article @if ($lesson->shownInEnglish()) lang="en" @endif>
                     <p class="text-sm text-accent">{{ __('Module :n', ['n' => $module->position]) }} · {{ $module->title }}</p>
                     <h1 class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{{ $lesson->title }}</h1>
                     <div class="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted">

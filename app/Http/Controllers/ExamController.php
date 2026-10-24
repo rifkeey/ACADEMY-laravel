@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\RuleViolation;
 use App\Models\ExamAttempt;
 use App\Services\ExamService;
+use App\Services\TranslationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,7 +17,10 @@ class ExamController extends Controller
 
     public function show(Request $request, string $slug): View
     {
-        return view('learner.exam', $this->exams->status($request->user(), $slug) + ['slug' => $slug]);
+        $status = $this->exams->status($request->user(), $slug);
+        app(TranslationService::class)->localiseLoaded([$status['exam'] ?? null]);
+
+        return view('learner.exam', $status + ['slug' => $slug]);
     }
 
     public function start(Request $request, string $slug): RedirectResponse

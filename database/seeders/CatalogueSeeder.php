@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\BadgeDefinition;
+use App\Models\ContentTranslation;
 use App\Models\CourseModule;
 use App\Models\CourseVersion;
 use App\Models\Exam;
@@ -15,6 +16,8 @@ use App\Models\Question;
 use App\Models\QuestionBank;
 use App\Models\SourceReference;
 use App\Models\Specialization;
+use App\Services\TranslationService;
+use App\Translation\TranslationTypes;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -39,6 +42,7 @@ class CatalogueSeeder extends Seeder
             foreach (glob("{$root}/programmes/*/programme.json") as $file) {
                 $def = json_decode(file_get_contents($file), true, flags: JSON_THROW_ON_ERROR);
                 $this->seedProgramme($def, dirname($file), $sourceIds);
+                $this->seedTranslations($def['slug'], dirname($file));
             }
 
             $this->seedArticles($root);
@@ -61,6 +65,60 @@ class CatalogueSeeder extends Seeder
         }
 
         return SourceReference::pluck('id', 'key')->all();
+    }
+
+    /**
+     * Translations from programmes/<dir>/<locale>/translations.json, keyed by the same stable keys
+     * as the English (module, lesson and lab slugs, question keys); see database/content/README.md.
+     * They are always loaded as drafts: nothing reaches learners until a reviewer approves it in
+     * Admin. Insert-if-missing, like the rest of this seeder, so Admin edits are never overwritten.
+     */
+    private function seedTranslations(string $slug, string $dir): void
+    {
+        $spec = Specialization::where('slug', $slug)->first();
+        $version = $spec?->current_version_id ? CourseVersion::find($spec->current_version_id) : null;
+        if (! $version) {
+            return;
+        }
+        $translations = app(TranslationService::class);
+        foreach (glob("{$dir}/*/translations.json") as $file) {
+            $locale = basename(dirname($file));
+            if (! in_array($locale, TranslationTypes::LOCALES, true)) {
+                continue;
+            }
+            $data = json_decode(file_get_contents($file), true, flags: JSON_THROW_ON_ERROR);
+            $origin = in_array($data['origin'] ?? null, ['human', 'machine'], true) ? $data['origin'] : 'machine';
+            $moduleIds = CourseModule::where('course_version_id', $version->id)->pluck('id', 'slug');
+            $targets = [['programme', $spec, $data['programme'] ?? []]];
+            foreach ($data['modules'] ?? [] as $key => $segs) {
+                $targets[] = ['module', CourseModule::where('course_version_id', $version->id)->where('slug', $key)->first(), $segs];
+            }
+            foreach ($data['lessons'] ?? [] as $key => $segs) {
+                $targets[] = ['lesson', Lesson::whereIn('course_module_id', $moduleIds->values())->where('slug', $key)->first(), $segs];
+            }
+            foreach ($data['labs'] ?? [] as $key => $segs) {
+                $targets[] = ['lab', Lab::where('course_version_id', $version->id)->where('slug', $key)->first(), $segs];
+            }
+            $bankId = Exam::where('course_version_id', $version->id)->value('question_bank_id');
+            foreach ($data['questions'] ?? [] as $key => $segs) {
+                $targets[] = ['question', $bankId ? Question::where('question_bank_id', $bankId)->where('external_key', $key)->first() : null, $segs];
+            }
+            foreach ($targets as [$type, $item, $segs]) {
+                if (! $item || $segs === [] || ContentTranslation::where('item_type', $type)->where('item_id', $item->id)->where('locale', $locale)->exists()) {
+                    continue;
+                }
+                // A segment may point at a file next to translations.json: {"body_md": {"file": "lessons/x.md"}}.
+                $segs = array_map(fn ($v) => is_array($v) && isset($v['file']) ? file_get_contents(dirname($file).'/'.$v['file']) : $v, $segs);
+                $english = $translations->english($item);
+                $segments = [];
+                foreach ($segs as $path => $text) {
+                    if (isset($english[$path]) && is_string($text) && trim($text) !== '') {
+                        $segments[$path] = ['source' => $english[$path]['text'], 'text' => rtrim($text, "\n")];
+                    }
+                }
+                ContentTranslation::create(['item_type' => $type, 'item_id' => $item->id, 'locale' => $locale, 'segments' => $segments, 'status' => 'draft', 'origin' => $origin]);
+            }
+        }
     }
 
     private function seedProgramme(array $def, string $dir, array $sourceIds): void

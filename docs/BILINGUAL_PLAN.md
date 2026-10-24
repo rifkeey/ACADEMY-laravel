@@ -102,7 +102,9 @@ Production needs: AMANIQ's own merchant account and live keys, the webhook URL r
 
 ### Content translations
 
-One translation table per content type, never duplicate courses:
+> **Changed when built (Phase 4):** instead of one table per content type, a single `content_translations` table holds every type, with the translated text stored as **segments** (each piece of English prose, by its path, with the English it was translated from and the French). Same rules as below, but one editor, one review queue and one out-of-date check for all content, and a lab translation can never change a task, option id or answer key, because the French is laid over the English structure rather than stored as a copy. See section 7, Phase 4.
+
+The original design (one translation table per content type, never duplicate courses):
 
 | Table | Key | Translated fields |
 | --- | --- | --- |
@@ -229,3 +231,20 @@ Rules:
 6. Do learners return to `success_url`/`error_url` with any query parameters?
 
 Until this is done, nothing here claims GeniusPay works with the real API.
+
+### Phase 4: content translation model and review workflow (24 October 2026), done
+
+- One table, `content_translations` (item type, item id, locale, segments, status, `outdated`, translator, origin, reviewer, review date and note), for programmes, modules, lessons, labs, questions, exams, badges and articles. English stays in the content tables; nothing was migrated destructively.
+- **Segments** (`App\Translation\Segments`): every piece of English prose has a path (`body_md`, `knowledge_checks.0.options.1`, `content.tasks[order].prompt`, `validator.tasks.order.feedback.correct`, `options.2` for question options by position). Each stores the English it was translated from and the French. Only prose keys are translated; ids, types, answer keys, lab data, KQL tables, starter policies and code are never touched, so a translated lab or quiz works exactly like the English (tested by marking the same answers in both languages). Accepted answers and required terms in written deliverables take **extra** French terms; the English ones always count.
+- **What learners see:** an item is shown in French only when its translation is approved, complete and current. Otherwise the English is shown with a French notice ("Cette leçon n'est pas encore disponible en français…") and marked `lang="en"`. Lesson and lab pages, the course outline, the dashboard, the catalogue and the programme page all follow this. Exam attempts take their question snapshot in the learner's language and record it (`exam_attempts.locale`); a started attempt never changes.
+- **Workflow:** draft → in review → approved. Saving any change to reviewed text returns it to draft. Sending for review needs every segment translated and current. Approval needs `translations.review` and a different person from the last editor or the sender (instructors and admins hold both permissions, so the reviewer can be given an instructor account). A reviewer can send back with a note. All steps are audited (`translation.saved`, `submitted`, `approved`, `returned`, `confirmed_current`).
+- **Out of date:** when English content is saved, its translations are checked segment by segment; changed or new English marks them out of date, and learners see the English until it is dealt with. The editor shows each changed segment with the previous English. For a small correction a reviewer can confirm the French still matches; new English text must be translated and reviewed.
+- **Versions:** a new draft course version copies the translations of its modules, lessons, labs and exam.
+- **Files:** `programmes/<dir>/fr/translations.json` (format in `database/content/README.md`) is loaded by the seeder as drafts, insert-if-missing. `"origin": "machine"` marks tool or AI drafts; the editor warns the reviewer to check them.
+- **Admin → French translations:** completeness per programme (approved, in review, draft, out of date, not started, with filters) and the editor, with each English segment beside its French field.
+- **Sample:** SOC module 1, its first lesson, the phishing timeline lab and question `soc-001` were drafted in French (origin `machine`) and are waiting for the reviewer; none is approved.
+- Tests: `ContentTranslationTest` (10 tests): segments never touch structure or answers, seeded drafts never reach learners, second-person approval, the sender of an imported draft cannot approve it, incomplete drafts refused, out-of-date detection and confirmation, the lab marked identically in both languages with French feedback, exam attempts keeping their language, version copies, and the admin editor over HTTP. Full suite: 84 tests passing.
+- Checked in the browser: the dashboard (4 drafts out of 88 SOC items); the editor with the machine-draft warning; the instructor sends the lesson for review and is blocked from approving it; the admin approves; the French learner then reads the lesson in French (headings, table and Markdown intact, code block kept in English) while the draft lab shows the English with the French notice. Afterwards the lesson was returned to draft and the temporary enrolment revoked on the development database.
+- Found and fixed while checking: sending an unchanged imported draft for review did not record the sender, which would have let them approve it themselves.
+
+**Not yet French:** all other course content (Phase 5). Articles are a translatable type, but the public article pages do not use translations yet; legal pages come from `legal.json` and get their French in Phase 5 with the marketing pages. The certificate's programme title is also Phase 5.

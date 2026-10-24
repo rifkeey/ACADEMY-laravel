@@ -163,6 +163,11 @@ Route::middleware(['auth', 'verified', 'staff'])->prefix('admin')->name('admin.'
     Route::get('/articles/{article}', [Admin\ArticleController::class, 'edit'])->name('articles.edit');
     Route::put('/articles/{article}', [Admin\ArticleController::class, 'update'])->name('articles.update');
 
+    Route::get('/translations', [Admin\TranslationController::class, 'index'])->name('translations.index');
+    Route::get('/translations/{type}/{id}', [Admin\TranslationController::class, 'edit'])->whereNumber('id')->name('translations.edit');
+    Route::put('/translations/{type}/{id}', [Admin\TranslationController::class, 'update'])->whereNumber('id')->name('translations.update');
+    Route::post('/translations/{type}/{id}/review', [Admin\TranslationController::class, 'review'])->whereNumber('id')->name('translations.review');
+
     Route::get('/sources', [Admin\SourceController::class, 'index'])->name('sources.index');
     Route::post('/sources', [Admin\SourceController::class, 'store'])->name('sources.store');
     Route::put('/sources/{source}', [Admin\SourceController::class, 'update'])->name('sources.update');

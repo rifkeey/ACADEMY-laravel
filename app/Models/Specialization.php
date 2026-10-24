@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /** A programme (specialization) in the catalogue. */
 class Specialization extends Model
 {
+    use Translatable;
+
     /** Mass assignment is used only by trusted server code (services, seeders), never with raw request input. */
     protected $guarded = ['id'];
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /** A lesson. body_md is Markdown rendered with raw HTML escaped. */
 class Lesson extends Model
 {
+    use Translatable;
+
     /** Mass assignment is used only by trusted server code (services, seeders), never with raw request input. */
     protected $guarded = ['id'];
 

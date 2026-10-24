@@ -36,8 +36,9 @@
                     <x-ui.pill>{{ $spec->level }}</x-ui.pill>
                     <x-ui.pill>{{ __('Version :n', ['n' => $version->version]) }}</x-ui.pill>
                 </div>
-                <h1 class="mt-4 text-4xl font-semibold tracking-tight">{{ $spec->title }}</h1>
-                <p class="mt-4 text-lg leading-relaxed text-muted">{{ $spec->description }}</p>
+                <h1 class="mt-4 text-4xl font-semibold tracking-tight" @if ($spec->shownInEnglish()) lang="en" @endif>{{ $spec->title }}</h1>
+                <p class="mt-4 text-lg leading-relaxed text-muted" @if ($spec->shownInEnglish()) lang="en" @endif>{{ $spec->description }}</p>
+                <x-site.english-notice :item="$spec" kind="programme" class="mt-6" />
                 @if ($spec->content_status !== 'complete')
                     <x-ui.alert tone="warning" :title="__('Curriculum in development')" class="mt-6">{{ __('Module structure and starter lessons are published below so you can see what is planned. Enrolment opens once every lesson, lab and the final examination have been completed and reviewed.') }}</x-ui.alert>
                 @endif

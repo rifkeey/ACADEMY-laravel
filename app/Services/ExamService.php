@@ -101,6 +101,12 @@ final class ExamService
         }
         $random = new Randomizer;   // secure randomness for selection and option order
         $chosen = Grading::selectBalanced($pool, $exam->question_count, $random);
+        // The snapshot is taken in the learner's language: each question in approved, current
+        // French where available, otherwise English. The attempt never changes afterwards.
+        $translations = app(TranslationService::class);
+        foreach ($chosen as $q) {
+            $translations->localise($q);
+        }
 
         return DB::transaction(function () use ($user, $exam, $enrolment, $chosen, $random) {
             // Close any expired, never-submitted attempt (it scores zero) so a new one can open.
@@ -110,7 +116,7 @@ final class ExamService
             $number = ExamAttempt::where('user_id', $user->id)->where('exam_id', $exam->id)->lockForUpdate()->count() + 1;
             $attempt = ExamAttempt::create([
                 'public_id' => (string) Str::ulid(), 'user_id' => $user->id, 'exam_id' => $exam->id, 'enrolment_id' => $enrolment->id,
-                'attempt_number' => $number, 'exam_config_version' => $exam->config_version, 'pass_percent' => $exam->pass_percent,
+                'attempt_number' => $number, 'exam_config_version' => $exam->config_version, 'pass_percent' => $exam->pass_percent, 'locale' => app()->getLocale(),
                 'started_at' => now(), 'expires_at' => now()->addMinutes($exam->duration_minutes), 'total_count' => count($chosen),
             ]);
 

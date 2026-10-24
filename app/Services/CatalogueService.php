@@ -48,7 +48,8 @@ final class CatalogueService
                 $prices = $this->activePrices($s);
                 $s->setAttribute('prices', $prices);
                 $s->setAttribute('price', $prices->get(Currency::current()));
-            });
+            })
+            ->tap(fn ($list) => app(TranslationService::class)->localiseLoaded($list));
     }
 
     /** Full public programme detail for /programmes/{slug}. */
@@ -59,6 +60,8 @@ final class CatalogueService
             return null;
         }
         $version = $spec->currentVersion()->first();
+        $translations = app(TranslationService::class);
+        $translations->localise($spec);
         $modules = $version->modules()
             ->where('status', 'published')
             ->orderBy('position')
@@ -67,14 +70,21 @@ final class CatalogueService
                 'labs' => fn ($q) => $q->where('status', 'published')->orderBy('position')->select('id', 'course_module_id', 'slug', 'title', 'summary', 'difficulty', 'estimated_minutes'),
             ])
             ->get();
+        $translations->localiseLoaded($modules);
+        $translations->localiseLoaded($modules->flatMap->lessons);
+        $translations->localiseLoaded($modules->flatMap->labs);
+        $exam = $version->exam()->first();
+        $badge = $spec->badge()->first();
+        $translations->localiseLoaded([$exam]);
+        $translations->localiseLoaded([$badge]);
 
         return [
             'spec' => $spec,
             'version' => $version,
             'modules' => $modules,
             'labs' => $modules->flatMap->labs,
-            'exam' => $version->exam()->first(),
-            'badge' => $spec->badge()->first(),
+            'exam' => $exam,
+            'badge' => $badge,
             'price' => $this->activePrice($spec),
             'prices' => $this->activePrices($spec),
         ];

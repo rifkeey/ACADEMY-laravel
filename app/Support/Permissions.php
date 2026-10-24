@@ -16,6 +16,8 @@ final class Permissions
         'content.edit',        // programmes, modules, lessons, labs, sources, articles
         'content.publish',     // publish versions and programmes
         'questions.edit',      // question bank
+        'translations.edit',   // write and edit translated content (drafts)
+        'translations.review', // approve or send back translations (never one's own last edit)
         'exams.configure',
         'users.manage',        // roles and account status
         'enrolments.manage',   // complimentary enrolments, revocations
@@ -28,7 +30,8 @@ final class Permissions
 
     private const MATRIX = [
         'learner' => [],
-        'instructor' => ['admin.access', 'content.edit', 'questions.edit'],
+        // A French reviewer can be given an instructor account.
+        'instructor' => ['admin.access', 'content.edit', 'questions.edit', 'translations.edit', 'translations.review'],
         'admin' => self::ALL,
     ];
 

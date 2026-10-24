@@ -13,6 +13,7 @@
             ['admin.exams.index', __('Examinations'), 'file-check-2', 'exams.configure', 'admin.exams.*'],
             ['admin.sources.index', __('Sources'), 'library', 'content.edit', 'admin.sources.*'],
             ['admin.articles.index', __('Articles'), 'book-open', 'content.edit', 'admin.articles.*'],
+            ['admin.translations.index', __('French translations'), 'languages', 'translations.edit', 'admin.translations.*'],
         ],
         __('Learners and sales') => [
             ['admin.users.index', __('Users'), 'users', 'users.manage', 'admin.users.*'],

@@ -49,3 +49,21 @@ Images go in `public/content/<programme>/` and are referenced as `![alt text](/c
 - `deliverable`: a written answer with `input.title`, `input.competency`, `input.minWords`, `input.rubric` and an optional `input.template`; the validator's `mustMention` groups (`label`, `any`) check completeness. Deliverables appear in the learner's Portfolio.
 
 Put the worked solution and debrief in `validator.debrief` (Markdown): it is sent only after the lab is passed. `content.reflection` is a list of questions shown at the end of the lab.
+
+## Translations (`programmes/<dir>/fr/`)
+
+French course content lives beside the English in `programmes/<dir>/fr/translations.json`, keyed by the same stable keys (module, lesson and lab slugs, question keys). Each item lists **segments**: the path of a piece of English prose and its French. Long texts can point at a file: `"body_md": {"file": "lessons/<slug>.md"}`.
+
+```json
+{
+  "origin": "machine",
+  "modules": { "soc-fundamentals": { "title": "…", "objectives.0": "…" } },
+  "lessons": { "soc-role-and-workflows": { "title": "…", "body_md": { "file": "lessons/soc-role-and-workflows.md" } } },
+  "labs": { "phishing-compromise-timeline": { "content.tasks[order].prompt": "…", "validator.tasks.order.feedback.correct": "…" } },
+  "questions": { "soc-001": { "prompt": "…", "options.2": "…" } }
+}
+```
+
+- Paths are listed in **Admin → French translations** next to each English segment (`App\Translation\Segments` defines them). Only prose can be translated: ids, answer keys, lab data, KQL, IP addresses, starter policies and code blocks are shared with the English and cannot change.
+- `validator.tasks.<id>.accept` and `…mustMention.N.any` take **extra** French terms, one per line; the English terms are always accepted.
+- The seeder loads these files as **drafts** (insert-if-missing). Nothing reaches learners until a reviewer approves it in Admin. Set `"origin": "machine"` for anything produced by a translation tool or AI, so the editor flags it for a careful check.

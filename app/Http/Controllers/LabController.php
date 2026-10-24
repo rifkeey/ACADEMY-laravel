@@ -8,6 +8,7 @@ use App\Models\LabAttempt;
 use App\Models\LabCompletion;
 use App\Services\LabService;
 use App\Services\LearningService;
+use App\Services\TranslationService;
 use App\Support\RichMarkdown;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,18 +19,26 @@ class LabController extends Controller
 {
     public function __construct(private readonly LabService $labs, private readonly LearningService $learning) {}
 
-    /** Resolves a lab by slug inside the version the learner is enrolled in. */
-    private function lab(Request $request, string $slug, string $labSlug): Lab
+    /**
+     * Resolves a lab by slug inside the version the learner is enrolled in. With $translate, the
+     * lab's approved translation is laid over it: same tasks, ids and answer keys, French prose
+     * and feedback, and French terms accepted alongside the English ones.
+     */
+    private function lab(Request $request, string $slug, string $labSlug, bool $translate = false): Lab
     {
         $enrolment = $this->learning->activeEnrolment($request->user(), $slug);
         abort_unless($enrolment, 403, 'You are not enrolled in this programme.');
+        $lab = Lab::where('course_version_id', $enrolment->course_version_id)->where('slug', $labSlug)->where('status', 'published')->firstOrFail();
+        if ($translate) {
+            app(TranslationService::class)->localise($lab);
+        }
 
-        return Lab::where('course_version_id', $enrolment->course_version_id)->where('slug', $labSlug)->where('status', 'published')->firstOrFail();
+        return $lab;
     }
 
     public function show(Request $request, string $slug, string $labSlug): View
     {
-        $lab = $this->lab($request, $slug, $labSlug);
+        $lab = $this->lab($request, $slug, $labSlug, translate: true);
         $attempts = LabAttempt::where('user_id', $request->user()->id)->where('lab_id', $lab->id)->latest('submitted_at')->limit(10)->get();
 
         return view('learner.lab', [
@@ -54,7 +63,7 @@ class LabController extends Controller
     public function submit(Request $request, string $slug, string $labSlug): JsonResponse
     {
         $data = $request->validate(['answers' => ['present', 'array'], 'hints_used' => ['nullable', 'integer', 'min:0', 'max:100']]);
-        $lab = $this->lab($request, $slug, $labSlug);
+        $lab = $this->lab($request, $slug, $labSlug, translate: true);
         $result = $this->labs->submit($request->user(), $lab, $data['answers'], (int) ($data['hints_used'] ?? 0));
 
         // Only results and feedback go back to the browser, never the answer keys.

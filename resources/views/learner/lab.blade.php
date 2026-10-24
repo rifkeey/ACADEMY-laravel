@@ -33,6 +33,7 @@
             <a href="{{ route('learn.course', $slug) }}" class="hover:text-text">{{ $spec->title }}</a> <span aria-hidden="true">/</span> <span class="text-text">{{ __('Lab') }}</span>
         </nav>
 
+        <x-site.english-notice :item="$lab" kind="lab" class="mb-6" />
         <header class="flex flex-col gap-4 border-b border-border pb-6 lg:flex-row lg:items-end lg:justify-between">
             <div class="max-w-3xl">
                 <p class="text-sm font-semibold uppercase tracking-[0.14em] text-accent">{{ __('Practical lab') }}</p>

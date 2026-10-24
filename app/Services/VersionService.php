@@ -51,18 +51,22 @@ final class VersionService
                 'status' => 'draft',
             ]);
 
-            // Copy modules and lessons (with their sources), then labs and the exam settings.
+            // Copy modules and lessons (with their sources), then labs and the exam settings, each
+            // with its translations: the copies start with the same English, so they stay current.
+            $translations = app(TranslationService::class);
             $moduleMap = [];
             foreach ($current->modules()->get() as $m) {
                 $copy = $m->replicate(['course_version_id']);
                 $copy->course_version_id = $draft->id;
                 $copy->save();
                 $moduleMap[$m->id] = $copy->id;
+                $translations->copy('module', $m->id, $copy->id);
                 foreach (Lesson::where('course_module_id', $m->id)->with('sources')->get() as $l) {
                     $lc = $l->replicate(['course_module_id']);
                     $lc->course_module_id = $copy->id;
                     $lc->save();
                     $lc->sources()->sync($l->sources->pluck('id'));
+                    $translations->copy('lesson', $l->id, $lc->id);
                 }
             }
             foreach (Lab::where('course_version_id', $current->id)->get() as $lab) {
@@ -70,12 +74,14 @@ final class VersionService
                 $copy->course_version_id = $draft->id;
                 $copy->course_module_id = $lab->course_module_id ? ($moduleMap[$lab->course_module_id] ?? null) : null;
                 $copy->save();
+                $translations->copy('lab', $lab->id, $copy->id);
             }
             if ($exam = Exam::where('course_version_id', $current->id)->first()) {
                 $copy = $exam->replicate(['course_version_id']);
                 $copy->course_version_id = $draft->id;
                 $copy->config_version = 1;
                 $copy->save();
+                $translations->copy('exam', $exam->id, $copy->id);
             }
             AuditLogger::record($actor->id, 'version.draft_created', 'course_version', $draft->id, ['programme' => $spec->slug, 'version' => $draft->version]);
 
