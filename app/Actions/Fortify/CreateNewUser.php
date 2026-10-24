@@ -23,14 +23,18 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => ['accepted'],
         ], [
-            'name.required' => 'Enter your full name as it should appear on certificates.',
-            'terms.accepted' => 'You must accept the terms and the acceptable-use policy.',
+            'name.required' => __('Enter your full name as it should appear on certificates.'),
+            'terms.accepted' => __('You must accept the terms and the acceptable-use policy.'),
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => trim($input['name']),
             'email' => mb_strtolower(trim($input['email'])),
             'password' => $input['password'],   // hashed by the model's "hashed" cast
         ]);
+        // Keep the language the visitor was using, so emails (verification first) arrive in it.
+        $user->forceFill(['locale' => app()->getLocale()])->save();
+
+        return $user;
     }
 }

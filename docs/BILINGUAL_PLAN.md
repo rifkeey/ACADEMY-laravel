@@ -172,3 +172,19 @@ Rules:
 - **Legal pages** in French need a lawyer's approval before launch.
 - **GeniusPay** is untested until sandbox credentials are provided; live readiness needs AMANIQ's own merchant account.
 - **Exchange-rate suggestions** are a convenience only. Prices are business decisions for the owner.
+
+## 7. Progress
+
+### Phase 1: language infrastructure and interface text (24 October 2026), done
+
+- `config/academy.php` lists the locales; `App\Support\Locales` and the `lroute()` helper map public routes to their `/fr` equivalents.
+- Public pages are registered once per language (`routes/web.php`): English URLs and route names unchanged, French under `/fr` with `fr.` names.
+- `SetLocale` middleware: URL prefix, then the signed-in user's `locale`, then the `locale` cookie, then `Accept-Language`, then English. An explicit French choice redirects English public pages to their French version; visitors without a choice (including search engines) are never redirected.
+- EN | FR switch in the site and admin headers (`/language/{locale}?to=…`): saves the cookie and, for signed-in users, `users.locale`; returns to the same page in the chosen language; refuses outside targets. Also shown on the Account page.
+- New accounts keep the language they registered in; `User::preferredLocale()` sends verification and reset emails in that language.
+- All interface text in the 87 views, controller and service messages, lab grader feedback and script messages goes through `__()`; `lang/fr.json` has 1,071 French entries; `lang/fr/{auth,passwords,pagination,validation}.php` translate Laravel's own messages, with French field names.
+- Dates use `translatedFormat`, so month names follow the language. Role names use `App\Support\Labels::role()`.
+- Tests: `LocalisationTest` (8 tests) covers URLs, the switch, cookie and profile persistence, staying signed in with progress unchanged, no redirect for new visitors, refusing outside redirects, French validation and email text, and that every key in the code has French with matching placeholders. Full suite: 54 tests passing.
+- Checked in the browser: French home, programme, catalogue, corporate, dashboard and admin pages; switching back and forth while signed in; no horizontal scrolling at 375 px.
+
+**Not yet French:** course and article content, programme titles and the certificate's programme title (Phase 4–5), and prices (still naira only: the home page says "Tarifs en naira" until Phase 2). French text is a draft for the reviewer; nothing is marked approved.

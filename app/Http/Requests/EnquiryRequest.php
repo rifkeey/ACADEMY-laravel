@@ -24,6 +24,6 @@ class EnquiryRequest extends FormRequest
 
     public function messages(): array
     {
-        return ['message.min' => 'Tell us a little more (at least 10 characters).'];
+        return ['message.min' => __('Tell us a little more (at least 10 characters).')];
     }
 }

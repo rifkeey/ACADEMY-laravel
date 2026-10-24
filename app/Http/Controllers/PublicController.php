@@ -50,7 +50,7 @@ class PublicController extends Controller
         unset($data['website']);
         Enquiry::create($data);
 
-        return back()->with('success', 'Thank you. Your enquiry has been received and a member of the AMANIQ Academy team will reply by email.');
+        return back()->with('success', __('Thank you. Your enquiry has been received and a member of the AMANIQ Academy team will reply by email.'));
     }
 
     public function resources(): View

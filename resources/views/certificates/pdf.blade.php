@@ -32,19 +32,19 @@
     <div class="division">ACADEMY</div>
     <div class="frame"></div>
 
-    <div class="centre muted" style="top: 158px; font-size: 13px; font-weight: bold; letter-spacing: 1px;">CERTIFICATE OF COMPLETION</div>
-    <div class="centre muted" style="top: 196px; font-size: 13px;">This certifies that</div>
+    <div class="centre muted" style="top: 158px; font-size: 13px; font-weight: bold; letter-spacing: 1px;">{{ __('CERTIFICATE OF COMPLETION') }}</div>
+    <div class="centre muted" style="top: 196px; font-size: 13px;">{{ __('This certifies that') }}</div>
     {{-- Names are printed exactly as entered (Noto Sans covers Yoruba, Igbo and Hausa letters). --}}
     <div class="centre" style="top: 222px; font-size: 34px; font-weight: bold;">{{ Normalizer::normalize($certificate->holder_name, Normalizer::FORM_C) }}</div>
-    <div class="centre muted" style="top: 290px; font-size: 13px;">has successfully completed the AMANIQ Academy programme</div>
+    <div class="centre muted" style="top: 290px; font-size: 13px;">{{ __('has successfully completed the AMANIQ Academy programme') }}</div>
     <div class="centre" style="top: 312px; font-size: 24px; font-weight: bold; color: #0b1220;">{{ $certificate->programme_title }}</div>
-    <div class="centre muted" style="top: 356px; font-size: 11px;">including all required lessons, practical labs and the final examination (pass mark 75%).</div>
+    <div class="centre muted" style="top: 356px; font-size: 11px;">{{ __('including all required lessons, practical labs and the final examination (pass mark 75%).') }}</div>
 
     <div class="details">
-        <div class="label">Certificate number</div><div class="value">{{ $certificate->certificate_number }}</div>
-        <div class="label">Issue date</div><div class="value">{{ $certificate->issued_at->format('Y-m-d') }}</div>
-        <div class="label">Course version</div><div class="value">{{ $certificate->course_version }}</div>
-        <div class="label">Issued by</div><div class="value">{{ config('academy.issuer') }}</div>
+        <div class="label">{{ __('Certificate number') }}</div><div class="value">{{ $certificate->certificate_number }}</div>
+        <div class="label">{{ __('Issue date') }}</div><div class="value">{{ $certificate->issued_at->format('Y-m-d') }}</div>
+        <div class="label">{{ __('Course version') }}</div><div class="value">{{ $certificate->course_version }}</div>
+        <div class="label">{{ __('Issued by') }}</div><div class="value">{{ __(config('academy.issuer')) }}</div>
     </div>
 
     @if ($signatory)
@@ -56,10 +56,10 @@
 
     <div class="qr">
         <img src="{{ $qr }}" alt="Verification QR code">
-        <div class="label" style="margin-top: 2px;">Verify this certificate</div>
+        <div class="label" style="margin-top: 2px;">{{ __('Verify this certificate') }}</div>
         <div class="verify">{{ preg_replace('#^https?://#', '', $verifyUrl) }}</div>
     </div>
 
-    <div class="footer">This certificate confirms completion of an AMANIQ Academy training programme. It is not a government-accredited qualification or a vendor certification.</div>
+    <div class="footer">{{ __('This certificate confirms completion of an AMANIQ Academy training programme. It is not a government-accredited qualification or a vendor certification.') }}</div>
 </body>
 </html>

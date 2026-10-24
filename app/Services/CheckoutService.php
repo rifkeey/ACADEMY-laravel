@@ -51,11 +51,11 @@ final class CheckoutService
     {
         $offer = $this->catalogue->activePrice($spec);
         if (! $offer) {
-            throw new RuleViolation('This programme is not currently priced.');
+            throw new RuleViolation(__('This programme is not currently priced.'));
         }
         $discount = $discountCode ? $this->findDiscount($discountCode, $spec) : null;
         if ($discountCode && ! $discount) {
-            throw new RuleViolation('That discount code is not valid for this programme.');
+            throw new RuleViolation(__('That discount code is not valid for this programme.'));
         }
 
         return ['offer' => $offer, 'discount' => $discount] + Money::applyDiscount($offer->amount_minor, $offer->currency, $discount);
@@ -65,15 +65,15 @@ final class CheckoutService
     public function createCheckout(User $user, Specialization $spec, ?string $discountCode): string
     {
         if (! $spec->enrolment_open || $spec->status !== 'published') {
-            throw new RuleViolation('Enrolment for this programme is not open yet.');
+            throw new RuleViolation(__('Enrolment for this programme is not open yet.'));
         }
         if (Enrolment::where('user_id', $user->id)->where('specialization_id', $spec->id)->exists()) {
-            throw new RuleViolation('You are already enrolled in this programme.');
+            throw new RuleViolation(__('You are already enrolled in this programme.'));
         }
         $q = $this->quote($spec, $discountCode);
         $provider = $this->provider();
         if (! $provider && $q['total_minor'] > 0) {
-            throw new RuleViolation('Online payment is not configured yet. Please contact us to enrol.');
+            throw new RuleViolation(__('Online payment is not configured yet. Please contact us to enrol.'));
         }
 
         $order = Order::create([
@@ -200,13 +200,13 @@ final class CheckoutService
         return DB::transaction(function () use ($actor, $email, $spec, $note) {
             $learner = User::where('email', trim($email))->first();
             if (! $learner) {
-                throw new RuleViolation('No account exists for that email. Ask the learner to register first.');
+                throw new RuleViolation(__('No account exists for that email. Ask the learner to register first.'));
             }
             if (! $spec->current_version_id) {
-                throw new RuleViolation('This programme has no published version.');
+                throw new RuleViolation(__('This programme has no published version.'));
             }
             if (Enrolment::where('user_id', $learner->id)->where('specialization_id', $spec->id)->exists()) {
-                throw new RuleViolation('That learner is already enrolled in this programme.');
+                throw new RuleViolation(__('That learner is already enrolled in this programme.'));
             }
             $enrolment = Enrolment::create([
                 'user_id' => $learner->id, 'specialization_id' => $spec->id, 'course_version_id' => $spec->current_version_id,
@@ -224,7 +224,7 @@ final class CheckoutService
         DB::transaction(function () use ($actor, $order, $reason) {
             $changed = Order::whereKey($order->id)->where('status', 'paid')->update(['status' => 'refunded', 'updated_at' => now()]);
             if (! $changed) {
-                throw new RuleViolation('Only paid orders can be marked as refunded.');
+                throw new RuleViolation(__('Only paid orders can be marked as refunded.'));
             }
             Payment::where('order_id', $order->id)->update(['status' => 'refunded']);
             Enrolment::where('order_id', $order->id)->update(['status' => 'revoked']);

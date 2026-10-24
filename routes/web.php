@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\LearnController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SeoController;
@@ -17,24 +18,35 @@ use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
-| Public website
+| Public website, once per language. English keeps the original URLs and route names; each
+| other language is prefixed (/fr/programmes, route "fr.programmes.index"). Use lroute() to link
+| to these pages in the current language.
 */
-Route::get('/', [PublicController::class, 'home'])->name('home');
-Route::get('/programmes', [CatalogueController::class, 'index'])->name('programmes.index');
-Route::get('/programmes/{specialization}', [CatalogueController::class, 'show'])->name('programmes.show');
-Route::get('/about', [PublicController::class, 'about'])->name('about');
-Route::get('/corporate', [PublicController::class, 'corporate'])->name('corporate');
-Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
-Route::post('/contact', [PublicController::class, 'storeEnquiry'])->middleware('throttle:enquiries')->name('contact.store');
-Route::get('/resources', [PublicController::class, 'resources'])->name('resources.index');
-Route::get('/resources/{article}', [PublicController::class, 'article'])->name('resources.show');
-Route::get('/legal/{doc}', [PublicController::class, 'legal'])->whereIn('doc', ['privacy', 'terms', 'acceptable-use', 'refunds'])->name('legal');
+$publicPages = function () {
+    Route::get('/', [PublicController::class, 'home'])->name('home');
+    Route::get('/programmes', [CatalogueController::class, 'index'])->name('programmes.index');
+    Route::get('/programmes/{specialization}', [CatalogueController::class, 'show'])->name('programmes.show');
+    Route::get('/about', [PublicController::class, 'about'])->name('about');
+    Route::get('/corporate', [PublicController::class, 'corporate'])->name('corporate');
+    Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
+    Route::post('/contact', [PublicController::class, 'storeEnquiry'])->middleware('throttle:enquiries')->name('contact.store');
+    Route::get('/resources', [PublicController::class, 'resources'])->name('resources.index');
+    Route::get('/resources/{article}', [PublicController::class, 'article'])->name('resources.show');
+    Route::get('/legal/{doc}', [PublicController::class, 'legal'])->whereIn('doc', ['privacy', 'terms', 'acceptable-use', 'refunds'])->name('legal');
 
-Route::middleware('throttle:verify')->group(function () {
-    Route::get('/verify', [VerifyController::class, 'index'])->name('verify.index');
-    Route::post('/verify', [VerifyController::class, 'lookup'])->name('verify.lookup');
-    Route::get('/verify/{credentialId}', [VerifyController::class, 'show'])->where('credentialId', '[A-Za-z0-9\-]{1,40}')->name('verify.show');
-});
+    Route::middleware('throttle:verify')->group(function () {
+        Route::get('/verify', [VerifyController::class, 'index'])->name('verify.index');
+        Route::post('/verify', [VerifyController::class, 'lookup'])->name('verify.lookup');
+        Route::get('/verify/{credentialId}', [VerifyController::class, 'show'])->where('credentialId', '[A-Za-z0-9\-]{1,40}')->name('verify.show');
+    });
+};
+$publicPages();
+foreach (array_diff(array_keys(config('academy.locales')), [config('academy.default_locale')]) as $locale) {
+    Route::prefix($locale)->name("{$locale}.")->group($publicPages);
+}
+
+// EN | FR switcher: saves the choice and returns to the same page in that language.
+Route::get('/language/{locale}', [LocaleController::class, 'switch'])->middleware('throttle:60,1')->name('locale.switch');
 
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');

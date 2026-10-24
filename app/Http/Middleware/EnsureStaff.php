@@ -19,7 +19,7 @@ class EnsureStaff
 
         if (config('academy.require_staff_two_factor') && ! $user->hasEnabledTwoFactorAuthentication()) {
             return redirect()->route('account.security')
-                ->with('warning', 'Administrators must turn on two-factor authentication before using the admin area.');
+                ->with('warning', __('Administrators must turn on two-factor authentication before using the admin area.'));
         }
 
         return $next($request);

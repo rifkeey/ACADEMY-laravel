@@ -1,8 +1,8 @@
 @php
     $columns = [
-        'Learn' => [[route('programmes.index'), 'All programmes'], [route('programmes.show', 'soc-analyst'), 'SOC Analyst'], [route('resources.index'), 'Learning resources'], [route('verify.index'), 'Verify a certificate']],
-        'Organisations' => [[route('corporate'), 'Corporate training'], [route('contact'), 'Contact and enquiries']],
-        'Policies' => [[route('legal', 'privacy'), 'Privacy policy'], [route('legal', 'terms'), 'Terms of service'], [route('legal', 'acceptable-use'), 'Acceptable use for labs'], [route('legal', 'refunds'), 'Refunds and cancellations']],
+        __('Learn') => [[lroute('programmes.index'), __('All programmes')], [lroute('programmes.show', 'soc-analyst'), __('SOC Analyst')], [lroute('resources.index'), __('Learning resources')], [lroute('verify.index'), __('Verify a certificate')]],
+        __('Organisations') => [[lroute('corporate'), __('Corporate training')], [lroute('contact'), __('Contact and enquiries')]],
+        __('Policies') => [[lroute('legal', 'privacy'), __('Privacy policy')], [lroute('legal', 'terms'), __('Terms of service')], [lroute('legal', 'acceptable-use'), __('Acceptable use for labs')], [lroute('legal', 'refunds'), __('Refunds and cancellations')]],
     ];
 @endphp
 <footer class="mt-24 border-t border-border bg-surface">
@@ -10,8 +10,7 @@
         <div class="max-w-xs">
             <x-brand.lockup division="Academy" size="sm" class="text-text" />
             <p class="mt-4 text-sm leading-relaxed text-muted">
-                Practical, professionally structured technology education. AMANIQ Academy is a business division of
-                <a href="https://amaniqgroup.com" class="text-text underline underline-offset-2">AMANIQ Projects Limited</a>.
+                {!! __('Practical, professionally structured technology education. AMANIQ Academy is a business division of :company.', ['company' => '<a href="https://amaniqgroup.com" class="text-text underline underline-offset-2">AMANIQ Projects Limited</a>']) !!}
             </p>
         </div>
         @foreach ($columns as $heading => $links)
@@ -26,7 +25,7 @@
         @endforeach
     </x-ui.container>
     <x-ui.container class="flex flex-col gap-2 border-t border-border py-6 text-xs text-subtle sm:flex-row sm:justify-between">
-        <p>© {{ now()->year }} AMANIQ Digital Labs. All rights reserved.</p>
-        <p>AMANIQ certificates confirm course completion. They are not government-accredited qualifications or vendor certifications.</p>
+        <p>{{ __('© :year AMANIQ Digital Labs. All rights reserved.', ['year' => now()->year]) }}</p>
+        <p>{{ __('AMANIQ certificates confirm course completion. They are not government-accredited qualifications or vendor certifications.') }}</p>
     </x-ui.container>
 </footer>

@@ -40,7 +40,7 @@ class LessonController extends Controller
             return $lesson;
         });
 
-        return redirect()->route('admin.lessons.edit', $lesson)->with('success', 'Lesson created as a draft.');
+        return redirect()->route('admin.lessons.edit', $lesson)->with('success', __('Lesson created as a draft.'));
     }
 
     public function edit(Lesson $lesson): View
@@ -85,7 +85,7 @@ class LessonController extends Controller
             AuditLogger::record($request->user()->id, 'lesson.updated', 'lesson', $lesson->id, ['fields' => array_keys($lesson->getChanges())]);
         });
 
-        return back()->with('success', 'Lesson saved.');
+        return back()->with('success', __('Lesson saved.'));
     }
 
     /**
@@ -97,7 +97,7 @@ class LessonController extends Controller
     {
         $checks = json_decode($json, true);
         if (! is_array($checks) || ! array_is_list($checks) || count($checks) > 20) {
-            throw new RuleViolation('Knowledge checks must be a JSON list of at most 20 items.');
+            throw new RuleViolation(__('Knowledge checks must be a JSON list of at most 20 items.'));
         }
         $clean = [];
         foreach ($checks as $i => $c) {
@@ -116,7 +116,7 @@ class LessonController extends Controller
                 && is_string($c['explanation'] ?? '') && is_string($c['code'] ?? '')
                 && (! isset($c['optionFeedback']) || (is_array($c['optionFeedback']) && count($c['optionFeedback']) <= $count));
             if (! $ok) {
-                throw new RuleViolation("Knowledge check {$n} needs a question, 2–8 text options, a valid answerIndex (or answerIndexes) and an explanation.");
+                throw new RuleViolation(__('Knowledge check :n needs a question, 2–8 text options, a valid answerIndex (or answerIndexes) and an explanation.', ['n' => $n]));
             }
             $item = ['question' => $c['question'], 'options' => $options];
             $item += $multi ? ['answerIndexes' => array_values(array_unique($c['answerIndexes']))] : ['answerIndex' => $c['answerIndex']];

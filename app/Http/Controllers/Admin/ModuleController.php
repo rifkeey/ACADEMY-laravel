@@ -40,7 +40,7 @@ class ModuleController extends Controller
             AuditLogger::record($request->user()->id, 'module.created', 'course_module', $m->id, ['version' => $version->id, 'title' => $m->title]);
         });
 
-        return back()->with('success', 'Module added as a draft.');
+        return back()->with('success', __('Module added as a draft.'));
     }
 
     public function update(Request $request, CourseModule $module): RedirectResponse
@@ -67,7 +67,7 @@ class ModuleController extends Controller
             AuditLogger::record($request->user()->id, 'module.updated', 'course_module', $module->id, ['fields' => array_keys($module->getChanges())]);
         });
 
-        return back()->with('success', 'Module saved.');
+        return back()->with('success', __('Module saved.'));
     }
 
     /** Swaps a module with its neighbour. */
@@ -105,6 +105,6 @@ class ModuleController extends Controller
             AuditLogger::record($request->user()->id, 'module.status', 'course_module', $module->id, $data);
         });
 
-        return back()->with('success', "Module is now {$data['status']}.");
+        return back()->with('success', __('Module is now :status.', ['status' => __($data['status'])]));
     }
 }

@@ -6,7 +6,7 @@
     $c2 = 'hsl('.(($hue + 40) % 360).' 65% 32%)';
     $gid = 'badge-'.$hue.'-'.\Illuminate\Support\Str::random(5);
 @endphp
-<div class="relative inline-flex shrink-0 items-center justify-center" style="width: {{ $size }}px; height: {{ $size }}px; opacity: {{ $awarded ? 1 : 0.45 }}" role="img" aria-label="{{ $name }} badge{{ $awarded ? '' : ' (not yet earned)' }}">
+<div class="relative inline-flex shrink-0 items-center justify-center" style="width: {{ $size }}px; height: {{ $size }}px; opacity: {{ $awarded ? 1 : 0.45 }}" role="img" aria-label="{{ $awarded ? __(':name badge', ['name' => $name]) : __(':name badge (not yet earned)', ['name' => $name]) }}">
     <svg viewBox="0 0 120 120" width="{{ $size }}" height="{{ $size }}" aria-hidden="true">
         <defs><linearGradient id="{{ $gid }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{{ $c1 }}"/><stop offset="1" stop-color="{{ $c2 }}"/></linearGradient></defs>
         <path d="M60 4 L108 30 L108 90 L60 116 L12 90 L12 30 Z" fill="url(#{{ $gid }})"/>

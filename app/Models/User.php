@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Support\Locales;
 use App\Support\Permissions;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +17,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * An account. `role` and `status` are deliberately NOT mass-assignable: only administrator
  * actions change them, through explicit assignments that are audited.
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements HasLocalePreference, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
@@ -23,9 +25,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = ['name', 'email', 'password', 'country'];
 
     // Same defaults as the database columns, so a freshly created user has them in memory too.
-    protected $attributes = ['role' => 'learner', 'status' => 'active'];
+    protected $attributes = ['role' => 'learner', 'status' => 'active', 'locale' => null];
 
     protected $hidden = ['password', 'remember_token', 'two_factor_secret', 'two_factor_recovery_codes'];
+
+    /** Language for emails and notifications: the saved choice, else the default. */
+    public function preferredLocale(): string
+    {
+        return Locales::isSupported($this->locale) ? $this->locale : Locales::default();
+    }
 
     protected function casts(): array
     {

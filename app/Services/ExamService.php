@@ -59,17 +59,17 @@ final class ExamService
 
         $reason = null;
         if ($exam->status !== 'published') {
-            $reason = 'The examination for this programme has not been published yet.';
+            $reason = __('The examination for this programme has not been published yet.');
         } elseif (! $requirements['examEligible']) {
-            $reason = 'Complete all required lessons and pass all required labs to unlock the examination.';
+            $reason = __('Complete all required lessons and pass all required labs to unlock the examination.');
         } elseif ($requirements['examPassed']) {
-            $reason = 'You have already passed this examination.';
+            $reason = __('You have already passed this examination.');
         } elseif ($used->count() >= $exam->max_attempts) {
-            $reason = "You have used all {$exam->max_attempts} attempts. Contact support if you need help.";
+            $reason = __('You have used all :max_attempts attempts. Contact support if you need help.', ['max_attempts' => $exam->max_attempts]);
         } elseif ($last = $used->first()) {
             $retakeAt = $last->started_at->copy()->addHours($exam->cooldown_hours);
             if ($retakeAt->isFuture() && ! $open) {
-                $reason = 'You can retake the examination after '.$retakeAt->format('j M Y, H:i').' UTC.';
+                $reason = __('You can retake the examination after :date UTC.', ['date' => $retakeAt->translatedFormat('j M Y, H:i')]);
             }
         }
 
@@ -97,7 +97,7 @@ final class ExamService
         $pool = Question::where('question_bank_id', $exam->question_bank_id)->where('review_status', 'approved')
             ->with(['options' => fn ($q) => $q->orderBy('position')])->get()->all();
         if (count($pool) < $exam->question_count) {
-            throw new RuleViolation('The question bank does not yet contain enough approved questions.');
+            throw new RuleViolation(__('The question bank does not yet contain enough approved questions.'));
         }
         $random = new Randomizer;   // secure randomness for selection and option order
         $chosen = Grading::selectBalanced($pool, $exam->question_count, $random);

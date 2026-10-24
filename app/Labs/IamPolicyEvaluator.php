@@ -27,41 +27,41 @@ final class IamPolicyEvaluator
     public static function parse(mixed $json): array
     {
         if (! is_string($json) || trim($json) === '' || strlen($json) > 20_000) {
-            return ['ok' => false, 'error' => 'Paste a JSON policy document (at most 20,000 characters).'];
+            return ['ok' => false, 'error' => __('Paste a JSON policy document (at most 20,000 characters).')];
         }
         $doc = json_decode($json, true);
         if (! is_array($doc)) {
-            return ['ok' => false, 'error' => 'The policy is not valid JSON: '.json_last_error_msg().'.'];
+            return ['ok' => false, 'error' => __('The policy is not valid JSON: :error.', ['error' => json_last_error_msg()])];
         }
         $raw = $doc['Statement'] ?? null;
         if (is_array($raw) && ! array_is_list($raw)) {
             $raw = [$raw];      // a single statement object is allowed, as in AWS
         }
         if (! is_array($raw) || ! $raw) {
-            return ['ok' => false, 'error' => 'The policy needs a "Statement" list.'];
+            return ['ok' => false, 'error' => __('The policy needs a "Statement" list.')];
         }
         if (count($raw) > self::MAX_STATEMENTS) {
-            return ['ok' => false, 'error' => 'Use at most '.self::MAX_STATEMENTS.' statements.'];
+            return ['ok' => false, 'error' => __('Use at most :max statements.', ['max' => self::MAX_STATEMENTS])];
         }
 
         $statements = [];
         foreach ($raw as $i => $s) {
-            $n = is_array($s) && is_string($s['Sid'] ?? null) ? "\"{$s['Sid']}\"" : 'statement '.($i + 1);
+            $n = is_array($s) && is_string($s['Sid'] ?? null) ? "\"{$s['Sid']}\"" : __('statement :n', ['n' => $i + 1]);
             if (! is_array($s)) {
-                return ['ok' => false, 'error' => "Statement {$n} must be an object."];
+                return ['ok' => false, 'error' => __(':statement must be an object.', ['statement' => $n])];
             }
             foreach (['Condition', 'NotAction', 'NotResource', 'Principal', 'NotPrincipal'] as $unsupported) {
                 if (array_key_exists($unsupported, $s)) {
-                    return ['ok' => false, 'error' => "{$n} uses \"{$unsupported}\", which this simulator does not evaluate. Express the requirement with Effect, Action and Resource."];
+                    return ['ok' => false, 'error' => __(':statement uses ":element", which this simulator does not evaluate. Express the requirement with Effect, Action and Resource.', ['statement' => $n, 'element' => $unsupported])];
                 }
             }
             if (! in_array($s['Effect'] ?? null, ['Allow', 'Deny'], true)) {
-                return ['ok' => false, 'error' => "{$n} needs \"Effect\": \"Allow\" or \"Deny\"."];
+                return ['ok' => false, 'error' => __(':statement needs "Effect": "Allow" or "Deny".', ['statement' => $n])];
             }
             $actions = self::list($s['Action'] ?? null);
             $resources = self::list($s['Resource'] ?? null);
             if (! $actions || ! $resources) {
-                return ['ok' => false, 'error' => "{$n} needs \"Action\" and \"Resource\" (a string or a list of strings)."];
+                return ['ok' => false, 'error' => __(':statement needs "Action" and "Resource" (a string or a list of strings).', ['statement' => $n])];
             }
             $statements[] = ['effect' => $s['Effect'], 'actions' => $actions, 'resources' => $resources, 'sid' => is_string($s['Sid'] ?? null) ? $s['Sid'] : null];
         }

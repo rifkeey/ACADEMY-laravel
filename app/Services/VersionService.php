@@ -25,10 +25,10 @@ final class VersionService
     {
         $v = CourseVersion::findOrFail($versionId);
         if ($v->status === 'retired') {
-            throw new RuleViolation('Retired versions are read-only.');
+            throw new RuleViolation(__('Retired versions are read-only.'));
         }
         if ($structural && $v->status === 'published') {
-            throw new RuleViolation('Structural changes require a draft version. Create a new draft from this version first.');
+            throw new RuleViolation(__('Structural changes require a draft version. Create a new draft from this version first.'));
         }
 
         return $v;
@@ -39,10 +39,10 @@ final class VersionService
         return DB::transaction(function () use ($actor, $spec) {
             $spec = Specialization::whereKey($spec->id)->lockForUpdate()->first();
             if (! $spec->current_version_id) {
-                throw new RuleViolation('Programme has no published version to copy.');
+                throw new RuleViolation(__('Programme has no published version to copy.'));
             }
             if ($existing = CourseVersion::where('specialization_id', $spec->id)->where('status', 'draft')->first()) {
-                throw new RuleViolation("Draft version {$existing->version} already exists. Publish or edit it instead.");
+                throw new RuleViolation(__('Draft version :version already exists. Publish or edit it instead.', ['version' => $existing->version]));
             }
             $current = CourseVersion::findOrFail($spec->current_version_id);
             $draft = CourseVersion::create([
@@ -88,7 +88,7 @@ final class VersionService
         DB::transaction(function () use ($actor, $version, $changelog) {
             $v = CourseVersion::whereKey($version->id)->lockForUpdate()->first();
             if ($v->status !== 'draft') {
-                throw new RuleViolation('Only draft versions can be published.');
+                throw new RuleViolation(__('Only draft versions can be published.'));
             }
             CourseVersion::where('specialization_id', $v->specialization_id)->where('status', 'published')->update(['status' => 'retired']);
             $v->forceFill(['status' => 'published', 'published_at' => now(), 'changelog' => $changelog])->save();

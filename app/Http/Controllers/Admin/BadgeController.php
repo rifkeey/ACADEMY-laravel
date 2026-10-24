@@ -42,6 +42,6 @@ class BadgeController extends Controller
             AuditLogger::record($request->user()->id, 'badge.updated', 'badge_definition', $badge->id, $badge->getChanges());
         });
 
-        return back()->with('success', 'Badge saved.');
+        return back()->with('success', __('Badge saved.'));
     }
 }

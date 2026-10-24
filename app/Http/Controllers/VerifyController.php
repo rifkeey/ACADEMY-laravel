@@ -19,7 +19,7 @@ class VerifyController extends Controller
     {
         $id = preg_replace('/[^0-9A-Z]/', '', strtoupper((string) $request->input('id', '')));
 
-        return redirect()->route('verify.show', $id !== '' ? $id : 'UNKNOWN');
+        return redirect(lroute('verify.show', $id !== '' ? $id : 'UNKNOWN'));
     }
 
     public function show(string $credentialId, CredentialService $credentials): View

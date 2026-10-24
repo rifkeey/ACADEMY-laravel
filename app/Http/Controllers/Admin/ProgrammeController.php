@@ -83,7 +83,7 @@ class ProgrammeController extends Controller
             AuditLogger::record($request->user()->id, 'programme.updated', 'specialization', $programme->id, ['fields' => array_keys($programme->getChanges())]);
         });
 
-        return back()->with('success', 'Programme details saved.');
+        return back()->with('success', __('Programme details saved.'));
     }
 
     /** Visibility and enrolment. Opening enrolment needs a published version and an active price. */
@@ -96,10 +96,10 @@ class ProgrammeController extends Controller
             'content_status' => ['required', Rule::in(['complete', 'in_development'])],
         ]);
         if ($data['status'] === 'published' && ! $programme->current_version_id) {
-            throw new RuleViolation('Publish a course version before publishing the programme.');
+            throw new RuleViolation(__('Publish a course version before publishing the programme.'));
         }
         if ($data['enrolment_open'] && ($data['status'] !== 'published' || ! $catalogue->activePrice($programme))) {
-            throw new RuleViolation('Enrolment can only open for a published programme with an active price.');
+            throw new RuleViolation(__('Enrolment can only open for a published programme with an active price.'));
         }
 
         DB::transaction(function () use ($request, $programme, $data) {
@@ -107,7 +107,7 @@ class ProgrammeController extends Controller
             AuditLogger::record($request->user()->id, 'programme.publication', 'specialization', $programme->id, $data);
         });
 
-        return back()->with('success', 'Publication settings saved.');
+        return back()->with('success', __('Publication settings saved.'));
     }
 
     public function createDraft(Request $request, Specialization $programme): RedirectResponse
@@ -116,7 +116,7 @@ class ProgrammeController extends Controller
         $draft = $this->versions->createDraft($request->user(), $programme);
 
         return redirect()->route('admin.programmes.edit', [$programme, 'version' => $draft->id])
-            ->with('success', "Draft version {$draft->version} created. Existing learners stay on their current version.");
+            ->with('success', __('Draft version :version created. Existing learners stay on their current version.', ['version' => $draft->version]));
     }
 
     public function publishVersion(Request $request, CourseVersion $version): RedirectResponse
@@ -126,7 +126,7 @@ class ProgrammeController extends Controller
         $this->versions->publish($request->user(), $version, $data['changelog']);
 
         return redirect()->route('admin.programmes.edit', [$version->specialization_id, 'version' => $version->id])
-            ->with('success', "Version {$version->version} is now live for new enrolments.");
+            ->with('success', __('Version :version is now live for new enrolments.', ['version' => $version->version]));
     }
 
     /**

@@ -33,6 +33,6 @@ class EnquiryController extends Controller
         $enquiry->forceFill($data)->save();
         AuditLogger::record($request->user()->id, 'enquiry.updated', 'enquiry', $enquiry->id, ['status' => $data['status']]);
 
-        return back()->with('success', 'Enquiry updated.');
+        return back()->with('success', __('Enquiry updated.'));
     }
 }

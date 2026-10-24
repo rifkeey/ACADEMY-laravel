@@ -44,11 +44,11 @@ class ExamController extends Controller
             'status' => ['required', Rule::in(['draft', 'published'])],
         ]);
         if ($exam->courseVersion->status === 'retired') {
-            throw new RuleViolation('This exam belongs to a retired version and is read-only.');
+            throw new RuleViolation(__('This exam belongs to a retired version and is read-only.'));
         }
         $approved = Question::where('question_bank_id', $exam->question_bank_id)->where('review_status', 'approved')->count();
         if ($data['status'] === 'published' && $approved < $data['question_count']) {
-            throw new RuleViolation("Only {$approved} approved questions are available; at least {$data['question_count']} are needed to publish.");
+            throw new RuleViolation(__('Only :approved approved questions are available; at least :question_count are needed to publish.', ['approved' => $approved, 'question_count' => $data['question_count']]));
         }
 
         DB::transaction(function () use ($request, $exam, $data) {
@@ -61,6 +61,6 @@ class ExamController extends Controller
             }
         });
 
-        return back()->with('success', 'Examination settings saved. Attempts already started keep their original settings.');
+        return back()->with('success', __('Examination settings saved. Attempts already started keep their original settings.'));
     }
 }

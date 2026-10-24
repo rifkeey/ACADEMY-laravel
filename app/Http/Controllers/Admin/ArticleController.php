@@ -40,7 +40,7 @@ class ArticleController extends Controller
             return $article;
         });
 
-        return redirect()->route('admin.articles.edit', $article)->with('success', 'Article created.');
+        return redirect()->route('admin.articles.edit', $article)->with('success', __('Article created.'));
     }
 
     public function edit(Article $article): View
@@ -59,7 +59,7 @@ class ArticleController extends Controller
             AuditLogger::record($request->user()->id, 'article.updated', 'article', $article->id, ['status' => $article->status]);
         });
 
-        return redirect()->route('admin.articles.edit', $article)->with('success', 'Article saved.');
+        return redirect()->route('admin.articles.edit', $article)->with('success', __('Article saved.'));
     }
 
     private function validated(Request $request, ?Article $article): array

@@ -35,10 +35,10 @@ class CertificateController extends Controller
         $this->authorize('credentials.manage');
         $reason = $request->validate(['reason' => ['required', 'string', 'min:5', 'max:500']])['reason'];
         if (! $this->credentials->revoke($request->user(), $certificate, $reason)) {
-            throw new RuleViolation('This certificate is already revoked.');
+            throw new RuleViolation(__('This certificate is already revoked.'));
         }
 
-        return back()->with('success', "Certificate {$certificate->certificate_number} revoked. Its verification page now shows it as revoked.");
+        return back()->with('success', __('Certificate :certificate_number revoked. Its verification page now shows it as revoked.', ['certificate_number' => $certificate->certificate_number]));
     }
 
     public function reinstate(Request $request, Certificate $certificate): RedirectResponse
@@ -46,9 +46,9 @@ class CertificateController extends Controller
         $this->authorize('credentials.manage');
         $reason = $request->validate(['reason' => ['required', 'string', 'min:5', 'max:500']])['reason'];
         if (! $this->credentials->reinstate($request->user(), $certificate, $reason)) {
-            throw new RuleViolation('This certificate is not revoked.');
+            throw new RuleViolation(__('This certificate is not revoked.'));
         }
 
-        return back()->with('success', "Certificate {$certificate->certificate_number} reinstated.");
+        return back()->with('success', __('Certificate :certificate_number reinstated.', ['certificate_number' => $certificate->certificate_number]));
     }
 }

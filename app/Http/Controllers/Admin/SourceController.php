@@ -36,7 +36,7 @@ class SourceController extends Controller
         $s = SourceReference::create($data);
         AuditLogger::record($request->user()->id, 'source.created', 'source_reference', $s->id, ['key' => $s->key]);
 
-        return back()->with('success', 'Source added.');
+        return back()->with('success', __('Source added.'));
     }
 
     public function update(Request $request, SourceReference $source): RedirectResponse
@@ -45,7 +45,7 @@ class SourceController extends Controller
         $source->forceFill($this->validated($request, $source))->save();
         AuditLogger::record($request->user()->id, 'source.updated', 'source_reference', $source->id, ['status' => $source->verification_status]);
 
-        return back()->with('success', 'Source saved.');
+        return back()->with('success', __('Source saved.'));
     }
 
     private function validated(Request $request, ?SourceReference $source): array

@@ -11,6 +11,14 @@ return [
 
     'issuer' => 'AMANIQ Academy, a division of AMANIQ Projects Limited',
 
+    // Interface languages. English is the default and keeps the existing URLs; other languages
+    // get a URL prefix for public pages (/fr/...). "currency" is the default display currency.
+    'locales' => [
+        'en' => ['name' => 'English', 'short' => 'EN', 'html' => 'en-GB', 'currency' => 'NGN'],
+        'fr' => ['name' => 'Français', 'short' => 'FR', 'html' => 'fr', 'currency' => 'XOF'],
+    ],
+    'default_locale' => 'en',
+
     // Payments: "paystack", "sandbox" (development only, refused in production) or "none".
     'payments' => [
         'provider' => env('PAYMENT_PROVIDER', 'sandbox'),

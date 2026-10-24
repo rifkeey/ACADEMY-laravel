@@ -86,7 +86,7 @@ class LabController extends Controller
             AuditLogger::record($request->user()->id, 'lab.updated', 'lab', $lab->id, ['structural' => $structural]);
         });
 
-        return back()->with('success', 'Lab saved.');
+        return back()->with('success', __('Lab saved.'));
     }
 
     /** Rejects definitions the lab runner or the grader could not use. */
@@ -94,40 +94,40 @@ class LabController extends Controller
     {
         if (! is_array($content) || ! is_array($content['tasks'] ?? null) || ! array_is_list($content['tasks']) || ! $content['tasks']
             || ! is_array($content['workspace'] ?? null) || ! in_array($content['workspace']['kind'] ?? null, ['kql', 'evidence', 'documents'], true)) {
-            throw new RuleViolation('Content needs a non-empty "tasks" list and a "workspace" of kind kql, evidence or documents.');
+            throw new RuleViolation(__('Content needs a non-empty "tasks" list and a "workspace" of kind kql, evidence or documents.'));
         }
         foreach (['scenario', 'instructions'] as $key) {
             if (! is_string($content[$key] ?? null)) {
-                throw new RuleViolation("Content needs a \"{$key}\" text.");
+                throw new RuleViolation(__('Content needs a ":key" text.', ['key' => $key]));
             }
         }
         if (! is_array($validator) || ! is_array($validator['tasks'] ?? null)) {
-            throw new RuleViolation('The validator needs a "tasks" object keyed by task id.');
+            throw new RuleViolation(__('The validator needs a "tasks" object keyed by task id.'));
         }
         $ids = [];
         foreach ($content['tasks'] as $i => $t) {
             $n = $i + 1;
             if (! is_array($t) || ! is_string($t['id'] ?? null) || ! preg_match('/^[a-z0-9-]{1,60}$/', $t['id']) || ! is_string($t['prompt'] ?? null)
                 || ! is_int($t['points'] ?? null) || $t['points'] < 1 || ! in_array($t['input']['type'] ?? null, self::TASK_TYPES, true)) {
-                throw new RuleViolation("Task {$n} needs an id (lower-case letters, digits, hyphens), a prompt, whole-number points and a supported input type.");
+                throw new RuleViolation(__('Task :n needs an id (lower-case letters, digits, hyphens), a prompt, whole-number points and a supported input type.', ['n' => $n]));
             }
             if (isset($ids[$t['id']])) {
-                throw new RuleViolation("Task id \"{$t['id']}\" is used twice.");
+                throw new RuleViolation(__('Task id ":id" is used twice.', ['id' => $t['id']]));
             }
             $ids[$t['id']] = true;
             $v = $validator['tasks'][$t['id']] ?? null;
             if (! is_array($v) || ($v['type'] ?? null) !== $t['input']['type'] || ! is_array($v['feedback'] ?? null)) {
-                throw new RuleViolation("The validator entry for task \"{$t['id']}\" is missing, has a different type, or has no feedback.");
+                throw new RuleViolation(__('The validator entry for task ":id" is missing, has a different type, or has no feedback.', ['id' => $t['id']]));
             }
             if (str_contains(json_encode($t), '"correct"')) {
-                throw new RuleViolation("Task \"{$t['id']}\" appears to contain an answer key; answers belong in the validator only.");
+                throw new RuleViolation(__('Task ":id" appears to contain an answer key; answers belong in the validator only.', ['id' => $t['id']]));
             }
         }
         // A dry run proves the grader can evaluate the definition without errors.
         try {
             LabEvaluator::evaluate($content, $validator, [], 100, (string) config('academy.lab_reference_now'));
         } catch (\Throwable $e) {
-            throw new RuleViolation('The grader could not evaluate this definition: '.$e->getMessage());
+            throw new RuleViolation(__('The grader could not evaluate this definition: :error', ['error' => $e->getMessage()]));
         }
     }
 }

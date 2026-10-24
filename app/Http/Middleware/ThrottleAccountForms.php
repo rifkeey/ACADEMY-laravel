@@ -30,7 +30,7 @@ class ThrottleAccountForms
         $key = 'account-form:'.$request->path().':'.$request->ip();
         if (RateLimiter::tooManyAttempts($key, $max)) {
             return back()->withInput($request->except('password', 'password_confirmation'))
-                ->withErrors(['email' => 'Too many attempts. Please try again in '.ceil(RateLimiter::availableIn($key) / 60).' minutes.']);
+                ->withErrors(['email' => __('Too many attempts. Please try again in :minutes minutes.', ['minutes' => (int) ceil(RateLimiter::availableIn($key) / 60)])]);
         }
         RateLimiter::hit($key, $decay);
 

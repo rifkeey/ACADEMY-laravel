@@ -4,6 +4,7 @@ use App\Exceptions\RuleViolation;
 use App\Http\Middleware\EnsureAccountActive;
 use App\Http\Middleware\EnsureStaff;
 use App\Http\Middleware\SecurityHeaders;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\ThrottleAccountForms;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->web(append: [SecurityHeaders::class, EnsureAccountActive::class, ThrottleAccountForms::class]);
+        $middleware->web(append: [SetLocale::class, SecurityHeaders::class, EnsureAccountActive::class, ThrottleAccountForms::class]);
 
         $middleware->alias(['staff' => EnsureStaff::class]);
 

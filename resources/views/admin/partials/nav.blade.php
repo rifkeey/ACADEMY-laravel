@@ -1,5 +1,5 @@
 {{-- Admin side navigation (shared by the desktop sidebar and the phone menu). --}}
-<nav aria-label="Admin" class="space-y-5">
+<nav aria-label="{{ __('Admin') }}" class="space-y-5">
     @foreach ($groups as $group => $items)
         @php $visible = array_filter($items, fn ($i) => $can($i[3])); @endphp
         @if ($visible)

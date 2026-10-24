@@ -47,7 +47,7 @@ class PricingController extends Controller
             AuditLogger::record($request->user()->id, 'price.changed', 'offer', $offer->id, ['programme' => $programme->slug, 'amount_minor' => $minor]);
         });
 
-        return back()->with('success', "New price for {$programme->title} is live. Orders already created keep their price.");
+        return back()->with('success', __('New price for :title is live. Orders already created keep their price.', ['title' => $programme->title]));
     }
 
     public function storeDiscount(Request $request): RedirectResponse
@@ -79,7 +79,7 @@ class PricingController extends Controller
             AuditLogger::record($request->user()->id, 'discount.created', 'discount', $d->id, ['code' => $d->code]);
         });
 
-        return back()->with('success', 'Discount code created.');
+        return back()->with('success', __('Discount code created.'));
     }
 
     public function toggleDiscount(Request $request, Discount $discount): RedirectResponse
@@ -92,7 +92,7 @@ class PricingController extends Controller
             AuditLogger::record($request->user()->id, $active ? 'discount.enabled' : 'discount.disabled', 'discount', $discount->id, ['code' => $discount->code]);
         });
 
-        return back()->with('success', "Discount {$discount->code} ".($active ? 'enabled.' : 'disabled.'));
+        return back()->with('success', __($active ? 'Discount :code enabled.' : 'Discount :code disabled.', ['code' => $discount->code]));
     }
 
     /** "180000.5" → 18000050 using string arithmetic, so no floating-point rounding is possible. */

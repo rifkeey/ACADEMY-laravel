@@ -41,6 +41,6 @@ class SettingController extends Controller
             AuditLogger::record($request->user()->id, 'settings.updated', 'platform_settings', null, ['keys' => self::KEYS]);
         });
 
-        return back()->with('success', 'Settings saved.');
+        return back()->with('success', __('Settings saved.'));
     }
 }

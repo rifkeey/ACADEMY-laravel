@@ -2,7 +2,7 @@
     Destructive action behind an accessible confirmation dialog (native <dialog>).
     <x-ui.confirm :action="route(...)" label="Revoke" title="..." description="..." require-reason />
 --}}
-@props(['action', 'method' => 'POST', 'label', 'title', 'description', 'confirmLabel' => 'Confirm', 'requireReason' => false, 'variant' => 'danger'])
+@props(['action', 'method' => 'POST', 'label', 'title', 'description', 'confirmLabel' => null, 'requireReason' => false, 'variant' => 'danger'])
 @php $id = 'dlg-'.\Illuminate\Support\Str::random(8); @endphp
 <div x-data="confirmDialog">
     <x-ui.button type="button" :variant="$variant" size="sm" @click="open">{{ $label }}</x-ui.button>
@@ -15,13 +15,13 @@
             <p class="text-sm text-muted">{{ $description }}</p>
             @if ($requireReason)
                 <div class="space-y-1.5">
-                    <label for="{{ $id }}-reason" class="text-sm font-medium">Reason (recorded in the audit log)</label>
+                    <label for="{{ $id }}-reason" class="text-sm font-medium">{{ __('Reason (recorded in the audit log)') }}</label>
                     <textarea id="{{ $id }}-reason" name="reason" required minlength="5" maxlength="500" class="w-full rounded-lg border border-border-strong bg-bg p-2 text-sm"></textarea>
                 </div>
             @endif
             <div class="flex justify-end gap-2">
-                <x-ui.button type="button" variant="ghost" size="sm" @click="close">Cancel</x-ui.button>
-                <x-ui.button :variant="$variant" size="sm">{{ $confirmLabel }}</x-ui.button>
+                <x-ui.button type="button" variant="ghost" size="sm" @click="close">{{ __('Cancel') }}</x-ui.button>
+                <x-ui.button :variant="$variant" size="sm">{{ $confirmLabel ?? __('Confirm') }}</x-ui.button>
             </div>
         </form>
     </dialog>

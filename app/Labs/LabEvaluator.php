@@ -25,7 +25,7 @@ final class LabEvaluator
             $base = ['taskId' => $task['id'], 'points' => (int) $task['points']];
 
             if (! $v) {
-                $results[] = $base + ['correct' => false, 'pointsAwarded' => 0, 'feedback' => 'This task has no validator configured.', 'detail' => null];
+                $results[] = $base + ['correct' => false, 'pointsAwarded' => 0, 'feedback' => __('This task has no validator configured.'), 'detail' => null];
 
                 continue;
             }
@@ -86,7 +86,7 @@ final class LabEvaluator
 
             case 'kql':
                 if (! is_string($answer) || trim($answer) === '') {
-                    return [false, 'No query submitted.'];
+                    return [false, __('No query submitted.')];
                 }
                 if (($content['workspace']['kind'] ?? null) !== 'kql') {
                     return [false, null];
@@ -94,29 +94,29 @@ final class LabEvaluator
                 try {
                     $res = Kql::run($answer, $content['workspace']['tables'], $now);
                 } catch (KqlError $e) {
-                    return [false, 'Query error: '.$e->getMessage()];
+                    return [false, __('Query error: :error', ['error' => $e->getMessage()])];
                 } catch (\Throwable) {
-                    return [false, 'Query could not be executed.'];
+                    return [false, __('Query could not be executed.')];
                 }
                 if (! in_array($v['column'], $res['columns'], true)) {
-                    return [false, "Your result does not contain a '{$v['column']}' column."];
+                    return [false, __('Your result does not contain a \':column\' column.', ['column' => $v['column']])];
                 }
                 $count = count($res['rows']);
                 if (isset($v['maxRows']) && $count > $v['maxRows']) {
-                    return [false, "Your query returned {$count} rows; narrow it to at most {$v['maxRows']}."];
+                    return [false, __('Your query returned :count rows; narrow it to at most :max.', ['count' => $count, 'max' => $v['maxRows']])];
                 }
                 $got = array_map(fn ($r) => self::cellKey($r[$v['column']] ?? null), $res['rows']);
                 $want = array_map(fn ($c) => self::cellKey($c), $v['values']);
                 // Optional "unique": each value must appear once. Used where an unaggregated query
                 // (such as the console's starter query) would otherwise pass by chance.
                 if (($v['unique'] ?? false) && count($got) !== count(array_unique($got))) {
-                    return [false, "Your query returned {$count} rows with repeated {$v['column']} values; aggregate them (for example with summarize or distinct) so each value appears once."];
+                    return [false, __('Your query returned :count rows with repeated :column values; aggregate them (for example with summarize or distinct) so each value appears once.', ['count' => $count, 'column' => $v['column']])];
                 }
                 $ok = ($v['mode'] ?? 'set') === 'ordered'
                     ? $got === $want
                     : count(array_unique($got)) === count(array_unique($want)) && ! array_diff($want, $got) && ! array_diff($got, $want);
 
-                return [$ok, $ok ? null : "Your query returned {$count} row(s), but not the expected result."];
+                return [$ok, $ok ? null : __('Your query returned :count row(s), but not the expected result.', ['count' => $count])];
 
             case 'firewall':
                 if (($task['input']['type'] ?? null) !== 'firewall') {
@@ -124,16 +124,16 @@ final class LabEvaluator
                 }
                 $rules = FirewallEvaluator::sanitize($answer, $task['input']['zones'], (int) $task['input']['maxRules']);
                 if (! $rules) {
-                    return [false, 'No valid rules submitted.'];
+                    return [false, __('No valid rules submitted.')];
                 }
                 $failures = array_values(array_filter($v['flows'], fn ($f) => FirewallEvaluator::evaluate($rules, $f)['action'] !== $f['expect']));
                 $total = count($v['flows']);
                 if (! $failures) {
-                    return [true, "All {$total} test flows behaved as required."];
+                    return [true, __('All :total test flows behaved as required.', ['total' => $total])];
                 }
                 $first = $failures[0];
 
-                return [false, count($failures)." of {$total} test flows failed, e.g. \"{$first['label']}\" should be ".($first['expect'] === 'allow' ? 'allowed' : 'blocked').'.'];
+                return [false, __($first['expect'] === 'allow' ? ':failed of :total test flows failed, e.g. ":flow" should be allowed.' : ':failed of :total test flows failed, e.g. ":flow" should be blocked.', ['failed' => count($failures), 'total' => $total, 'flow' => $first['label']])];
 
             case 'iam-policy':
                 $parsed = IamPolicyEvaluator::parse($answer);
@@ -143,22 +143,22 @@ final class LabEvaluator
                 $failures = array_values(array_filter($v['requests'], fn ($r) => IamPolicyEvaluator::evaluate($parsed['statements'], $r['action'], $r['resource'])['decision'] !== $r['expect']));
                 $total = count($v['requests']);
                 if (! $failures) {
-                    return [true, "All {$total} test requests were decided as required."];
+                    return [true, __('All :total test requests were decided as required.', ['total' => $total])];
                 }
                 $first = $failures[0];
 
-                return [false, count($failures)." of {$total} test requests were decided incorrectly, e.g. \"{$first['label']}\" should be ".($first['expect'] === 'allow' ? 'allowed' : 'denied').'.'];
+                return [false, __($first['expect'] === 'allow' ? ':failed of :total test requests were decided incorrectly, e.g. ":request" should be allowed.' : ':failed of :total test requests were decided incorrectly, e.g. ":request" should be denied.', ['failed' => count($failures), 'total' => $total, 'request' => $first['label']])];
 
             case 'deliverable':
                 // Completeness check only: enough words and the required points mentioned. The
                 // quality of the reasoning is judged by the learner against the rubric.
                 if (! is_string($answer) || mb_strlen($answer) > 20_000) {
-                    return [false, 'Write your deliverable in the box (at most 20,000 characters).'];
+                    return [false, __('Write your deliverable in the box (at most 20,000 characters).')];
                 }
                 $words = preg_match_all('/[\p{L}\p{N}][\p{L}\p{N}\'._\/-]*/u', $answer);
                 $min = (int) ($v['minWords'] ?? 0);
                 if ($words < $min) {
-                    return [false, "Your deliverable has {$words} words; write at least {$min}."];
+                    return [false, __('Your deliverable has :words words; write at least :min.', ['words' => $words, 'min' => $min])];
                 }
                 $text = mb_strtolower($answer);
                 $missing = [];
@@ -169,10 +169,10 @@ final class LabEvaluator
                     }
                 }
                 if ($missing) {
-                    return [false, 'Your deliverable does not yet cover: '.implode('; ', $missing).'.'];
+                    return [false, __('Your deliverable does not yet cover: :points.', ['points' => implode('; ', $missing)])];
                 }
 
-                return [true, "{$words} words; all required points are covered. Now check it against the rubric."];
+                return [true, __(':words words; all required points are covered. Now check it against the rubric.', ['words' => $words])];
 
             case 'grid':
                 $grid = is_array($answer) && ! array_is_list($answer) ? $answer : [];

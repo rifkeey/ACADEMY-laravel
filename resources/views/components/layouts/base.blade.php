@@ -5,12 +5,12 @@
 @props(['title' => null, 'description' => null, 'noindex' => false, 'canonical' => null])
 @php
     $siteUrl = config('academy.site_url');
-    $fullTitle = $title ? "{$title} | AMANIQ Academy" : 'AMANIQ Academy: practical cybersecurity education';
-    $description ??= 'Practice-oriented cybersecurity programmes with hands-on simulated labs, fair server-graded examinations and verifiable certificates. A division of AMANIQ Projects Limited.';
+    $fullTitle = $title ? "{$title} | AMANIQ Academy" : __('AMANIQ Academy: practical cybersecurity education');
+    $description ??= __('Practice-oriented cybersecurity programmes with hands-on simulated labs, fair server-graded examinations and verifiable certificates. A division of AMANIQ Projects Limited.');
     $canonical ??= $siteUrl.(request()->path() === '/' ? '' : '/'.request()->path());
 @endphp
 <!doctype html>
-<html lang="en-GB">
+<html lang="{{ \App\Support\Locales::htmlLang() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,10 +33,20 @@
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Messages used by scripts, in the current language (read by resources/js/i18n.js). --}}
+    @php
+        $scriptMessages = collect([
+            'You have submitted this lab many times recently. Take a break and try again later.',
+            'The submission could not be checked. Please try again.',
+            'Too many queries in a short time. Wait a moment and try again.',
+            'The query could not be run.',
+        ])->mapWithKeys(fn ($m) => [$m => __($m)]);
+    @endphp
+    <script type="application/json" id="i18n">{!! json_encode($scriptMessages, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE) !!}</script>
     {{ $head ?? '' }}
 </head>
 <body {{ $attributes->merge(['class' => 'min-h-dvh']) }}>
-    <a href="#main" class="sr-only rounded-md bg-accent px-3 py-2 font-semibold text-accent-ink focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50">Skip to content</a>
+    <a href="#main" class="sr-only rounded-md bg-accent px-3 py-2 font-semibold text-accent-ink focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50">{{ __('Skip to content') }}</a>
     {{ $slot }}
 </body>
 </html>

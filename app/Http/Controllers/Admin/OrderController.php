@@ -53,7 +53,7 @@ class OrderController extends Controller
         // Records a refund already made in the payment provider's dashboard and removes access.
         $this->checkout->markRefunded($request->user(), $order, $reason);
 
-        return back()->with('success', "Order {$order->reference} marked as refunded and its enrolment revoked.");
+        return back()->with('success', __('Order :reference marked as refunded and its enrolment revoked.', ['reference' => $order->reference]));
     }
 
     public function grant(Request $request): RedirectResponse
@@ -66,7 +66,7 @@ class OrderController extends Controller
         ]);
         $enrolment = $this->checkout->grantComplimentary($request->user(), strtolower($data['email']), Specialization::findOrFail($data['specialization_id']), $data['note']);
 
-        return back()->with('success', "Complimentary enrolment granted (#{$enrolment->id}).");
+        return back()->with('success', __('Complimentary enrolment granted (#:id).', ['id' => $enrolment->id]));
     }
 
     public function revoke(Request $request, Enrolment $enrolment): RedirectResponse
@@ -77,11 +77,11 @@ class OrderController extends Controller
         DB::transaction(function () use ($request, $enrolment, $reason) {
             $changed = Enrolment::whereKey($enrolment->id)->where('status', 'active')->update(['status' => 'revoked', 'updated_at' => now()]);
             if (! $changed) {
-                throw new RuleViolation('This enrolment is already revoked.');
+                throw new RuleViolation(__('This enrolment is already revoked.'));
             }
             AuditLogger::record($request->user()->id, 'enrolment.revoked', 'enrolment', $enrolment->id, ['reason' => $reason]);
         });
 
-        return back()->with('success', 'Enrolment revoked. The learner can no longer open the course.');
+        return back()->with('success', __('Enrolment revoked. The learner can no longer open the course.'));
     }
 }

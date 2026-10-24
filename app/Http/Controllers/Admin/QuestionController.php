@@ -75,7 +75,7 @@ class QuestionController extends Controller
             return $question;
         });
 
-        return redirect()->route('admin.questions.edit', $question)->with('success', 'Question created.');
+        return redirect()->route('admin.questions.edit', $question)->with('success', __('Question created.'));
     }
 
     public function edit(Question $question): View
@@ -101,7 +101,7 @@ class QuestionController extends Controller
             AuditLogger::record($request->user()->id, 'question.updated', 'question', $question->id, ['status' => $question->review_status]);
         });
 
-        return back()->with('success', 'Question saved. Past attempts keep the version they were given.');
+        return back()->with('success', __('Question saved. Past attempts keep the version they were given.'));
     }
 
     /** Review several questions at once, for example approving a reviewed category. Each change is audited. */
@@ -125,7 +125,7 @@ class QuestionController extends Controller
             return $questions->count();
         });
 
-        return back()->with('success', "{$changed} question(s) marked {$data['review_status']}.");
+        return back()->with('success', __(':changed question(s) marked :review_status.', ['changed' => $changed, 'review_status' => __($data['review_status'])]));
     }
 
     private function validated(Request $request, bool $creating): array
@@ -147,7 +147,7 @@ class QuestionController extends Controller
         $data['options'] = array_values(array_filter($data['options'], fn ($o) => trim((string) ($o['text'] ?? '')) !== ''));
         $correct = count(array_filter($data['options'], fn ($o) => ! empty($o['correct'])));
         if (count($data['options']) < 2) {
-            throw new RuleViolation('A question needs at least two options.');
+            throw new RuleViolation(__('A question needs at least two options.'));
         }
         if ($data['kind'] === 'single' ? $correct !== 1 : $correct < 1) {
             throw new RuleViolation($data['kind'] === 'single' ? 'Single-answer questions need exactly one correct option.' : 'Mark at least one correct option.');

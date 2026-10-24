@@ -48,7 +48,7 @@ class UserController extends Controller
             AuditLogger::record($request->user()->id, 'user.role_changed', 'user', $locked->id, ['email' => $locked->email, 'from' => $from, 'to' => $data['role']]);
         });
 
-        return back()->with('success', "Role updated for {$user->email}.");
+        return back()->with('success', __('Role updated for :email.', ['email' => $user->email]));
     }
 
     public function status(Request $request, User $user): RedirectResponse
@@ -70,13 +70,13 @@ class UserController extends Controller
             AuditLogger::record($request->user()->id, 'user.status_changed', 'user', $locked->id, ['email' => $locked->email, 'status' => $data['status'], 'reason' => $data['reason'] ?? null]);
         });
 
-        return back()->with('success', "Account {$user->email} is now {$data['status']}.");
+        return back()->with('success', __('Account :email is now :status.', ['email' => $user->email, 'status' => __($data['status'])]));
     }
 
     private function guardSelf(Request $request, User $user): void
     {
         if ($request->user()->is($user)) {
-            throw new RuleViolation('You cannot change your own role or status. Ask another administrator.');
+            throw new RuleViolation(__('You cannot change your own role or status. Ask another administrator.'));
         }
     }
 
@@ -85,7 +85,7 @@ class UserController extends Controller
     {
         $others = User::where('role', 'admin')->where('status', 'active')->whereKeyNot($user->id)->lockForUpdate()->count();
         if ($others === 0) {
-            throw new RuleViolation('At least one active administrator must remain.');
+            throw new RuleViolation(__('At least one active administrator must remain.'));
         }
     }
 }

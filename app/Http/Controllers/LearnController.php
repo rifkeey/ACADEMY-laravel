@@ -20,7 +20,7 @@ class LearnController extends Controller
         if (! $course) {
             abort_unless($catalogue->getProgramme($slug), 404);
 
-            return redirect()->route('programmes.show', $slug)->with('warning', 'Enrol in this programme to access its lessons.');
+            return redirect(lroute('programmes.show', $slug))->with('warning', __('Enrol in this programme to access its lessons.'));
         }
 
         return view('learner.course', $course + ['slug' => $slug]);
@@ -38,6 +38,6 @@ class LearnController extends Controller
 
         return $next
             ? redirect()->route('learn.lesson', [$slug, $next])
-            : redirect()->route('learn.lesson', [$slug, $lesson->id])->with('success', 'Lesson marked as complete.');
+            : redirect()->route('learn.lesson', [$slug, $lesson->id])->with('success', __('Lesson marked as complete.'));
     }
 }

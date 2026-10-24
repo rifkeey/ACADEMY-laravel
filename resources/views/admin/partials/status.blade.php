@@ -8,4 +8,4 @@
         default => 'neutral',
     };
 @endphp
-<x-ui.pill :tone="$tone">{{ str_replace('_', ' ', ucfirst($value)) }}</x-ui.pill>
+<x-ui.pill :tone="$tone">{{ __(str_replace('_', ' ', ucfirst($value))) }}</x-ui.pill>

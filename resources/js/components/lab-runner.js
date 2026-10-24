@@ -6,6 +6,8 @@
  * console and the grading both run on the server, so there is a single implementation of each.
  */
 
+import { t } from '../i18n';
+
 const csrf = () => document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
 
 async function postJson(url, body) {
@@ -140,9 +142,9 @@ export function labRunner() {
                 this.result = data;
                 this.$nextTick(() => document.getElementById('lab-result')?.focus());
             } else if (status === 429) {
-                this.error = 'You have submitted this lab many times recently. Take a break and try again later.';
+                this.error = t('You have submitted this lab many times recently. Take a break and try again later.');
             } else {
-                this.error = data?.message ?? 'The submission could not be checked. Please try again.';
+                this.error = data?.message ?? t('The submission could not be checked. Please try again.');
             }
         },
 
@@ -274,7 +276,7 @@ export function kqlConsole() {
             } else {
                 this.columns = [];
                 this.rows = [];
-                this.error = status === 429 ? 'Too many queries in a short time. Wait a moment and try again.' : (data?.error ?? data?.message ?? 'The query could not be run.');
+                this.error = status === 429 ? t('Too many queries in a short time. Wait a moment and try again.') : (data?.error ?? data?.message ?? t('The query could not be run.'));
             }
         },
         keydown(event) {

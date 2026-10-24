@@ -18,7 +18,7 @@ class EnsureAccountActive
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('login')->withErrors(['email' => 'This account is suspended. Contact AMANIQ Academy support.']);
+            return redirect()->route('login')->withErrors(['email' => __('This account is suspended. Contact AMANIQ Academy support.')]);
         }
 
         return $next($request);
