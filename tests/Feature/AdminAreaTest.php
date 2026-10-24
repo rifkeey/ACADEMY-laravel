@@ -120,8 +120,8 @@ class AdminAreaTest extends TestCase
     {
         $this->actingAs($this->user('admin'));
         $soc = $this->soc();
-        $this->post(route('admin.pricing.price', $soc), ['amount' => '199999.99'])->assertSessionHas('success');
-        $this->post(route('admin.pricing.price', $soc), ['amount' => '12.3.4'])->assertSessionHasErrors('amount');
+        $this->post(route('admin.pricing.price', $soc), ['currency' => 'NGN', 'amount' => '199999.99'])->assertSessionHas('success');
+        $this->post(route('admin.pricing.price', $soc), ['currency' => 'NGN', 'amount' => '12.3.4'])->assertSessionHasErrors('amount');
 
         $active = Offer::where('specialization_id', $soc->id)->where('active', true)->get();
         $this->assertCount(1, $active);

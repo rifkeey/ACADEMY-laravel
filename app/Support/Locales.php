@@ -83,6 +83,14 @@ final class Locales
      * counterpart; signed-in pages keep their path (their language comes from the preference).
      * Anything that is not a safe relative path falls back to the home page.
      */
+    /** The language a site path is in, from its prefix ("/fr/programmes" → "fr"); unprefixed paths are the default language. */
+    public static function fromPath(string $path): string
+    {
+        $first = explode('/', ltrim((string) parse_url($path, PHP_URL_PATH), '/'))[0];
+
+        return $first !== self::default() && self::isSupported($first) ? $first : self::default();
+    }
+
     public static function equivalentPath(string $path, string $locale): string
     {
         $home = route(self::routeName('home', $locale), [], false);

@@ -28,7 +28,7 @@ class ProgrammeController extends Controller
         $programmes = Specialization::with(['currentVersion', 'versions' => fn ($q) => $q->where('status', 'draft')])
             ->withCount(['enrolments' => fn ($q) => $q->where('status', 'active')])
             ->orderBy('sort_order')->get()
-            ->each(fn ($s) => $s->setAttribute('price', $catalogue->activePrice($s)));
+            ->each(fn ($s) => $s->setAttribute('prices', $catalogue->activePrices($s)));
 
         return view('admin.programmes.index', ['programmes' => $programmes]);
     }
@@ -98,7 +98,7 @@ class ProgrammeController extends Controller
         if ($data['status'] === 'published' && ! $programme->current_version_id) {
             throw new RuleViolation(__('Publish a course version before publishing the programme.'));
         }
-        if ($data['enrolment_open'] && ($data['status'] !== 'published' || ! $catalogue->activePrice($programme))) {
+        if ($data['enrolment_open'] && ($data['status'] !== 'published' || $catalogue->activePrices($programme)->isEmpty())) {
             throw new RuleViolation(__('Enrolment can only open for a published programme with an active price.'));
         }
 

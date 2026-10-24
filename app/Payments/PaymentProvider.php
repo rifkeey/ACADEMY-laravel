@@ -10,6 +10,9 @@ interface PaymentProvider
 {
     public function id(): string;
 
+    /** Whether this provider can take payments in the given ISO 4217 currency. */
+    public function supportsCurrency(string $currency): bool;
+
     /** Starts a payment and returns the URL to send the learner to. */
     public function initialize(string $reference, string $email, int $amountMinor, string $currency, string $callbackUrl, array $metadata): string;
 

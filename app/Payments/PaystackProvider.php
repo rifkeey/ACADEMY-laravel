@@ -15,11 +15,17 @@ use RuntimeException;
  */
 final class PaystackProvider implements PaymentProvider
 {
-    public function __construct(private readonly string $secretKey, private readonly string $apiBase) {}
+    /** @param  list<string>  $currencies  currencies enabled on this Paystack account (NGN by default) */
+    public function __construct(private readonly string $secretKey, private readonly string $apiBase, private readonly array $currencies = ['NGN']) {}
 
     public function id(): string
     {
         return 'paystack';
+    }
+
+    public function supportsCurrency(string $currency): bool
+    {
+        return in_array($currency, $this->currencies, true);
     }
 
     private function call(string $method, string $path, array $body = []): array

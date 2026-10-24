@@ -29,6 +29,7 @@ class CheckoutController extends Controller
             'spec' => $specialization,
             'version' => $specialization->currentVersion()->first(),
             'price' => $catalogue->activePrice($specialization),
+            'prices' => $catalogue->activePrices($specialization),
             'provider' => app(PaymentProvider::class),
         ]);
     }

@@ -1,6 +1,10 @@
 @php
     use App\Support\Money;
-    $priceText = $price ? Money::format($price->amount_minor, $price->currency) : __('Price on request');
+    $currency = \App\Support\Currency::current();
+    $priceText = $price ? Money::format($price->amount_minor, $price->currency) : null;
+    // Priced in another currency only: say so plainly and never fall back to charging it silently.
+    $otherCurrency = $price ? null : $prices->keys()->first();
+    $priceLabel = $priceText ?? ($otherCurrency ? __('Price in :currency coming soon', ['currency' => \App\Support\Currency::short($currency)]) : __('Price on request'));
     $lessonCount = $modules->sum(fn ($m) => $m->lessons->count());
     $difficulty = ['foundation' => __('Foundation'), 'intermediate' => __('Intermediate'), 'advanced' => __('Advanced')];
     $user = auth()->user();
@@ -16,9 +20,11 @@
     @php
         $cta = $enrolled
             ? ['href' => route('learn.course', $spec->slug), 'label' => __('Continue learning'), 'variant' => 'primary']
-            : ($spec->enrolment_open
+            : ($spec->enrolment_open && $price
                 ? ['href' => route('checkout.show', $spec), 'label' => __('Enrol now · :price', ['price' => $priceText]), 'variant' => 'primary']   // guests are sent to sign in, then back here
-                : ['href' => lroute('contact', ['kind' => 'programme_interest', 'programme' => $spec->slug]), 'label' => __('Register interest'), 'variant' => 'secondary']);
+                : ($spec->enrolment_open
+                    ? ['href' => lroute('contact', ['kind' => 'programme_interest', 'programme' => $spec->slug]), 'label' => __('Contact us to enrol'), 'variant' => 'secondary']
+                    : ['href' => lroute('contact', ['kind' => 'programme_interest', 'programme' => $spec->slug]), 'label' => __('Register interest'), 'variant' => 'secondary']));
     @endphp
 
     <section class="border-b border-border bg-surface/50">
@@ -42,8 +48,17 @@
             </div>
             <x-ui.card class="h-fit p-6">
                 <p class="text-sm text-muted">{{ __('Price') }}</p>
-                <p class="text-3xl font-semibold tabular-nums">{{ $priceText }}</p>
-                <p class="mt-1 text-xs text-subtle">{{ __('One-off payment. Includes access to course version :n.', ['n' => $version->version]) }}</p>
+                <p @class(['font-semibold tabular-nums', 'text-3xl' => $priceText, 'text-lg' => ! $priceText])>{{ $priceLabel }}</p>
+                @if ($priceText)
+                    <p class="mt-1 text-xs text-subtle">{{ __('One-off payment. Includes access to course version :n.', ['n' => $version->version]) }}</p>
+                @elseif ($otherCurrency)
+                    <p class="mt-2 text-sm text-muted">{!! __('A price in :currency has not been set for this programme yet. :contact, or :switch.', [
+                        'currency' => e(\App\Support\Currency::short($currency)),
+                        'contact' => '<a href="'.e(lroute('contact', ['kind' => 'programme_interest', 'programme' => $spec->slug])).'" class="font-semibold text-text underline">'.e(__('Contact us to enrol')).'</a>',
+                        'switch' => '<a href="'.e(route('currency.switch', ['currency' => $otherCurrency, 'to' => request()->getRequestUri()])).'" class="text-text underline">'.e(__('view the price in :other', ['other' => \App\Support\Currency::short($otherCurrency)])).'</a>',
+                    ]) !!}</p>
+                @endif
+                <x-site.currency-switch class="mt-3" />
                 <ul class="mt-5 space-y-2.5 text-sm">
                     <li class="flex items-center gap-2"><x-icon name="layers" class="text-accent" /> {{ __(':modules modules · :lessons published lessons', ['modules' => $modules->count(), 'lessons' => $lessonCount]) }}</li>
                     <li class="flex items-center gap-2"><x-icon name="flask-conical" class="text-accent" /> {{ __($spec->content_status !== 'complete' ? ':count hands-on labs (more planned)' : ':count hands-on labs', ['count' => $labs->count()]) }}</li>

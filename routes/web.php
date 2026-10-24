@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LabController;
@@ -47,6 +48,8 @@ foreach (array_diff(array_keys(config('academy.locales')), [config('academy.defa
 
 // EN | FR switcher: saves the choice and returns to the same page in that language.
 Route::get('/language/{locale}', [LocaleController::class, 'switch'])->middleware('throttle:60,1')->name('locale.switch');
+// NGN | FCFA switcher: chooses which configured price is shown and charged (never a conversion).
+Route::get('/currency/{currency}', [CurrencyController::class, 'switch'])->middleware('throttle:60,1')->name('currency.switch');
 
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
@@ -137,7 +140,9 @@ Route::middleware(['auth', 'verified', 'staff'])->prefix('admin')->name('admin.'
     Route::post('/certificates/{certificate}/reinstate', [Admin\CertificateController::class, 'reinstate'])->name('certificates.reinstate');
 
     Route::get('/pricing', [Admin\PricingController::class, 'index'])->name('pricing.index');
+    Route::post('/pricing/rate', [Admin\PricingController::class, 'rate'])->name('pricing.rate');   // before {programme}
     Route::post('/pricing/{programme}', [Admin\PricingController::class, 'price'])->name('pricing.price');
+    Route::post('/pricing/{programme}/disable', [Admin\PricingController::class, 'disable'])->name('pricing.disable');
     Route::post('/discounts', [Admin\PricingController::class, 'storeDiscount'])->name('discounts.store');
     Route::put('/discounts/{discount}', [Admin\PricingController::class, 'toggleDiscount'])->name('discounts.toggle');
 

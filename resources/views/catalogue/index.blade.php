@@ -20,7 +20,8 @@
             <x-ui.button variant="secondary">{{ __('Apply') }}</x-ui.button>
         </form>
 
-        <p class="mt-6 text-sm text-muted" aria-live="polite">{{ trans_choice(':count programme|:count programmes', $programmes->count()) }}@if ($q !== '') {{ __('matching “:q”', ['q' => $q]) }}@endif</p>
+        <div class="mt-4 flex justify-end"><x-site.currency-switch /></div>
+        <p class="mt-2 text-sm text-muted" aria-live="polite">{{ trans_choice(':count programme|:count programmes', $programmes->count()) }}@if ($q !== '') {{ __('matching “:q”', ['q' => $q]) }}@endif</p>
 
         @if ($programmes->isEmpty())
             <div class="mt-6">

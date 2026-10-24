@@ -7,7 +7,7 @@
                 <x-ui.td>{{ $p->enrolment_open ? __('Open') : __('Closed') }}</x-ui.td>
                 <x-ui.td>{{ $p->currentVersion ? 'v'.$p->currentVersion->version : '—' }}</x-ui.td>
                 <x-ui.td>{{ $p->versions->isNotEmpty() ? 'v'.$p->versions->first()->version : '—' }}</x-ui.td>
-                <x-ui.td class="tabular-nums">{{ $p->price ? \App\Support\Money::format($p->price->amount_minor, $p->price->currency) : __('Not priced') }}</x-ui.td>
+                <x-ui.td class="tabular-nums">{{ $p->prices->isNotEmpty() ? $p->prices->map(fn ($o) => \App\Support\Money::format($o->amount_minor, $o->currency))->join(' · ') : __('Not priced') }}</x-ui.td>
                 <x-ui.td class="tabular-nums">{{ $p->enrolments_count }}</x-ui.td>
                 <x-ui.td><a href="{{ route('admin.programmes.edit', $p) }}" class="text-accent-strong hover:underline">{{ __('Manage') }}</a></x-ui.td>
             </tr>

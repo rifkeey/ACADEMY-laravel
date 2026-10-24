@@ -30,10 +30,12 @@ class CatalogueController extends Controller
         if ($category) {
             $list = $list->where('category', $category);
         }
+        // Programmes without a price in the visitor's currency sort last in both directions.
         $price = fn ($p) => $p->price?->amount_minor ?? PHP_INT_MAX;
+        $priceDesc = fn ($p) => $p->price?->amount_minor ?? -1;
         $list = match ($sort) {
             'price-asc' => $list->sortBy($price),
-            'price-desc' => $list->sortByDesc($price),
+            'price-desc' => $list->sortByDesc($priceDesc),
             'duration' => $list->sortBy('estimated_hours'),
             default => $list,
         };

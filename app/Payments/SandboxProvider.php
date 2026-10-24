@@ -19,6 +19,11 @@ final class SandboxProvider implements PaymentProvider
         return 'sandbox';
     }
 
+    public function supportsCurrency(string $currency): bool
+    {
+        return true;
+    }
+
     public function initialize(string $reference, string $email, int $amountMinor, string $currency, string $callbackUrl, array $metadata): string
     {
         Cache::put("sandbox:{$reference}", ['amount' => $amountMinor, 'currency' => $currency, 'status' => 'pending'], now()->addDay());
@@ -29,7 +34,7 @@ final class SandboxProvider implements PaymentProvider
     /** Records the outcome chosen on the sandbox page (dev only). */
     public function setOutcome(string $reference, string $status, ?int $amountOverride = null): void
     {
-        $entry = Cache::get("sandbox:{$reference}", ['amount' => -1, 'currency' => 'NGN']);
+        $entry = Cache::get("sandbox:{$reference}", ['amount' => -1, 'currency' => '']);
         $entry['status'] = $status;
         if ($amountOverride !== null) {
             $entry['amount'] = $amountOverride;
@@ -39,7 +44,7 @@ final class SandboxProvider implements PaymentProvider
 
     public function verify(string $reference): array
     {
-        $e = Cache::get("sandbox:{$reference}", ['amount' => -1, 'currency' => 'NGN', 'status' => 'pending']);
+        $e = Cache::get("sandbox:{$reference}", ['amount' => -1, 'currency' => '', 'status' => 'pending']);
 
         return ['status' => $e['status'], 'amount_minor' => (int) $e['amount'], 'currency' => $e['currency'], 'provider_reference' => "sbx_{$reference}", 'channel' => 'sandbox'];
     }

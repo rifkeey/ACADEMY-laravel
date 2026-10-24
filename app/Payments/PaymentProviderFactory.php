@@ -13,6 +13,7 @@ final class PaymentProviderFactory
             'paystack' => new PaystackProvider(
                 (string) (config('academy.payments.paystack.secret_key') ?: throw new RuntimeException('PAYSTACK_SECRET_KEY is required when PAYMENT_PROVIDER=paystack.')),
                 (string) config('academy.payments.paystack.api_base'),
+                array_values(array_filter(array_map('trim', explode(',', strtoupper((string) config('academy.payments.paystack.currencies')))))),
             ),
             'sandbox' => app()->isProduction()
                 ? throw new RuntimeException('The sandbox payment provider cannot run in production.')

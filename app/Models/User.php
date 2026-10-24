@@ -25,7 +25,7 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
     protected $fillable = ['name', 'email', 'password', 'country'];
 
     // Same defaults as the database columns, so a freshly created user has them in memory too.
-    protected $attributes = ['role' => 'learner', 'status' => 'active', 'locale' => null];
+    protected $attributes = ['role' => 'learner', 'status' => 'active', 'locale' => null, 'currency' => null];
 
     protected $hidden = ['password', 'remember_token', 'two_factor_secret', 'two_factor_recovery_codes'];
 

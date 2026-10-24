@@ -4,9 +4,8 @@ namespace App\Support;
 
 use App\Models\Discount;
 use InvalidArgumentException;
-use NumberFormatter;
 
-/** Exact money handling in integer minor units (kobo for NGN). Never floats for amounts. */
+/** Exact money handling in integer minor units (kobo for NGN, francs for XOF). Never floats for amounts. */
 final class Money
 {
     /** @return array{discount_minor: int, total_minor: int} */
@@ -26,12 +25,9 @@ final class Money
         return ['discount_minor' => $off, 'total_minor' => $subtotalMinor - $off];
     }
 
-    /** ₦180,000 style formatting for display. */
+    /** "₦180,000" / "180 000 FCFA" style display in the current language (see Currency::format). */
     public static function format(int $minor, string $currency = 'NGN'): string
     {
-        $fmt = new NumberFormatter('en_NG', NumberFormatter::CURRENCY);
-        $fmt->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $minor % 100 === 0 ? 0 : 2);
-
-        return $fmt->formatCurrency($minor / 100, $currency);
+        return Currency::format($minor, $currency);
     }
 }

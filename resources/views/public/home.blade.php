@@ -32,7 +32,7 @@
                     <x-ui.button :href="lroute('programmes.index')" size="lg">{{ __('Explore Specializations') }} <x-icon name="arrow-right" /></x-ui.button>
                     <x-ui.button :href="lroute('corporate')" size="lg" variant="secondary"><x-icon name="building-2" /> {{ __('Corporate Training') }}</x-ui.button>
                 </div>
-                <p class="mt-6 text-sm text-subtle">{{ __('For learners in Nigeria, across Africa and internationally. Prices in Naira.') }}</p>
+                <p class="mt-6 text-sm text-subtle">{{ __('For learners in Nigeria, across Africa and internationally. Prices in naira (NGN) and CFA francs (FCFA).') }}</p>
             </div>
             <x-ui.card class="overflow-hidden">
                 <div class="flex items-center justify-between border-b border-border bg-elevated px-4 py-2.5 text-xs text-muted">

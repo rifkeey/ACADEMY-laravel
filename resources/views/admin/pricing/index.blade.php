@@ -1,18 +1,56 @@
-<x-layouts.admin :title="__('Pricing and discounts')" :description="__('Prices are stored exactly in kobo. Changing a price starts a new offer; orders already created keep the price they were quoted.')">
-    <section aria-labelledby="price-h">
-        <h2 id="price-h" class="text-lg font-semibold">{{ __('Programme prices (NGN)') }}</h2>
+<x-layouts.admin :title="__('Pricing and discounts')" :description="__('Each currency has its own price, set here and stored exactly. Nothing is converted at checkout. Changing a price starts a new offer; orders already created keep the price they were quoted.')">
+    <section aria-labelledby="rate-h">
+        <h2 id="rate-h" class="text-lg font-semibold">{{ __('Exchange rate for FCFA suggestions') }}</h2>
+        <p class="mt-1 max-w-3xl text-sm text-muted">{{ __('Used only to suggest a rounded FCFA price from the naira price. A suggestion is never charged until you review it and save it as the FCFA price.') }}</p>
+        <form method="POST" action="{{ route('admin.pricing.rate') }}" class="mt-4 grid gap-4 rounded-2xl border border-border bg-surface p-5 sm:grid-cols-2 lg:grid-cols-4">
+            @csrf
+            <x-ui.field :label="__('FCFA for 1 naira')" for="rate"><x-ui.input name="rate" inputmode="decimal" required :value="old('rate', $rate['rate'] ?? '')" placeholder="0.38" class="tabular-nums" /></x-ui.field>
+            <x-ui.field :label="__('Rate date')" for="date"><x-ui.input type="date" name="date" required :value="old('date', $rate['date'] ?? now()->toDateString())" /></x-ui.field>
+            <x-ui.field :label="__('Source (optional)')" for="source"><x-ui.input name="source" maxlength="160" :value="old('source', $rate['source'] ?? '')" /></x-ui.field>
+            <div class="flex items-end"><x-ui.button size="sm" variant="secondary">{{ __('Save rate') }}</x-ui.button></div>
+        </form>
+        @if ($rate)
+            <p class="mt-2 text-xs text-subtle">{{ __('Current rate: 1 NGN = :rate FCFA, dated :date.', ['rate' => $rate['rate'], 'date' => \Illuminate\Support\Carbon::parse($rate['date'])->translatedFormat('j M Y')]) }}</p>
+        @endif
+    </section>
+
+    <section aria-labelledby="price-h" class="mt-10">
+        <h2 id="price-h" class="text-lg font-semibold">{{ __('Programme prices') }}</h2>
         <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             @foreach ($programmes as $p)
                 <x-ui.card class="p-5">
                     <p class="font-medium">{{ $p->title }}</p>
-                    <p class="mt-1 text-2xl font-semibold tabular-nums">{{ $p->price ? \App\Support\Money::format($p->price->amount_minor, $p->price->currency) : __('Not priced') }}</p>
-                    @if ($p->price)<p class="text-xs text-subtle">{{ __('Since :date', ['date' => $p->price->valid_from->translatedFormat('j M Y')]) }}</p>@endif
-                    <form method="POST" action="{{ route('admin.pricing.price', $p) }}" class="mt-4 flex items-end gap-2">
-                        @csrf
-                        <div class="flex-1"><label for="amt-{{ $p->id }}" class="text-xs text-muted">{{ __('New price in naira') }}</label>
-                            <input id="amt-{{ $p->id }}" name="amount" inputmode="decimal" required pattern="\d{1,9}(\.\d{1,2})?" placeholder="{{ __('e.g. 180000') }}" class="h-9 w-full rounded-lg border border-border-strong bg-bg px-3 text-sm tabular-nums"></div>
-                        <x-ui.button size="sm" variant="secondary">{{ __('Set price') }}</x-ui.button>
-                    </form>
+                    @foreach ($currencies as $code)
+                        @php
+                            $offer = $p->prices->get($code);
+                            $whole = \App\Support\Currency::decimals($code) === 0;
+                            $suggestion = $code === 'XOF' ? $p->suggestedXof : null;
+                        @endphp
+                        <div class="mt-4 border-t border-border pt-4">
+                            <div class="flex items-baseline justify-between gap-2">
+                                <p class="text-xs font-semibold uppercase tracking-wide text-subtle">{{ \App\Support\Currency::short($code) }}</p>
+                                @if ($offer)
+                                    <form method="POST" action="{{ route('admin.pricing.disable', $p) }}">@csrf<input type="hidden" name="currency" value="{{ $code }}"><x-ui.button variant="ghost" size="sm">{{ __('Switch off') }}</x-ui.button></form>
+                                @endif
+                            </div>
+                            <p class="text-xl font-semibold tabular-nums">{{ $offer ? \App\Support\Money::format($offer->amount_minor, $code) : __('Not priced') }}</p>
+                            @if ($offer)<p class="text-xs text-subtle">{{ __('Since :date', ['date' => $offer->valid_from->translatedFormat('j M Y')]) }}</p>@endif
+                            @if ($suggestion && $suggestion !== $offer?->amount_minor)
+                                <p class="mt-1 text-xs text-muted">{{ __('Suggested from the exchange rate: :price. Review it before saving.', ['price' => \App\Support\Money::format($suggestion, 'XOF')]) }}</p>
+                            @endif
+                            <form method="POST" action="{{ route('admin.pricing.price', $p) }}" class="mt-3 flex items-end gap-2">
+                                @csrf
+                                <input type="hidden" name="currency" value="{{ $code }}">
+                                @if ($suggestion)<input type="hidden" name="from_suggestion" value="1">@endif
+                                <div class="flex-1"><label for="amt-{{ $p->id }}-{{ $code }}" class="text-xs text-muted">{{ __('New price in :currency', ['currency' => \App\Support\Currency::short($code)]) }}</label>
+                                    <input id="amt-{{ $p->id }}-{{ $code }}" name="amount" inputmode="{{ $whole ? 'numeric' : 'decimal' }}" required
+                                           pattern="{{ $whole ? '\d{1,11}' : '\d{1,9}(\.\d{1,2})?' }}"
+                                           value="{{ $suggestion && ! $offer ? \App\Support\Currency::toMajorString($suggestion, 'XOF') : '' }}"
+                                           placeholder="{{ $whole ? __('e.g. 65000') : __('e.g. 180000') }}" class="h-9 w-full rounded-lg border border-border-strong bg-bg px-3 text-sm tabular-nums"></div>
+                                <x-ui.button size="sm" variant="secondary">{{ __('Set price') }}</x-ui.button>
+                            </form>
+                        </div>
+                    @endforeach
                 </x-ui.card>
             @endforeach
         </div>
@@ -25,13 +63,15 @@
             <x-ui.field :label="__('Code')" for="code"><x-ui.input name="code" required class="font-mono uppercase" maxlength="40" /></x-ui.field>
             <x-ui.field :label="__('Type')" for="type"><x-ui.select name="type"><option value="percent" @selected(old('type') !== 'amount')>{{ __('Percentage off') }}</option><option value="amount" @selected(old('type') === 'amount')>{{ __('Fixed amount off') }}</option></x-ui.select></x-ui.field>
             <x-ui.field :label="__('Percent off (if percentage)')" for="percent_off"><x-ui.input type="number" name="percent_off" min="1" max="100" /></x-ui.field>
-            <x-ui.field :label="__('Naira off (if fixed)')" for="amount_off"><x-ui.input name="amount_off" inputmode="decimal" /></x-ui.field>
+            <x-ui.field :label="__('Amount off (if fixed)')" for="amount_off"><x-ui.input name="amount_off" inputmode="decimal" /></x-ui.field>
+            <x-ui.field :label="__('Currency (if fixed)')" for="currency"><x-ui.select name="currency">@foreach ($currencies as $code)<option value="{{ $code }}" @selected(old('currency', 'NGN') === $code)>{{ \App\Support\Currency::short($code) }}</option>@endforeach</x-ui.select></x-ui.field>
             <x-ui.field :label="__('Programme')" for="specialization_id"><x-ui.select name="specialization_id"><option value="">{{ __('All programmes') }}</option>@foreach ($programmes as $p)<option value="{{ $p->id }}" @selected((int) old('specialization_id') === $p->id)>{{ $p->title }}</option>@endforeach</x-ui.select></x-ui.field>
             <x-ui.field :label="__('Maximum uses')" for="max_redemptions"><x-ui.input type="number" name="max_redemptions" min="1" /></x-ui.field>
             <x-ui.field :label="__('Expires')" for="valid_until"><x-ui.input type="datetime-local" name="valid_until" /></x-ui.field>
             <x-ui.field :label="__('Internal description')" for="description"><x-ui.input name="description" maxlength="200" /></x-ui.field>
-            <div><x-ui.button size="sm">{{ __('Create code') }}</x-ui.button></div>
+            <div class="flex items-end"><x-ui.button size="sm">{{ __('Create code') }}</x-ui.button></div>
         </form>
+        <p class="mt-2 text-xs text-subtle">{{ __('A fixed amount only applies to orders in its own currency. Percentage codes apply in any currency.') }}</p>
 
         <div class="mt-4">
             <x-ui.table :head="[__('Code'), __('Discount'), __('Programme'), __('Used'), __('Expires'), __('Status'), '']" :caption="__('Discount codes')">
@@ -44,7 +84,7 @@
                         <x-ui.td class="whitespace-nowrap">{{ $d->valid_until?->translatedFormat('j M Y H:i') ?? __('Never') }}</x-ui.td>
                         <x-ui.td>@include('admin.partials.status', ['value' => $d->active ? 'active' : 'cancelled'])</x-ui.td>
                         <x-ui.td>
-                            <form method="POST" action="{{ route('admin.discounts.toggle', $d) }}">@csrf @method('PUT')<input type="hidden" name="active" value="{{ $d->active ? 0 : 1 }}"><x-ui.button variant="ghost" size="sm">{{ $d->active ? 'Disable' : 'Enable' }}</x-ui.button></form>
+                            <form method="POST" action="{{ route('admin.discounts.toggle', $d) }}">@csrf @method('PUT')<input type="hidden" name="active" value="{{ $d->active ? 0 : 1 }}"><x-ui.button variant="ghost" size="sm">{{ $d->active ? __('Disable') : __('Enable') }}</x-ui.button></form>
                         </x-ui.td>
                     </tr>
                 @empty

@@ -12,6 +12,7 @@ use App\Models\Specialization;
 use App\Models\User;
 use App\Payments\PaymentProvider;
 use App\Support\CredentialIds;
+use App\Support\Currency;
 use App\Support\Money;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
@@ -34,26 +35,34 @@ final class CheckoutService
         return app(PaymentProvider::class);
     }
 
-    private function findDiscount(string $code, Specialization $spec): ?Discount
+    private function findDiscount(string $code, Specialization $spec, string $currency): ?Discount
     {
         $d = Discount::where('code', strtoupper(trim($code)))
             ->where('active', true)
             ->where('valid_from', '<=', now())
             ->where(fn ($q) => $q->whereNull('valid_until')->orWhere('valid_until', '>', now()))
             ->where(fn ($q) => $q->whereNull('specialization_id')->orWhere('specialization_id', $spec->id))
+            // A fixed amount off only applies in its own currency; percentages apply in any.
+            ->where(fn ($q) => $q->whereNull('amount_off_minor')->orWhere('currency', $currency))
             ->first();
 
         return $d && ($d->max_redemptions === null || $d->redemptions < $d->max_redemptions) ? $d : null;
     }
 
-    /** Price quote calculated entirely on the server. */
-    public function quote(Specialization $spec, ?string $discountCode): array
+    /**
+     * Price quote calculated entirely on the server, in the learner's chosen currency. There is no
+     * fallback: without a price in that currency the learner is told so and nothing is charged.
+     */
+    public function quote(Specialization $spec, ?string $discountCode, ?string $currency = null): array
     {
-        $offer = $this->catalogue->activePrice($spec);
+        $currency ??= Currency::current();
+        $offer = $this->catalogue->activePrice($spec, $currency);
         if (! $offer) {
-            throw new RuleViolation(__('This programme is not currently priced.'));
+            throw new RuleViolation($this->catalogue->activePrices($spec)->isNotEmpty()
+                ? __('A price in :currency has not been set for this programme yet. Please contact us to enrol, or choose another currency.', ['currency' => Currency::short($currency)])
+                : __('This programme is not currently priced.'));
         }
-        $discount = $discountCode ? $this->findDiscount($discountCode, $spec) : null;
+        $discount = $discountCode ? $this->findDiscount($discountCode, $spec, $offer->currency) : null;
         if ($discountCode && ! $discount) {
             throw new RuleViolation(__('That discount code is not valid for this programme.'));
         }
@@ -74,6 +83,9 @@ final class CheckoutService
         $provider = $this->provider();
         if (! $provider && $q['total_minor'] > 0) {
             throw new RuleViolation(__('Online payment is not configured yet. Please contact us to enrol.'));
+        }
+        if ($q['total_minor'] > 0 && ! $provider->supportsCurrency($q['offer']->currency)) {
+            throw new RuleViolation(__('Online payment in :currency is not available yet. Please contact us to enrol.', ['currency' => Currency::short($q['offer']->currency)]));
         }
 
         $order = Order::create([

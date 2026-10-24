@@ -6,20 +6,32 @@ use App\Models\Article;
 use App\Models\Offer;
 use App\Models\PlatformSetting;
 use App\Models\Specialization;
+use App\Support\Currency;
 use Illuminate\Support\Collection;
 
 /** Public catalogue reads. Lesson bodies and lab validators are never included here. */
 final class CatalogueService
 {
-    public function activePrice(Specialization $spec, string $currency = 'NGN'): ?Offer
+    /** The live price in one currency (the visitor's by default), or null if none is configured. */
+    public function activePrice(Specialization $spec, ?string $currency = null): ?Offer
+    {
+        return $this->liveOffers($spec)->where('currency', $currency ?? Currency::current())->first();
+    }
+
+    /** Live prices keyed by currency, newest first. A missing currency is simply absent. */
+    public function activePrices(Specialization $spec): Collection
+    {
+        return $this->liveOffers($spec)->unique('currency')->keyBy('currency');
+    }
+
+    private function liveOffers(Specialization $spec): Collection
     {
         return Offer::where('specialization_id', $spec->id)
-            ->where('currency', $currency)
             ->where('active', true)
             ->where('valid_from', '<=', now())
             ->where(fn ($q) => $q->whereNull('valid_until')->orWhere('valid_until', '>', now()))
-            ->latest('valid_from')
-            ->first();
+            ->latest('valid_from')->latest('id')
+            ->get();
     }
 
     /** Published programmes with module/lab counts from their current version and an active price. */
@@ -32,7 +44,11 @@ final class CatalogueService
             ])])
             ->orderBy('sort_order')
             ->get()
-            ->each(fn (Specialization $s) => $s->setAttribute('price', $this->activePrice($s)));
+            ->each(function (Specialization $s) {
+                $prices = $this->activePrices($s);
+                $s->setAttribute('prices', $prices);
+                $s->setAttribute('price', $prices->get(Currency::current()));
+            });
     }
 
     /** Full public programme detail for /programmes/{slug}. */
@@ -60,6 +76,7 @@ final class CatalogueService
             'exam' => $version->exam()->first(),
             'badge' => $spec->badge()->first(),
             'price' => $this->activePrice($spec),
+            'prices' => $this->activePrices($spec),
         ];
     }
 

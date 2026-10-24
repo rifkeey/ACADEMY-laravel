@@ -29,7 +29,11 @@
     </dl>
     <p class="mt-2 text-xs text-subtle">{{ __('Includes: :list', ['list' => implode('; ', array_slice($p->inclusions, 0, 2))]) }}</p>
     <div class="mt-auto flex items-center justify-between pt-5">
-        <p class="text-lg font-semibold tabular-nums">{{ $p->price ? \App\Support\Money::format($p->price->amount_minor, $p->price->currency) : __('Price on request') }}</p>
+        @if ($p->price)
+            <p class="text-lg font-semibold tabular-nums">{{ \App\Support\Money::format($p->price->amount_minor, $p->price->currency) }}</p>
+        @else
+            <p class="text-sm font-semibold text-muted">{{ ($p->prices ?? collect())->isNotEmpty() ? __('Price in :currency coming soon', ['currency' => \App\Support\Currency::short(\App\Support\Currency::current())]) : __('Price on request') }}</p>
+        @endif
         <span class="relative inline-flex items-center gap-1 text-sm font-semibold text-accent">{{ $p->enrolment_open ? __('View and enrol') : __('View programme') }} <x-icon name="arrow-right" class="size-4 transition-transform group-hover:translate-x-0.5" /></span>
     </div>
 </article>
