@@ -54,8 +54,10 @@ Route::get('/currency/{currency}', [CurrencyController::class, 'switch'])->middl
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 
-// Payment provider webhooks: no session or CSRF token; authenticated by signature.
-Route::post('/webhooks/payments', WebhookController::class)->middleware('throttle:webhooks')->name('webhooks.payments');
+// Payment provider webhooks: no session or CSRF token; authenticated by signature. One URL per
+// provider; the original /webhooks/payments stays Paystack's so its dashboard setting keeps working.
+Route::post('/webhooks/payments/{provider}', WebhookController::class)->whereIn('provider', App\Payments\PaymentProviderFactory::IDS)->middleware('throttle:webhooks')->name('webhooks.provider');
+Route::post('/webhooks/payments', WebhookController::class)->defaults('provider', 'paystack')->middleware('throttle:webhooks')->name('webhooks.payments');
 
 /*
 | Signed-in learners (email verified)
@@ -147,6 +149,7 @@ Route::middleware(['auth', 'verified', 'staff'])->prefix('admin')->name('admin.'
     Route::put('/discounts/{discount}', [Admin\PricingController::class, 'toggleDiscount'])->name('discounts.toggle');
 
     Route::get('/orders', [Admin\OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders/{order}/check', [Admin\OrderController::class, 'check'])->name('orders.check');
     Route::post('/orders/{order}/refund', [Admin\OrderController::class, 'refund'])->name('orders.refund');
     Route::post('/enrolments', [Admin\OrderController::class, 'grant'])->name('enrolments.grant');
     Route::post('/enrolments/{enrolment}/revoke', [Admin\OrderController::class, 'revoke'])->name('enrolments.revoke');

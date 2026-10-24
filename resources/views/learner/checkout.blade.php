@@ -17,7 +17,7 @@
             @elseif (! $price)
                 <x-ui.alert tone="warning" :title="__('Not currently priced')">{!! __('Please :link to enrol.', ['link' => '<a href="'.e(lroute('contact')).'" class="font-semibold text-text underline">'.e(__('contact us')).'</a>']) !!}</x-ui.alert>
             @else
-                @if ($provider && ! $provider->supportsCurrency($price->currency))
+                @if (! $provider?->supportsCurrency($price->currency))
                     <x-ui.alert tone="warning" :title="__('Online payment in :currency is not available yet', ['currency' => \App\Support\Currency::short($price->currency)])">{!! __('Please :link to enrol. Your price is shown below.', ['link' => '<a href="'.e(lroute('contact', ['kind' => 'programme_interest', 'programme' => $spec->slug])).'" class="font-semibold text-text underline">'.e(__('contact us')).'</a>']) !!}</x-ui.alert>
                 @endif
                 <x-ui.card class="p-6">
@@ -37,6 +37,8 @@
                     <p class="text-sm text-muted">
                         @if ($provider?->id() === 'paystack')
                             {{ __('You will be taken to Paystack\'s secure payment page. Your enrolment is activated only after Paystack confirms the payment to us.') }}
+                        @elseif ($provider?->id() === 'geniuspay')
+                            {{ __('You will be taken to GeniusPay\'s secure payment page, where you can pay by Wave, Orange Money, MTN, Moov or card. Your enrolment is activated only after GeniusPay confirms the payment to us.') }}
                         @elseif ($provider?->id() === 'sandbox')
                             {{ __('Development mode: payment is simulated and no money is taken.') }}
                         @else

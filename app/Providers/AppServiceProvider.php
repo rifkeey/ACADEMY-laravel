@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Payments\PaymentProvider;
 use App\Payments\PaymentProviderFactory;
 use App\Support\Permissions;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -20,8 +19,8 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // The active payment provider is chosen from config; see App\Payments.
-        $this->app->singleton(PaymentProvider::class, fn () => PaymentProviderFactory::make());
+        // Payment providers per currency, from config; see App\Payments.
+        $this->app->singleton(PaymentProviderFactory::class);
     }
 
     public function boot(): void
@@ -59,11 +58,15 @@ class AppServiceProvider extends ServiceProvider
         if (! str_starts_with(config('academy.site_url'), 'https://')) {
             $problems[] = 'ACADEMY_SITE_URL must use https';
         }
-        if (config('academy.payments.provider') === 'sandbox') {
+        $routes = (array) config('academy.payments.currencies');
+        if (in_array('sandbox', $routes, true)) {
             $problems[] = 'the sandbox payment provider is not permitted in production';
         }
         if (str_starts_with((string) config('academy.payments.paystack.secret_key'), 'sk_test_')) {
             $problems[] = 'a Paystack test key is configured in production';
+        }
+        if (in_array('geniuspay', $routes, true) && ! str_starts_with((string) config('academy.payments.geniuspay.secret_key'), 'sk_live_')) {
+            $problems[] = 'GeniusPay needs live keys (sk_live_) in production';
         }
         if ($problems) {
             throw new RuntimeException('Unsafe production configuration: '.implode('; ', $problems).'.');

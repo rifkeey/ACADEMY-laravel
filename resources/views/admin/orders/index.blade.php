@@ -10,6 +10,12 @@
     @if ($orders)
         <section aria-labelledby="ord-h">
             <h2 id="ord-h" class="text-lg font-semibold">{{ __('Orders') }}</h2>
+            <p class="mt-1 text-sm text-muted">
+                {{ __('Online payment by currency:') }}
+                @foreach ($paymentRoutes as $code => $providerId)
+                    <span class="ml-2 whitespace-nowrap"><span class="font-semibold">{{ \App\Support\Currency::short($code) }}</span> → {{ $providerId ?? __('off (contact us)') }}</span>
+                @endforeach
+            </p>
             <div class="mt-3">
                 <x-ui.table :head="[__('Reference'), __('Learner'), __('Programme'), __('Total'), __('Payment'), __('Status'), __('Created'), '']" :caption="__('Orders')">
                     @forelse ($orders as $o)
@@ -19,12 +25,15 @@
                             <x-ui.td>{{ $o->user->email }}</x-ui.td>
                             <x-ui.td>{{ $o->specialization->title }}</x-ui.td>
                             <x-ui.td class="whitespace-nowrap tabular-nums">{{ \App\Support\Money::format($o->total_minor, $o->currency) }}@if ($o->discount_minor > 0)<p class="text-xs text-subtle">{{ __('−:amount discount', ['amount' => \App\Support\Money::format($o->discount_minor, $o->currency)]) }}</p>@endif</x-ui.td>
-                            <x-ui.td class="text-xs text-muted">{{ $o->provider }}@if ($pay)<br><span class="font-mono">{{ $pay->provider_reference }}</span>@endif</x-ui.td>
+                            <x-ui.td class="text-xs text-muted">{{ $o->provider }}@if ($pay || $o->provider_reference)<br><span class="font-mono">{{ $pay?->provider_reference ?? $o->provider_reference }}</span>@endif</x-ui.td>
                             <x-ui.td>@include('admin.partials.status', ['value' => $o->status])</x-ui.td>
                             <x-ui.td class="whitespace-nowrap text-muted">{{ $o->created_at->translatedFormat('j M Y H:i') }}</x-ui.td>
                             <x-ui.td>
+                                @if ($o->status === 'pending' && $o->provider !== 'none')
+                                    <form method="POST" action="{{ route('admin.orders.check', $o) }}">@csrf<x-ui.button variant="ghost" size="sm">{{ __('Check with provider') }}</x-ui.button></form>
+                                @endif
                                 @if ($o->status === 'paid')
-                                    <x-ui.confirm :action="route('admin.orders.refund', $o)" :label="__('Record refund')" title="Record a refund for {{ $o->reference }}?" :description="__('Only do this after refunding in the payment provider\'s dashboard. The learner\'s enrolment is revoked.')" :confirm-label="__('Record refund')" :require-reason="true" />
+                                    <x-ui.confirm :action="route('admin.orders.refund', $o)" :label="__('Record refund')" :title="__('Record a refund for :reference?', ['reference' => $o->reference])" :description="__('Only do this after refunding in the payment provider\'s dashboard. The learner\'s enrolment is revoked.')" :confirm-label="__('Record refund')" :require-reason="true" />
                                 @endif
                             </x-ui.td>
                         </tr>

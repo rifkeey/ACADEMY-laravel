@@ -27,9 +27,21 @@ return [
         'XOF' => ['decimals' => 0, 'symbol' => 'FCFA', 'short' => 'FCFA'],
     ],
 
-    // Payments: "paystack", "sandbox" (development only, refused in production) or "none".
+    // Payments: the provider for each currency: "paystack", "geniuspay", "sandbox" (development
+    // only, refused in production) or "none" (online payment off; admins grant access by hand).
+    // PAYMENT_PROVIDER is the older single setting and still sets NGN.
     'payments' => [
-        'provider' => env('PAYMENT_PROVIDER', 'sandbox'),
+        'currencies' => [
+            'NGN' => env('PAYMENT_PROVIDER_NGN', env('PAYMENT_PROVIDER', 'sandbox')),
+            'XOF' => env('PAYMENT_PROVIDER_XOF', env('PAYMENT_PROVIDER', 'sandbox') === 'sandbox' ? 'sandbox' : 'none'),
+        ],
+        'geniuspay' => [
+            // Server-side only: never shown in Admin, sent to the browser or logged.
+            'public_key' => env('GENIUSPAY_PUBLIC_KEY'),
+            'secret_key' => env('GENIUSPAY_SECRET_KEY'),
+            'webhook_secret' => env('GENIUSPAY_WEBHOOK_SECRET'),
+            'api_base' => env('GENIUSPAY_API_BASE', 'https://pay.genius.ci/api/v1/merchant'),
+        ],
         'paystack' => [
             'secret_key' => env('PAYSTACK_SECRET_KEY'),
             'api_base' => env('PAYSTACK_API_BASE', 'https://api.paystack.co'),

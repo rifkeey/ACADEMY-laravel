@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\RuleViolation;
 use App\Models\Order;
 use App\Models\Specialization;
-use App\Payments\PaymentProvider;
+use App\Payments\PaymentProviderFactory;
 use App\Payments\SandboxProvider;
 use App\Services\CatalogueService;
 use App\Services\CheckoutService;
@@ -16,7 +16,16 @@ use Illuminate\View\View;
 
 class CheckoutController extends Controller
 {
-    public function __construct(private readonly CheckoutService $checkout) {}
+    public function __construct(private readonly CheckoutService $checkout, private readonly PaymentProviderFactory $providers) {}
+
+    /** The sandbox stand-in, only for a sandbox order outside production. */
+    private function sandboxFor(Order $order): SandboxProvider
+    {
+        $provider = $this->providers->get('sandbox');
+        abort_unless($order->provider === 'sandbox' && ! app()->isProduction() && $provider instanceof SandboxProvider, 404);
+
+        return $provider;
+    }
 
     public function show(Request $request, Specialization $specialization, CatalogueService $catalogue, LearningService $learning): View|RedirectResponse
     {
@@ -25,12 +34,14 @@ class CheckoutController extends Controller
             return redirect()->route('learn.course', $specialization->slug);
         }
 
+        $price = $catalogue->activePrice($specialization);
+
         return view('learner.checkout', [
             'spec' => $specialization,
             'version' => $specialization->currentVersion()->first(),
-            'price' => $catalogue->activePrice($specialization),
+            'price' => $price,
             'prices' => $catalogue->activePrices($specialization),
-            'provider' => app(PaymentProvider::class),
+            'provider' => $price ? $this->providers->forCurrency($price->currency) : null,
         ]);
     }
 
@@ -63,8 +74,8 @@ class CheckoutController extends Controller
     /** Development-only stand-in for a provider's payment page. */
     public function sandbox(Request $request, string $reference): View
     {
-        abort_unless(app(PaymentProvider::class) instanceof SandboxProvider && ! app()->isProduction(), 404);
         $order = Order::where('reference', $reference)->where('user_id', $request->user()->id)->firstOrFail();
+        $this->sandboxFor($order);
 
         return view('learner.checkout-sandbox', ['order' => $order]);
     }
@@ -72,15 +83,14 @@ class CheckoutController extends Controller
     /** Simulates the provider: records the outcome and delivers a signed webhook to ourselves. */
     public function sandboxPay(Request $request, string $reference): RedirectResponse
     {
-        $provider = app(PaymentProvider::class);
-        abort_unless($provider instanceof SandboxProvider && ! app()->isProduction(), 404);
         $order = Order::where('reference', $reference)->where('user_id', $request->user()->id)->firstOrFail();
+        $provider = $this->sandboxFor($order);
         $outcome = $request->input('outcome') === 'success' ? 'success' : 'failed';
         $provider->setOutcome($order->reference, $outcome);
 
         if ($outcome === 'success') {
             $body = json_encode(['id' => "evt_{$order->reference}", 'event' => 'payment.success', 'reference' => $order->reference]);
-            $this->checkout->handleWebhook($body, ['x-sandbox-signature' => SandboxProvider::sign($body)]);
+            $this->checkout->handleWebhook('sandbox', $body, ['x-sandbox-signature' => SandboxProvider::sign($body)]);
         } else {
             $this->checkout->confirm($order->reference);
         }

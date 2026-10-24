@@ -11,8 +11,6 @@ use App\Models\Order;
 use App\Models\PlatformSetting;
 use App\Models\Specialization;
 use App\Models\User;
-use App\Payments\PaymentProvider;
-use App\Payments\PaystackProvider;
 use App\Services\CheckoutService;
 use App\Support\Currency;
 use Database\Seeders\CatalogueSeeder;
@@ -161,7 +159,8 @@ class CurrencyTest extends TestCase
     {
         $soc = $this->soc();
         $this->setXof($soc, 65_000);
-        $this->app->instance(PaymentProvider::class, new PaystackProvider('sk_test_unused', 'https://paystack.invalid', ['NGN']));
+        // XOF wrongly routed to a Paystack account that only takes NGN.
+        config(['academy.payments.currencies.XOF' => 'paystack', 'academy.payments.paystack.secret_key' => 'sk_test_unused', 'academy.payments.paystack.currencies' => 'NGN']);
         $learner = $this->user(currency: 'XOF');
         $this->actingAs($learner);
 

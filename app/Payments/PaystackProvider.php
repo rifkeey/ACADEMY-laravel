@@ -28,6 +28,12 @@ final class PaystackProvider implements PaymentProvider
         return in_array($currency, $this->currencies, true);
     }
 
+    /** Paystack's own minimum is enforced on its side; nothing extra here. */
+    public function minimumMinor(string $currency): int
+    {
+        return 1;
+    }
+
     private function call(string $method, string $path, array $body = []): array
     {
         $response = Http::withToken($this->secretKey)->acceptJson()->timeout(15)->{$method}($this->apiBase.$path, $body);
@@ -39,7 +45,7 @@ final class PaystackProvider implements PaymentProvider
         return $json['data'];
     }
 
-    public function initialize(string $reference, string $email, int $amountMinor, string $currency, string $callbackUrl, array $metadata): string
+    public function initialize(string $reference, string $email, int $amountMinor, string $currency, string $callbackUrl, array $metadata): array
     {
         $data = $this->call('post', '/transaction/initialize', [
             'email' => $email,
@@ -50,11 +56,13 @@ final class PaystackProvider implements PaymentProvider
             'metadata' => $metadata,
         ]);
 
-        return $data['authorization_url'];
+        // Paystack uses our reference as its own.
+        return ['url' => (string) $data['authorization_url'], 'provider_reference' => $reference];
     }
 
-    public function verify(string $reference): array
+    public function verify(string $providerReference): array
     {
+        $reference = $providerReference;
         $d = $this->call('get', '/transaction/verify/'.rawurlencode($reference));
         $status = match ($d['status'] ?? '') {
             'success' => 'success',

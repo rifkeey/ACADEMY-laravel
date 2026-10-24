@@ -24,11 +24,16 @@ final class SandboxProvider implements PaymentProvider
         return true;
     }
 
-    public function initialize(string $reference, string $email, int $amountMinor, string $currency, string $callbackUrl, array $metadata): string
+    public function minimumMinor(string $currency): int
+    {
+        return 1;
+    }
+
+    public function initialize(string $reference, string $email, int $amountMinor, string $currency, string $callbackUrl, array $metadata): array
     {
         Cache::put("sandbox:{$reference}", ['amount' => $amountMinor, 'currency' => $currency, 'status' => 'pending'], now()->addDay());
 
-        return route('checkout.sandbox', ['reference' => $reference]);
+        return ['url' => route('checkout.sandbox', ['reference' => $reference]), 'provider_reference' => $reference];
     }
 
     /** Records the outcome chosen on the sandbox page (dev only). */
@@ -42,8 +47,9 @@ final class SandboxProvider implements PaymentProvider
         Cache::put("sandbox:{$reference}", $entry, now()->addDay());
     }
 
-    public function verify(string $reference): array
+    public function verify(string $providerReference): array
     {
+        $reference = $providerReference;
         $e = Cache::get("sandbox:{$reference}", ['amount' => -1, 'currency' => '', 'status' => 'pending']);
 
         return ['status' => $e['status'], 'amount_minor' => (int) $e['amount'], 'currency' => $e['currency'], 'provider_reference' => "sbx_{$reference}", 'channel' => 'sandbox'];

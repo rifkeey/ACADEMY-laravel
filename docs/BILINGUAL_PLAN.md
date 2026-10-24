@@ -205,3 +205,27 @@ Rules:
 - Full suite: 62 tests passing.
 
 **Owner to do:** enter the real exchange rate and confirm each FCFA price in Admin → Pricing. Until a programme has an FCFA price, French visitors see "Tarif en FCFA bientôt disponible" and can contact AMANIQ or view the naira price. Online FCFA payment needs GeniusPay (Phase 3); until then FCFA checkout shows the price and asks the learner to contact AMANIQ.
+
+### Phase 3: GeniusPay for FCFA, Paystack kept for naira (24 October 2026), built and tested against a faked GeniusPay; not yet run against the real sandbox
+
+- One provider per currency (`academy.payments.currencies`, from `PAYMENT_PROVIDER_NGN` and `PAYMENT_PROVIDER_XOF`; the old `PAYMENT_PROVIDER` still sets NGN). `PaymentProviderFactory` builds them; every status check and webhook goes back to the provider stored on the order, so changing the routing never strands a pending payment.
+- `GeniusPayProvider` (no SDK): `POST /payments` for a hosted checkout (Wave, Orange Money, MTN, Moov, card) with the amount in whole francs; `GET /payments/{reference}` for the authoritative status; webhooks checked with HMAC-SHA256 over `timestamp.body` (constant-time compare, 300-second window). Keys travel only in request headers to GeniusPay; they are never shown in Admin, sent to the browser or logged.
+- GeniusPay issues its own reference (`MTX-…`), now stored as `orders.provider_reference`; ours goes in `metadata.order_reference`. Orders also record the checkout language (`orders.locale`).
+- Webhooks: `/webhooks/payments/geniuspay` (and `/payments/sandbox` in development); `/webhooks/payments` stays Paystack's. A webhook only prompts a status check: access is granted only when GeniusPay itself reports `completed` for exactly the order's amount and currency. Amounts must be exact whole francs (`65000` or `65000.00`); anything else is refused without rounding. `payment.failed`, `cancelled` and `expired` close the order after the same check; refunds are recorded by hand in Admin, as for Paystack.
+- Production guards: the app refuses to boot with GeniusPay routed but no `sk_live_` key, and in production a payment GeniusPay reports from its sandbox environment never counts as paid.
+- Checkout: the provider is chosen on the server from the currency of the price; below GeniusPay's 200 FCFA minimum, or with no provider for the currency, the learner is asked to contact AMANIQ and nothing is sent. If GeniusPay cannot be reached the order is closed and the learner sees "Nous n'avons pas pu joindre le prestataire de paiement. Aucun montant n'a été débité…" instead of an error page.
+- Admin → Orders shows which provider takes each currency (ids only), GeniusPay's reference for each order, and a "Check with provider" button for pending orders (audited as `order.status_checked`).
+- Tests: `GeniusPayTest` (12 tests, faked GeniusPay API): checkout request and stored reference, success enrols once, duplicate webhook, forged and stale signatures, webhook not trusted over the status check, failure, amount and currency mismatches, sandbox payments refused in production, exact amounts, provider unreachable (French message), below minimum, naira routed separately, and the admin status check.
+
+- Checked in the browser (development sandbox standing in for GeniusPay): a French learner checks out a programme at 68 500 FCFA, pays on the sandbox page and sees "Paiement confirmé"; Admin → Orders shows the routing and the FCFA order. The test order was then recorded as refunded and the test FCFA price switched off. Full suite: 74 tests passing.
+
+**GeniusPay sandbox checklist** (needs AMANIQ's or the owner's friend's `pk_sandbox_`/`sk_sandbox_`/`whsec_sandbox_` keys in a local or staging `.env` with `PAYMENT_PROVIDER_XOF=geniuspay`; the webhook needs a public https URL, so staging is easiest):
+
+1. Create a payment: does `POST /payments` without `payment_method` return `data.checkout_url` and `data.reference`?
+2. Pay in the sandbox: does the status become exactly `completed`, and is `amount` returned as a whole number (`65000` or `65000.00`)?
+3. Webhook signature: is it computed over the raw body exactly as received? (The reference's sample re-encodes the JSON.) If webhooks are refused with 401 while payments succeed, this is why; the return page still confirms the payment by status check.
+4. Is `data.reference` in the webhook the same `MTX-…` reference returned at creation? (The reference's webhook example shows `TXN-…`.)
+5. Failed, cancelled and expired payments: which statuses and events arrive?
+6. Do learners return to `success_url`/`error_url` with any query parameters?
+
+Until this is done, nothing here claims GeniusPay works with the real API.

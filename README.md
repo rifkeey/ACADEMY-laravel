@@ -32,14 +32,14 @@ Requirements: PHP 8.3+ with `pdo_mysql`, `mbstring`, `intl`, `gd`, `fileinfo`, `
 
 ```bash
 composer install
-cp .env.example .env        # then set APP_ENV=local, APP_DEBUG=true, PAYMENT_PROVIDER=sandbox and your DB details
+cp .env.example .env        # then set APP_ENV=local, APP_DEBUG=true, PAYMENT_PROVIDER_NGN=sandbox, PAYMENT_PROVIDER_XOF=sandbox and your DB details
 php artisan key:generate
 php artisan migrate --seed  # creates tables, loads the curriculum and three dev accounts
 npm install && npm run build
 php artisan serve
 ```
 
-Open <http://127.0.0.1:8000>. The development accounts (admin, instructor, learner) and their passwords are listed in `database/seeders/DevAccountsSeeder.php`; that seeder refuses to run in production. With `PAYMENT_PROVIDER=sandbox`, checkout shows a simulated payment page.
+Open <http://127.0.0.1:8000>. The development accounts (admin, instructor, learner) and their passwords are listed in `database/seeders/DevAccountsSeeder.php`; that seeder refuses to run in production. With the sandbox provider, checkout shows a simulated payment page.
 
 Tests use a separate database (`amaniq_academy_test`, see `phpunit.xml`):
 

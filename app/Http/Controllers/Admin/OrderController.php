@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Enrolment;
 use App\Models\Order;
 use App\Models\Specialization;
+use App\Payments\PaymentProviderFactory;
 use App\Services\AuditLogger;
 use App\Services\CheckoutService;
+use App\Support\Currency;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,8 +44,30 @@ class OrderController extends Controller
                     ->latest('enrolled_at')->paginate(25, ['*'], 'enrolments')->withQueryString()
                 : null,
             'programmes' => Specialization::orderBy('sort_order')->get(['id', 'title']),
+            // Which provider takes each currency (ids only, never keys).
+            'paymentRoutes' => $user->can('commerce.manage') ? $this->paymentRoutes() : [],
             'status' => $status, 'q' => $q,
         ]);
+    }
+
+    private function paymentRoutes(): array
+    {
+        $configured = app(PaymentProviderFactory::class)->configured();
+
+        return collect(Currency::supported())->mapWithKeys(fn ($c) => [$c => $configured[$c] ?? null])->all();
+    }
+
+    /** Reconciliation: asks the order's provider for its authoritative status now. */
+    public function check(Request $request, Order $order): RedirectResponse
+    {
+        $this->authorize('commerce.manage');
+        if ($order->status !== 'pending') {
+            throw new RuleViolation(__('Only pending orders can be checked with the provider.'));
+        }
+        $result = $this->checkout->confirm($order->reference);
+        AuditLogger::record($request->user()->id, 'order.status_checked', 'order', $order->id, ['provider' => $order->provider, 'result' => $result]);
+
+        return back()->with('success', __('Order :reference checked with :provider: :status.', ['reference' => $order->reference, 'provider' => $order->provider, 'status' => __(ucfirst($result))]));
     }
 
     public function refund(Request $request, Order $order): RedirectResponse

@@ -16,7 +16,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Specialization;
 use App\Models\User;
-use App\Payments\PaymentProvider;
+use App\Payments\PaymentProviderFactory;
 use App\Payments\SandboxProvider;
 use App\Services\CertificatePdfService;
 use App\Services\CheckoutService;
@@ -67,7 +67,7 @@ class LearnerJourneyTest extends TestCase
     {
         app(CheckoutService::class)->createCheckout($user, $this->soc(), null);
         $order = Order::where('user_id', $user->id)->latest('id')->firstOrFail();
-        app(PaymentProvider::class)->setOutcome($order->reference, 'success');
+        app(PaymentProviderFactory::class)->get('sandbox')->setOutcome($order->reference, 'success');
         $body = json_encode(['id' => "evt_{$order->reference}", 'event' => 'payment.success', 'reference' => $order->reference]);
 
         return [$order, $body, ['x-sandbox-signature' => SandboxProvider::sign($body)]];
@@ -76,7 +76,7 @@ class LearnerJourneyTest extends TestCase
     private function enrol(User $user): void
     {
         [, $body, $headers] = $this->sandboxCheckout($user);
-        app(CheckoutService::class)->handleWebhook($body, $headers);
+        app(CheckoutService::class)->handleWebhook('sandbox', $body, $headers);
     }
 
     private function completeLessonsAndLabs(User $user): void
@@ -120,11 +120,11 @@ class LearnerJourneyTest extends TestCase
         $this->assertNull(app(LearningService::class)->activeEnrolment($user, self::SLUG));
 
         $checkout = app(CheckoutService::class);
-        $this->assertSame(401, $checkout->handleWebhook($body, ['x-sandbox-signature' => str_repeat('0', 64)])['status']);
+        $this->assertSame(401, $checkout->handleWebhook('sandbox', $body, ['x-sandbox-signature' => str_repeat('0', 64)])['status']);
         $this->assertNull(app(LearningService::class)->activeEnrolment($user, self::SLUG));
 
-        $this->assertSame('paid', $checkout->handleWebhook($body, $headers)['result']);
-        $this->assertSame('duplicate', $checkout->handleWebhook($body, $headers)['result']);
+        $this->assertSame('paid', $checkout->handleWebhook('sandbox', $body, $headers)['result']);
+        $this->assertSame('duplicate', $checkout->handleWebhook('sandbox', $body, $headers)['result']);
         $this->assertSame(1, Enrolment::where('user_id', $user->id)->count());
         $this->assertSame(1, Payment::where('order_id', $order->id)->count());
     }
@@ -135,7 +135,7 @@ class LearnerJourneyTest extends TestCase
         $user = $this->learner();
         app(CheckoutService::class)->createCheckout($user, $this->soc(), null);
         $order = Order::where('user_id', $user->id)->firstOrFail();
-        app(PaymentProvider::class)->setOutcome($order->reference, 'success', amountOverride: 100);   // tampered amount
+        app(PaymentProviderFactory::class)->get('sandbox')->setOutcome($order->reference, 'success', amountOverride: 100);   // tampered amount
         $this->assertSame('pending', app(CheckoutService::class)->confirm($order->reference));
         $this->assertNull(app(LearningService::class)->activeEnrolment($user, self::SLUG));
     }

@@ -12,7 +12,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Specialization;
 use App\Models\User;
-use App\Payments\PaymentProvider;
+use App\Payments\PaymentProviderFactory;
 use App\Payments\SandboxProvider;
 use App\Services\CheckoutService;
 use Database\Seeders\CatalogueSeeder;
@@ -186,10 +186,10 @@ class HttpPagesTest extends TestCase
         $learner = $this->user();
         $this->actingAs($learner)->post(route('checkout.store', 'soc-analyst'));
         $order = Order::where('user_id', $learner->id)->firstOrFail();
-        app(PaymentProvider::class)->setOutcome($order->reference, 'success');
+        app(PaymentProviderFactory::class)->get('sandbox')->setOutcome($order->reference, 'success');
         $body = json_encode(['id' => "evt_{$order->reference}", 'event' => 'payment.success', 'reference' => $order->reference]);
 
-        $send = fn (string $sig) => $this->call('POST', '/webhooks/payments', [], [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_X_SANDBOX_SIGNATURE' => $sig], $body);
+        $send = fn (string $sig) => $this->call('POST', '/webhooks/payments/sandbox', [], [], [], ['CONTENT_TYPE' => 'application/json', 'HTTP_X_SANDBOX_SIGNATURE' => $sig], $body);
 
         $send('forged')->assertStatus(401);
         $this->assertSame('pending', $order->fresh()->status);

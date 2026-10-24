@@ -10,7 +10,9 @@ use App\Models\Payment;
 use App\Models\PaymentWebhookEvent;
 use App\Models\Specialization;
 use App\Models\User;
-use App\Payments\PaymentProvider;
+use App\Payments\PaymentProviderFactory;
+use Illuminate\Support\Facades\Log;
+use RuntimeException;
 use App\Support\CredentialIds;
 use App\Support\Currency;
 use App\Support\Money;
@@ -28,12 +30,10 @@ final class CheckoutService
 {
     private const SUCCESS_EVENTS = ['charge.success', 'payment.success'];
 
-    public function __construct(private readonly CatalogueService $catalogue) {}
+    /** Final outcomes worth an authoritative status check (GeniusPay); refunds are recorded by hand in Admin. */
+    private const FAILURE_EVENTS = ['payment.failed', 'payment.cancelled', 'payment.expired'];
 
-    private function provider(): ?PaymentProvider
-    {
-        return app(PaymentProvider::class);
-    }
+    public function __construct(private readonly CatalogueService $catalogue, private readonly PaymentProviderFactory $providers) {}
 
     private function findDiscount(string $code, Specialization $spec, string $currency): ?Discount
     {
@@ -80,19 +80,20 @@ final class CheckoutService
             throw new RuleViolation(__('You are already enrolled in this programme.'));
         }
         $q = $this->quote($spec, $discountCode);
-        $provider = $this->provider();
-        if (! $provider && $q['total_minor'] > 0) {
-            throw new RuleViolation(__('Online payment is not configured yet. Please contact us to enrol.'));
+        $currency = $q['offer']->currency;
+        $provider = $this->providers->forCurrency($currency);
+        if ($q['total_minor'] > 0 && ! $provider?->supportsCurrency($currency)) {
+            throw new RuleViolation(__('Online payment in :currency is not available yet. Please contact us to enrol.', ['currency' => Currency::short($currency)]));
         }
-        if ($q['total_minor'] > 0 && ! $provider->supportsCurrency($q['offer']->currency)) {
-            throw new RuleViolation(__('Online payment in :currency is not available yet. Please contact us to enrol.', ['currency' => Currency::short($q['offer']->currency)]));
+        if ($q['total_minor'] > 0 && $q['total_minor'] < $provider->minimumMinor($currency)) {
+            throw new RuleViolation(__('The minimum online payment is :amount. Please contact us to enrol.', ['amount' => Money::format($provider->minimumMinor($currency), $currency)]));
         }
 
         $order = Order::create([
             'reference' => CredentialIds::orderReference(), 'user_id' => $user->id, 'specialization_id' => $spec->id,
-            'offer_id' => $q['offer']->id, 'discount_id' => $q['discount']?->id, 'currency' => $q['offer']->currency,
+            'offer_id' => $q['offer']->id, 'discount_id' => $q['discount']?->id, 'currency' => $currency,
             'subtotal_minor' => $q['offer']->amount_minor, 'discount_minor' => $q['discount_minor'], 'total_minor' => $q['total_minor'],
-            'provider' => $q['total_minor'] === 0 ? 'none' : $provider->id(),
+            'provider' => $q['total_minor'] === 0 ? 'none' : $provider->id(), 'locale' => app()->getLocale(),
         ]);
 
         if ($q['total_minor'] === 0) {   // a 100% discount: nothing to collect
@@ -101,11 +102,22 @@ final class CheckoutService
             return route('checkout.complete', ['reference' => $order->reference]);
         }
 
-        return $provider->initialize(
-            $order->reference, $user->email, $order->total_minor, $order->currency,
-            route('checkout.complete', ['reference' => $order->reference]),
-            ['order_id' => $order->id, 'programme' => $spec->slug],
-        );
+        try {
+            $started = $provider->initialize(
+                $order->reference, $user->email, $order->total_minor, $order->currency,
+                route('checkout.complete', ['reference' => $order->reference]),
+                ['order_id' => $order->id, 'programme' => $spec->slug, 'description' => "AMANIQ Academy: {$spec->title}", 'customer_name' => $user->name],
+            );
+        } catch (RuntimeException $e) {
+            // Nothing was charged: close the order and let the learner try again.
+            Order::whereKey($order->id)->where('status', 'pending')->update(['status' => 'failed']);
+            Log::warning('Payment could not be started', ['order' => $order->reference, 'provider' => $provider->id(), 'error' => $e->getMessage()]);
+
+            throw new RuleViolation(__('We could not reach the payment provider. Nothing was charged. Please try again in a few minutes.'));
+        }
+        $order->forceFill(['provider_reference' => $started['provider_reference']])->save();
+
+        return $started['url'];
     }
 
     /**
@@ -149,12 +161,19 @@ final class CheckoutService
         if ($order->status !== 'pending') {
             return $order->status;
         }
-        $provider = $this->provider();
-        if (! $provider || $provider->id() !== $order->provider) {
+        // Always the provider the order was created with, whatever the currency routing says now.
+        $provider = $this->providers->get($order->provider);
+        if (! $provider) {
             return 'pending';
         }
 
-        $v = $provider->verify($reference);
+        try {
+            $v = $provider->verify($order->provider_reference ?? $order->reference);
+        } catch (RuntimeException $e) {
+            Log::warning('Payment status check failed', ['order' => $order->reference, 'provider' => $provider->id(), 'error' => $e->getMessage()]);
+
+            return 'pending';   // try again later; never guess
+        }
         if ($v['status'] === 'success') {
             // The provider must report exactly what the server priced; anything else is not accepted.
             if ($v['amount_minor'] !== (int) $order->total_minor || $v['currency'] !== $order->currency) {
@@ -181,9 +200,10 @@ final class CheckoutService
      *
      * @return array{status: int, result: string}
      */
-    public function handleWebhook(string $rawBody, array $headers): array
+    public function handleWebhook(string $providerId, string $rawBody, array $headers): array
     {
-        $provider = $this->provider();
+        // Only providers some currency is routed to accept webhooks.
+        $provider = in_array($providerId, $this->providers->configured(), true) ? $this->providers->get($providerId) : null;
         if (! $provider) {
             return ['status' => 404, 'result' => 'no-provider'];
         }
@@ -200,7 +220,13 @@ final class CheckoutService
             return ['status' => 200, 'result' => 'duplicate'];
         }
 
-        $result = in_array($event['type'], self::SUCCESS_EVENTS, true) && $event['reference'] ? $this->confirm($event['reference']) : 'ignored';
+        // The event only prompts a status check with the provider; its own contents are not trusted.
+        $result = 'ignored';
+        if ($event['reference'] && in_array($event['type'], [...self::SUCCESS_EVENTS, ...self::FAILURE_EVENTS], true)) {
+            $order = Order::where('provider', $provider->id())->where('provider_reference', $event['reference'])->first()
+                ?? Order::where('provider', $provider->id())->whereNull('provider_reference')->where('reference', $event['reference'])->first();   // orders from before provider references were stored
+            $result = $order ? $this->confirm($order->reference) : 'unknown';
+        }
         $record->forceFill(['processed_at' => now(), 'result' => $result])->save();
 
         return ['status' => 200, 'result' => $result];

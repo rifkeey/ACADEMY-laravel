@@ -57,7 +57,10 @@ Copy `.env.example` to `.env` in `/home/USER/academy/` and fill in:
 - `APP_URL` and `ACADEMY_SITE_URL`: `https://academy.amaniqgroup.com` (https is required; the app refuses to boot in production otherwise).
 - `DB_*`: the values from step 4. `DB_HOST=localhost` on cPanel.
 - `MAIL_*`: SMTP host, port 465 (SSL) and mailbox credentials from cPanel → Email Accounts.
-- `PAYMENT_PROVIDER=paystack` and `PAYSTACK_SECRET_KEY=sk_live_…` (live keys only; test keys are refused in production). Use `PAYMENT_PROVIDER=none` to launch without online payments and grant enrolments from the admin area.
+- Payments are set per currency:
+  - `PAYMENT_PROVIDER_NGN=paystack` with `PAYSTACK_SECRET_KEY=sk_live_…` (live keys only; test keys are refused in production).
+  - `PAYMENT_PROVIDER_XOF=geniuspay` with `GENIUSPAY_PUBLIC_KEY=pk_live_…`, `GENIUSPAY_SECRET_KEY=sk_live_…` and `GENIUSPAY_WEBHOOK_SECRET=whsec_live_…`, from AMANIQ's own GeniusPay merchant account (sandbox keys are refused in production). Keep `PAYMENT_PROVIDER_XOF=none` until that account is tested; FCFA learners are then asked to contact AMANIQ.
+  - `none` for either currency launches without online payment in it; grant enrolments from the admin area.
 
 Set the file permission of `.env` to **600** (or 640).
 
@@ -103,11 +106,13 @@ cd /home/USER/academy && php artisan schedule:run >> /dev/null 2>&1
 
 (Use the full PHP 8.3 path if `php` is an older version.) The scheduler only cleans expired password-reset tokens; the site works without it.
 
-## 9. HTTPS and Paystack
+## 9. HTTPS, Paystack and GeniusPay
 
 1. Check the SSL certificate is active, then open the site over https.
 2. In the Paystack dashboard set the **webhook URL** to `https://academy.amaniqgroup.com/webhooks/payments` and the callback URL to `https://academy.amaniqgroup.com/checkout/complete`.
-3. Make a real low-value test purchase (e.g. with a 99% discount code) and refund it, to confirm payments end to end. **This has not yet been done: the Paystack integration is untested against the live API.**
+3. In the GeniusPay dashboard set the **webhook URL** to `https://academy.amaniqgroup.com/webhooks/payments/geniuspay` and subscribe to `payment.success`, `payment.failed`, `payment.cancelled` and `payment.expired`. The return URLs are sent with each payment; nothing to set.
+4. Check the server can reach `https://pay.genius.ci` (outbound HTTPS; ask GO54 if it times out).
+5. Make a real low-value test purchase in each currency (e.g. with a 99% discount code) and refund it in the provider's dashboard, then record the refund in Admin → Orders. **This has not yet been done: neither the Paystack nor the GeniusPay integration has been tested against the real API.** GeniusPay must first pass the sandbox checklist in `docs/BILINGUAL_PLAN.md` (Phase 3).
 
 ## 10. Updating the site
 
