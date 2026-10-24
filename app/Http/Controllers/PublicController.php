@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EnquiryRequest;
 use App\Models\Article;
 use App\Models\Enquiry;
+use App\Models\LegalPage;
 use App\Services\CatalogueService;
+use App\Services\TranslationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -61,15 +63,17 @@ class PublicController extends Controller
     public function article(Article $article): View
     {
         abort_unless($article->status === 'published', 404);
+        app(TranslationService::class)->localise($article);
 
         return view('public.article', ['article' => $article]);
     }
 
     public function legal(string $doc): View
     {
-        $docs = json_decode(file_get_contents(database_path('content/legal.json')), true);
-        abort_unless(isset($docs[$doc]), 404);
+        $page = LegalPage::forSlug($doc);
+        abort_unless($page, 404);
+        app(TranslationService::class)->localise($page);
 
-        return view('public.legal', ['doc' => $docs[$doc]]);
+        return view('public.legal', ['page' => $page]);
     }
 }

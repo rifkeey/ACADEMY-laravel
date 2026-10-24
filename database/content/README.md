@@ -52,7 +52,7 @@ Put the worked solution and debrief in `validator.debrief` (Markdown): it is sen
 
 ## Translations (`programmes/<dir>/fr/`)
 
-French course content lives beside the English in `programmes/<dir>/fr/translations.json`, keyed by the same stable keys (module, lesson and lab slugs, question keys). Each item lists **segments**: the path of a piece of English prose and its French. Long texts can point at a file: `"body_md": {"file": "lessons/<slug>.md"}`.
+French course content lives beside the English in `programmes/<dir>/fr/translations.json` (and any `translations-*.json` beside it, so large programmes can be split by module), keyed by the same stable keys (module, lesson and lab slugs, question keys). Each item lists **segments**: the path of a piece of English prose and its French. Long texts can point at a file: `"body_md": {"file": "lessons/<slug>.md"}`.
 
 ```json
 {

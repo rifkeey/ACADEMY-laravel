@@ -1,0 +1,57 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 1: legal pages and articles, drafted in French. Loaded as drafts; a reviewer must approve them in Admin. Legal pages are a faithful translation of the English draft: they still need legal review, including the points listed in docs/BILINGUAL_PLAN.md (Phase 5).",
+    "legal": {
+        "privacy": {
+            "title": "Politique de confidentialité",
+            "summary": "Comment AMANIQ Academy collecte, utilise et protège les données personnelles.",
+            "body_md": {
+                "file": "legal/privacy.md"
+            }
+        },
+        "terms": {
+            "title": "Conditions d’utilisation",
+            "summary": "Les conditions qui s’appliquent lorsque vous utilisez AMANIQ Academy.",
+            "body_md": {
+                "file": "legal/terms.md"
+            }
+        },
+        "acceptable-use": {
+            "title": "Politique d’utilisation acceptable des labs de cybersécurité",
+            "summary": "Règles applicables aux exercices pratiques de sécurité, sur la plateforme AMANIQ et en dehors.",
+            "body_md": {
+                "file": "legal/acceptable-use.md"
+            }
+        },
+        "refunds": {
+            "title": "Politique de remboursement et d’annulation",
+            "summary": "Dans quels cas un remboursement est possible et comment le demander.",
+            "body_md": {
+                "file": "legal/refunds.md"
+            }
+        }
+    },
+    "articles": {
+        "how-to-read-a-security-alert": {
+            "title": "Lire une alerte de sécurité en cinq minutes",
+            "summary": "Une méthode reproductible pour transformer une alerte inconnue en décision claire : ce qui s’est déclenché, ce qui est touché et la suite à donner.",
+            "body_md": {
+                "file": "articles/how-to-read-a-security-alert.md"
+            }
+        },
+        "certificates-of-completion-explained": {
+            "title": "Certificat de réussite, certification et accréditation : quelle différence ?",
+            "summary": "Un guide simple sur ce que signifient, ou non, les certificats de formation, pour présenter vos titres avec exactitude.",
+            "body_md": {
+                "file": "articles/certificates-of-completion-explained.md"
+            }
+        },
+        "least-privilege-in-practice": {
+            "title": "Le moindre privilège en pratique : trois questions pour chaque permission",
+            "summary": "Le moindre privilège est facile à énoncer et difficile à appliquer. Trois questions le rendent concret pour les accès cloud, réseau et applicatifs.",
+            "body_md": {
+                "file": "articles/least-privilege-in-practice.md"
+            }
+        }
+    }
+}

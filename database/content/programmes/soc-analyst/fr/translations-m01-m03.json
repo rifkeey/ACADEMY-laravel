@@ -1,0 +1,157 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 2a: SOC modules 1–3 (remaining lessons of module 1, modules 2 and 3). Drafts for review.",
+    "modules": {
+        "telemetry": {
+            "title": "Télémétrie réseau et systèmes d’exploitation",
+            "purpose": "Donner aux analystes l’aisance nécessaire pour lire les preuves réseau, Windows et Linux qu’ils consultent chaque jour.",
+            "prerequisite_knowledge": "Module 1. Une connaissance de base des adresses IP est utile.",
+            "objectives.0": "Interpréter les éléments TCP/IP, de ports et DNS présents dans les journaux.",
+            "objectives.1": "Identifier les principaux identifiants d’événement de sécurité Windows et types d’ouverture de session.",
+            "objectives.2": "Lire les journaux d’authentification Linux en tenant compte des différences de fuseau horaire.",
+            "key_concepts.0": "RFC 1918 et plages de documentation",
+            "key_concepts.1": "Négociation TCP en trois temps",
+            "key_concepts.2": "Schémas de requêtes DNS",
+            "key_concepts.3": "Événements Windows 4624/4625 et types d’ouverture de session",
+            "key_concepts.4": "auth.log et journald",
+            "key_concepts.5": "Normalisation des horodatages",
+            "assessment_criteria.0": "Distingue la pulvérisation de mots de passe de la force brute à partir des journaux d’authentification",
+            "assessment_criteria.1": "Convertit correctement en UTC les heures locales de syslog"
+        },
+        "siem": {
+            "title": "Architecture SIEM et analyse des journaux",
+            "purpose": "Expliquer comment un SIEM collecte, normalise et corrèle les données, et comment la qualité des détections est gérée.",
+            "prerequisite_knowledge": "Modules 1 et 2.",
+            "objectives.0": "Décrire chaque étape du traitement d’un SIEM et le rôle de la normalisation.",
+            "objectives.1": "Concevoir une logique de corrélation en langage courant avant d’écrire les requêtes.",
+            "objectives.2": "Appliquer des techniques d’ajustement sûres et expliquer le risque des exclusions larges.",
+            "key_concepts.0": "Collecte, analyse syntaxique, normalisation, enrichissement",
+            "key_concepts.1": "Heure de l’événement et heure d’ingestion",
+            "key_concepts.2": "Règles de seuil, de corrélation et d’anomalie",
+            "key_concepts.3": "Période d’examen et fréquence",
+            "key_concepts.4": "Précision et ajustement",
+            "assessment_criteria.0": "Repère les événements manqués à cause des périodes d’examen",
+            "assessment_criteria.1": "Choisit une exclusion étroite et documentée plutôt qu’une exclusion large"
+        }
+    },
+    "lessons": {
+        "events-alerts-incidents": {
+            "title": "Événements, alertes et incidents",
+            "objectives.0": "Définir précisément événement, alerte et incident",
+            "objectives.1": "Classer l’issue des alertes, y compris les vrais positifs bénins",
+            "body_md": {
+                "file": "lessons/events-alerts-incidents.md"
+            },
+            "knowledge_checks.0.question": "Une règle qui détecte PsExec se déclenche pendant une fenêtre de maintenance autorisée, conduite par l’équipe informatique. Quel est le meilleur classement ?",
+            "knowledge_checks.0.options.0": "Faux positif",
+            "knowledge_checks.0.options.1": "Vrai positif bénin",
+            "knowledge_checks.0.options.2": "Faux négatif",
+            "knowledge_checks.0.options.3": "Incident",
+            "knowledge_checks.0.explanation": "La règle a détecté exactement le comportement qu’elle cible, mais l’activité était autorisée."
+        },
+        "severity-priority-escalation": {
+            "title": "Sévérité, priorité et escalade",
+            "objectives.0": "Appliquer des critères de sévérité à des situations concrètes",
+            "objectives.1": "Rédiger un message d’escalade qui demande une décision précise",
+            "body_md": {
+                "file": "lessons/severity-priority-escalation.md"
+            },
+            "knowledge_checks.0.question": "Quel élément est le plus important à inclure dans un message d’escalade adressé à un décideur ?",
+            "knowledge_checks.0.options.0": "Chaque ligne de journal brute",
+            "knowledge_checks.0.options.1": "La décision ou l’autorisation précise dont vous avez besoin",
+            "knowledge_checks.0.options.2": "Votre hypothèse sur l’auteur de l’attaque",
+            "knowledge_checks.0.options.3": "Une capture d’écran du tableau de bord du SIEM",
+            "knowledge_checks.0.explanation": "Une escalade sert à obtenir une autorité ou une expertise ; indiquez exactement ce dont vous avez besoin."
+        },
+        "tcpip-dns-for-analysts": {
+            "title": "TCP/IP et DNS pour les analystes",
+            "objectives.0": "Reconnaître les ports courants et leur intérêt pour l’analyste",
+            "objectives.1": "Repérer les schémas de requêtes DNS suspects",
+            "body_md": {
+                "file": "lessons/tcpip-dns-for-analysts.md"
+            },
+            "knowledge_checks.0.question": "Un poste de travail émet toutes les 60 secondes des requêtes TXT vers des sous-domaines d’apparence aléatoire d’un même domaine. Que cela suggère-t-il le plus ?",
+            "knowledge_checks.0.options.0": "Une navigation web normale",
+            "knowledge_checks.0.options.1": "Un possible tunnel DNS ou un balisage",
+            "knowledge_checks.0.options.2": "Une imprimante mal configurée",
+            "knowledge_checks.0.options.3": "Un renouvellement DHCP",
+            "knowledge_checks.0.explanation": "Un rythme régulier, des sous-domaines aléatoires et des enregistrements TXT forment ensemble des indicateurs classiques de tunnel ou de balisage."
+        },
+        "windows-event-logging": {
+            "title": "La journalisation des événements Windows",
+            "objectives.0": "Se rappeler la signification des principaux identifiants d’événement de sécurité",
+            "objectives.1": "Interpréter les types d’ouverture de session et les codes d’échec",
+            "body_md": {
+                "file": "lessons/windows-event-logging.md"
+            },
+            "knowledge_checks.0.question": "Que signifie l’événement 4625 avec le SubStatus 0xC0000064 ?",
+            "knowledge_checks.0.options.0": "Mot de passe erroné pour un utilisateur valide",
+            "knowledge_checks.0.options.1": "Le nom d’utilisateur n’existe pas",
+            "knowledge_checks.0.options.2": "Compte verrouillé",
+            "knowledge_checks.0.options.3": "Ouverture de session réussie",
+            "knowledge_checks.0.explanation": "0xC0000064 signifie que le nom d’utilisateur n’existe pas ; 0xC000006A, un mot de passe erroné pour un utilisateur valide.",
+            "knowledge_checks.1.question": "Quel type d’ouverture de session correspond à RDP ?",
+            "knowledge_checks.1.options.0": "2",
+            "knowledge_checks.1.options.1": "3",
+            "knowledge_checks.1.options.2": "5",
+            "knowledge_checks.1.options.3": "10",
+            "knowledge_checks.1.explanation": "Le type 10 correspond à RemoteInteractive, utilisé par le Bureau à distance."
+        },
+        "linux-auth-logs": {
+            "title": "Les journaux d’authentification et système Linux",
+            "objectives.0": "Lire les lignes de journal de sshd et de sudo",
+            "objectives.1": "Convertir en UTC les horodatages locaux de syslog",
+            "body_md": {
+                "file": "lessons/linux-auth-logs.md"
+            },
+            "knowledge_checks.0.question": "Un serveur de Lagos (UTC+1) enregistre « Mar 4 03:01:12 ». Quelle heure est-il en UTC ?",
+            "knowledge_checks.0.options.0": "03:01:12",
+            "knowledge_checks.0.options.1": "04:01:12",
+            "knowledge_checks.0.options.2": "02:01:12",
+            "knowledge_checks.0.options.3": "Impossible à déterminer par principe",
+            "knowledge_checks.0.explanation": "L’heure d’Afrique de l’Ouest est UTC+1 : il faut retirer une heure."
+        },
+        "log-pipeline": {
+            "title": "Collecte, analyse syntaxique et normalisation",
+            "objectives.0": "Expliquer pourquoi la normalisation permet la détection sur plusieurs sources",
+            "objectives.1": "Distinguer « aucun résultat » de « aucune donnée »",
+            "body_md": {
+                "file": "lessons/log-pipeline.md"
+            },
+            "knowledge_checks.0.question": "Votre requête sur les échecs de connexion ne renvoie aucune ligne. Que devez-vous vérifier en premier ?",
+            "knowledge_checks.0.options.0": "Clôturer le dossier comme sain",
+            "knowledge_checks.0.options.1": "Que la source de données est présente sur cette période",
+            "knowledge_checks.0.options.2": "Si la licence du SIEM a expiré",
+            "knowledge_checks.0.options.3": "Réécrire la requête dans un autre langage",
+            "knowledge_checks.0.explanation": "L’absence de résultats n’a de sens que si les données ont été collectées."
+        },
+        "correlation-and-detection-rules": {
+            "title": "Corrélation et règles de détection",
+            "objectives.0": "Comparer les types de logique de détection",
+            "objectives.1": "Choisir des périodes d’examen qui tolèrent le délai d’ingestion",
+            "body_md": {
+                "file": "lessons/correlation-and-detection-rules.md"
+            },
+            "knowledge_checks.0.question": "Une règle s’exécute toutes les 5 minutes avec une période d’examen de 5 minutes. Les événements arrivent en général avec 3 minutes de retard. Que se passe-t-il ?",
+            "knowledge_checks.0.options.0": "Rien ; c’est idéal",
+            "knowledge_checks.0.options.1": "Certains événements peuvent être manqués entre deux exécutions",
+            "knowledge_checks.0.options.2": "Chaque événement est détecté deux fois",
+            "knowledge_checks.0.options.3": "Le SIEM rejette la règle",
+            "knowledge_checks.0.explanation": "La période d’examen doit dépasser la fréquence augmentée du délai prévu."
+        },
+        "false-positives-and-tuning": {
+            "title": "Faux positifs, ajustement et qualité des alertes",
+            "objectives.0": "Mesurer la qualité des alertes",
+            "objectives.1": "Ajuster les détections sans créer d’angles morts",
+            "body_md": {
+                "file": "lessons/false-positives-and-tuning.md"
+            },
+            "knowledge_checks.0.question": "Quelle exclusion est la plus sûre ?",
+            "knowledge_checks.0.options.0": "Exclure tout le sous-réseau informatique",
+            "knowledge_checks.0.options.1": "Exclure un seul hôte de scan pour un seul processus, avec un responsable et une date d’expiration",
+            "knowledge_checks.0.options.2": "Désactiver la règle",
+            "knowledge_checks.0.options.3": "Exclure tous les administrateurs",
+            "knowledge_checks.0.explanation": "Des exclusions étroites, documentées et limitées dans le temps réduisent les angles morts."
+        }
+    }
+}

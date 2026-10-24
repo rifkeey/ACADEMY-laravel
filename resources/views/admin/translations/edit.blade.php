@@ -1,5 +1,5 @@
 @php
-    $types = ['programme' => __('Programme'), 'module' => __('Module'), 'lesson' => __('Lesson'), 'lab' => __('Lab'), 'question' => __('Question'), 'exam' => __('Examination'), 'badge' => __('Badge'), 'article' => __('Article')];
+    $types = ['programme' => __('Programme'), 'module' => __('Module'), 'lesson' => __('Lesson'), 'lab' => __('Lab'), 'question' => __('Question'), 'exam' => __('Examination'), 'badge' => __('Badge'), 'article' => __('Article'), 'legal' => __('Legal page')];
     $fieldLabels = [
         'title' => __('Title'), 'summary' => __('Summary'), 'description' => __('Description'), 'audience' => __('Who it is for'),
         'prerequisites' => __('Prerequisites'), 'outcomes' => __('Outcomes'), 'inclusions' => __('What is included'), 'faqs' => __('Questions and answers'),

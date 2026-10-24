@@ -7,6 +7,7 @@ use App\Models\BadgeDefinition;
 use App\Models\CourseModule;
 use App\Models\Exam;
 use App\Models\Lab;
+use App\Models\LegalPage;
 use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Specialization;
@@ -44,6 +45,7 @@ final class TranslationTypes
         'exam' => ['model' => Exam::class, 'fields' => ['title' => 'text']],
         'badge' => ['model' => BadgeDefinition::class, 'fields' => ['name' => 'text', 'description' => 'text', 'criteria' => 'text']],
         'article' => ['model' => Article::class, 'fields' => ['title' => 'text', 'summary' => 'text', 'body_md' => 'markdown']],
+        'legal' => ['model' => LegalPage::class, 'fields' => ['title' => 'text', 'summary' => 'text', 'body_md' => 'markdown']],
     ];
 
     public static function all(): array

@@ -1,0 +1,32 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 1: public programme page, badge and exam title. Loaded as drafts for review.",
+    "programme": {
+        "title": "Sécurité des réseaux",
+        "summary": "Analysez le trafic, concevez la segmentation et la politique de pare-feu, et détectez les menaces réseau. Programme en cours d’élaboration.",
+        "description": "Un programme pratique sur les fondamentaux des réseaux, l’analyse de paquets, la segmentation, les pare-feu, la détection réseau, l’accès à distance sécurisé et le durcissement. Chaque module dispose d’une leçon d’introduction rédigée ; les leçons complètes, les labs restants et l’examen sont en cours d’élaboration.",
+        "audience.0": "Ingénieurs réseau et infrastructure",
+        "audience.1": "Professionnels du support informatique",
+        "audience.2": "Analystes SOC qui veulent approfondir leurs compétences réseau",
+        "prerequisites.0": "Une expérience informatique de base",
+        "prerequisites.1": "Connaître les adresses IP est un plus",
+        "outcomes.0": "Lire les captures de paquets avec assurance",
+        "outcomes.1": "Concevoir des architectures réseau segmentées",
+        "outcomes.2": "Écrire des politiques de pare-feu fondées sur le moindre privilège",
+        "outcomes.3": "Interpréter et ajuster les détections réseau",
+        "outcomes.4": "Durcir l’infrastructure réseau",
+        "inclusions.0": "9 modules (en cours d’élaboration)",
+        "inclusions.1": "Labs de politique de pare-feu et d’analyse de paquets et de DNS disponibles dès maintenant",
+        "inclusions.2": "Examen final, badge et certificat une fois le programme terminé",
+        "faqs.0.q": "Ai-je besoin de matériel réseau ?",
+        "faqs.0.a": "Non. Les labs utilisent des données fournies et des simulateurs. Les exercices facultatifs avec des outils gratuits seront clairement signalés."
+    },
+    "badge": {
+        "name": "AMANIQ Sécurité des réseaux",
+        "description": "Décerné à l’issue du programme Sécurité des réseaux d’AMANIQ Academy.",
+        "criteria": "Suivre toutes les leçons et tous les labs obligatoires et obtenir au moins 75 % à l’examen final."
+    },
+    "exam": {
+        "title": "Examen final Sécurité des réseaux"
+    }
+}

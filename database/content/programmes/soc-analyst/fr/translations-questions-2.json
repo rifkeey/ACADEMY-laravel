@@ -1,0 +1,204 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 2e: SOC exam questions soc-025 to soc-046. Drafts for review. ATT&CK names, registry paths and framework names are unchanged.",
+    "questions": {
+        "soc-025": {
+            "prompt": "Pourquoi redémarrer un poste soupçonné d’être compromis peut-il être préjudiciable ?",
+            "explanation": "Les preuves présentes en mémoire sont perdues au redémarrage.",
+            "objective": "Préserver les preuves",
+            "options.1": "Cela ralentit le réseau",
+            "options.2": "Cela détruit des preuves volatiles comme le contenu de la mémoire",
+            "options.3": "Cela efface le disque",
+            "options.4": "Cela alerte l’éditeur du SIEM"
+        },
+        "soc-026": {
+            "prompt": "Pourquoi les analystes doivent-ils être prudents avant de soumettre des fichiers internes à des bacs à sable publics ?",
+            "explanation": "Une soumission publique peut divulguer des données et révéler que l’attaque a été détectée.",
+            "objective": "Limites de l’enrichissement",
+            "options.1": "Les bacs à sable sont toujours inexacts",
+            "options.2": "Cela peut divulguer des données confidentielles et alerter l’attaquant",
+            "options.3": "C’est illégal partout",
+            "options.4": "Les bacs à sable ne savent pas analyser les documents"
+        },
+        "soc-027": {
+            "prompt": "Un analyste décide très tôt qu’une alerte est bénigne et ne cherche que des éléments qui le confirment. Comment appelle-t-on ce biais ?",
+            "explanation": "Le biais d’ancrage fausse le tri.",
+            "objective": "Éviter les biais",
+            "options.1": "Le pivot",
+            "options.2": "L’ancrage",
+            "options.3": "L’enrichissement",
+            "options.4": "L’établissement d’une référence"
+        },
+        "soc-028": {
+            "prompt": "Dans ATT&CK, que représente une tactique ?",
+            "explanation": "Les tactiques répondent au « pourquoi » ; les techniques, au « comment ».",
+            "objective": "Vocabulaire des TTP",
+            "options.1": "L’objectif de l’attaquant à une étape donnée, comme Persistence",
+            "options.2": "Un échantillon précis de logiciel malveillant",
+            "options.3": "Le produit d’un éditeur",
+            "options.4": "Un identifiant CVE"
+        },
+        "soc-029": {
+            "prompt": "Un attaquant crée une règle de boîte de réception qui transfère les messages vers une adresse externe. Quelle technique correspond le mieux ?",
+            "explanation": "Les règles de transfert sont une sous-technique d’Email Collection.",
+            "objective": "Rattacher les techniques",
+            "options.1": "T1110.003 Password Spraying",
+            "options.2": "T1114.003 Email Collection: Email Forwarding Rule",
+            "options.3": "T1053.005 Scheduled Task",
+            "options.4": "T1486 Data Encrypted for Impact"
+        },
+        "soc-030": {
+            "prompt": "Quelle affirmation sur la couverture ATT&CK est la plus exacte ?",
+            "explanation": "Des règles non testées surestiment la protection.",
+            "objective": "Évaluer la couverture",
+            "options.1": "Disposer d’une règle pour une technique signifie qu’elle est couverte",
+            "options.2": "La couverture doit distinguer données disponibles, détection existante et détection validée",
+            "options.3": "Couvrir 100 % des techniques est l’objectif de toute organisation",
+            "options.4": "ATT&CK est un score de maturité"
+        },
+        "soc-031": {
+            "prompt": "Qu’est-ce que Sigma ?",
+            "explanation": "Les règles Sigma peuvent être converties dans de nombreux langages de requête de SIEM.",
+            "objective": "Sigma",
+            "options.1": "Un SIEM commercial",
+            "options.2": "Un format YAML indépendant des éditeurs pour décrire des détections sur des journaux",
+            "options.3": "Une famille de logiciels malveillants",
+            "options.4": "Un format de capture de paquets"
+        },
+        "soc-032": {
+            "prompt": "Quelle logique de détection est la plus spécifique pour les documents malveillants ?",
+            "explanation": "Exiger un processus parent Office élimine la plupart des correspondances bénignes.",
+            "objective": "Précision",
+            "options.1": "Toute exécution de powershell.exe",
+            "options.2": "Tout processus avec -enc",
+            "options.3": "powershell.exe ou cmd.exe dont le parent est winword.exe, excel.exe ou powerpnt.exe",
+            "options.4": "Tout démarrage d’une application Office"
+        },
+        "soc-033": {
+            "prompt": "Avant d’activer une nouvelle détection, sur quels DEUX jeux de test faut-il l’exécuter ?",
+            "explanation": "Elle doit se déclencher sur le malveillant et rester silencieuse sur le sain.",
+            "objective": "Tester les détections",
+            "options.1": "Des événements malveillants connus",
+            "options.2": "Des événements sains connus et représentatifs",
+            "options.3": "Une table vide",
+            "options.4": "Uniquement les incidents de l’année dernière"
+        },
+        "soc-034": {
+            "prompt": "Quel type d’indicateur est en général le plus facile à changer pour un attaquant ?",
+            "explanation": "Les empreintes de fichier se trouvent au bas de la pyramide de la douleur.",
+            "objective": "Durée de vie des IOC",
+            "options.1": "L’empreinte de fichier",
+            "options.2": "Les outils et les TTP",
+            "options.3": "L’objectif global de la campagne",
+            "options.4": "Le secteur ciblé"
+        },
+        "soc-035": {
+            "prompt": "Un indicateur IP a été observé pour la dernière fois il y a 14 mois. Quel est le principal risque à le bloquer aujourd’hui ?",
+            "explanation": "L’infrastructure IP est recyclée ; les indicateurs doivent avoir une date d’expiration.",
+            "objective": "Qualité des indicateurs",
+            "options.1": "L’adresse appartient peut-être aujourd’hui à un tiers innocent, d’où des faux positifs",
+            "options.2": "Bloquer d’anciennes IP est illégal",
+            "options.3": "Le SIEM ne peut pas la stocker",
+            "options.4": "Il n’y a aucun risque"
+        },
+        "soc-036": {
+            "prompt": "Quelle hypothèse de chasse est bien formulée ?",
+            "explanation": "Une hypothèse est vérifiable et indique la télémétrie attendue.",
+            "objective": "Chasse",
+            "options.1": "Chercher des choses malveillantes",
+            "options.2": "Si un attaquant utilise un tunnel DNS, un poste interrogera de nombreux sous-domaines uniques d’un même domaine",
+            "options.3": "Bloquer toutes les IP étrangères",
+            "options.4": "Vérifier chaque journal manuellement"
+        },
+        "soc-037": {
+            "prompt": "À quel public le renseignement stratégique sur les menaces s’adresse-t-il principalement ?",
+            "explanation": "Le renseignement stratégique éclaire les décisions de l’organisation.",
+            "objective": "Niveaux de renseignement",
+            "options.1": "La direction et les décideurs",
+            "options.2": "Les moteurs de règles de pare-feu",
+            "options.3": "Les agents installés sur les postes",
+            "options.4": "Les outils de capture de paquets"
+        },
+        "soc-038": {
+            "prompt": "Quels DEUX résultats ont de la valeur pour une chasse qui n’a trouvé aucune intrusion ?",
+            "explanation": "Les chasses améliorent la détection et la visibilité.",
+            "objective": "Résultats d’une chasse",
+            "options.1": "Une nouvelle règle de détection",
+            "options.2": "Une référence documentée du comportement normal",
+            "options.3": "La suppression des données examinées",
+            "options.4": "La désactivation des alertes existantes"
+        },
+        "soc-039": {
+            "prompt": "Quel emplacement est un mécanisme de persistance Windows courant ?",
+            "explanation": "Les clés Run lancent des programmes à l’ouverture de session (T1547.001).",
+            "objective": "Persistance",
+            "options.1": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+            "options.2": "C:\\Windows\\Fonts",
+            "options.3": "HKLM\\HARDWARE\\DESCRIPTION",
+            "options.4": "La corbeille"
+        },
+        "soc-040": {
+            "prompt": "Quelle observation est la plus suspecte ?",
+            "explanation": "Un nom de binaire système dans un emplacement modifiable par l’utilisateur signale une usurpation d’identité du processus.",
+            "objective": "Anomalies de processus",
+            "options.1": "svchost.exe lancé par services.exe depuis System32",
+            "options.2": "svchost.exe exécuté depuis le dossier Téléchargements d’un utilisateur",
+            "options.3": "chrome.exe lancé par explorer.exe",
+            "options.4": "Teams qui se met à jour"
+        },
+        "soc-041": {
+            "prompt": "Quelle activité est un indicateur précoce d’une opération de rançongiciel, avant le chiffrement ?",
+            "explanation": "La suppression des options de restauration précède généralement le chiffrement.",
+            "objective": "Signes précurseurs d’un rançongiciel",
+            "options.1": "Un utilisateur qui change son fond d’écran",
+            "options.2": "La suppression des clichés instantanés de volume",
+            "options.3": "Une impression qui échoue",
+            "options.4": "Les mises à jour habituelles des définitions antivirus"
+        },
+        "soc-042": {
+            "prompt": "Pourquoi les réinitialisations d’identifiants doivent-elles en général être coordonnées après avoir établi le périmètre ?",
+            "explanation": "Un confinement partiel alerte l’attaquant.",
+            "objective": "Confinement",
+            "options.1": "Les réinitialisations coûtent cher",
+            "options.2": "L’attaquant peut détenir d’autres comptes et sera alerté",
+            "options.3": "Les réinitialisations exigent un redémarrage",
+            "options.4": "La politique interdit les réinitialisations pendant un incident"
+        },
+        "soc-043": {
+            "prompt": "Avec quel référentiel la publication NIST SP 800-61 Rev. 3 aligne-t-elle la réponse aux incidents ?",
+            "explanation": "La révision 3 (2025) rattache les activités de réponse aux incidents aux fonctions du CSF 2.0.",
+            "objective": "Recommandations sur la réponse aux incidents",
+            "options.1": "NIST Cybersecurity Framework 2.0",
+            "options.2": "PCI DSS",
+            "options.3": "ITIL 4",
+            "options.4": "COBIT 5"
+        },
+        "soc-044": {
+            "prompt": "À quoi sert la consignation de l’empreinte SHA-256 d’une preuve exportée ?",
+            "explanation": "Les empreintes étayent l’intégrité et la chaîne de possession.",
+            "objective": "Intégrité des preuves",
+            "options.1": "À compresser le fichier",
+            "options.2": "À démontrer que le fichier n’a pas changé depuis sa collecte",
+            "options.3": "À chiffrer le fichier",
+            "options.4": "À accélérer les recherches"
+        },
+        "soc-045": {
+            "prompt": "Quel indicateur risque le plus de créer un effet pervers s’il est utilisé seul ?",
+            "explanation": "Il récompense les clôtures rapides et négligentes.",
+            "objective": "Indicateurs",
+            "options.1": "La couverture de détection validée",
+            "options.2": "Le nombre d’alertes clôturées par analyste et par heure",
+            "options.3": "Le délai moyen de confinement",
+            "options.4": "Le taux de faux positifs par règle"
+        },
+        "soc-046": {
+            "prompt": "Que doit contenir la synthèse pour la direction d’un rapport d’incident ?",
+            "explanation": "La synthèse s’adresse à des décideurs non techniques.",
+            "objective": "Structure du rapport",
+            "options.1": "Les requêtes KQL brutes",
+            "options.2": "Ce qui s’est passé, l’impact, la situation actuelle et les principales recommandations",
+            "options.3": "Le registre complet des preuves",
+            "options.4": "Chaque IOC observé"
+        }
+    }
+}

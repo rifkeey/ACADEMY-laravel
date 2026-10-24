@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Exceptions\RuleViolation;
+use App\Models\Article;
 use App\Models\AuditEvent;
 use App\Models\ContentTranslation;
 use App\Models\CourseModule;
@@ -10,6 +11,7 @@ use App\Models\Enrolment;
 use App\Models\Exam;
 use App\Models\ExamAttemptQuestion;
 use App\Models\Lab;
+use App\Models\LegalPage;
 use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Specialization;
@@ -189,6 +191,84 @@ class ContentTranslationTest extends TestCase
         $this->assertSame($instructor->id, $t->fresh()->translated_by);
         $this->expectException(RuleViolation::class);
         $svc->approve($instructor, $t->fresh(), null);
+    }
+
+    /**
+     * Quality gate for the French files in database/content: every draft is complete, code and
+     * lab data are untouched, legal placeholders survive, and translated labs mark the known
+     * solutions exactly as the English does.
+     */
+    #[Test]
+    public function seeded_french_content_is_complete_and_keeps_code_and_marking_intact(): void
+    {
+        $svc = app(TranslationService::class);
+        $rows = ContentTranslation::where('locale', 'fr')->get();
+        $this->assertGreaterThan(100, $rows->count());
+        $fences = fn (string $md) => preg_match_all('/^```(\w*)\n(.*?)^```/ms', $md, $m) ? array_map(null, $m[1], $m[2]) : [];
+
+        foreach ($rows as $row) {
+            $item = TranslationTypes::model($row->item_type)::findOrFail($row->item_id);
+            $english = $svc->english($item);
+            $c = $svc->compare($row, $english);
+            $label = "{$row->item_type}:{$row->item_id}";
+            $this->assertSame([], $c['missing'], "{$label} is incomplete");
+            $this->assertSame([], $c['stale'], "{$label} was drafted from different English");
+
+            foreach ($row->segments as $path => $seg) {
+                if (! str_contains($english[$path]['text'], '```')) {
+                    continue;
+                }
+                $en = $fences($english[$path]['text']);
+                $fr = $fences($seg['text']);
+                $this->assertCount(count($en), $fr, "{$label} {$path}: code blocks added or lost");
+                foreach ($en as $i => [$lang, $code]) {
+                    if (in_array($lang, ['kql', 'bash', 'yaml', 'powershell', 'json'], true)) {
+                        $this->assertSame($code, $fr[$i][1], "{$label} {$path}: {$lang} block changed");
+                    }
+                }
+            }
+            if ($row->item_type === 'legal') {
+                $this->assertSame(substr_count($english['body_md']['text'], '['), substr_count($row->segments['body_md']['text'], '['), "{$label}: placeholders lost");
+            }
+        }
+
+        foreach (Lab::where('course_version_id', $this->soc()->current_version_id)->get() as $lab) {
+            $row = $this->row('lab', $lab->id);
+            $texts = array_map(fn ($s) => $s['text'], $row->segments);
+            $answers = LabSolutions::ALL[$lab->slug];
+            $now = config('academy.lab_reference_now');
+            $en = \App\Labs\LabEvaluator::evaluate($lab->content, $lab->validator, $answers, $lab->pass_percent, $now);
+            $fr = \App\Labs\LabEvaluator::evaluate(
+                Segments::apply('content', 'lab_content', $lab->content, $texts),
+                Segments::apply('validator', 'lab_validator', $lab->validator, $texts),
+                $answers, $lab->pass_percent, $now,
+            );
+            $this->assertTrue($en['passed'], $lab->slug);
+            $this->assertSame([$en['score'], $en['maxScore'], $en['passed']], [$fr['score'], $fr['maxScore'], $fr['passed']], "{$lab->slug} marks differently in French");
+        }
+    }
+
+    #[Test]
+    public function legal_pages_and_articles_follow_the_same_rules(): void
+    {
+        $this->get('/fr/legal/privacy')->assertOk()->assertSee('Who we are')
+            ->assertSee(__('This content is not yet available in French. It is shown in English.', [], 'fr'));
+        $page = LegalPage::where('slug', 'privacy')->firstOrFail();
+        $this->assertSame('machine', $this->row('legal', $page->id)->origin);
+
+        $this->approve('legal', $page->id);
+        $this->get('/fr/legal/privacy')->assertOk()->assertSee('Qui sommes-nous')->assertSee('[À compléter', false);
+        $this->get('/legal/privacy')->assertOk()->assertSee('Who we are')->assertDontSee('Qui sommes-nous');
+
+        // legal.json stays the source of the English: a change there marks the French out of date.
+        $page->forceFill(['body_md' => $page->body_md."\n\nNew clause."])->save();
+        $this->assertTrue($this->row('legal', $page->id)->outdated);
+        $this->get('/fr/legal/privacy')->assertSee('Who we are');
+
+        $article = Article::where('slug', 'how-to-read-a-security-alert')->firstOrFail();
+        $this->approve('article', $article->id);
+        $this->get('/fr/resources/how-to-read-a-security-alert')->assertOk()->assertSee('Lire une alerte de sécurité en cinq minutes');
+        $this->get('/fr/resources')->assertOk()->assertSee('Lire une alerte de sécurité en cinq minutes');
     }
 
     #[Test]

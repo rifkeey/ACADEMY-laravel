@@ -1,6 +1,45 @@
 {
     "origin": "machine",
     "note": "Sample French drafts for Phase 4 (module 1, its first lesson, one lab, one question). Loaded as drafts; a reviewer must approve them in Admin before learners see them.",
+    "programme": {
+        "title": "Analyste SOC",
+        "summary": "Surveillez, triez et investiguez les alertes de sécurité avec un SIEM, KQL et ATT&CK, au fil de six labs d’investigation pratiques.",
+        "description": "Un programme pratique pour les personnes qui se préparent à un poste dans les opérations de sécurité. Vous apprendrez comment fonctionne un SOC, à lire la télémétrie Windows, Linux, réseau et cloud, à écrire des requêtes KQL pour l’investigation et la détection, à trier des alertes à partir de plusieurs sources, à rattacher les comportements observés à MITRE ATT&CK et à documenter les incidents de façon professionnelle. Chaque notion est mise en pratique dans des investigations simulées construites sur des données fictives : aucun abonnement cloud payant n’est nécessaire.",
+        "audience.0": "Futurs analystes SOC",
+        "audience.1": "Professionnels du support informatique et du centre de services qui se tournent vers la sécurité",
+        "audience.2": "Analystes débutants qui veulent des bases structurées",
+        "audience.3": "Administrateurs réseau et système qui traitent des alertes de sécurité",
+        "prerequisites.0": "Être à l’aise avec un ordinateur et un navigateur web",
+        "prerequisites.1": "Savoir à quoi correspondent une adresse IP et un système d’exploitation",
+        "prerequisites.2": "Aucune expérience préalable en sécurité n’est requise",
+        "outcomes.0": "Trier les alertes selon une méthode reproductible et documentée",
+        "outcomes.1": "Interpréter les éléments de preuve des journaux de sécurité Windows, de l’authentification Linux et du DNS",
+        "outcomes.2": "Écrire des requêtes KQL pour investiguer et détecter les activités suspectes",
+        "outcomes.3": "Rattacher les comportements observés aux techniques MITRE ATT&CK",
+        "outcomes.4": "Concevoir et tester une logique de détection sur des données saines et malveillantes connues",
+        "outcomes.5": "Rédiger des notes de dossier, des escalades et des rapports d’incident",
+        "inclusions.0": "10 modules, 23 leçons",
+        "inclusions.1": "6 labs pratiques simulés",
+        "inclusions.2": "Examen final de 40 questions",
+        "inclusions.3": "Badge numérique et certificat vérifiable à l’issue du programme",
+        "inclusions.4": "Accès à la version 1 du cours pendant la durée prévue par les conditions d’utilisation",
+        "faqs.0.q": "Ai-je besoin d’un abonnement Microsoft Sentinel ?",
+        "faqs.0.a": "Non. Tous les labs KQL fonctionnent dans le simulateur intégré d’AMANIQ, sur des données fictives. La syntaxe que vous apprenez est du KQL standard, directement transposable à Microsoft Sentinel.",
+        "faqs.1.q": "Ce certificat est-il une certification professionnelle ?",
+        "faqs.1.a": "Non. Vous recevez un certificat de réussite délivré par AMANIQ Academy. Ce n’est ni une qualification externe ni un diplôme reconnu par l’État, et il n’est lié à aucune certification d’éditeur.",
+        "faqs.2.q": "Combien de temps faut-il ?",
+        "faqs.2.a": "Nous estimons environ 60 heures, labs compris. Votre rythme peut être différent.",
+        "faqs.3.q": "Que faut-il pour réussir ?",
+        "faqs.3.a": "Suivre toutes les leçons obligatoires, réussir les six labs et obtenir au moins 75 % (30 sur 40) à l’examen final."
+    },
+    "badge": {
+        "name": "AMANIQ Analyste SOC",
+        "description": "Décerné à l’issue du programme Analyste SOC d’AMANIQ Academy.",
+        "criteria": "A suivi toutes les leçons obligatoires, réussi les six labs et obtenu au moins 75 % à l’examen final."
+    },
+    "exam": {
+        "title": "Examen final Analyste SOC"
+    },
     "modules": {
         "soc-fundamentals": {
             "title": "Fondamentaux des opérations de cybersécurité",
@@ -26,8 +65,8 @@
             "body_md": {
                 "file": "lessons/soc-role-and-workflows.md"
             },
-            "knowledge_checks.0.question": "Un analyste clôture une alerte avec la seule mention « Clôturé ». Quel est le principal problème ?",
-            "knowledge_checks.0.options.0": "Aucun : l’objectif est de clôturer vite",
+            "knowledge_checks.0.question": "Un analyste clôture une alerte avec la seule mention « Clôturé ». Quel est le principal problème ?",
+            "knowledge_checks.0.options.0": "Aucun : l’objectif est de clôturer vite",
             "knowledge_checks.0.options.1": "Sans motif, l’alerte ne peut servir ni à l’ajustement des règles ni à une revue",
             "knowledge_checks.0.options.2": "Les alertes ne doivent jamais être clôturées par le niveau 1",
             "knowledge_checks.0.options.3": "L’alerte aurait dû être supprimée",
@@ -38,7 +77,7 @@
         "phishing-compromise-timeline": {
             "title": "Investiguer une compromission par hameçonnage à l’aide d’une chronologie",
             "summary": "Remettre dans l’ordre les étapes d’une compromission partie d’un e-mail d’hameçonnage, identifier le mécanisme de persistance et déterminer qui d’autre a été ciblé.",
-            "content.scenario": "Des collaborateurs du service financier signalent un e-mail suspect intitulé « remittance details ». Le SOC a regroupé dans une seule vue les événements de la passerelle de messagerie, de la protection des clics sur les liens, du proxy, des postes de travail et du registre.",
+            "content.scenario": "Des collaborateurs du service financier signalent un e-mail suspect intitulé « remittance details ». Le SOC a regroupé dans une seule vue les événements de la passerelle de messagerie, de la protection des clics sur les liens, du proxy, des postes de travail et du registre.",
             "content.scope": "Utilisez uniquement l’extrait d’événements combiné. Toutes les heures sont en UTC.",
             "content.instructions": "Triez et lisez les événements, puis répondez aux questions. Pour la chronologie, attribuez à chaque étape son rang (1 = la plus ancienne).",
             "content.simulationNotice": "Ceci est une simulation. Toutes les données sont fictives et générées par AMANIQ Academy pour la formation. Aucun système, aucune personne ni aucune organisation réels ne sont concernés, et rien de ce que vous faites ici ne sort de la plateforme.",
@@ -58,28 +97,28 @@
             "content.tasks[order].input.columns[step].options[3].label": "Étape 3",
             "content.tasks[order].input.columns[step].options[4].label": "Étape 4",
             "content.tasks[order].input.columns[step].options[5].label": "Étape 5",
-            "content.tasks[persistence].prompt": "Quel est le **nom de la valeur de registre** utilisée pour la persistance ?",
+            "content.tasks[persistence].prompt": "Quel est le **nom de la valeur de registre** utilisée pour la persistance ?",
             "content.tasks[persistence].hints.0": "Regardez la source Registry.",
-            "content.tasks[c2-domain].prompt": "Quel domaine a reçu la première requête POST sortante depuis le poste infecté ?",
+            "content.tasks[c2-domain].prompt": "Quel domaine a reçu la première requête POST sortante depuis le poste infecté ?",
             "content.tasks[c2-domain].hints.0": "L’événement Proxy qui suit la modification du registre.",
-            "content.tasks[recipients].prompt": "Quels utilisateurs ont **reçu** l’e-mail d’hameçonnage ? Sélectionnez toutes les réponses.",
+            "content.tasks[recipients].prompt": "Quels utilisateurs ont **reçu** l’e-mail d’hameçonnage ? Sélectionnez toutes les réponses.",
             "content.tasks[recipients].hints.0": "Les lignes EmailGateway.",
             "content.tasks[recipients].input.options[p.etim].label": "p.etim",
             "content.tasks[recipients].input.options[o.adamu].label": "o.adamu",
             "content.tasks[recipients].input.options[l.usman].label": "l.usman",
             "content.tasks[recipients].input.options[a.bello].label": "a.bello",
-            "content.tasks[technique].prompt": "Quelle technique ATT&CK décrit l’accès initial ?",
+            "content.tasks[technique].prompt": "Quelle technique ATT&CK décrit l’accès initial ?",
             "content.tasks[technique].hints.0": "L’e-mail contenait un lien, pas une pièce jointe.",
             "content.tasks[technique].input.options[t1566002].label": "T1566.002 Phishing: Spearphishing Link (hameçonnage ciblé par lien)",
             "content.tasks[technique].input.options[t1566001].label": "T1566.001 Phishing: Spearphishing Attachment (hameçonnage ciblé par pièce jointe)",
             "content.tasks[technique].input.options[t1190].label": "T1190 Exploit Public-Facing Application (exploitation d’une application exposée)",
             "validator.tasks.order.feedback.correct": "Séquence correcte.",
             "validator.tasks.order.feedback.incorrect": "Triez l’extrait par heure et vérifiez à nouveau chaque étape.",
-            "validator.tasks.persistence.feedback.correct": "Correct : une clé Run qui se fait passer pour un logiciel Adobe.",
+            "validator.tasks.persistence.feedback.correct": "Correct : une clé Run qui se fait passer pour un logiciel Adobe.",
             "validator.tasks.persistence.feedback.incorrect": "Lisez le nom de la valeur dans l’événement Registry (après Run\\).",
             "validator.tasks.c2-domain.feedback.correct": "Correct.",
             "validator.tasks.c2-domain.feedback.incorrect": "Vérifiez l’événement Proxy de 08:55:02.",
-            "validator.tasks.recipients.feedback.correct": "Correct : trois destinataires, une compromission réussie et un clic bloqué.",
+            "validator.tasks.recipients.feedback.correct": "Correct : trois destinataires, une compromission réussie et un clic bloqué.",
             "validator.tasks.recipients.feedback.incorrect": "Utilisez les lignes de remise EmailGateway.",
             "validator.tasks.technique.feedback.correct": "Correct.",
             "validator.tasks.technique.feedback.incorrect": "Le message contenait un lien."
@@ -87,12 +126,12 @@
     },
     "questions": {
         "soc-001": {
-            "prompt": "Quelle affirmation décrit le mieux la différence entre une alerte et un incident ?",
-            "explanation": "Une alerte est une notification qui doit être validée ; un incident est un problème confirmé.",
+            "prompt": "Quelle affirmation décrit le mieux la différence entre une alerte et un incident ?",
+            "explanation": "Une alerte est une notification qui doit être validée ; un incident est un problème confirmé.",
             "objective": "Définir les alertes et les incidents",
             "options.1": "Ce sont des synonymes",
-            "options.2": "Une alerte est une hypothèse qui doit être triée ; un incident est un problème confirmé qui exige une réponse",
-            "options.3": "Les incidents sont générés automatiquement ; les alertes sont signalées par les utilisateurs",
+            "options.2": "Une alerte est une hypothèse qui doit être triée ; un incident est un problème confirmé qui exige une réponse",
+            "options.3": "Les incidents sont générés automatiquement ; les alertes sont signalées par les utilisateurs",
             "options.4": "Les alertes proviennent uniquement des antivirus"
         }
     }

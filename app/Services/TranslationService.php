@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Exceptions\RuleViolation;
+use App\Models\Article;
 use App\Models\ContentTranslation;
+use App\Models\LegalPage;
 use App\Models\CourseVersion;
 use App\Models\Question;
 use App\Models\QuestionOption;
@@ -337,6 +339,22 @@ final class TranslationService
         $rows = ContentTranslation::where('locale', $locale)->get()->groupBy('item_type')->map->keyBy('item_id');
 
         return $items->map(function ($i) use ($rows, $locale) {
+            [$type, $item, $label] = $i;
+            $t = $rows->get($type)?->get($item->getKey());
+
+            return ['type' => $type, 'item' => $item, 'label' => $label, 'translation' => $t, 'state' => $this->state($t, $this->english($item))];
+        });
+    }
+
+    /** Legal pages and articles, for the "Site pages" tab of the dashboard. */
+    public function inventorySite(string $locale): Collection
+    {
+        LegalPage::syncFromFile();
+        $items = LegalPage::orderBy('id')->get()->map(fn ($p) => ['legal', $p, $p->title])
+            ->concat(Article::orderBy('title')->get()->map(fn ($a) => ['article', $a, $a->title]));
+        $rows = ContentTranslation::where('locale', $locale)->whereIn('item_type', ['legal', 'article'])->get()->groupBy('item_type')->map->keyBy('item_id');
+
+        return $items->map(function ($i) use ($rows) {
             [$type, $item, $label] = $i;
             $t = $rows->get($type)?->get($item->getKey());
 

@@ -1,0 +1,158 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 2b: SOC modules 4–6 (KQL, triage, ATT&CK and detection engineering). Drafts for review. KQL operators, ATT&CK technique and tactic names stay in their official English form.",
+    "modules": {
+        "kql": {
+            "title": "Fondamentaux de Microsoft Sentinel et de KQL",
+            "purpose": "Acquérir des compétences KQL pratiques pour l’investigation et la détection, utilisables dans Microsoft Sentinel et la chasse avancée de Defender.",
+            "prerequisite_knowledge": "Modules 1 à 3. Aucun abonnement Microsoft n’est nécessaire : les labs utilisent le simulateur KQL d’AMANIQ.",
+            "objectives.0": "Filtrer et mettre en forme les données avec where, project et extend.",
+            "objectives.1": "Agréger avec summarize, dcount, min/max et bin().",
+            "objectives.2": "Expliquer les jointures et l’analyse par fenêtres de temps, et écrire des requêtes performantes et lisibles.",
+            "key_concepts.0": "Tables et chaînes d’opérateurs",
+            "key_concepts.1": "Filtres temporels",
+            "key_concepts.2": "Opérateurs de chaînes et sensibilité à la casse",
+            "key_concepts.3": "summarize et bin",
+            "key_concepts.4": "Jointures (inner, leftouter, leftanti)",
+            "key_concepts.5": "Performance des requêtes",
+            "assessment_criteria.0": "Écrit une requête qui distingue la pulvérisation de mots de passe de la force brute",
+            "assessment_criteria.1": "Choisit le bon type de jointure pour une situation donnée"
+        },
+        "triage": {
+            "title": "Tri et investigation des alertes",
+            "purpose": "Enseigner une méthode de tri et d’investigation reproductible qui aboutit à des conclusions défendables.",
+            "prerequisite_knowledge": "Modules 1 à 4.",
+            "objectives.0": "Suivre une séquence de tri structurée pour n’importe quelle alerte.",
+            "objectives.1": "Consigner des preuves qui séparent les faits de l’interprétation.",
+            "objectives.2": "Enrichir les entités et construire une chronologie d’investigation en UTC.",
+            "key_concepts.0": "Identification des entités",
+            "key_concepts.1": "Consignation des preuves",
+            "key_concepts.2": "Préserver avant de modifier",
+            "key_concepts.3": "Sources d’enrichissement et leurs limites",
+            "key_concepts.4": "Chronologies",
+            "assessment_criteria.0": "Rend le bon verdict sur une alerte multi-sources",
+            "assessment_criteria.1": "Produit une chronologie avec des références aux preuves"
+        },
+        "attack-detection": {
+            "title": "MITRE ATT&CK et ingénierie de détection",
+            "purpose": "Utiliser ATT&CK pour décrire les comportements et planifier la couverture, et appliquer une discipline d’ingénierie aux détections.",
+            "prerequisite_knowledge": "Modules 1 à 5.",
+            "objectives.0": "Rattacher les comportements observés aux tactiques et techniques ATT&CK.",
+            "objectives.1": "Évaluer la couverture de détection en distinguant données, détection et validation.",
+            "objectives.2": "Lire des règles Sigma et exprimer une logique de détection en KQL.",
+            "key_concepts.0": "Tactiques, techniques, sous-techniques, procédures",
+            "key_concepts.1": "Couverture et validation",
+            "key_concepts.2": "Cycle de vie d’une détection",
+            "key_concepts.3": "Format Sigma",
+            "key_concepts.4": "Spécificité",
+            "assessment_criteria.0": "Rattache une chronologie aux bons identifiants de technique",
+            "assessment_criteria.1": "Construit une détection qui réussit les tests sur données saines et malveillantes connues"
+        }
+    },
+    "lessons": {
+        "kql-basics": {
+            "title": "Tables, filtres et colonnes",
+            "objectives.0": "Écrire des requêtes de filtrage avec les bons opérateurs",
+            "objectives.1": "Appliquer les filtres temporels en premier",
+            "body_md": {
+                "file": "lessons/kql-basics.md"
+            },
+            "knowledge_checks.0.question": "Quel opérateur effectue un test d’égalité insensible à la casse en KQL ?",
+            "knowledge_checks.0.options.0": "==",
+            "knowledge_checks.0.options.1": "=~",
+            "knowledge_checks.0.options.2": "has",
+            "knowledge_checks.0.options.3": "in",
+            "knowledge_checks.0.explanation": "=~ teste l’égalité sans tenir compte de la casse ; == y est sensible."
+        },
+        "summarise-and-aggregate": {
+            "title": "Synthétiser et agréger",
+            "objectives.0": "Utiliser summarize avec dcount pour distinguer les schémas d’attaque",
+            "objectives.1": "Construire des séries temporelles avec bin()",
+            "body_md": {
+                "file": "lessons/summarise-and-aggregate.md"
+            },
+            "knowledge_checks.0.question": "Une IP présente des échecs contre 300 utilisateurs différents. Quelle agrégation l’a révélé ?",
+            "knowledge_checks.0.options.0": "count()",
+            "knowledge_checks.0.options.1": "dcount(UserPrincipalName)",
+            "knowledge_checks.0.options.2": "max(TimeGenerated)",
+            "knowledge_checks.0.options.3": "take 300",
+            "knowledge_checks.0.explanation": "Le dcount de la colonne des utilisateurs montre combien de comptes distincts ont été ciblés : c’est la signature de la pulvérisation.",
+            "knowledge_checks.1.question": "Quel est le sens de tri par défaut de order by en KQL ?",
+            "knowledge_checks.1.options.0": "Croissant",
+            "knowledge_checks.1.options.1": "Décroissant",
+            "knowledge_checks.1.options.2": "Aléatoire",
+            "knowledge_checks.1.options.3": "Ordre d’insertion",
+            "knowledge_checks.1.explanation": "Contrairement à SQL, KQL trie par défaut dans l’ordre décroissant."
+        },
+        "joins-time-analysis-and-performance": {
+            "title": "Jointures, analyse temporelle et performance des requêtes",
+            "objectives.0": "Choisir correctement le type de jointure",
+            "objectives.1": "Appliquer les bonnes pratiques de performance",
+            "body_md": {
+                "file": "lessons/joins-time-analysis-and-performance.md"
+            },
+            "knowledge_checks.0.question": "Pour lister les actifs qui n’ont PAS envoyé de journaux aujourd’hui, quel type de jointure convient le mieux ?",
+            "knowledge_checks.0.options.0": "inner",
+            "knowledge_checks.0.options.1": "leftouter",
+            "knowledge_checks.0.options.2": "leftanti",
+            "knowledge_checks.0.options.3": "innerunique",
+            "knowledge_checks.0.explanation": "leftanti renvoie les lignes de gauche sans correspondance à droite."
+        },
+        "alert-validation-and-evidence": {
+            "title": "Validation des alertes et collecte des preuves",
+            "objectives.0": "Appliquer la séquence de tri en six étapes",
+            "objectives.1": "Documenter les preuves de façon reproductible",
+            "body_md": {
+                "file": "lessons/alert-validation-and-evidence.md"
+            },
+            "knowledge_checks.0.question": "Pourquoi les analystes doivent-ils consigner la période de chaque requête ?",
+            "knowledge_checks.0.options.0": "Pour la facturation",
+            "knowledge_checks.0.options.1": "Pour que d’autres puissent reproduire et vérifier le résultat",
+            "knowledge_checks.0.options.2": "Parce que les SIEM l’exigent",
+            "knowledge_checks.0.options.3": "Ce n’est pas nécessaire",
+            "knowledge_checks.0.explanation": "C’est la reproductibilité qui fait d’une constatation une preuve."
+        },
+        "enrichment-and-timelines": {
+            "title": "Enrichissement des entités et chronologies",
+            "objectives.0": "Enrichir les utilisateurs, postes, IP, domaines et empreintes",
+            "objectives.1": "Construire une hypothèse chronologique et la mettre à l’épreuve",
+            "body_md": {
+                "file": "lessons/enrichment-and-timelines.md"
+            },
+            "knowledge_checks.0.question": "Un domaine enregistré récemment a un score de réputation « sain ». Que devez-vous en conclure ?",
+            "knowledge_checks.0.options.0": "Qu’il est sûr",
+            "knowledge_checks.0.options.1": "La réputation n’est qu’un élément ; les nouveaux domaines n’ont souvent pas encore fait l’objet de signalements",
+            "knowledge_checks.0.options.2": "Qu’il faut bloquer partout tous les nouveaux domaines",
+            "knowledge_checks.0.options.3": "Que les services de réputation se trompent toujours",
+            "knowledge_checks.0.explanation": "L’absence de mauvaise réputation est une preuve faible, surtout pour une infrastructure récente."
+        },
+        "attack-framework": {
+            "title": "Travailler avec MITRE ATT&CK",
+            "objectives.0": "Expliquer les TTP",
+            "objectives.1": "Rattacher les preuves aux techniques et indiquer la version d’ATT&CK",
+            "body_md": {
+                "file": "lessons/attack-framework.md"
+            },
+            "knowledge_checks.0.question": "À quelle technique ATT&CK correspond la pulvérisation de mots de passe ?",
+            "knowledge_checks.0.options.0": "T1078 Valid Accounts",
+            "knowledge_checks.0.options.1": "T1110.003 Brute Force: Password Spraying",
+            "knowledge_checks.0.options.2": "T1566 Phishing",
+            "knowledge_checks.0.options.3": "T1053.005 Scheduled Task",
+            "knowledge_checks.0.explanation": "La pulvérisation de mots de passe est la sous-technique .003 de T1110 Brute Force."
+        },
+        "detection-logic-and-sigma": {
+            "title": "Logique de détection et Sigma",
+            "objectives.0": "Lire une règle Sigma",
+            "objectives.1": "Gagner en précision en combinant des conditions",
+            "body_md": {
+                "file": "lessons/detection-logic-and-sigma.md"
+            },
+            "knowledge_checks.0.question": "Quelle détection est la plus spécifique ?",
+            "knowledge_checks.0.options.0": "Tout processus powershell.exe",
+            "knowledge_checks.0.options.1": "powershell.exe avec -enc",
+            "knowledge_checks.0.options.2": "powershell.exe avec -enc lancé par winword.exe",
+            "knowledge_checks.0.options.3": "Tout processus lancé par explorer.exe",
+            "knowledge_checks.0.explanation": "Combiner des conditions indépendantes qui se produisent rarement ensemble de façon légitime augmente la précision."
+        }
+    }
+}

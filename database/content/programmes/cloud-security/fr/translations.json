@@ -1,0 +1,33 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 1: public programme page, badge and exam title. Loaded as drafts for review.",
+    "programme": {
+        "title": "Sécurité du cloud",
+        "summary": "Sécurisez les identités, les réseaux, les données et les charges de travail dans le cloud, et investiguez les incidents cloud. Les principes indépendants des fournisseurs d’abord. Programme en cours d’élaboration.",
+        "description": "Un programme qui enseigne d’abord les principes de sécurité du cloud indépendants des fournisseurs, puis des exemples propres à chaque fournisseur, clairement signalés, pour AWS, Microsoft Azure et Google Cloud. Les activités essentielles utilisent des données fournies et des simulateurs : vous n’avez jamais besoin de créer de ressources cloud payantes. Chaque module dispose d’une leçon d’introduction rédigée ; les leçons complètes, les labs restants et l’examen sont en cours d’élaboration.",
+        "audience.0": "Ingénieurs cloud et DevOps",
+        "audience.1": "Ingénieurs sécurité qui passent au cloud",
+        "audience.2": "Analystes SOC qui traitent des alertes cloud",
+        "prerequisites.0": "Des connaissances de base en informatique et en réseau",
+        "prerequisites.1": "Aucun compte cloud n’est nécessaire",
+        "outcomes.0": "Appliquer correctement le modèle de responsabilité partagée",
+        "outcomes.1": "Concevoir une gestion des identités et des accès (IAM) fondée sur le moindre privilège",
+        "outcomes.2": "Empêcher l’exposition des espaces de stockage",
+        "outcomes.3": "Utiliser les journaux d’audit cloud pour la détection",
+        "outcomes.4": "Investiguer les identités compromises",
+        "outcomes.5": "Examiner des architectures cloud",
+        "inclusions.0": "10 modules (en cours d’élaboration)",
+        "inclusions.1": "Labs de revue IAM et de journaux d’audit disponibles dès maintenant",
+        "inclusions.2": "Examen final, badge et certificat une fois le programme terminé",
+        "faqs.0.q": "Ai-je besoin d’un compte cloud payant ?",
+        "faqs.0.a": "Non. Les activités essentielles utilisent des jeux de données fournis et des simulateurs. Les éventuels exercices facultatifs dans un véritable compte cloud seront clairement signalés, avec des avertissements sur les coûts."
+    },
+    "badge": {
+        "name": "AMANIQ Sécurité du cloud",
+        "description": "Décerné à l’issue du programme Sécurité du cloud d’AMANIQ Academy.",
+        "criteria": "Suivre toutes les leçons et tous les labs obligatoires et obtenir au moins 75 % à l’examen final."
+    },
+    "exam": {
+        "title": "Examen final Sécurité du cloud"
+    }
+}

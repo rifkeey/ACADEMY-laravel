@@ -248,3 +248,40 @@ Until this is done, nothing here claims GeniusPay works with the real API.
 - Found and fixed while checking: sending an unchanged imported draft for review did not record the sender, which would have let them approve it themselves.
 
 **Not yet French:** all other course content (Phase 5). Articles are a translatable type, but the public article pages do not use translations yet; legal pages come from `legal.json` and get their French in Phase 5 with the marketing pages. The certificate's programme title is also Phase 5.
+
+### Phase 5: French content (24 October 2026), batches 1 and 2 drafted; all waiting for review
+
+Nothing in this phase is approved. Every item is a draft with origin `machine`, so the editor shows the warning to check it carefully. Learners keep seeing English, with the French notice, until the reviewer approves each item in **Admin → French translations**.
+
+**Batch 1: site pages and programme pages**
+
+- Legal pages are now records (`legal_pages`), synced from `database/content/legal.json`, which stays the source of the English. A change to that file marks the French out of date. Public legal and article pages, and the article lists, show approved French.
+- New **Site pages** tab in the dashboard for legal pages and articles.
+- Drafted: the four legal pages, the three articles, and the public page, badge and exam title of all five programmes (files: `database/content/fr/`, `programmes/<dir>/fr/translations.json`).
+- The marketing pages (home, about, corporate, contact) are interface text, drafted in Phase 1 in `lang/fr.json`. They are not in the Admin review workflow; the reviewer should read them on the site in French.
+
+**Batch 2: the whole SOC Analyst programme**
+
+- 10 modules, 23 lessons (with knowledge checks), 6 labs, 46 exam questions, the badge and the exam: 88 of 88 items drafted (files `programmes/soc-analyst/fr/translations-*.json` and `fr/lessons/*.md`).
+
+**Conventions used (for the reviewer):**
+
+- Commands, queries and machine output stay exactly as in English: KQL, bash, YAML/Sigma, log lines, event IDs, column and table names, file paths and registry keys. Where a code block carries English comments, a sentence after it explains it in French.
+- Human-written templates are translated, because learners copy their structure: the escalation message, case notes, the investigation timeline, the plain-language rule logic.
+- MITRE ATT&CK tactic and technique names keep their official English names; in lab options a French gloss follows in brackets.
+- Product and framework names are not translated (Microsoft Sentinel, NIST CSF 2.0, Sigma, ISO/IEC 27001). Programme names are translated, matching the site footer ("Analyste SOC").
+- Legal pages are a faithful translation of the English draft. Placeholders stay in square brackets as `[À compléter : …]`.
+- Typography: typographic apostrophe (’), French quotation marks (« »), a space before « : ; ? ! ».
+
+**Quality gate (automated):** a test checks that every French draft covers every English segment, was drafted from the current English, keeps the same number of code blocks with KQL, bash, YAML, PowerShell and JSON blocks byte-for-byte identical, and keeps every legal placeholder. It also checks that each translated SOC lab marks the known-correct answers exactly as the English does.
+
+**Points for the owner (not translation issues):**
+
+1. The terms of service say prices are in Nigerian naira. Since Phase 2 they can be in FCFA, charged through GeniusPay. The English needs updating first; the French will then show as out of date.
+2. The privacy policy, the GRC programme page and the incident response lesson cite only Nigerian law (NDPA 2023, NDPC). For learners in Côte d'Ivoire, counsel should decide whether to add Ivorian data protection law and its authority. They are not added here, to avoid inventing legal content.
+3. The Network Security and Cloud Security programme pages still say their curriculum is "in development". That may be out of date now that both programmes are complete.
+4. In the SOC hunting lesson, the KQL example under "Beaconing" counts unique DNS subdomains, which matches the tunnelling hypothesis rather than timing-based beaconing. The English example should be corrected; the French follows the English.
+
+Full suite: 86 tests passing.
+
+**Next batches:** GRC, then Network Security and Cloud Security (the largest, about 100,000 words together), then the certificate's programme title in French.

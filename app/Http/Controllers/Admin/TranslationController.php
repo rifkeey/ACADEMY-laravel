@@ -28,13 +28,20 @@ class TranslationController extends Controller
     {
         $this->authorize('translations.edit');
         $programmes = Specialization::orderBy('sort_order')->get(['id', 'slug', 'title', 'current_version_id']);
-        $programme = $programmes->firstWhere('slug', $request->query('programme')) ?? $programmes->first();
-        $inventory = $programme ? $this->translations->inventory(Specialization::findOrFail($programme->id), self::LOCALE) : collect();
+        // "site" is the pseudo-programme for legal pages and articles.
+        $site = $request->query('programme') === 'site';
+        $programme = $site ? null : ($programmes->firstWhere('slug', $request->query('programme')) ?? $programmes->first());
+        $inventory = match (true) {
+            $site => $this->translations->inventorySite(self::LOCALE),
+            (bool) $programme => $this->translations->inventory(Specialization::findOrFail($programme->id), self::LOCALE),
+            default => collect(),
+        };
         $state = in_array($request->query('state'), self::STATES, true) ? $request->query('state') : null;
 
         return view('admin.translations.index', [
             'programmes' => $programmes,
             'programme' => $programme,
+            'site' => $site,
             'counts' => collect(self::STATES)->mapWithKeys(fn ($s) => [$s => $inventory->where('state', $s)->count()]),
             'total' => $inventory->count(),
             'items' => $state ? $inventory->where('state', $state)->values() : $inventory,

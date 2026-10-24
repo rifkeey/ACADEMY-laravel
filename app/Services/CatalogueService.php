@@ -93,7 +93,8 @@ final class CatalogueService
     public function articles(int $limit = 50): Collection
     {
         return Article::where('status', 'published')->latest('published_at')->limit($limit)
-            ->get(['slug', 'title', 'summary', 'tags', 'published_at']);
+            ->get(['id', 'slug', 'title', 'summary', 'tags', 'published_at'])
+            ->tap(fn ($list) => app(TranslationService::class)->localiseLoaded($list));
     }
 
     public function setting(string $key, mixed $default = null): mixed

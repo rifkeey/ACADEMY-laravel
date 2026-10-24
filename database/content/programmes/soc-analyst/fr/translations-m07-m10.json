@@ -1,0 +1,159 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 2c: SOC modules 7–10 (threat intelligence and hunting, endpoint and incident response, reporting, capstone). Drafts for review.",
+    "modules": {
+        "threat-intel": {
+            "title": "Renseignement sur les menaces et chasse",
+            "purpose": "Évaluer le renseignement avec esprit critique et mener des chasses structurées, fondées sur des hypothèses.",
+            "prerequisite_knowledge": "Modules 1 à 6.",
+            "objectives.0": "Juger la qualité d’un indicateur selon sa source, son contexte, son degré de confiance, son ancienneté et sa pertinence.",
+            "objectives.1": "Gérer l’expiration des IOC et éviter de bloquer une infrastructure partagée.",
+            "objectives.2": "Planifier et mener une chasse fondée sur une hypothèse et en consigner les résultats.",
+            "key_concepts.0": "Renseignement stratégique, opérationnel et tactique",
+            "key_concepts.1": "Pyramide de la douleur",
+            "key_concepts.2": "Durée de vie et expiration des IOC",
+            "key_concepts.3": "Pivot",
+            "key_concepts.4": "Boucle de chasse",
+            "assessment_criteria.0": "Hiérarchise correctement les indicateurs dans des mises en situation",
+            "assessment_criteria.1": "Rédige une hypothèse de chasse vérifiable"
+        },
+        "endpoint-ir": {
+            "title": "Sécurité des postes et réponse aux incidents",
+            "purpose": "Lire les preuves issues des postes et coordonner le confinement, l’éradication et le rétablissement.",
+            "prerequisite_knowledge": "Modules 1 à 7.",
+            "objectives.0": "Identifier les arbres de processus suspects et les mécanismes de persistance.",
+            "objectives.1": "Reconnaître les premiers indicateurs d’une opération de rançongiciel.",
+            "objectives.2": "Choisir des actions de confinement adaptées à la menace et aux besoins de preuve.",
+            "key_concepts.0": "Télémétrie EDR",
+            "key_concepts.1": "Arbres de processus",
+            "key_concepts.2": "Persistance (clés Run, tâches, services)",
+            "key_concepts.3": "Signes précurseurs d’un rançongiciel",
+            "key_concepts.4": "Arbitrages du confinement",
+            "key_concepts.5": "Retour d’expérience",
+            "assessment_criteria.0": "Identifie une persistance à partir de preuves issues du registre",
+            "assessment_criteria.1": "Ordonne le confinement après avoir établi le périmètre"
+        },
+        "reporting": {
+            "title": "Documentation des incidents et reporting du SOC",
+            "purpose": "Produire des notes de dossier, des passations, des indicateurs et des rapports d’incident qui résistent à l’examen.",
+            "prerequisite_knowledge": "Modules 1 à 8.",
+            "objectives.0": "Rédiger des notes de dossier, des registres de preuves et des notes de passation.",
+            "objectives.1": "Choisir des indicateurs de SOC qui évitent les effets pervers.",
+            "objectives.2": "Structurer un rapport d’incident pour plusieurs publics.",
+            "key_concepts.0": "Notes de dossier",
+            "key_concepts.1": "Chaîne de possession",
+            "key_concepts.2": "Passation",
+            "key_concepts.3": "MTTA/MTTD/MTTR",
+            "key_concepts.4": "Analyse des faux positifs",
+            "key_concepts.5": "Structure d’un rapport d’incident",
+            "assessment_criteria.0": "Produit une note de passation sur laquelle un autre analyste peut agir",
+            "assessment_criteria.1": "Rédige une synthèse pour la direction sans données de journal brutes"
+        },
+        "capstone": {
+            "title": "Projet final d’ingénierie de détection",
+            "purpose": "Réunir détection, investigation, documentation et reporting autour d’un incident simulé réaliste.",
+            "prerequisite_knowledge": "Modules 1 à 9.",
+            "objectives.0": "Concevoir et tester une logique de détection sur des données fictives.",
+            "objectives.1": "Investiguer une intrusion en plusieurs étapes à travers plusieurs sources de télémétrie.",
+            "objectives.2": "Rédiger un rapport d’incident professionnel.",
+            "key_concepts.0": "Investigation de bout en bout",
+            "key_concepts.1": "Tests de détection",
+            "key_concepts.2": "Reporting",
+            "assessment_criteria.0": "Réussit les labs 4 et 6",
+            "assessment_criteria.1": "Évalue lui-même son rapport d’incident à l’aide de la liste de vérification"
+        }
+    },
+    "lessons": {
+        "iocs-and-intelligence-quality": {
+            "title": "Indicateurs et qualité du renseignement",
+            "objectives.0": "Évaluer la qualité d’un indicateur",
+            "objectives.1": "Appliquer une bonne hygiène des IOC",
+            "body_md": {
+                "file": "lessons/iocs-and-intelligence-quality.md"
+            },
+            "knowledge_checks.0.question": "Pourquoi les indicateurs de type adresse IP doivent-ils avoir une date d’expiration ?",
+            "knowledge_checks.0.options.0": "La réglementation l’exige",
+            "knowledge_checks.0.options.1": "L’infrastructure des attaquants est recyclée puis utilisée par des tiers innocents",
+            "knowledge_checks.0.options.2": "Les SIEM ne peuvent pas conserver d’anciennes IP",
+            "knowledge_checks.0.options.3": "Elles ne changent jamais",
+            "knowledge_checks.0.explanation": "Les anciens indicateurs IP provoquent des faux positifs sur des adresses réattribuées."
+        },
+        "hypothesis-driven-hunting": {
+            "title": "La chasse aux menaces fondée sur des hypothèses",
+            "objectives.0": "Rédiger des hypothèses vérifiables",
+            "objectives.1": "Transformer les résultats de chasse en détections et en références",
+            "body_md": {
+                "file": "lessons/hypothesis-driven-hunting.md"
+            },
+            "knowledge_checks.0.question": "Une chasse ne trouve aucune intrusion. Quel résultat lui donne malgré tout de la valeur ?",
+            "knowledge_checks.0.options.0": "Aucun : c’était du temps perdu",
+            "knowledge_checks.0.options.1": "Une nouvelle référence, une détection ou une lacune de données documentée",
+            "knowledge_checks.0.options.2": "La suppression des journaux examinés",
+            "knowledge_checks.0.options.3": "L’abaissement de la sévérité de toutes les alertes",
+            "knowledge_checks.0.explanation": "Les chasses améliorent la visibilité et la détection, même lorsque rien de malveillant n’est trouvé."
+        },
+        "edr-processes-persistence": {
+            "title": "EDR, processus suspects et persistance",
+            "objectives.0": "Lire des arbres de processus",
+            "objectives.1": "Détecter les mécanismes de persistance",
+            "body_md": {
+                "file": "lessons/edr-processes-persistence.md"
+            },
+            "knowledge_checks.0.question": "Une clé Run nommée OneDriveSync pointe vers AppData\\Roaming\\upd\\updater.exe. Quelle est la constatation principale ?",
+            "knowledge_checks.0.options.0": "OneDrive est installé",
+            "knowledge_checks.0.options.1": "Le nom de la valeur imite un produit légitime, mais le chemin ne lui correspond pas",
+            "knowledge_checks.0.options.2": "Les clés Run sont toujours malveillantes",
+            "knowledge_checks.0.options.3": "Rien d’inhabituel",
+            "knowledge_checks.0.explanation": "Un nom trompeur associé à un chemin de binaire incohérent est un indicateur fort de persistance."
+        },
+        "incident-response-lifecycle": {
+            "title": "Confinement, éradication et rétablissement",
+            "objectives.0": "Choisir des stratégies de confinement",
+            "objectives.1": "Expliquer le retour d’expérience et l’escalade juridique",
+            "body_md": {
+                "file": "lessons/incident-response-lifecycle.md"
+            },
+            "knowledge_checks.0.question": "Pourquoi établir le périmètre avant de réinitialiser le mot de passe d’un compte compromis ?",
+            "knowledge_checks.0.options.0": "Les réinitialisations sont lentes",
+            "knowledge_checks.0.options.1": "L’attaquant peut détenir d’autres comptes et sera alerté",
+            "knowledge_checks.0.options.2": "Les politiques interdisent les réinitialisations",
+            "knowledge_checks.0.options.3": "Cela améliore le MTTA",
+            "knowledge_checks.0.explanation": "Un confinement coordonné évite d’alerter un attaquant qui conserve d’autres accès."
+        },
+        "case-notes-and-timelines": {
+            "title": "Notes de dossier, preuves et passation",
+            "objectives.0": "Tenir les notes de dossier au fil du travail",
+            "objectives.1": "Préserver l’intégrité des preuves",
+            "body_md": {
+                "file": "lessons/case-notes-and-timelines.md"
+            },
+            "knowledge_checks.0.question": "Pourquoi consigner les empreintes SHA-256 des fichiers de preuve exportés ?",
+            "knowledge_checks.0.options.0": "Pour les compresser",
+            "knowledge_checks.0.options.1": "Pour pouvoir démontrer leur intégrité plus tard",
+            "knowledge_checks.0.options.2": "Pour les chiffrer",
+            "knowledge_checks.0.options.3": "Les empreintes ne servent à rien",
+            "knowledge_checks.0.explanation": "Une empreinte identique montre que le fichier n’a pas changé depuis sa collecte."
+        },
+        "metrics-and-reporting": {
+            "title": "Indicateurs et rapports d’incident",
+            "objectives.0": "Choisir des indicateurs pertinents",
+            "objectives.1": "Structurer un rapport d’incident professionnel",
+            "body_md": {
+                "file": "lessons/metrics-and-reporting.md"
+            },
+            "knowledge_checks.0.question": "Quand faut-il rédiger la synthèse pour la direction d’un rapport d’incident ?",
+            "knowledge_checks.0.options.0": "En premier, avant l’investigation",
+            "knowledge_checks.0.options.1": "En dernier, une fois les preuves comprises",
+            "knowledge_checks.0.options.2": "Jamais",
+            "knowledge_checks.0.options.3": "Seulement pour les incidents critiques",
+            "knowledge_checks.0.explanation": "Rédigez-la en dernier pour qu’elle reflète exactement ce que les preuves établissent."
+        },
+        "capstone-brief": {
+            "title": "Présentation du projet final : Kanem Logistics",
+            "objectives.0": "Comprendre le scénario du projet final et les critères d’évaluation",
+            "body_md": {
+                "file": "lessons/capstone-brief.md"
+            }
+        }
+    }
+}

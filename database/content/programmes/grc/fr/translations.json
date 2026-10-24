@@ -1,0 +1,42 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 1: public programme page, badge and exam title. Loaded as drafts for review.",
+    "programme": {
+        "title": "Gouvernance, risques et conformité",
+        "summary": "Évaluez les risques, établissez les correspondances entre les mesures du NIST CSF 2.0, de l’ISO/IEC 27001 et des CIS Controls, préparez les preuves d’audit et évaluez les fournisseurs, au fil de cinq labs pratiques.",
+        "description": "Un programme pratique sur la gouvernance de la sécurité, l’appréciation des risques, les référentiels de mesures de sécurité, la préparation aux audits et les risques liés aux tiers, y compris les obligations nigérianes en matière de protection des données prévues par le NDPA 2023. Vous construirez un registre des risques, établirez les correspondances entre des mesures et le CSF 2.0, examinerez le périmètre d’un SMSI et une déclaration d’applicabilité, testerez des mesures au regard des preuves, évaluerez un hébergeur et apprendrez à rendre compte des risques à la direction. Tous les labs utilisent des organisations fictives et des données fictives. Les normes ISO sont expliquées avec les mots d’AMANIQ et ne sont pas reproduites.",
+        "audience.0": "Futurs analystes GRC et auditeurs de la sécurité",
+        "audience.1": "Professionnels de la conformité et des risques qui se tournent vers la cybersécurité",
+        "audience.2": "Responsables informatiques chargés de la politique de sécurité",
+        "prerequisites.0": "Une expérience professionnelle, quel que soit le domaine",
+        "prerequisites.1": "Aucune formation technique n’est requise",
+        "outcomes.0": "Construire et tenir à jour un registre des risques",
+        "outcomes.1": "Utiliser les profils du NIST CSF 2.0 pour une analyse d’écarts",
+        "outcomes.2": "Expliquer avec exactitude les notions de SMSI et de certification",
+        "outcomes.3": "Établir les correspondances entre les mesures de plusieurs référentiels",
+        "outcomes.4": "Préparer et évaluer des preuves d’audit",
+        "outcomes.5": "Évaluer les risques liés aux tiers et à la protection des données",
+        "outcomes.6": "Rendre compte des risques à la direction",
+        "inclusions.0": "9 modules, 27 leçons",
+        "inclusions.1": "5 labs pratiques simulés",
+        "inclusions.2": "Examen final de 40 questions",
+        "inclusions.3": "Badge numérique et certificat vérifiable à l’issue du programme",
+        "inclusions.4": "Accès à la version 1 du cours pendant la durée prévue par les conditions d’utilisation",
+        "faqs.0.q": "S’agit-il d’une qualification d’auditeur ISO/IEC 27001 ?",
+        "faqs.0.a": "Non. Les certificats AMANIQ attestent uniquement la réussite d’une formation. Les qualifications d’auditeur ISO sont délivrées par des organismes de certification et de certification de personnes accrédités.",
+        "faqs.1.q": "Dois-je acheter les normes ISO ?",
+        "faqs.1.a": "Non. Les leçons expliquent les notions avec nos propres mots. Si votre organisation met en œuvre un SMSI, elle doit acheter les normes officielles auprès de l’ISO ou d’un organisme national de normalisation.",
+        "faqs.2.q": "Le contenu sur la protection des données constitue-t-il un conseil juridique ?",
+        "faqs.2.a": "Non. Il est pédagogique. Pour toute décision de conformité, consultez un conseil juridique qualifié et les recommandations en vigueur de la NDPC.",
+        "faqs.3.q": "Que faut-il pour réussir ?",
+        "faqs.3.a": "Suivre toutes les leçons obligatoires, réussir les cinq labs et obtenir au moins 75 % (30 sur 40) à l’examen final."
+    },
+    "badge": {
+        "name": "AMANIQ Praticien GRC",
+        "description": "Décerné à l’issue du programme Gouvernance, risques et conformité d’AMANIQ Academy.",
+        "criteria": "Suivre toutes les leçons et tous les labs obligatoires et obtenir au moins 75 % à l’examen final."
+    },
+    "exam": {
+        "title": "Examen final GRC"
+    }
+}

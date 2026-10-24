@@ -1,0 +1,213 @@
+{
+    "origin": "machine",
+    "note": "Phase 5, batch 2e: SOC exam questions soc-002 to soc-024. Drafts for review. Queries, event IDs and file paths in the options are unchanged.",
+    "questions": {
+        "soc-002": {
+            "prompt": "Un scanner de vulnérabilités qui fonctionne selon sa planification autorisée déclenche une détection de balayage de ports. Comment classer l’alerte ?",
+            "explanation": "La règle a correctement détecté le balayage, mais l’activité est autorisée.",
+            "objective": "Classer l’issue des alertes",
+            "options.1": "Vrai positif exigeant l’ouverture d’un incident",
+            "options.2": "Vrai positif bénin",
+            "options.3": "Faux négatif",
+            "options.4": "Faux positif dû à une règle défaillante"
+        },
+        "soc-003": {
+            "prompt": "Quelle catégorie d’issue représente le plus grand risque caché pour un SOC ?",
+            "explanation": "Les faux négatifs sont des activités malveillantes qui n’ont produit aucune alerte : personne ne les voit.",
+            "objective": "Classer l’issue des alertes",
+            "options.1": "Les vrais positifs",
+            "options.2": "Les vrais positifs bénins",
+            "options.3": "Les faux positifs",
+            "options.4": "Les faux négatifs"
+        },
+        "soc-004": {
+            "prompt": "Quel facteur justifie le plus fortement de porter un incident au niveau de sévérité le plus élevé ?",
+            "explanation": "Une perte confirmée de données sensibles remplit les critères du niveau critique.",
+            "objective": "Appliquer des critères de sévérité",
+            "options.1": "L’alerte s’est déclenchée en dehors des heures ouvrées",
+            "options.2": "Une exfiltration confirmée de données personnelles sensibles",
+            "options.3": "L’IP source se trouve dans un autre pays",
+            "options.4": "L’utilisateur vient d’arriver dans l’organisation"
+        },
+        "soc-005": {
+            "prompt": "Quels DEUX éléments doivent figurer dans chaque message d’escalade ?",
+            "explanation": "Une escalade doit être concise, factuelle et demander une décision précise.",
+            "objective": "Escalader efficacement",
+            "options.1": "La décision ou l’autorisation dont vous avez besoin",
+            "options.2": "Un exposé concis des faits et du périmètre",
+            "options.3": "Chaque ligne de journal brute collectée",
+            "options.4": "Des spéculations sur la nationalité de l’attaquant"
+        },
+        "soc-006": {
+            "prompt": "Quel identifiant d’événement de sécurité Windows enregistre un échec d’ouverture de session ?",
+            "explanation": "4625 correspond à « Échec d’ouverture de session d’un compte » (An account failed to log on).",
+            "objective": "Se rappeler les identifiants d’événement Windows",
+            "options.1": "4624",
+            "options.2": "4625",
+            "options.3": "4688",
+            "options.4": "1102"
+        },
+        "soc-007": {
+            "prompt": "Une ouverture de session 4624 réussie indique un LogonType 10 depuis un poste inconnu. Qu’est-ce que cela indique ?",
+            "explanation": "Le type 10 correspond à RemoteInteractive, c’est-à-dire RDP.",
+            "objective": "Interpréter les types d’ouverture de session",
+            "options.1": "Une tâche planifiée s’est exécutée",
+            "options.2": "Une session Bureau à distance (RemoteInteractive)",
+            "options.3": "Un service a démarré",
+            "options.4": "Un déverrouillage d’écran"
+        },
+        "soc-008": {
+            "prompt": "De nombreux événements 4625 depuis une même source indiquent le SubStatus 0xC000006A pour différents utilisateurs. Que pouvez-vous en déduire ?",
+            "explanation": "0xC000006A signifie un utilisateur valide avec un mot de passe erroné.",
+            "objective": "Interpréter les codes d’échec",
+            "options.1": "Les noms d’utilisateur n’existent pas",
+            "options.2": "L’attaquant utilise des noms d’utilisateur valides avec de mauvais mots de passe",
+            "options.3": "Les comptes sont verrouillés",
+            "options.4": "Les ouvertures de session ont réussi"
+        },
+        "soc-009": {
+            "prompt": "Sous Ubuntu, où rsyslog écrit-il généralement les événements d’authentification SSH ?",
+            "explanation": "Debian et Ubuntu utilisent auth.log ; RHEL utilise /var/log/secure.",
+            "objective": "Localiser les journaux d’authentification Linux",
+            "options.1": "/var/log/auth.log",
+            "options.2": "/var/log/secure",
+            "options.3": "/etc/ssh/sshd_config",
+            "options.4": "/var/log/nginx/access.log"
+        },
+        "soc-010": {
+            "prompt": "Une ligne syslog classique provenant d’un serveur en UTC+1 indique « Mar 4 07:30:00 ». Que devez-vous faire avant de la corréler avec des journaux cloud en UTC ?",
+            "explanation": "Le syslog classique n’a ni année ni décalage ; convertissez l’heure locale en UTC.",
+            "objective": "Normaliser l’heure",
+            "options.1": "Rien ; syslog est toujours en UTC",
+            "options.2": "La convertir en 06:30:00 UTC et vérifier l’année",
+            "options.3": "Ajouter une heure",
+            "options.4": "L’écarter, puisque syslog n’indique pas de fuseau horaire"
+        },
+        "soc-011": {
+            "prompt": "Quel schéma dans les journaux DNS évoque le plus un tunnel DNS ?",
+            "explanation": "Des sous-domaines uniques à forte entropie sous un même domaine parent sont typiques d’un tunnel.",
+            "objective": "Reconnaître les anomalies DNS",
+            "options.1": "Un poste de travail qui résout le nom de son serveur de fichiers",
+            "options.2": "Des centaines de requêtes depuis un seul poste vers des sous-domaines aléatoires et uniques d’un même domaine",
+            "options.3": "Un navigateur qui résout un CDN",
+            "options.4": "Un NXDOMAIN pour un nom intranet mal saisi"
+        },
+        "soc-012": {
+            "prompt": "Pourquoi un SIEM normalise-t-il les champs des différentes sources de journaux ?",
+            "explanation": "La normalisation met en correspondance les champs propres à chaque éditeur avec un schéma commun.",
+            "objective": "Expliquer la normalisation",
+            "options.1": "Pour réduire le coût de stockage",
+            "options.2": "Pour qu’une même règle de détection fonctionne sur des produits qui nomment leurs champs différemment",
+            "options.3": "Pour chiffrer les journaux",
+            "options.4": "Pour supprimer les horodatages"
+        },
+        "soc-013": {
+            "prompt": "Une règle planifiée s’exécute toutes les 10 minutes. Les données arrivent avec jusqu’à 4 minutes de retard. Quelle période d’examen évite les trous ?",
+            "explanation": "La période d’examen doit couvrir la fréquence augmentée du délai.",
+            "objective": "Configurer les fenêtres d’une règle",
+            "options.1": "5 minutes",
+            "options.2": "10 minutes",
+            "options.3": "Au moins 14 minutes, avec dédoublonnage",
+            "options.4": "1 minute"
+        },
+        "soc-014": {
+            "prompt": "« De nombreux échecs de connexion suivis d’une réussite depuis la même IP » est un exemple de quel type de détection ?",
+            "explanation": "Elle combine des événements différents en séquence.",
+            "objective": "Comparer les types de règles",
+            "options.1": "Signature atomique",
+            "options.2": "Seuil simple",
+            "options.3": "Corrélation",
+            "options.4": "Liste d’autorisation statique"
+        },
+        "soc-015": {
+            "prompt": "Quelle action d’ajustement crée le plus grand angle mort ?",
+            "explanation": "Les exclusions larges et permanentes masquent précisément les postes que visent les attaquants.",
+            "objective": "Ajuster sans risque",
+            "options.1": "Corriger une sous-chaîne qui correspondait à des valeurs imprévues",
+            "options.2": "Ajouter le contexte des actifs",
+            "options.3": "Exclure définitivement tout un sous-réseau d’administration",
+            "options.4": "Relever un seuil sur la base de 30 jours de données"
+        },
+        "soc-016": {
+            "prompt": "Une requête de chasse ne renvoie aucune ligne. Que devez-vous vérifier en premier ?",
+            "explanation": "L’absence de résultats n’a de sens que si les données existent.",
+            "objective": "Distinguer « aucune donnée » de « aucun résultat »",
+            "options.1": "Que la source de données concernée a bien été ingérée sur cette période",
+            "options.2": "Que l’analyste dispose des droits d’administration",
+            "options.3": "Que la licence du SIEM couvre la chasse",
+            "options.4": "Rien ; aucune ligne signifie aucune menace"
+        },
+        "soc-017": {
+            "prompt": "Quel opérateur KQL teste l’égalité d’une valeur sans tenir compte de la casse ?",
+            "explanation": "=~ teste l’égalité sans tenir compte de la casse.",
+            "objective": "Utiliser les opérateurs",
+            "options.1": "==",
+            "options.2": "=~",
+            "options.3": "contains_cs",
+            "options.4": "startswith_cs"
+        },
+        "soc-018": {
+            "prompt": "En KQL, quel est le sens par défaut de « order by » ?",
+            "explanation": "KQL trie par ordre décroissant, sauf si asc est précisé.",
+            "objective": "Connaître les valeurs par défaut",
+            "options.1": "Croissant",
+            "options.2": "Décroissant",
+            "options.3": "Sans ordre",
+            "options.4": "Alphabétique, par nom de colonne"
+        },
+        "soc-019": {
+            "prompt": "Quelle requête identifie le mieux les sources de pulvérisation de mots de passe ?",
+            "explanation": "Le nombre d’utilisateurs distincts ciblés par source révèle la pulvérisation.",
+            "objective": "Agréger",
+            "options.1": "SigninLogs | summarize count() by UserPrincipalName",
+            "options.2": "SigninLogs | where ResultType != \"0\" | summarize dcount(UserPrincipalName) by IPAddress",
+            "options.3": "SigninLogs | take 100",
+            "options.4": "SigninLogs | distinct Location"
+        },
+        "soc-020": {
+            "prompt": "Que produit « summarize count() by bin(TimeGenerated, 1h) » ?",
+            "explanation": "bin() répartit les horodatages dans des intervalles fixes.",
+            "objective": "Séries temporelles",
+            "options.1": "Des décomptes horaires, adaptés au repérage des pics",
+            "options.2": "Uniquement la première heure de données",
+            "options.3": "Une liste d’horodatages distincts",
+            "options.4": "Une erreur, car bin attend un nombre"
+        },
+        "soc-021": {
+            "prompt": "Vous cherchez les utilisateurs qui se sont connectés mais n’ont AUCUN enregistrement MFA correspondant. Quel type de jointure convient ?",
+            "explanation": "leftanti renvoie les lignes de gauche sans correspondance à droite.",
+            "objective": "Choisir le type de jointure",
+            "options.1": "inner",
+            "options.2": "leftouter",
+            "options.3": "leftanti",
+            "options.4": "innerunique"
+        },
+        "soc-022": {
+            "prompt": "Quelles DEUX pratiques améliorent les performances de KQL en production ?",
+            "explanation": "Les filtres temporels placés tôt et les opérateurs qui utilisent l’index des termes réduisent le travail.",
+            "objective": "Performance",
+            "options.1": "Filtrer d’abord sur le temps",
+            "options.2": "Préférer has à contains pour les correspondances de termes entiers",
+            "options.3": "Rechercher dans toutes les tables avec * dans chaque règle planifiée",
+            "options.4": "Joindre avant de filtrer"
+        },
+        "soc-023": {
+            "prompt": "Que doit faire l’analyste juste après avoir lu la définition de l’alerte ?",
+            "explanation": "Les entités sont les points de pivot de toutes les étapes suivantes.",
+            "objective": "Séquence de tri",
+            "options.1": "Clôturer l’alerte",
+            "options.2": "Identifier les entités concernées (utilisateur, poste, IP, processus)",
+            "options.3": "Réinstaller le poste",
+            "options.4": "Envoyer un e-mail au directeur général"
+        },
+        "soc-024": {
+            "prompt": "Quelle entrée de notes de dossier est la plus utile comme preuve ?",
+            "explanation": "Elle consigne la requête, la période, le résultat et une interprétation signalée comme telle.",
+            "objective": "Consigner les preuves",
+            "options.1": "Regardé les journaux, ça a l’air mauvais",
+            "options.2": "Requête sur SigninLogs pour 203.0.113.45, 00:00–06:00 UTC : 212 échecs, 1 réussite ; évalué comme une pulvérisation",
+            "options.3": "L’utilisateur a confirmé que tout allait bien",
+            "options.4": "SIEM vérifié"
+        }
+    }
+}
